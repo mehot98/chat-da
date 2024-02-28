@@ -1,0 +1,9 @@
+dist
+node_modules
+.gitignore
+.github
+.eslintignore
+.nvmrc
+.prettierignore
+LICENSE
+*.md
