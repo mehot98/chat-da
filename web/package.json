@@ -1,38 +1,66 @@
 {
   "name": "chatda",
-  "version": "0.1.0",
   "private": true,
-  "dependencies": {
-    "@testing-library/jest-dom": "^5.17.0",
-    "@testing-library/react": "^13.4.0",
-    "@testing-library/user-event": "^13.5.0",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-scripts": "5.0.1",
-    "web-vitals": "^2.1.4"
-  },
+  "version": "0.0.0",
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "build": "tsc --noEmit && vite build",
+    "build:watch": "cross-env __DEV__=true vite build -w --mode development",
+    "build:hmr": "rollup --config utils/reload/rollup.config.mjs",
+    "wss": "node utils/reload/initReloadServer.js",
+    "dev": "npm run build:hmr && (run-p wss build:watch)",
+    "test": "vitest",
+    "lint": "eslint src --ext .ts,.js,.tsx,.jsx",
+    "lint:fix": "npm run lint --fix",
+    "prettier": "prettier . --write"
   },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
+  "type": "module",
+  "dependencies": {
+    "construct-style-sheets-polyfill": "3.1.0",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "webextension-polyfill": "0.10.0"
   },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
+  "devDependencies": {
+    "@rollup/plugin-sucrase": "^5.0.2",
+    "@rollup/plugin-typescript": "11.1.6",
+    "@testing-library/react": "14.2.1",
+    "@types/chrome": "0.0.262",
+    "@types/node": "20.11.21",
+    "@types/react": "18.2.0",
+    "@types/react-dom": "18.2.0",
+    "@types/ws": "8.5.10",
+    "@typescript-eslint/eslint-plugin": "6.10.0",
+    "@typescript-eslint/parser": "6.18.1",
+    "@vitejs/plugin-react": "4.2.1",
+    "chokidar": "3.6.0",
+    "cross-env": "7.0.3",
+    "eslint": "8.57.0",
+    "eslint-config-airbnb-typescript": "17.1.0",
+    "eslint-config-prettier": "9.1.0",
+    "eslint-plugin-import": "2.29.1",
+    "eslint-plugin-jsx-a11y": "6.8.0",
+    "eslint-plugin-prettier": "5.1.3",
+    "eslint-plugin-react": "7.33.2",
+    "eslint-plugin-react-hooks": "4.6.0",
+    "fs-extra": "11.2.0",
+    "jsdom": "^24.0.0",
+    "lint-staged": "15.2.2",
+    "magic-string": "^0.30.7",
+    "npm-run-all": "4.1.5",
+    "prettier": "3.2.5",
+    "rollup": "4.12.0",
+    "sass": "1.71.1",
+    "ts-loader": "9.5.1",
+    "tslib": "2.6.2",
+    "typescript": "5.3.3",
+    "vite": "5.1.4",
+    "vitest": "^1.3.1",
+    "ws": "8.16.0"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": [
+      "prettier --write",
+      "eslint --fix"
     ]
   }
 }
