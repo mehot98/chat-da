@@ -1,15 +1,7 @@
-from typing import Union
-
 from fastapi import FastAPI
+from routers.chats import router as chats_router
 
 app = FastAPI()
 
-
-@app.get("/")
-def read_root():
-    return {"Hello": "World"}
-
-
-@app.get("/items/{item_id}")
-def read_item(item_id: int, q: Union[str, None] = None):
-    return {"item_id": item_id}
+# 채팅 관련 라우터
+app.include_router(chats_router, prefix="/chats", tags=["chats"])
