@@ -1,23 +1,30 @@
-from fastapi import APIRouter
+from typing import Any
+
+from fastapi import APIRouter, Depends, Form
 
 import models.response.ChatResponseDto as Dto
+from models.response.ChatRequestDto import ChatRequestDto
 from models.response.HttpResponseDto import HttpResponseDto
 
 # prefix == chat
 router = APIRouter()
 
 
-@router.post("/", status_code=200, response_model=HttpResponseDto)
-async def get_chat():
+@router.post("")
+async def get_chat(
+        chatRequestDto: ChatRequestDto
+):
     """
     기본 챗봇과의 대화시 호출되는 API
     입력값은 UUID와 채팅 내역을 보내주면 된다
     :return: type, content, modelNoList
     """
 
+    print(chatRequestDto)
+
     info_response = Dto.ChatInfoResponseDto(**{
         "type": "info",
-        "content":  "A 제품은 ~~~하고 ~~해여",
+        "content": "A 제품은 ~~~하고 ~~해여",
         "modelNo": "RF85C9101AP"
     })
 
