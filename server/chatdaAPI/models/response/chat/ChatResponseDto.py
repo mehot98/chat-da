@@ -1,21 +1,21 @@
-from typing import List
+from typing import List, Union
 
 from pydantic import BaseModel
 
 
-class ChatInfoResponseDto(BaseModel):
+class ChatInfoDto(BaseModel):
     type: str
     content: str
     modelNo: str
 
 
-class ChatCompareResponseDto(BaseModel):
+class ChatCompareDto(BaseModel):
     type: str
     content: str
     modelNoList: List[str]
 
 
-class Spec(BaseModel):
+class ChatSpec(BaseModel):
     modelNo: str
     name: str
     기준가: str
@@ -23,12 +23,17 @@ class Spec(BaseModel):
     imageUrl: str
 
 
-class Content(BaseModel):
+class ChatContent(BaseModel):
     message: str
-    spec: Spec
+    spec: ChatSpec
 
 
-class ChatRecommendResponseDto(BaseModel):
+class ChatRecommendDto(BaseModel):
     type: str
-    content: Content
+    content: ChatContent
     modelNoList: List[str]
+
+
+class ChatResponseDto(BaseModel):
+    data: Union[ChatRecommendDto, ChatInfoDto, ChatCompareDto]
+    success: bool

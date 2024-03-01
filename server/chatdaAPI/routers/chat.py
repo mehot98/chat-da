@@ -2,13 +2,12 @@ from fastapi import APIRouter
 
 import models.response.chat.ChatResponseDto as Dto
 from models.response.chat.ChatRequestDto import ChatRequestDto
-from models.response.HttpResponseDto import HttpResponseDto
 
 # prefix == chat
 router = APIRouter()
 
 
-@router.post("")
+@router.post("", status_code=200 ,response_model=Dto.ChatResponseDto)
 async def get_chat(
         chatRequestDto: ChatRequestDto
 ):
@@ -20,13 +19,13 @@ async def get_chat(
 
     print(chatRequestDto)
 
-    info_response = Dto.ChatInfoResponseDto(**{
+    info_response = Dto.ChatInfoDto(**{
         "type": "info",
         "content": "A 제품은 ~~~하고 ~~해여",
         "modelNo": "RF85C9101AP"
     })
 
-    compare_response = Dto.ChatCompareResponseDto(**{
+    compare_response = Dto.ChatCompareDto(**{
         "type": "compare",
         "content": "A 제품이 B 제품보다 ...",
         "modelNoList": [
@@ -35,7 +34,7 @@ async def get_chat(
         ]
     })
 
-    recommend_response = Dto.ChatRecommendResponseDto(**{
+    recommend_response = Dto.ChatRecommendDto(**{
         "type": "recommend",
         "content": {
             "message": "이 제품은 어떠세요?",
@@ -52,7 +51,7 @@ async def get_chat(
         ]
     })
 
-    response = HttpResponseDto(**{
+    response = Dto.ChatResponseDto(**{
         "data": recommend_response,
         "success": True
     })
