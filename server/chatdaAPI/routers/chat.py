@@ -1,9 +1,7 @@
-from typing import Any
+from fastapi import APIRouter
 
-from fastapi import APIRouter, Depends, Form
-
-import models.response.ChatResponseDto as Dto
-from models.response.ChatRequestDto import ChatRequestDto
+import models.response.chat.ChatResponseDto as Dto
+from models.response.chat.ChatRequestDto import ChatRequestDto
 from models.response.HttpResponseDto import HttpResponseDto
 
 # prefix == chat
@@ -15,9 +13,9 @@ async def get_chat(
         chatRequestDto: ChatRequestDto
 ):
     """
-    기본 챗봇과의 대화시 호출되는 API
-    입력값은 UUID와 채팅 내역을 보내주면 된다
-    :return: type, content, modelNoList
+    기본 챗봇과의 대화 API
+    입력: uuid, content
+    응답: chatResponse (type, content, modelNoList or modelNo)
     """
 
     print(chatRequestDto)

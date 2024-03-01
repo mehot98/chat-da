@@ -6,6 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="c583271c-cb10-418d-997a-99bff2e2c283" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/response/ChatRequestDto.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/response/chat/ChatRequestDto.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/response/ChatResponseDto.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/response/chat/ChatResponseDto.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routers/chat.py" beforeDir="false" afterPath="$PROJECT_DIR$/routers/chat.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -47,6 +50,7 @@
       <recent name="C:\Users\Dachan\Desktop\ChatDA\S10P21S004\server\chatdaAPI\models\response" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Dachan\Desktop\ChatDA\S10P21S004\server\chatdaAPI\models\response\chat" />
       <recent name="C:\Users\SSAFY\Desktop\새 폴더\S10P21S004\server\chatdaAPI\models\response" />
       <recent name="C:\Users\SSAFY\Desktop\새 폴더\S10P21S004\server\chatdaAPI" />
     </key>
@@ -74,7 +78,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" log-message="true" suspend="NONE" type="python-line">
           <url>file://$PROJECT_DIR$/routers/chat.py</url>
-          <line>39</line>
+          <line>37</line>
           <option name="timeStamp" value="1" />
         </line-breakpoint>
       </breakpoints>
