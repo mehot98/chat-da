@@ -1,12 +1,13 @@
 from fastapi import APIRouter
 
 import models.response.ChatResponseDto as Dto
+from models.response.HttpResponseDto import HttpResponseDto
 
 # prefix == chat
 router = APIRouter()
 
 
-@router.post("/")
+@router.post("/", status_code=200, response_model=HttpResponseDto)
 async def get_chat():
     """
     기본 챗봇과의 대화시 호출되는 API
@@ -46,4 +47,8 @@ async def get_chat():
         ]
     })
 
-    return info_response
+    response = HttpResponseDto(**{
+        "data": recommend_response,
+        "success": True
+    })
+    return response
