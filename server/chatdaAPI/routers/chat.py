@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 
-import models.response.chat.ChatResponseDto as Dto
-from models.response.chat.ChatRequestDto import ChatRequestDto
+import models.chat.ChatResponseDto as Dto
+from models.chat.ChatRequestDto import ChatRequestDto
 
 # prefix == chat
 router = APIRouter()

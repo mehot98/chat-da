@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 
-import models.response.detail.DetailResponseDto as Dto
+import models.detail.DetailResponseDto as Dto
 
 # prefix == detail
 router = APIRouter()

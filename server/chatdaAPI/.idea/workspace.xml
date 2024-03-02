@@ -6,9 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="c583271c-cb10-418d-997a-99bff2e2c283" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/response/HttpResponseDto.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/response/chat/ChatResponseDto.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/response/chat/ChatResponseDto.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/response/detail/DetailResponseDto.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/response/detail/DetailResponseDto.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/response/chat/ChatRequestDto.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/chat/ChatRequestDto.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/response/chat/ChatResponseDto.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/chat/ChatResponseDto.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/response/detail/DetailResponseDto.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/detail/DetailResponseDto.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routers/chat.py" beforeDir="false" afterPath="$PROJECT_DIR$/routers/chat.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routers/detail.py" beforeDir="false" afterPath="$PROJECT_DIR$/routers/detail.py" afterDir="false" />
     </list>
@@ -42,15 +43,17 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "feature/be/server",
-    "last_opened_file_path": "C:/Users/Dachan/Desktop/ChatDA/S10P21S004/server/chatdaAPI/models/response",
+    "last_opened_file_path": "C:/Users/Dachan/Desktop/ChatDA/S10P21S004/server/chatdaAPI/routers",
     "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Dachan\Desktop\ChatDA\S10P21S004\server\chatdaAPI\routers" />
       <recent name="C:\Users\Dachan\Desktop\ChatDA\S10P21S004\server\chatdaAPI\models\response" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Dachan\Desktop\ChatDA\S10P21S004\server\chatdaAPI\models" />
       <recent name="C:\Users\Dachan\Desktop\ChatDA\S10P21S004\server\chatdaAPI\models\response\chat" />
       <recent name="C:\Users\SSAFY\Desktop\새 폴더\S10P21S004\server\chatdaAPI\models\response" />
       <recent name="C:\Users\SSAFY\Desktop\새 폴더\S10P21S004\server\chatdaAPI" />
