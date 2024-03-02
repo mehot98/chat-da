@@ -1,15 +1,15 @@
 from fastapi import APIRouter
 
-import models.chat.ChatResponseDto as Dto
-from models.chat.ChatRequestDto import ChatRequestDto
+import models.chat.ChatResponseDto as responseDto
+import models.chat.ChatRequestDto as requestDto
 
 # prefix == chat
 router = APIRouter()
 
 
-@router.post("", status_code=200, response_model=Dto.ChatResponseDto)
+@router.post("", status_code=200, response_model=responseDto.ChatResponseDto)
 async def post_chat(
-        chatRequestDto: ChatRequestDto
+        chatRequestDto: requestDto.ChatRequestDto
 ):
     """
     기본 챗봇과의 대화 API
@@ -19,13 +19,13 @@ async def post_chat(
 
     print(chatRequestDto)
 
-    info_response = Dto.ChatInfoDto(**{
+    info_response = responseDto.ChatInfoDto(**{
         "type": "info",
         "content": "A 제품은 ~~~하고 ~~해여",
         "modelNo": "RF85C9101AP"
     })
 
-    compare_response = Dto.ChatCompareDto(**{
+    compare_response = responseDto.ChatCompareDto(**{
         "type": "compare",
         "content": "A 제품이 B 제품보다 ...",
         "modelNoList": [
@@ -34,7 +34,7 @@ async def post_chat(
         ]
     })
 
-    recommend_response = Dto.ChatRecommendDto(**{
+    recommend_response = responseDto.ChatRecommendDto(**{
         "type": "recommend",
         "content": {
             "message": "이 제품은 어떠세요?",
@@ -51,8 +51,16 @@ async def post_chat(
         ]
     })
 
-    response = Dto.ChatResponseDto(**{
+    response = responseDto.ChatResponseDto(**{
         "data": recommend_response,
         "success": True
     })
     return response
+
+
+@router.post("/feedback", status_code=200)
+async def post_chat(
+        feedbackRequestDto: requestDto.FeedbackRequestDto
+):
+    print(feedbackRequestDto)
+    return {"success": True}
