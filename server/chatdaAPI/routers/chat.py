@@ -7,8 +7,8 @@ from models.response.chat.ChatRequestDto import ChatRequestDto
 router = APIRouter()
 
 
-@router.post("", status_code=200 ,response_model=Dto.ChatResponseDto)
-async def get_chat(
+@router.post("", status_code=200, response_model=Dto.ChatResponseDto)
+async def post_chat(
         chatRequestDto: ChatRequestDto
 ):
     """
