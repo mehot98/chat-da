@@ -4,15 +4,14 @@ export default function customDynamicImport(): PluginOption {
   return {
     name: "custom-dynamic-import",
     renderDynamicImport({ moduleId }) {
-      if (!moduleId.includes("node_modules")) {
+      if (!moduleId.includes("node_modules") && process.env.__FIREFOX__) {
         return {
           left: `
           {
             const dynamicImport = (path) => import(path);
-            if (typeof browser !== "undefined") {
-              dynamicImport(browser.runtime.getURL('./') + 
+            dynamicImport(browser.runtime.getURL('./') + 
             `,
-          right: ".split('../').join(''))};}",
+          right: ".split('../').join(''))}",
         };
       }
       return {
