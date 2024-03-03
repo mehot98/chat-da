@@ -1,0 +1,9 @@
+﻿
+# langchain
+langchain
+langchain_community
+langchain_openai
+openai
+
+# mysql
+pymysql
