@@ -34,13 +34,15 @@ const manifest = {
   },
   content_scripts: [
     {
-      matches: ["http://*/*", "https://*/*", "<all_urls>"],
+      // matches: ["http://*/*", "https://*/*", "<all_urls>"],
+      matches: ["https://www.samsung.com/*"],
       js: ["src/pages/contentInjected/index.js"],
       // KEY for cache invalidation
-      css: ["assets/css/contentStyle<KEY>.chunk.css"],
+      // css: ["assets/css/contentStyle<KEY>.chunk.css"],
     },
     {
-      matches: ["http://*/*", "https://*/*", "<all_urls>"],
+      // matches: ["http://*/*", "https://*/*", "<all_urls>"],
+      matches: ["https://www.samsung.com/*"],
       js: ["src/pages/contentUI/index.js"],
     },
   ],
