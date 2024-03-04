@@ -1,9 +1,6 @@
-import examples
+from examples import examples
 
 from langchain_core.prompts import FewShotPromptTemplate, PromptTemplate
-from langchain_core.example_selectors import SemanticSimilarityExampleSelector
-from langchain_openai import OpenAIEmbeddings
-from langchain_community.vectorstores import FAISS
 
 # 답변 생성용 프롬프트
 answer_prompt = PromptTemplate.from_template(
