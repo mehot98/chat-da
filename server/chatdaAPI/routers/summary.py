@@ -1,11 +1,10 @@
-from fastapi import APIRouter, Query
-from models.dto.HttpResponseDto import HttpResponseDto
+from fastapi import APIRouter, Query, status
 
 # prefix == summary
 router = APIRouter()
 
 
-@router.get("/review", status_code=200)
+@router.get("/review", status_code=status.HTTP_200_OK)
 async def get_review(
         model_no: str = Query(..., alias="modelNo")
 ):
@@ -17,18 +16,14 @@ async def get_review(
 
     print(model_no)
 
-    review_response = {
+    response = {
         "content": "리뷰 내용 요약본입니다"
     }
 
-    response = HttpResponseDto(**{
-        "data": review_response,
-        "success": True
-    })
     return response
 
 
-@router.get("/detail", status_code=200)
+@router.get("/detail", status_code=status.HTTP_200_OK)
 async def get_detail(
         model_no: str = Query(..., alias="modelNo")
 ):
@@ -40,12 +35,8 @@ async def get_detail(
 
     print(model_no)
 
-    detail = {
+    response = {
         "content": "제품 본문에 있는 설명 요약본입니다."
     }
 
-    response = HttpResponseDto(**{
-        "data": detail,
-        "success": True
-    })
     return response

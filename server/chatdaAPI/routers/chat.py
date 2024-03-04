@@ -1,4 +1,6 @@
-from fastapi import APIRouter
+from typing import Union
+
+from fastapi import APIRouter, status
 
 import models.dto.chat.ChatResponseDto as response_dto
 import models.dto.chat.ChatRequestDto as request_dto
@@ -7,14 +9,15 @@ import models.dto.chat.ChatRequestDto as request_dto
 router = APIRouter()
 
 
-@router.post("", status_code=200, response_model=response_dto.ChatResponseDto)
+@router.post("", status_code=status.HTTP_201_CREATED,
+             response_model=Union[response_dto.ChatInfoDto, response_dto.ChatCompareDto, response_dto.ChatRecommendDto])
 async def post_chat(
         chat_request_dto: request_dto.ChatRequestDto
 ):
     """
     기본 챗봇과의 대화 API\n
     입력: ChatRequestDto(uuid, content)\n
-    응답: ChatResponseDto(type, content, modelNoLlist or modelNo)\n
+    응답: ChatInfoDto, ChatCompareDto, ChatRecommendDto(type, content, modelNoLlist or modelNo)\n
     """
 
     print(chat_request_dto)
@@ -39,9 +42,9 @@ async def post_chat(
         "content": {
             "message": "이 제품은 어떠세요?",
             "spec": {
-                "model_no": "RF84C906B4W",
-                "name": "BESPOKE 냉장고 4도어 875 L",
-                "기준가": "2340000",
+                "제품_코드": "RF84C906B4W",
+                "제품명": "BESPOKE 냉장고 4도어 875 L",
+                "가격": "2340000",
                 "혜택가": "1490000",
                 "image_url": "https://images.samsung.com/kdp/goods/2023/11/16/a7b8d6bb-7665-4a69-bd14-6ac97871746b.png"
             }
@@ -51,16 +54,11 @@ async def post_chat(
         ]
     })
     print(info_response)
-
-    response = response_dto.ChatResponseDto(**{
-        "data": info_response,
-        "success": True
-    })
-    return response
+    return info_response
 
 
-@router.post("/feedback", status_code=200)
-async def post_chat(
+@router.post("/feedback", status_code=status.HTTP_201_CREATED)
+async def post_feedback(
         feedback_request_dto: request_dto.FeedbackRequestDto
 ):
     """

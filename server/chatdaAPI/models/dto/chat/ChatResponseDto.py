@@ -25,9 +25,9 @@ class ChatSpec(CamelModel):
     """
     각 제품마다 가지고 있는 간단한 정보 (추천에 사용)
     """
-    model_no: str
+    제품_코드: str
     제품명: str
-    기준가: str
+    가격: str
     혜택가: str
     image_url: str
 
@@ -47,12 +47,3 @@ class ChatRecommendDto(CamelModel):
     type: str
     content: ChatContent
     model_no_list: List[str]
-
-
-class ChatResponseDto(CamelModel):
-    """
-    기본 채팅 응답을 보낼 형식 (response 형식은 data, success로 고정)
-    """
-    data: Union[ChatRecommendDto, ChatInfoDto, ChatCompareDto]
-    success: bool
-

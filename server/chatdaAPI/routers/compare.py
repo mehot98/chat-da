@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Query
+from fastapi import APIRouter, Query, status
 
 import models.dto.compare.CompareResponseDto as Dto
 
@@ -6,7 +6,7 @@ import models.dto.compare.CompareResponseDto as Dto
 router = APIRouter()
 
 
-@router.get("", status_code=200, response_model=Dto.CompareResponseDto)
+@router.get("", status_code=status.HTTP_200_OK, response_model=Dto.CompareResponseDto)
 async def get_compare_detail(
         model_no: str = Query(..., alias="modelNo")
 ):
@@ -17,7 +17,7 @@ async def get_compare_detail(
     """
     model_no_list = model_no.split(",")
 
-    compare_response = Dto.CompareDto(
+    response = Dto.CompareResponseDto(
         type="compare",
         spec=[
             {
@@ -65,11 +65,6 @@ async def get_compare_detail(
             }
         ],
         model_no_list=model_no_list
-    )
-
-    response = Dto.CompareResponseDto(
-        data=compare_response,
-        success=True
     )
 
     return response

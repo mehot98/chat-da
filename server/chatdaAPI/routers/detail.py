@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Query
+from fastapi import APIRouter, Query, status
 
 import models.dto.detail.DetailResponseDto as Dto
 
@@ -6,7 +6,7 @@ import models.dto.detail.DetailResponseDto as Dto
 router = APIRouter()
 
 
-@router.get("/{modelNo}", status_code=200, response_model=Dto.DetailResponseDto)
+@router.get("/{modelNo}", status_code=status.HTTP_200_OK, response_model=Dto.DetailResponseDto)
 async def get_spec(
         model_no: str = Query(..., alias="modelNo")
 ):
@@ -16,7 +16,8 @@ async def get_spec(
     응답: detailResponse(type, spec, modelNo)\n
     """
     print(model_no)
-    detail = Dto.DetailDto(
+
+    response = Dto.DetailResponseDto(
         type="info",
         detail_spec={
             "model_no": "RF84C906B4W",
@@ -42,9 +43,5 @@ async def get_spec(
         },
         model_no="RF84C906B4W"
     )
-
-    response = Dto.DetailResponseDto(**{
-        "data": detail,
-        "success": True
-    })
+    print(response)
     return response
