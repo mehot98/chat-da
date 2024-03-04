@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { styled } from "styled-components";
-import { ChatbotMain } from "@root/src/component";
+import { ChatbotMain } from "@src/components";
 import "@assets/style/theme.scss";
 import chatDAIconPath from "../../../../public/ChatDA_icon_128.png";
 
