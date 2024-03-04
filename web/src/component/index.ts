@@ -1,5 +1,5 @@
-import ChatbotMain from "./ChatbotMain";
+import GptPrac from "./GptPrac";
 
 export {
-    ChatbotMain,
+    GptPrac,
 };
