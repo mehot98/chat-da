@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import styled from "@emotion/styled";
+import styled from "styled-components";
 import "@assets/style/theme.scss";
 import chatDAIconPath from "../../../../public/ChatDA_icon_128.png";
 // import chatDAIconPath from "@assets/img/ChatDA_icon_128.png";
