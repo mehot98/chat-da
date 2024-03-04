@@ -1,4 +1,6 @@
-﻿
+﻿# Chroma DB (Vector DB)
+chromadb
+
 # langchain
 langchain
 langchain_community

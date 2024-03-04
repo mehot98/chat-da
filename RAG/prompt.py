@@ -1,3 +1,5 @@
+import examples
+
 from langchain_core.prompts import FewShotPromptTemplate, PromptTemplate
 from langchain_core.example_selectors import SemanticSimilarityExampleSelector
 from langchain_openai import OpenAIEmbeddings
@@ -37,49 +39,23 @@ example_prompt = PromptTemplate.from_template(
 SQL query: {query}"""
 )
 
-# SQL 예시들
-examples = [
-    {
-        "input": "List all artists.",
-        "query": "SELECT * FROM Artist;"
-    },
-    {
-        "input": "Find all albums for the artist 'AC/DC'.",
-        "query": "SELECT * FROM Album WHERE ArtistId = (SELECT ArtistId FROM Artist WHERE Name = 'AC/DC');",
-    },
-    {
-        "input": "List all tracks in the 'Rock' genre.",
-        "query": "SELECT * FROM Track WHERE GenreId = (SELECT GenreId FROM Genre WHERE Name = 'Rock');",
-    },
-    {
-        "input": "Find the total duration of all tracks.",
-        "query": "SELECT SUM(Milliseconds) FROM Track;",
-    }
-]
-
 # SQL 생성용 프롬프트 후반
 mysql_prompt_suffix = """User input: {input}
 SQL query: """
 
-# 사용자의 입력과 관련 있는 예시만 가져오기 위한 selector
-example_selector = SemanticSimilarityExampleSelector.from_examples(
-    examples,
-    OpenAIEmbeddings(),
-    FAISS,
-    k=5,
-    input_keys=["input"],
-)
-
-# SQL 생성용 프롬프트 최종
-sql_prompt = FewShotPromptTemplate(
-    example_selector=example_selector,
-    example_prompt=example_prompt,
-    prefix=mysql_prompt_prefix,
-    suffix=mysql_prompt_suffix,
-    input_variables=["input", "top_k", "table_info"],
-)
-
 
 # SQL 생성용 프롬프트
 def sql_prompt(user_input):
-    return "prompt", False
+    # 유저 입력과 관련된 예시들과 리스트 형태로 보여줘야 하는지의 여부를 가져옴
+    user_examples, is_list = examples.get_examples(user_input)
+
+    # SQL 생성용 프롬프트 최종
+    prompt = FewShotPromptTemplate(
+        examples=user_examples,
+        example_prompt=example_prompt,
+        prefix=mysql_prompt_prefix,
+        suffix=mysql_prompt_suffix,
+        input_variables=["input", "top_k", "table_info"],
+    )
+
+    return prompt, is_list
