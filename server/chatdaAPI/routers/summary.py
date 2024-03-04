@@ -26,3 +26,26 @@ async def get_review(
         "success": True
     })
     return response
+
+
+@router.get("/detail", status_code=200)
+async def get_detail(
+        model_no: str = Query(..., alias="modelNo")
+):
+    """
+    특정 제품의 정보 요약 조회 API
+    입력: modelNo
+    응답: content
+    """
+
+    print(model_no)
+
+    detail = {
+        "content": "제품 본문에 있는 설명 요약본입니다."
+    }
+
+    response = HttpResponseDto(**{
+        "data": detail,
+        "success": True
+    })
+    return response
