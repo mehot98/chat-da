@@ -11,13 +11,13 @@ async def get_compare_detail(
         model_no: str = Query(..., alias="modelNo")
 ):
     """
-    제품 비교 상세보기 페이지 API
-    입력: modelNo(EWEWE2323,WEAFWEWE23)
-    응답: CompareResponseDto(type, spec[], model_no_list[])
+    제품 비교 상세보기 페이지 API\n
+    입력: modelNo(EWEWE2323,WEAFWEWE23)\n
+    응답: CompareResponseDto(type, spec[], model_no_list[])\n
     """
     model_no_list = model_no.split(",")
 
-    response = Dto.CompareResponseDto(
+    compare_response = Dto.CompareDto(
         type="compare",
         spec=[
             {
@@ -65,6 +65,11 @@ async def get_compare_detail(
             }
         ],
         model_no_list=model_no_list
+    )
+
+    response = Dto.CompareResponseDto(
+        data=compare_response,
+        success=True
     )
 
     return response

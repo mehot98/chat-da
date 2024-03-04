@@ -11,9 +11,9 @@ async def get_spec(
         model_no: str = Query(..., alias="modelNo")
 ):
     """
-    모델에 대한 상세 스펙 정보 요청 API
-    입력: path variable - ModelNo
-    응답: detailResponse(type, spec, modelNo)
+    모델에 대한 상세 스펙 정보 요청 API\n
+    입력: path variable - ModelNo\n
+    응답: detailResponse(type, spec, modelNo)\n
     """
     print(model_no)
     detail = Dto.DetailDto(

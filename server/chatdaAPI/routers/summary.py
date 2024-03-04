@@ -10,9 +10,9 @@ async def get_review(
         model_no: str = Query(..., alias="modelNo")
 ):
     """
-    특정 제품의 리뷰 요약 정보 조회 API
-    입력: modelNo
-    응답: content
+    특정 제품의 리뷰 요약 정보 조회 API\n
+    입력: modelNo\n
+    응답: content\n
     """
 
     print(model_no)

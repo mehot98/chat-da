@@ -12,9 +12,9 @@ async def post_chat(
         chat_request_dto: request_dto.ChatRequestDto
 ):
     """
-    기본 챗봇과의 대화 API
-    입력: ChatRequestDto(uuid, content)
-    응답: ChatResponseDto(type, content, modelNoLlist or modelNo)
+    기본 챗봇과의 대화 API\n
+    입력: ChatRequestDto(uuid, content)\n
+    응답: ChatResponseDto(type, content, modelNoLlist or modelNo)\n
     """
 
     print(chat_request_dto)
@@ -63,5 +63,11 @@ async def post_chat(
 async def post_chat(
         feedback_request_dto: request_dto.FeedbackRequestDto
 ):
+    """
+    채팅에 대한 피드백 등록 API\n
+    입력: FeedbackRequestDto(uuid,createdAt,content)\n
+    응답: HttpResponseDto(data, success)\n
+    """
+
     print(feedback_request_dto)
     return {"success": True}

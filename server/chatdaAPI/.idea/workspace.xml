@@ -6,6 +6,14 @@
   <component name="ChangeListManager">
     <list default="true" id="c583271c-cb10-418d-997a-99bff2e2c283" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/dto/chat/ChatRequestDto.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/dto/chat/ChatRequestDto.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/dto/chat/ChatResponseDto.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/dto/chat/ChatResponseDto.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/dto/compare/CompareResponseDto.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/dto/compare/CompareResponseDto.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/dto/detail/DetailResponseDto.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/dto/detail/DetailResponseDto.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/dto/summary/ReviewSummary.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/routers/chat.py" beforeDir="false" afterPath="$PROJECT_DIR$/routers/chat.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routers/compare.py" beforeDir="false" afterPath="$PROJECT_DIR$/routers/compare.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routers/detail.py" beforeDir="false" afterPath="$PROJECT_DIR$/routers/detail.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routers/summary.py" beforeDir="false" afterPath="$PROJECT_DIR$/routers/summary.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
