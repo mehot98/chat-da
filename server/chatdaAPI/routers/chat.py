@@ -1,8 +1,7 @@
 from fastapi import APIRouter
-from pydantic.alias_generators import to_camel, to_snake
 
-import models.chat.ChatResponseDto as response_dto
-import models.chat.ChatRequestDto as request_dto
+import models.dto.chat.ChatResponseDto as response_dto
+import models.dto.chat.ChatRequestDto as request_dto
 
 # prefix == chat
 router = APIRouter()

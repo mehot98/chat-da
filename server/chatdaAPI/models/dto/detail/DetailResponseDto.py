@@ -1,11 +1,10 @@
-from typing import Any
-
 from models.CamelModel import CamelModel
+from models.entity.spec.Spec import DetailSpecDto
 
 
 class DetailDto(CamelModel):
     type: str
-    spec: Any
+    detail_spec: DetailSpecDto
     model_no: str
 
 

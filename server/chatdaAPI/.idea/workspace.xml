@@ -5,13 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c583271c-cb10-418d-997a-99bff2e2c283" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/chatdaAPI.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/chatdaAPI.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/chat/ChatRequestDto.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/chat/ChatRequestDto.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/chat/ChatResponseDto.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/chat/ChatResponseDto.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/compare/CompareResponseDto.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/compare/CompareResponseDto.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/detail/DetailResponseDto.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/detail/DetailResponseDto.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/chat/ChatRequestDto.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/dto/chat/ChatRequestDto.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/chat/ChatResponseDto.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/dto/chat/ChatResponseDto.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/compare/CompareResponseDto.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/dto/compare/CompareResponseDto.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/detail/DetailResponseDto.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/dto/detail/DetailResponseDto.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routers/chat.py" beforeDir="false" afterPath="$PROJECT_DIR$/routers/chat.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routers/compare.py" beforeDir="false" afterPath="$PROJECT_DIR$/routers/compare.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routers/detail.py" beforeDir="false" afterPath="$PROJECT_DIR$/routers/detail.py" afterDir="false" />
@@ -56,10 +54,11 @@
       <recent name="C:\Users\Dachan\Desktop\ChatDA\S10P21S004\server\chatdaAPI\models\response" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\SSAFY\Desktop\새 폴더\S10P21S004\server\chatdaAPI\models\dto" />
+      <recent name="C:\Users\SSAFY\Desktop\새 폴더\S10P21S004\server\chatdaAPI\models\entity" />
       <recent name="C:\Users\Dachan\Desktop\ChatDA\S10P21S004\server\chatdaAPI\models" />
       <recent name="C:\Users\Dachan\Desktop\ChatDA\S10P21S004\server\chatdaAPI\models\response\chat" />
       <recent name="C:\Users\SSAFY\Desktop\새 폴더\S10P21S004\server\chatdaAPI\models\response" />
-      <recent name="C:\Users\SSAFY\Desktop\새 폴더\S10P21S004\server\chatdaAPI" />
     </key>
   </component>
   <component name="SharedIndexes">
