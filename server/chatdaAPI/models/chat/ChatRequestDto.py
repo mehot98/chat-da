@@ -1,15 +1,14 @@
 from typing import Literal
 
-from pydantic import BaseModel
+from models.CamelModel import CamelModel
 
 
-class ChatRequestDto(BaseModel):
+class ChatRequestDto(CamelModel):
     uuid: str
     content: str
 
 
-class FeedbackRequestDto(BaseModel):
+class FeedbackRequestDto(CamelModel):
     uuid: str
     created_at: str
     feedback: Literal["긍정", "부정"]
-

@@ -1,9 +1,9 @@
 from typing import Any, List
 
-from pydantic import BaseModel, Field
+from models.CamelModel import CamelModel
 
 
-class CompareResponseDto(BaseModel):
+class CompareResponseDto(CamelModel):
     type: str
     spec: Any
-    modelNoList: List[str]
+    model_no_list: List[str]

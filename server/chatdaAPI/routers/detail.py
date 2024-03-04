@@ -1,4 +1,4 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Query
 
 import models.detail.DetailResponseDto as Dto
 
@@ -8,18 +8,18 @@ router = APIRouter()
 
 @router.get("/{modelNo}", status_code=200, response_model=Dto.DetailResponseDto)
 async def get_spec(
-        modelNo: str
+        model_no: str = Query(..., alias="modelNo")
 ):
     """
     모델에 대한 상세 스펙 정보 요청 API
     입력: path variable - ModelNo
     응답: detailResponse(type, spec, modelNo)
     """
-    print(modelNo)
-    detail = Dto.DetailDto(**{
-        "type": "info",
-        "spec": {
-            "modelNo": "RF84C906B4W",
+    print(model_no)
+    detail = Dto.DetailDto(
+        type="info",
+        spec={
+            "model_no": "RF84C906B4W",
             "name": "BESPOKE 냉장고 4도어 870 L",
             "category": "냉장고",
             "가로": "912",
@@ -34,13 +34,13 @@ async def get_spec(
             "소비 전력": "42.8",
             "기준가": "2340000",
             "혜택가": "1490000",
-            "reviewSummary": "삼성 냉장고로 바꿨는데 디자인도 좋고 기능도 편리해요. 김치냉장고까지 추가하면 완벽할 것 같아요. 키친핏 냉장,냉동고 세트는 크기도 적당하고 디자인도 이쁘게 잘 어울려요.",
-            "reviewCount": "303",
+            "review_summary": "삼성 냉장고로 바꿨는데 디자인도 좋고 기능도 편리해요. 김치냉장고까지 추가하면 완벽할 것 같아요. 키친핏 냉장,냉동고 세트는 크기도 적당하고 디자인도 이쁘게 잘 어울려요.",
+            "review_count": "303",
             "rating": "4.9",
-            "imageUrl": "https://images.samsung.com/kdp/goods/2023/11/16/a7b8d6bb-7665-4a69-bd14-6ac97871746b.png"
+            "image_url": "https://images.samsung.com/kdp/goods/2023/11/16/a7b8d6bb-7665-4a69-bd14-6ac97871746b.png"
         },
-        "modelNo": "RF84C906B4W"
-    })
+        model_no="RF84C906B4W"
+    )
 
     response = Dto.DetailResponseDto(**{
         "data": detail,

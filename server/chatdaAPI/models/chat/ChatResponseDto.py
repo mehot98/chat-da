@@ -1,39 +1,40 @@
 from typing import List, Union
 
-from pydantic import BaseModel
+from models.CamelModel import CamelModel
 
 
-class ChatInfoDto(BaseModel):
+class ChatInfoDto(CamelModel):
     type: str
     content: str
-    modelNo: str
+    model_no: str
 
 
-class ChatCompareDto(BaseModel):
+class ChatCompareDto(CamelModel):
     type: str
     content: str
-    modelNoList: List[str]
+    model_no_list: List[str]
 
 
-class ChatSpec(BaseModel):
-    modelNo: str
+class ChatSpec(CamelModel):
+    model_no: str
     name: str
     기준가: str
     혜택가: str
-    imageUrl: str
+    image_url: str
 
 
-class ChatContent(BaseModel):
+class ChatContent(CamelModel):
     message: str
     spec: ChatSpec
 
 
-class ChatRecommendDto(BaseModel):
+class ChatRecommendDto(CamelModel):
     type: str
     content: ChatContent
-    modelNoList: List[str]
+    model_no_list: List[str]
 
 
-class ChatResponseDto(BaseModel):
+class ChatResponseDto(CamelModel):
     data: Union[ChatRecommendDto, ChatInfoDto, ChatCompareDto]
     success: bool
+

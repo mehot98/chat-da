@@ -1,14 +1,14 @@
 from typing import Any
 
-from pydantic import BaseModel
+from models.CamelModel import CamelModel
 
 
-class DetailDto(BaseModel):
+class DetailDto(CamelModel):
     type: str
     spec: Any
-    modelNo: str
+    model_no: str
 
 
-class DetailResponseDto(BaseModel):
+class DetailResponseDto(CamelModel):
     data: DetailDto
     success: bool
