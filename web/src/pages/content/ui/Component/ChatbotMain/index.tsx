@@ -26,7 +26,7 @@ export default function ChatbotMain() {
 	// 	apiKey: process.env.OPENAI_API_KEY,
 	// });
 	// const openai = new OpenAIApi(configuration);
-	const openAiKey='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';
+	const openAiKey='';
 
 
 
