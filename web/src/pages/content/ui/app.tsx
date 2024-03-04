@@ -1,8 +1,7 @@
 import { useState, useEffect } from "react";
-import styled from "styled-components";
+import { styled } from "styled-components";
 import "@assets/style/theme.scss";
 import chatDAIconPath from "../../../../public/ChatDA_icon_128.png";
-// import chatDAIconPath from "@assets/img/ChatDA_icon_128.png";
 
 export default function App() {
   const [isOpenMainModal, setIsOpenMainModal] = useState<boolean>(false);
@@ -14,19 +13,24 @@ export default function App() {
   // Find existing chatbot icon, and insert chatda icon
   const existingChatbotIcon: Element = document.getElementsByClassName("menu01")[0];
 
-  const chatDAIcon: HTMLImageElement = document.createElement("img");
-  chatDAIcon.src = chatDAIconPath;
-  console.log(chatDAIconPath);
-  chatDAIcon.width = 64;
-  chatDAIcon.style.zIndex = "100";
+  if (!document.getElementById("chatDAIcon")) {
+    const chatDAIcon: HTMLImageElement = document.createElement("img");
+    chatDAIcon.id = "chatDAIcon";
 
-  chatDAIcon.onclick = (e: MouseEvent) => {
-    console.log(e);
-    setIsOpenMainModal(true);
-    console.log("chat da 클릭됨!!", isOpenMainModal);
-  };
+    chatDAIcon.src = chrome.runtime.getURL(chatDAIconPath);
+    chatDAIcon.width = 64;
+    chatDAIcon.style.position = "relative";
+    chatDAIcon.style.zIndex = "100";
+    chatDAIcon.style.cursor = "pointer";
 
-  existingChatbotIcon.prepend(chatDAIcon);
+    chatDAIcon.onclick = (e: MouseEvent) => {
+      console.log(e);
+      setIsOpenMainModal(true);
+      console.log("chat da 클릭됨!!", isOpenMainModal);
+    };
+
+    existingChatbotIcon.prepend(chatDAIcon);
+  }
 
   // When click chatDAIcon, the dialog open
   return (

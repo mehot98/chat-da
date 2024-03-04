@@ -55,6 +55,7 @@ const manifest = {
         "ChatDA_icon_48.png",
         "ChatDA_icon_32.png",
         "ChatDA_icon_16.png",
+        "assets/png/ChatDA_icon_128.chunk.png",
       ],
       matches: ["*://*/*"],
     },
