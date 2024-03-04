@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { styled } from "styled-components";
+import { ChatbotMain } from './Component';
 import "@assets/style/theme.scss";
 import chatDAIconPath from "../../../../public/ChatDA_icon_128.png";
 
@@ -36,7 +37,7 @@ export default function App() {
   return (
     <>
       <div className="">content view</div>
-
+      <ChatbotMain />
       <ChatMainModal open={isOpenMainModal}>
         <button onClick={() => setIsOpenMainModal(false)}>x</button>
       </ChatMainModal>

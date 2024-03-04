@@ -49,6 +49,7 @@ export default defineConfig({
           return `assets/[ext]/${assetFileName}.chunk.[ext]`;
         },
       },
+      // external: ['axios']
     },
   },
   test: {
