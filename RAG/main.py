@@ -1,4 +1,14 @@
+import sys
 import os
+
+# 현재 스크립트 파일의 절대 경로를 얻습니다.
+script_dir = os.path.dirname(os.path.abspath(__file__))
+
+# 'examples' 디렉토리의 상대 경로를 계산합니다.
+examples_dir = os.path.join(script_dir, 'examples')
+
+# 계산된 경로를 모듈 검색 경로에 추가합니다.
+sys.path.append(examples_dir)
 
 import keys
 
@@ -38,7 +48,7 @@ execute_sql = QuerySQLDataBaseTool(db=db)
 # 사용자의 입력으로부터 출력을 생성하는 함수
 def get_output(user_input, search):
     # 사용자 입력으로부터 SQL 프롬프트와 제품을 리스트 형태로 보여줘야 하는지의 여부를 가져옴
-    sql_prompt, is_list = prompt.sql_prompt(user_input)
+    sql_prompt, user_input_type = prompt.sql_prompt(user_input)
 
     if search:
         is_list = True
@@ -47,17 +57,22 @@ def get_output(user_input, search):
     create_sql = create_sql_query_chain(llm, db, sql_prompt)
 
     # 답변 생성용 LCEL
-    chain = (
-        RunnablePassthrough.assign(query=create_sql).assign(
+    sql_chain = RunnablePassthrough.assign(query=create_sql).assign(
             result=itemgetter("query") | execute_sql
         )
-        | prompt.answer_prompt | llm | StrOutputParser()
-    )
+
+    answer_chain = prompt.answer_prompt | llm | StrOutputParser()
+
+    chain = sql_chain | answer_chain
 
     # 유저 입력으로부터 답변 생성
     result = chain.invoke({"question": user_input})
 
-    return result, is_list
+    return {
+        "type": user_input_type,
+        "content": result,
+        "model_no_list": []
+    }
 
 
 # 테스트용

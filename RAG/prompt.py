@@ -1,6 +1,18 @@
-from examples import examples
+import sys
+import os
+
+# 현재 스크립트 파일의 절대 경로를 얻습니다.
+script_dir = os.path.dirname(os.path.abspath(__file__))
+
+# 'examples' 디렉토리의 상대 경로를 계산합니다.
+examples_dir = os.path.join(script_dir, 'examples')
+
+# 계산된 경로를 모듈 검색 경로에 추가합니다.
+sys.path.append(examples_dir)
 
 from langchain_core.prompts import FewShotPromptTemplate, PromptTemplate
+
+from examples import examples_main
 
 # 답변 생성용 프롬프트
 answer_prompt = PromptTemplate.from_template(
@@ -43,8 +55,8 @@ SQL query: """
 
 # SQL 생성용 프롬프트
 def sql_prompt(user_input):
-    # 유저 입력과 관련된 예시들과 리스트 형태로 보여줘야 하는지의 여부를 가져옴
-    user_examples, is_list = examples.get_examples(user_input)
+    # 유저 입력과 관련된 예시들과 유저 입력의 타입을 가져옴
+    user_examples, user_input_type = examples_main.get_examples(user_input)
 
     # SQL 생성용 프롬프트 최종
     prompt = FewShotPromptTemplate(
@@ -55,4 +67,11 @@ def sql_prompt(user_input):
         input_variables=["input", "top_k", "table_info"],
     )
 
-    return prompt, is_list
+    return prompt, user_input_type
+
+
+# 테스트 용
+if __name__ == '__main__':
+    prom, user_input_type = sql_prompt("RF85C90D1AP와 RF85C90D2AP의 차이점이 뭐야?")
+
+    print(prom.pretty_print())
