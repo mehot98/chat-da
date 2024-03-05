@@ -1,0 +1,9 @@
+$chatDA-chat-color: #eeeeee;
+$user-chat-color: #6c9bd5;
+$border-color: #3a6da9;
+
+:export {
+  chatDAchatcolor: $chatDA-chat-color;
+  userchatcolor: $chatDA-chat-color;
+  bordercolor: $border-color;
+}
