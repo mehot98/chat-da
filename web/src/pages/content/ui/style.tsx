@@ -1,4 +1,6 @@
-import styled from "styled-components";
+import styled from "@emotion/styled";
+import theme from "@assets/style/theme.module.scss";
+import { Dialog } from "@mui/material";
 
 export const ModalOverlay = styled.div`
   position: fixed;
@@ -25,4 +27,21 @@ export const ModalContent = styled.div`
 export const CloseButton = styled.button`
   top: 10px;
   right: 10px;
+`;
+
+export const ChatMainModal = styled(Dialog)`
+  position: fixed;
+
+  & .MuiBackdrop-root {
+    background-color: transparent;
+  }
+
+  & .MuiDialog-paper {
+    width: 373px;
+    height: 748px;
+    position: fixed;
+    right: 80px;
+    border: 1px solid ${theme.bordercolor};
+    border-radius: 10px;
+  }
 `;
