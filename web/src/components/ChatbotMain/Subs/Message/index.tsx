@@ -1,5 +1,5 @@
 import * as Comp from "@root/src/components";
-import * as S from "./style";
+// import * as S from "./style";
 import { MessageProps } from "@root/src/types";
 import chatDAIconPath from "@root/public/ChatDA_icon_128.png";
 

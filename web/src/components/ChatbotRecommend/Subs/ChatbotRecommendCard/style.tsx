@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from "@emotion/styled";
 import theme from "@assets/style/theme.module.scss";
 
 export const RecommendCardWrapper = styled.div`
