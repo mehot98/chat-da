@@ -1,44 +1,16 @@
-import { useState, ChangeEvent } from "react";
-// import dotenv from 'dotenv';
 import axios from "axios";
-import { useRef } from "react";
-
-
-interface ChatMessage {
-    text: string;
-    sender: "user" | "bot";
-  }
-
-// dotenv.config();
-
+import { useEffect, useState } from "react";
+import MessageList from "./Subs/MessageList";
+import MessageForm from "./Subs/MessageForm";
+import * as S from "./style";
 
 export default function ChatbotMain() {
-  const [messages, setMessages] = useState<ChatMessage[]>([]);
-	const ref = useRef<HTMLInputElement>(null);
-	const [inputText, setInputText] = useState<string>("");
-	const [gptText, setGptText] = useState<string>("");
-	// const openAiKey = process.env.openAiKey;
+    const [ messages, setMessages ] = useState([]);
+    const [ currentTypingId, setCurrentTypingId ] = useState(null);
 
-	// openAiKey발급
-	// const {Configuration, OpenAIApi} = require('openai')
+    const openAiKey='';
 
-	// const configuration = new Configuration({
-	// 	apiKey: process.env.OPENAI_API_KEY,
-	// });
-	// const openai = new OpenAIApi(configuration);
-	const openAiKey='';
-
-
-
-	const handleInputTextOnChange = (e: ChangeEvent<HTMLInputElement>) => {
-		setInputText(e.target.value);
-	}
-
-	const handleGptText = (prompt:string) => {
-		setGptText(prompt)
-	}
-
-	const generateText = async (prompt: string) => {
+    const generateText = async (prompt: string) => {
 		try {
 			const response = await axios.post(
 				"https://api.openai.com/v1/chat/completions",
@@ -71,53 +43,60 @@ export default function ChatbotMain() {
 			    alert("OpenAI 서버에 오류가 발생했습니다.");
 			    setMessages([
 			      ...messages,
-			      { text: inputText, sender: "user" },
+			      { text: prompt, sender: "user" },
 			      { text: "오류가 발생했습니다.", sender: "bot" },
 			    ]);
 			  }
 		};
   };
 
-	async function handleSendMessage() {
-    if (inputText.trim() === "") {
-      return;
-    }
-    const response = await generateText(inputText);
-    // 예외처리
-    if (!response || response === undefined) {
-      setMessages([
-        ...messages,
-        { text: inputText, sender: "user" },
-        { text: "에러가 발생했습니다.", sender: "bot" },
-      ]);
-    } else {
-      setMessages([
-        ...messages,
-        { text: inputText, sender: "user" },
-        { text: response, sender: "bot" },
-      ]);
-    }
-		setGptText(response);
-    setInputText("");
-  }
+    const handleSendMessage = async (message: string) => {
 
-	const handleKeyPress = (e: React.KeyboardEvent) => {
-		if (e.key === "Enter") {
-			handleSendMessage();
-			setInputText("");
-		}
-	}
+        const response = await generateText(message);
 
-	return (
-		<div>
-			<div>
-				<p>GPT's Answer</p>
-				<span>{gptText}</span>
-			</div>
-			<div>
-				<input ref={ref} id="chat" type="text" value={inputText} onChange={handleInputTextOnChange} onKeyDown={handleKeyPress} />
-				<button onClick={() => {handleSendMessage(); setInputText("");}}>send</button>
-			</div>
-		</div>
-	)
+        setMessages((prev) => [
+            ...prev,
+            { text: message, isUser: true },
+            {
+              text: response,
+							isUser: false,
+							isTyping: true,
+							id: Date.now()
+            }
+        ]);
+    };
+
+		const handleEndTyping = (id: number) => {
+			setMessages((prev) => 
+				prev.map((msg) => {
+					msg.id === id ? { ...msg, isTyping: false } : msg
+				})
+			);
+			setCurrentTypingId(null);
+		};
+
+		useEffect(() => {
+			if (currentTypingId === null) {
+				const nextTypingMEssage = messages.find((msg) => {
+					!msg.isUser && msg.isTyping
+				});
+				if (nextTypingMEssage) {
+					setCurrentTypingId(nextTypingMEssage.id);
+				}
+			}
+		}, [messages, currentTypingId]);
+
+		return (
+			<S.ChatBotMainWrapper>
+				<div className="chat-box">
+					<h1>ChatDA</h1>
+					<MessageList 
+						messages={messages} 
+						currentTypingId={currentTypingId} 
+						onEndTyping={handleEndTyping}						
+					/>
+					<MessageForm onSendMessage={handleSendMessage} />
+				</div>
+			</S.ChatBotMainWrapper>
+		)
 }

@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import { styled } from "styled-components";
-import { GptPrac } from "@root/src/component";
+// import GptPrac from "@components/GptPrac";
 import "@assets/style/theme.scss";
-import chatDAIconPath from "../../../../public/ChatDA_icon_128.png";
-import ChatbotMain from "@root/src/component/ChatbotMain";
+import chatDAIconPath from "@root/public/ChatDA_icon_128.png";
+import ChatbotMain from "@components/ChatbotMain";
 
 export default function App() {
   const [isOpenMainModal, setIsOpenMainModal] = useState<boolean>(false);
@@ -50,41 +50,41 @@ export default function App() {
     </>
   );
 }
-        // {/* <div className="">content view</div>
-        // <GptPrac /> */}
-        //   <ChatMainModal open={isOpenMainModal}>
+// {/* <div className="">content view</div>
+// <GptPrac /> */}
+//   <ChatMainModal open={isOpenMainModal}>
 
-        //     <button onClick={() => setIsOpenMainModal(false)}>x</button>
-        //     <div>
-        //       <ChatbotMain />
-        //     </div>
-        //   </ChatMainModal>
+//     <button onClick={() => setIsOpenMainModal(false)}>x</button>
+//     <div>
+//       <ChatbotMain />
+//     </div>
+//   </ChatMainModal>
 
 const ModalOverlay = styled.div`
-position: fixed;
-top: 0;
-left: 0;
-width: 100%;
-height: 100%;
-background-color: rgba(0, 0, 0, 0.5);
-display: flex;
-justify-content: center;
-align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const ModalContentWrapper = styled.div`
-position: relative;
-background-color: white;
-padding: 20px;
+  position: relative;
+  background-color: white;
+  padding: 20px;
 `;
 
 const ModalContent = styled.div`
   position: absolute;
-`
+`;
 
 const CloseButton = styled.button`
-top: 10px;
-right: 10px;
+  top: 10px;
+  right: 10px;
 `;
 
 // const ChatbotMainModalWrapper = styled.div`
