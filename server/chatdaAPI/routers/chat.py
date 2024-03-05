@@ -1,11 +1,10 @@
 from typing import Union
 
-from fastapi import APIRouter, status
+from fastapi import APIRouter, status, HTTPException
 
 import models.dto.chat.ChatResponseDto as response_dto
 import models.dto.chat.ChatRequestDto as request_dto
 import models.exmaple as dump
-
 
 # prefix == chat
 router = APIRouter()
@@ -25,8 +24,8 @@ async def post_chat(
     print(chat_request_dto)
 
     response = None
-    data = dump.recommend_data
-
+    data = dump.compare_data
+    data["type"] = "Sdsds"
     match data["type"]:
         case "INFO":
             response = response_dto.ChatInfoDto(
@@ -35,14 +34,10 @@ async def post_chat(
                 model_no=data["model_list"][0]["제품_코드"]
             )
         case "COMPARE":
-            model_no_list = []
-            for i in data["model_list"]:
-                model_no_list.append(i["제품_코드"])
-
             response = response_dto.ChatCompareDto(
                 type=data["type"],
                 content=data["content"],
-                model_no_list=model_no_list
+                model_no_list=get_model_no_list(data["model_list"])
             )
         case "RECOMMEND":
             model = data["model_list"][0]
@@ -54,6 +49,16 @@ async def post_chat(
                 },
                 model_no=model["제품_코드"]
             )
+        case default:
+            raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=[
+                {
+                    "type": "error",
+                    "msg": "Content error",
+                    "input": {
+                        "content": "string"
+                    }
+                }
+            ])
 
     print(response)
     return response
@@ -71,3 +76,7 @@ async def post_feedback(
 
     print(feedback_request_dto)
     return {"success": True}
+
+
+def get_model_no_list(model_list):
+    return [i["제품_코드"] for i in model_list]
