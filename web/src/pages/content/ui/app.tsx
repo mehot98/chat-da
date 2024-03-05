@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
+import * as S from "./style";
+import "@assets/style/theme.scss";
+import chatDAIconPath from "@root/public/ChatDA_icon_128.png";
+import ChatbotMain from "@components/ChatbotMain";
 import styled from "@emotion/styled";
 import theme from "@assets/style/theme.module.scss";
 
 import { Dialog } from "@mui/material";
-
-import chatDAIconPath from "../../../../public/ChatDA_icon_128.png";
 
 export default function App() {
   const [isOpenMainModal, setIsOpenMainModal] = useState<boolean>(false);
@@ -46,6 +48,18 @@ export default function App() {
 
   return (
     <>
+      {isOpenMainModal && (
+        <S.ModalOverlay>
+          <S.ModalContentWrapper>
+            <S.ModalContent>
+              <S.CloseButton className="close-button" onClick={() => setIsOpenMainModal(false)}>
+                x
+              </S.CloseButton>
+              <ChatbotMain />
+            </S.ModalContent>
+          </S.ModalContentWrapper>
+        </S.ModalOverlay>
+      )}
       <ChatMainModal open={isOpenMainModal} onClose={handleCloseMainModal} disableScrollLock={true}>
         <button onClick={handleCloseMainModal}>x</button>
       </ChatMainModal>
