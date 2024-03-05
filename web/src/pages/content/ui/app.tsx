@@ -1,8 +1,7 @@
 import { useState, useEffect } from "react";
 import * as S from "./style";
-import "@assets/style/theme.scss";
 import chatDAIconPath from "@root/public/ChatDA_icon_128.png";
-import ChatbotMain from "@components/ChatbotMain";
+import { ChatbotMain } from "@root/src/components";
 import styled from "@emotion/styled";
 import theme from "@assets/style/theme.module.scss";
 
