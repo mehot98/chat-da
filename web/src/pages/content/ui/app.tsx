@@ -1,12 +1,9 @@
 import { useState, useEffect } from "react";
 import * as S from "./style";
-import "@assets/style/theme.scss";
 import chatDAIconPath from "@root/public/ChatDA_icon_128.png";
 import ChatbotMain from "@components/ChatbotMain";
-import styled from "@emotion/styled";
-import theme from "@assets/style/theme.module.scss";
 
-import { Dialog } from "@mui/material";
+import { StyledEngineProvider } from "@mui/material/styles";
 
 export default function App() {
   const [isOpenMainModal, setIsOpenMainModal] = useState<boolean>(false);
@@ -60,27 +57,16 @@ export default function App() {
           </S.ModalContentWrapper>
         </S.ModalOverlay>
       )}
-      <ChatMainModal open={isOpenMainModal} onClose={handleCloseMainModal} disableScrollLock={true}>
-        <button onClick={handleCloseMainModal}>x</button>
-      </ChatMainModal>
+      {/* mui component를 사용하는 경우 아래와 같이 StyledEngineProvider를 반드시 사용해야 합니다!*/}
+      <StyledEngineProvider injectFirst>
+        <S.ChatMainModal
+          open={isOpenMainModal}
+          onClose={handleCloseMainModal}
+          disableScrollLock={true}
+        >
+          <button onClick={handleCloseMainModal}>x</button>
+        </S.ChatMainModal>
+      </StyledEngineProvider>
     </>
   );
 }
-
-const ChatMainModal = styled(Dialog)`
-  position: fixed;
-  right: 100px;
-
-  & .MuiBackdrop-root {
-    background-color: transparent;
-  }
-
-  & .MuiDialog-paper {
-    width: 373px;
-    height: 748px;
-    position: fixed;
-    right: 80px;
-    border: 1px solid ${theme.bordercolor};
-    border-radius: 10px;
-  }
-`;

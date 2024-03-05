@@ -1,12 +1,12 @@
 import { createRoot } from "react-dom/client";
 import App from "@pages/content/ui/app";
 import refreshOnUpdate from "virtual:reload-on-update-in-view";
-import { StyleSheetManager } from "styled-components";
+import EmotionCacheProvider from "@pages/content/ui/EmotionCacheProvider";
 
 refreshOnUpdate("pages/content");
 
 const root = document.createElement("div");
-root.id = "chrome-extension-boilerplate-react-vite-content-view-root";
+root.id = "chrome-extension-content-view-root";
 
 document.body.append(root);
 
@@ -16,13 +16,10 @@ rootIntoShadow.id = "shadow-root";
 const shadowRoot = root.attachShadow({ mode: "open" });
 shadowRoot.appendChild(rootIntoShadow);
 
-const styleElement = document.createElement("style");
-shadowRoot.appendChild(styleElement);
-
 createRoot(rootIntoShadow).render(
   <>
-    <StyleSheetManager target={styleElement}>
+    <EmotionCacheProvider rootId={root.id}>
       <App />
-    </StyleSheetManager>
+    </EmotionCacheProvider>
   </>,
 );

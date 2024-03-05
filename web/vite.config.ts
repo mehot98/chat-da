@@ -18,7 +18,7 @@ export default defineConfig({
       "@src": srcDir,
       "@assets": resolve(srcDir, "assets"),
       "@pages": pagesDir,
-      "@components": resolve(srcDir, "components")
+      "@components": resolve(srcDir, "components"),
     },
   },
   plugins: [...getPlugins(isDev), react()],
@@ -49,6 +49,12 @@ export default defineConfig({
             name === "contentStyle" ? `${name}${getCacheInvalidationKey()}` : name;
           return `assets/[ext]/${assetFileName}.chunk.[ext]`;
         },
+      },
+      onwarn(warning, warn) {
+        if (warning.code === "MODULE_LEVEL_DIRECTIVE" && warning.message.includes(`"use client"`)) {
+          return;
+        }
+        warn(warning);
       },
     },
   },
