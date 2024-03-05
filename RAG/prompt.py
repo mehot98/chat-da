@@ -25,32 +25,50 @@ Answer: """
 )
 
 # SQL 생성용 프롬프트 초반
-# from langchain.chains.sql_database.prompt import SQL_PROMPTS
-mysql_prompt_prefix = """You are a MySQL expert. Given an input question, first create a syntactically correct MySQL query to run, then look at the results of the query and return the answer to the input question.
-Unless the user specifies in the question a specific number of examples to obtain, query for at most {top_k} results using the LIMIT clause as per MySQL. You can order the results to return the most informative data in the database.
-Never query for all columns from a table. You must query only the columns that are needed to answer the question. Wrap each column name in backticks (`) to denote them as delimited identifiers.
-Pay attention to use only the column names you can see in the tables below. Be careful to not query for columns that do not exist. Also, pay attention to which column is in which table.
-Pay attention to use CURDATE() function to get the current date, if the question involves "today".
+from langchain.chains.sql_database.prompt import SQL_PROMPTS
+mysql_prompt_prefix = """You are a MySQL expert.
+Given an input question, You will always create 2 MySQL queries. 
+Firstly, create a syntactically correct MySQL query to run only with using the following tables that i will give you below.
+Pay attention to use only the column names you can see in the tables below.
 
-Only use the following tables:
+Only use the following tables for the first MySQL query:
 {table_info}
+
+And secondly, create a syntactically correct MySQL query to run like the first one.
+But in this case you will join more tables.
+You will only need table's names to join and the column to join with the main table
+
+Here is the additional table names to join:
+[`냉장고_추가정보`,`리뷰_정보`,`제품_정보`,`할인_정보`]
+
+And here is the standard column name to join:
+`제품_코드`
+
+Separate first query and second query using two line breakings like `\\n\\n`
+You can order the results to return the most informative data in the database.
+Always query for all columns from a table using * after SELECT.
+Unless the user specifies in the question a specific number of examples to obtain,
+query for at most {top_k} results using the LIMIT clause as per MySQL
+Wrap each column name in backticks (`) to denote them as delimited identifiers.
+Be careful to not query for columns that do not exist.
+Also, pay attention to which column is in which table.
 
 Use the following format:
 
 User input: User input here
-SQL query: SQL Query to run
+SQLquery: First SQL Query to run
+Second SQL Query to run
 
 Below are a number of examples of questions and their corresponding SQL queries."""
 
 # SQL 예시 프롬프트
 example_prompt = PromptTemplate.from_template(
     """User input: {input}
-SQL query: {query}"""
+SQLquery: {query}"""
 )
 
 # SQL 생성용 프롬프트 후반
-mysql_prompt_suffix = """User input: {input}
-SQL query: """
+mysql_prompt_suffix = """User input: {input}"""
 
 
 # SQL 생성용 프롬프트
@@ -64,7 +82,7 @@ def sql_prompt(user_input):
         example_prompt=example_prompt,
         prefix=mysql_prompt_prefix,
         suffix=mysql_prompt_suffix,
-        input_variables=["input", "top_k", "table_info"],
+        input_variables=["input", "table_info", "top_k"],
     )
 
     return prompt, user_input_type

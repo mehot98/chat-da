@@ -22,11 +22,12 @@ persist_directory = "./chroma_db"
 make_new_vectorDB = True
 
 # 디렉토리 존재 여부 확인
-if not os.path.exists(persist_directory) or make_new_vectorDB:
+if make_new_vectorDB or not os.path.exists(persist_directory):
     # 저장된 DB가 존재하지 않는다면 데이터로부터 vector DB 생성
 
     # 기존 데이터 삭제
-    shutil.rmtree(persist_directory)
+    if make_new_vectorDB and os.path.exists(persist_directory):
+        shutil.rmtree(persist_directory)
 
     # SQL 예시들
     examples = examples_compare.examples
