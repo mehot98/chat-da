@@ -1,6 +1,9 @@
 import { useState, useEffect } from "react";
-import { styled } from "styled-components";
-import "@assets/style/theme.scss";
+import styled from "@emotion/styled";
+import theme from "@assets/style/theme.module.scss";
+
+import { Dialog } from "@mui/material";
+
 import chatDAIconPath from "../../../../public/ChatDA_icon_128.png";
 
 export default function App() {
@@ -9,6 +12,10 @@ export default function App() {
   useEffect(() => {
     console.log("content view loaded");
   }, []);
+
+  useEffect(() => {
+    document.body.style.overflowY = "scroll";
+  }, [isOpenMainModal]);
 
   // Find existing chatbot icon, and insert chatda icon
   const existingChatbotIcon: Element = document.getElementsByClassName("menu01")[0];
@@ -23,6 +30,7 @@ export default function App() {
     chatDAIcon.style.zIndex = "100";
     chatDAIcon.style.cursor = "pointer";
 
+    // When click chatDAIcon, the dialog open
     chatDAIcon.onclick = (e: MouseEvent) => {
       console.log(e);
       setIsOpenMainModal(true);
@@ -32,23 +40,33 @@ export default function App() {
     existingChatbotIcon.prepend(chatDAIcon);
   }
 
-  // When click chatDAIcon, the dialog open
+  const handleCloseMainModal: () => void = () => {
+    setIsOpenMainModal(false);
+  };
+
   return (
     <>
-      <div className="">content view</div>
-
-      <ChatMainModal open={isOpenMainModal}>
-        <button onClick={() => setIsOpenMainModal(false)}>x</button>
+      <ChatMainModal open={isOpenMainModal} onClose={handleCloseMainModal} disableScrollLock={true}>
+        <button onClick={handleCloseMainModal}>x</button>
       </ChatMainModal>
     </>
   );
 }
 
-const ChatMainModal = styled.dialog`
-  width: 373px;
-  height: 748px;
+const ChatMainModal = styled(Dialog)`
   position: fixed;
   right: 100px;
-  background-color: white;
-  border: 1px solid var(--border-color);
+
+  & .MuiBackdrop-root {
+    background-color: transparent;
+  }
+
+  & .MuiDialog-paper {
+    width: 373px;
+    height: 748px;
+    position: fixed;
+    right: 80px;
+    border: 1px solid ${theme.bordercolor};
+    border-radius: 10px;
+  }
 `;
