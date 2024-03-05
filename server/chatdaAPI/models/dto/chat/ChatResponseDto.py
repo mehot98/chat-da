@@ -46,4 +46,4 @@ class ChatRecommendDto(CamelModel):
     """
     type: str
     content: ChatContent
-    model_no_list: List[str]
+    model_no: str

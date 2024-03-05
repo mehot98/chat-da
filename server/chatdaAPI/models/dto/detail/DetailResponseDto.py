@@ -1,5 +1,5 @@
 from models.CamelModel import CamelModel
-from models.entity.spec.Spec import DetailSpecDto
+from models.dto.Spec import DetailSpecDto
 
 
 class DetailResponseDto(CamelModel):

@@ -4,6 +4,8 @@ from fastapi import APIRouter, status
 
 import models.dto.chat.ChatResponseDto as response_dto
 import models.dto.chat.ChatRequestDto as request_dto
+import models.exmaple as dump
+
 
 # prefix == chat
 router = APIRouter()
@@ -22,39 +24,39 @@ async def post_chat(
 
     print(chat_request_dto)
 
-    info_response = response_dto.ChatInfoDto(
-        type="info",
-        content="A 제품은 ~~~하고 ~~해여",
-        model_no="RF85C9101AP"
-    )
+    response = None
+    data = dump.recommend_data
 
-    compare_response = response_dto.ChatCompareDto(**{
-        "type": "compare",
-        "content": "A 제품이 B 제품보다 ...",
-        "model_no_list": [
-            "RF84C906B4W",
-            "RF85C9101AP"
-        ]
-    })
+    match data["type"]:
+        case "INFO":
+            response = response_dto.ChatInfoDto(
+                type=data["type"],
+                content=data["content"],
+                model_no=data["model_list"][0]["제품_코드"]
+            )
+        case "COMPARE":
+            model_no_list = []
+            for i in data["model_list"]:
+                model_no_list.append(i["제품_코드"])
 
-    recommend_response = response_dto.ChatRecommendDto(**{
-        "type": "recommend",
-        "content": {
-            "message": "이 제품은 어떠세요?",
-            "spec": {
-                "제품_코드": "RF84C906B4W",
-                "제품명": "BESPOKE 냉장고 4도어 875 L",
-                "가격": "2340000",
-                "혜택가": "1490000",
-                "image_url": "https://images.samsung.com/kdp/goods/2023/11/16/a7b8d6bb-7665-4a69-bd14-6ac97871746b.png"
-            }
-        },
-        "model_no_list": [
-            "RF84C906B4W"
-        ]
-    })
-    print(info_response)
-    return info_response
+            response = response_dto.ChatCompareDto(
+                type=data["type"],
+                content=data["content"],
+                model_no_list=model_no_list
+            )
+        case "RECOMMEND":
+            model = data["model_list"][0]
+            response = response_dto.ChatRecommendDto(
+                type=data["type"],
+                content={
+                    "message": data["content"],
+                    "spec": model
+                },
+                model_no=model["제품_코드"]
+            )
+
+    print(response)
+    return response
 
 
 @router.post("/feedback", status_code=status.HTTP_201_CREATED)
