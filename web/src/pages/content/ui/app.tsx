@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
-import { styled } from "styled-components";
-import { GptPrac } from "@root/src/component";
+import * as S from "./style";
 import "@assets/style/theme.scss";
 import chatDAIconPath from "../../../../public/ChatDA_icon_128.png";
 import ChatbotMain from "@root/src/component/ChatbotMain";
@@ -38,64 +37,17 @@ export default function App() {
   return (
     <>
       {isOpenMainModal && (
-        <ModalOverlay>
-          <ModalContentWrapper>
-            <ModalContent>
-              <CloseButton onClick={() => setIsOpenMainModal(false)}>x</CloseButton>
+        <S.ModalOverlay>
+          <S.ModalContentWrapper>
+            <S.ModalContent>
+              <S.CloseButton className="close-button" onClick={() => setIsOpenMainModal(false)}>
+                x
+              </S.CloseButton>
               <ChatbotMain />
-            </ModalContent>
-          </ModalContentWrapper>
-        </ModalOverlay>
+            </S.ModalContent>
+          </S.ModalContentWrapper>
+        </S.ModalOverlay>
       )}
     </>
   );
 }
-        // {/* <div className="">content view</div>
-        // <GptPrac /> */}
-        //   <ChatMainModal open={isOpenMainModal}>
-
-        //     <button onClick={() => setIsOpenMainModal(false)}>x</button>
-        //     <div>
-        //       <ChatbotMain />
-        //     </div>
-        //   </ChatMainModal>
-
-const ModalOverlay = styled.div`
-position: fixed;
-top: 0;
-left: 0;
-width: 100%;
-height: 100%;
-background-color: rgba(0, 0, 0, 0.5);
-display: flex;
-justify-content: center;
-align-items: center;
-`;
-
-const ModalContentWrapper = styled.div`
-position: relative;
-background-color: white;
-padding: 20px;
-`;
-
-const ModalContent = styled.div`
-  position: absolute;
-`
-
-const CloseButton = styled.button`
-top: 10px;
-right: 10px;
-`;
-
-// const ChatbotMainModalWrapper = styled.div`
-//   position: relative;
-// `;
-
-// const ChatMainModal = styled.dialog`
-//   width: 373px;
-//   height: 748px;
-//   position: absolute;
-//   right: 100px;
-//   background-color: white;
-//   border: 1px solid var(--border-color);
-// `;

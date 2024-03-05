@@ -1,6 +1,5 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const ChatBotMainWrapper = styled.div`
-  background-color: black;
-
+  background-color: white;
 `;
