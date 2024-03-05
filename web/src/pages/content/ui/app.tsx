@@ -2,21 +2,16 @@ import { useState, useEffect } from "react";
 import * as S from "./style";
 import chatDAIconPath from "@root/public/ChatDA_icon_128.png";
 import * as Comp from "@root/src/components";
-import styled from "@emotion/styled";
-import theme from "@assets/style/theme.module.scss";
 
 import { StyledEngineProvider } from "@mui/material/styles";
 
 export default function App() {
   const [isOpenMainModal, setIsOpenMainModal] = useState<boolean>(false);
+  const [isOpenExpandModal, setIsOpenExpandModal] = useState<boolean>(false);
 
   useEffect(() => {
     console.log("content view loaded");
   }, []);
-
-  useEffect(() => {
-    document.body.style.overflowY = "scroll";
-  }, [isOpenMainModal]);
 
   // Find existing chatbot icon, and insert chatda icon
   const existingChatbotIcon: Element = document.getElementsByClassName("menu01")[0];
@@ -45,6 +40,10 @@ export default function App() {
     setIsOpenMainModal(false);
   };
 
+  const handleCloseExpandModal: () => void = () => {
+    setIsOpenExpandModal(false);
+  };
+
   return (
     <>
       {isOpenMainModal && (
@@ -61,12 +60,22 @@ export default function App() {
       )}
       {/* mui component를 사용하는 경우 아래와 같이 StyledEngineProvider를 반드시 사용해야 합니다!*/}
       <StyledEngineProvider injectFirst>
+        <S.ChatExpandModal
+          open={isOpenExpandModal}
+          onClose={handleCloseExpandModal}
+          disableScrollLock={true}
+        >
+          확장모달입니당
+          <button onClick={handleCloseExpandModal}>확장 모달 닫기</button>
+        </S.ChatExpandModal>
+
         <S.ChatMainModal
           open={isOpenMainModal}
           onClose={handleCloseMainModal}
           disableScrollLock={true}
         >
           <button onClick={handleCloseMainModal}>x</button>
+          <button onClick={() => setIsOpenExpandModal(true)}>확장 모달 열기</button>
         </S.ChatMainModal>
       </StyledEngineProvider>
     </>

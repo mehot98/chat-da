@@ -43,6 +43,15 @@ export const ChatMainModal = styled(Dialog)`
     position: fixed;
     right: 80px;
     border: 1px solid ${theme.bordercolor};
-    border-radius: 10px;
+    border-radius: 15px;
+  }
+`;
+
+export const ChatExpandModal = styled(ChatMainModal)`
+  z-index: 1299;
+
+  & .MuiDialog-paper {
+    width: 1014px;
+    height: 748px;
   }
 `;
