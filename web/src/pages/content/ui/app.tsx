@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import * as S from "./style";
 import "@assets/style/theme.scss";
-import chatDAIconPath from "../../../../public/ChatDA_icon_128.png";
-import ChatbotMain from "@root/src/component/ChatbotMain";
+import chatDAIconPath from "@root/public/ChatDA_icon_128.png";
+import ChatbotMain from "@components/ChatbotMain";
 
 export default function App() {
   const [isOpenMainModal, setIsOpenMainModal] = useState<boolean>(false);
