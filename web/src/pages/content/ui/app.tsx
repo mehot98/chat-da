@@ -59,9 +59,9 @@ export default function App() {
           </S.ModalContentWrapper>
         </S.ModalOverlay>
       )}
-      <ChatMainModal open={isOpenMainModal} onClose={handleCloseMainModal} disableScrollLock={true}>
+      {/* <ChatMainModal open={isOpenMainModal} onClose={handleCloseMainModal} disableScrollLock={true}>
         <button onClick={handleCloseMainModal}>x</button>
-      </ChatMainModal>
+      </ChatMainModal> */}
     </>
   );
 }

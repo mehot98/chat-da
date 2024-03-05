@@ -1,5 +1,5 @@
 import GptPrac from "./GptPrac";
 import ChatbotMain from "./ChatbotMain";
-import ChatbotRecommendCard from "./ChatbotRecommend/Subs/ChatbotRecommendCard";
+import ChatbotRecommend from "./ChatbotRecommend";
 
-export { GptPrac, ChatbotMain, ChatbotRecommendCard };
+export { GptPrac, ChatbotMain, ChatbotRecommend };

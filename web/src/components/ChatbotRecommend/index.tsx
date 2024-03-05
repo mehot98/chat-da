@@ -1,15 +1,15 @@
 import { ChatbotRecommendCardProps } from "@root/src/types";
-import ChatbotRecommendCard from "./Subs/ChatbotRecommendCard";
+import * as Sub from "./Subs";
 import * as S from "./style";
 
-export default function ChatbotRecommend(props: ChatbotRecommendCardProps, message: string) {
+export default function ChatbotRecommend(props: ChatbotRecommendCardProps) {
   return (
     <S.RecommendWrapper>
       <S.RecommendMessageWrapper>
-        <span>{message}</span>
+        <span>{props.message}</span>
       </S.RecommendMessageWrapper>
       <S.RecommendCardWrapper>
-        <ChatbotRecommendCard {...props} />
+        <Sub.ChatbotRecommendCard {...props} />
       </S.RecommendCardWrapper>
       <S.RecommendCardButtonWrapper>
         <span>이 제품이...</span>

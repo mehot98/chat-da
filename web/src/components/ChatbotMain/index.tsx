@@ -1,14 +1,13 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import MessageList from "./Subs/MessageList";
-import MessageForm from "./Subs/MessageForm";
+import * as Sub from "./Subs";
 import * as S from "./style";
 
 export default function ChatbotMain() {
   const [messages, setMessages] = useState([]);
   const [currentTypingId, setCurrentTypingId] = useState(null);
 
-  const openAiKey = "";
+  const openAiKey = "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";
 
   const generateText = async (prompt: string) => {
     try {
@@ -76,11 +75,11 @@ export default function ChatbotMain() {
 
   useEffect(() => {
     if (currentTypingId === null) {
-      const nextTypingMEssage = messages.find((msg) => {
+      const nextTypingMessage = messages.find((msg) => {
         !msg.isUser && msg.isTyping;
       });
-      if (nextTypingMEssage) {
-        setCurrentTypingId(nextTypingMEssage.id);
+      if (nextTypingMessage) {
+        setCurrentTypingId(nextTypingMessage.id);
       }
     }
   }, [messages, currentTypingId]);
@@ -89,12 +88,12 @@ export default function ChatbotMain() {
     <S.ChatBotMainWrapper>
       <div className="chat-box">
         <h1>ChatDA</h1>
-        <MessageList
+        <Sub.MessageList
           messages={messages}
           currentTypingId={currentTypingId}
           onEndTyping={handleEndTyping}
         />
-        <MessageForm onSendMessage={handleSendMessage} />
+        <Sub.MessageForm onSendMessage={handleSendMessage} />
       </div>
     </S.ChatBotMainWrapper>
   );
