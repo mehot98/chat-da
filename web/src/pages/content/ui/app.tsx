@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
 import * as S from "./style";
 import chatDAIconPath from "@root/public/ChatDA_icon_128.png";
-import ChatbotMain from "@components/ChatbotMain";
+import * as Comp from "@root/src/components";
+import styled from "@emotion/styled";
+import theme from "@assets/style/theme.module.scss";
 
 import { StyledEngineProvider } from "@mui/material/styles";
 
@@ -52,7 +54,7 @@ export default function App() {
               <S.CloseButton className="close-button" onClick={() => setIsOpenMainModal(false)}>
                 x
               </S.CloseButton>
-              <ChatbotMain />
+              <Comp.ChatbotMain />
             </S.ModalContent>
           </S.ModalContentWrapper>
         </S.ModalOverlay>
