@@ -1,12 +1,13 @@
 import { useState } from "react";
-// import nextIconPath from "@root/public/next_icon.png";
+import * as S from "./style";
 
 const nextIconPath = "icons/next_icon.png";
 
-export default function MessageForm({ onSendMessage }) {
+export default function MessageForm({ onSendMessage }: {onSendMessage: (message: string) => Promise<void>}) {
   const nextIcon = chrome.runtime.getURL(nextIconPath);
 
   const [message, setMessage] = useState("");
+  const [focused, setFocused] = useState(false);
 
   const handleSubmit = (
     event: React.FormEvent<HTMLFormElement> | React.KeyboardEvent<HTMLTextAreaElement>,
@@ -25,16 +26,25 @@ export default function MessageForm({ onSendMessage }) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="message-form">
-      <textarea
+    <S.InputForm onSubmit={handleSubmit} className="message-form">
+      <S.InputWrapper>
+      <S.InputPlaceholder isEmpty={!message} isFocused={focused}>
+        <span>
+        궁금한 점이 있으신가요?
+        </span>
+      </S.InputPlaceholder>
+      <S.InputTextarea
         value={message}
         onChange={(event) => setMessage(event.target.value)}
         onKeyDown={handleEnterSubmit}
         className="message-input"
+        onFocus={()=>setFocused(true)}
+        onBlur={()=>setFocused(false)}
       />
-      <button type="submit" className="send-button">
+      </S.InputWrapper>
+      <S.SubmitButton type="submit" className="send-button">
         <img src={nextIcon} alt="next-icon" width={23} height={23} />
-      </button>
-    </form>
+      </S.SubmitButton>
+    </S.InputForm>
   );
 }

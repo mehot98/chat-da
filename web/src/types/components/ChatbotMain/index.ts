@@ -1,3 +1,13 @@
+export interface MsgProps {
+  text?: string;
+  sender?: "user" | "bot";
+  isUser?: boolean;
+  isTyping?: boolean;
+  id?: number;
+}
+
+export interface MessagesProps extends Array<MsgProps> {}
+
 export interface MessageProps {
   text: string;
   isUser: boolean;
@@ -23,4 +33,9 @@ export interface MessageProps {
   reviewCount?: string;
   rating?: string;
   imageUrl?: string;
+}
+
+export interface MessageListProps {
+  messages: MessagesProps;
+  currentTypingId: number;
 }

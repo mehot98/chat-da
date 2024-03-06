@@ -2,7 +2,7 @@ import Message from "../Message";
 import * as T from "@root/src/types";
 import * as S from "./style";
 
-export default function MessageList({ messages, currentTypingId, onEndTyping }) {
+export default function MessageList({ messages, currentTypingId }: { messages: T.MessagesProps, currentTypingId: number}) {
   return (
     <S.MessageListWrapper>
       {messages.map((message: T.MessageProps, index: number) => (

@@ -60,18 +60,6 @@ export default function App() {
 
   return (
     <>
-      {/* {isOpenMainModal && (
-        <S.ModalOverlay>
-          <S.ModalContentWrapper>
-            <S.ModalContent>
-              <S.CloseButton className="close-button" onClick={() => setIsOpenMainModal(false)}>
-                x
-              </S.CloseButton>
-              <Comp.ChatbotMain />
-            </S.ModalContent>
-          </S.ModalContentWrapper>
-        </S.ModalOverlay>
-      )} */}
       {/* mui component를 사용하는 경우 아래와 같이 StyledEngineProvider를 반드시 사용해야 합니다!*/}
       <StyledEngineProvider injectFirst>
         <S.ChatExpandModal
