@@ -4,7 +4,7 @@ from fastapi import APIRouter, status, HTTPException
 
 import models.dto.chat.ChatResponseDto as response_dto
 import models.dto.chat.ChatRequestDto as request_dto
-import models.exmaple as dump
+import models.exmaple_chat as dump
 
 # prefix == chat
 router = APIRouter()
@@ -24,22 +24,24 @@ async def post_chat(
     print(chat_request_dto)
 
     response = None
-    data = dump.compare_data
-    data["type"] = "Sdsds"
+    data = {"type": chat_request_dto.content}
     match data["type"]:
         case "INFO":
+            data = dump.info_data
             response = response_dto.ChatInfoDto(
                 type=data["type"],
                 content=data["content"],
                 model_no=data["model_list"][0]["제품_코드"]
             )
         case "COMPARE":
+            data = dump.compare_data
             response = response_dto.ChatCompareDto(
                 type=data["type"],
                 content=data["content"],
                 model_no_list=get_model_no_list(data["model_list"])
             )
         case "RECOMMEND":
+            data = dump.recommend_data
             model = data["model_list"][0]
             response = response_dto.ChatRecommendDto(
                 type=data["type"],

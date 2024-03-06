@@ -6,7 +6,12 @@
   <component name="ChangeListManager">
     <list default="true" id="c583271c-cb10-418d-997a-99bff2e2c283" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/dto/Spec.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/dto/Spec.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/exmaple.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/exmaple_chat.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routers/chat.py" beforeDir="false" afterPath="$PROJECT_DIR$/routers/chat.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routers/compare.py" beforeDir="false" afterPath="$PROJECT_DIR$/routers/compare.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routers/detail.py" beforeDir="false" afterPath="$PROJECT_DIR$/routers/detail.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -23,6 +28,9 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
   </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 3
 }</component>
@@ -31,19 +39,21 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Python.chat.executor&quot;: &quot;Run&quot;,
-    &quot;Python.main.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;feature/be/server&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/SSAFY/Desktop/RAG/S10P21S004/RAG&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Python.CamelModel.executor": "Run",
+    "Python.chat.executor": "Run",
+    "Python.main.executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "feature/be/server",
+    "last_opened_file_path": "C:/Users/SSAFY/Desktop/새 폴더/S10P21S004/server/chatdaAPI/models",
+    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\SSAFY\Desktop\새 폴더\S10P21S004\server\chatdaAPI\models" />
       <recent name="C:\Users\SSAFY\Desktop\새 폴더\S10P21S004\server\chatdaAPI\routers" />
       <recent name="C:\Users\Dachan\Desktop\ChatDA\S10P21S004\server\chatdaAPI\routers" />
       <recent name="C:\Users\Dachan\Desktop\ChatDA\S10P21S004\server\chatdaAPI\models\response" />
@@ -91,6 +101,11 @@
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/routers/summary.py</url>
           <option name="timeStamp" value="2" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" log-message="true" suspend="NONE" type="python-line">
+          <url>file://$PROJECT_DIR$/models/exmaple_chat.py</url>
+          <line>76</line>
+          <option name="timeStamp" value="3" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
