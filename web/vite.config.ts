@@ -18,6 +18,7 @@ export default defineConfig({
       "@src": srcDir,
       "@assets": resolve(srcDir, "assets"),
       "@pages": pagesDir,
+      "@components": resolve(srcDir, "components"),
     },
   },
   plugins: [...getPlugins(isDev), react()],
@@ -35,7 +36,7 @@ export default defineConfig({
         contentInjected: resolve(pagesDir, "content", "injected", "index.ts"),
         contentUI: resolve(pagesDir, "content", "ui", "index.ts"),
         background: resolve(pagesDir, "background", "index.ts"),
-        contentStyle: resolve(pagesDir, "content", "style.scss"),
+        // contentStyle: resolve(pagesDir, "content", "style.scss"),
         popup: resolve(pagesDir, "popup", "index.html"),
         sidepanel: resolve(pagesDir, "sidepanel", "index.html"),
       },
@@ -48,6 +49,12 @@ export default defineConfig({
             name === "contentStyle" ? `${name}${getCacheInvalidationKey()}` : name;
           return `assets/[ext]/${assetFileName}.chunk.[ext]`;
         },
+      },
+      onwarn(warning, warn) {
+        if (warning.code === "MODULE_LEVEL_DIRECTIVE" && warning.message.includes(`"use client"`)) {
+          return;
+        }
+        warn(warning);
       },
     },
   },
