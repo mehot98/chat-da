@@ -31,19 +31,24 @@ export const CloseButton = styled.button`
 `;
 
 export const ChatMainModal = styled(Dialog)`
-  position: fixed;
+  width: 0;
+  height: 100vh;
 
   & .MuiBackdrop-root {
-    background-color: transparent;
+    display: none;
   }
 
   & .MuiDialog-paper {
-    width: 373px;
-    height: 748px;
+    max-width: none;
+    max-height: none;
+    width: 350px;
+    height: 600px;
     position: fixed;
-    right: 80px;
-    border: 1px solid ${theme.bordercolor};
+    right: 120px;
+    border: 2px solid ${theme.bordercolor};
     border-radius: 15px;
+    margin: 0;
+    z-index: 1300;
   }
 `;
 
@@ -52,6 +57,15 @@ export const ChatExpandModal = styled(ChatMainModal)`
 
   & .MuiDialog-paper {
     width: 1014px;
-    height: 748px;
+    z-index: 1299;
   }
+`;
+
+export const ChatModalBackdrop = styled.div<{ open: boolean }>`
+  ${(props) => (props.open ? "position: fixed" : "display: none")};
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1200;
 `;

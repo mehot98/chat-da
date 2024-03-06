@@ -44,6 +44,11 @@ export default function App() {
     setIsOpenExpandModal(false);
   };
 
+  const handleClickBackdrop: () => void = () => {
+    handleCloseMainModal();
+    handleCloseExpandModal();
+  };
+
   return (
     <>
       {isOpenMainModal && (
@@ -78,6 +83,12 @@ export default function App() {
           <button onClick={() => setIsOpenExpandModal(true)}>확장 모달 열기</button>
         </S.ChatMainModal>
       </StyledEngineProvider>
+
+      <S.ChatModalBackdrop
+        className="backdrop"
+        onClick={handleClickBackdrop}
+        open={isOpenMainModal}
+      />
     </>
   );
 }
