@@ -2,12 +2,13 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import * as Sub from "./Subs";
 import * as S from "./style";
+import * as T from "@root/src/types";
 
 export default function ChatbotMain() {
-  const [messages, setMessages] = useState([]);
-  const [currentTypingId, setCurrentTypingId] = useState(null);
+  const [messages, setMessages] = useState<T.MessagesProps>([]);
+  const [currentTypingId, setCurrentTypingId] = useState<number | null>(null);
 
-  const openAiKey = "";
+  const openAiKey = "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";
 
   const generateText = async (prompt: string) => {
     try {
@@ -64,14 +65,14 @@ export default function ChatbotMain() {
     ]);
   };
 
-  const handleEndTyping = (id: number) => {
-    setMessages((prev) =>
-      prev.map((msg) => {
-        msg.id === id ? { ...msg, isTyping: false } : msg;
-      }),
-    );
-    setCurrentTypingId(null);
-  };
+  // const handleEndTyping: (id: number) => void = (id: number) => {
+  //   setMessages((prev: T.MessagesProps) =>
+  //     prev.map((msg) => {
+  //       return msg.id === id ? { ...msg, isTyping: false } : msg;
+  //     }),
+  //   );
+  //   setCurrentTypingId(null);
+  // };
 
   useEffect(() => {
     if (currentTypingId === null) {
@@ -90,7 +91,6 @@ export default function ChatbotMain() {
         <Sub.MessageList
           messages={messages}
           currentTypingId={currentTypingId}
-          onEndTyping={handleEndTyping}
         />
       </S.ChatMessageWrapper>
       <S.ChatInputWrapper>

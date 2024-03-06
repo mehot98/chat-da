@@ -8,7 +8,9 @@ export default function Message(props: MessageProps) {
   if (props.isUser) {
     return (
       <S.UserMessageWrapper>
+        <div>
         <p>{props.text}</p>
+        </div>
       </S.UserMessageWrapper>
     );
   } else {

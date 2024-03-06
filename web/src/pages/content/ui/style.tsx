@@ -2,34 +2,6 @@ import styled from "@emotion/styled";
 import theme from "@assets/style/theme.module.scss";
 import { Dialog } from "@mui/material";
 
-// export const ModalOverlay = styled.div`
-//   position: fixed;
-//   top: 100px;
-//   left: 300px;
-//   width: 374px;
-//   height: 500px;
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-//   font-size: 14px;
-//   z-index: 999;
-// `;
-
-// export const ModalContentWrapper = styled.div`
-//   /* position: relative; */
-//   /* padding: 20px; */
-// `;
-
-// export const ModalContent = styled.div`
-//   /* position: absolute; */
-//   background-color: white;
-// `;
-
-// export const CloseButton = styled.button`
-//   /* top: 10px;
-//   right: 10px; */
-// `;
-
 export const ChatMainModal = styled(Dialog)`
   width: 0;
   height: 100vh;
@@ -99,6 +71,7 @@ export const HeaderWords = styled.div`
 export const IconWrapper = styled.div`
   display: flex;
   flex-direction: column;
+  gap: 10px;
   font-size: 10px;
   font-weight: bold;
   color: white;
