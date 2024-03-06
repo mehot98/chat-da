@@ -1,15 +1,3 @@
-import sys
-import os
-
-# 현재 스크립트 파일의 절대 경로를 얻습니다.
-script_dir = os.path.dirname(os.path.abspath(__file__))
-
-# 'examples' 디렉토리의 상대 경로를 계산합니다.
-examples_dir = os.path.join(script_dir, 'examples')
-
-# 계산된 경로를 모듈 검색 경로에 추가합니다.
-sys.path.append(examples_dir)
-
 from langchain_core.prompts import FewShotPromptTemplate, PromptTemplate
 
 from examples import make_examples

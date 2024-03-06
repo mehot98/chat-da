@@ -2,13 +2,13 @@ import os
 
 import shutil
 
-import keys
+import RAG.keys
 
-import input_type
+import RAG.input_type as input_type
 
-import examples_compare
-import examples_info
-import examples_recommend
+import examples.examples_compare as examples_compare
+import examples.examples_info as examples_info
+import examples.examples_recommend as examples_recommend
 
 from langchain_community.vectorstores import Chroma
 from langchain.schema import Document

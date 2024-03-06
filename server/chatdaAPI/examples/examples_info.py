@@ -1,4 +1,4 @@
-from input_type import INFO
+from RAG.input_type import INFO
 
 examples = [
     {

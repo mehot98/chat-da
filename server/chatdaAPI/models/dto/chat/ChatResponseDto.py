@@ -1,4 +1,4 @@
-from typing import List, Union
+from typing import List, Union, Any
 
 from models.CamelModel import CamelModel
 
@@ -47,3 +47,38 @@ class ChatRecommendDto(CamelModel):
     type: str
     content: ChatContent
     model_no: str
+
+
+# 모델 리스트를 배열로 추출하는 함수입니다
+def get_model_no_list(model_list):
+    return [i["제품_코드"] for i in model_list]
+
+
+# pydantic은 init 함수를 구현하면 안되므로 커스텀 함수를 구현합니다
+
+def init_info_response(data):
+    return ChatInfoDto(
+        type=data["type"],
+        content=data["content"],
+        model_no=data["model_list"][0]["제품_코드"]
+    )
+
+
+def init_compare_response(data):
+    return ChatCompareDto(
+        type=data["type"],
+        content=data["content"],
+        model_no_list=get_model_no_list(data["model_list"])
+    )
+
+
+def init_recommend_response(data):
+    model = data["model_list"][0]
+    return ChatRecommendDto(
+        type=data["type"],
+        content={
+            "message": data["content"],
+            "spec": model
+        },
+        model_no=model["제품_코드"]
+    )

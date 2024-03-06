@@ -5,6 +5,7 @@ from fastapi import APIRouter, status, HTTPException
 import models.dto.chat.ChatResponseDto as response_dto
 import models.dto.chat.ChatRequestDto as request_dto
 import models.exmaple_chat as dump
+from RAG.make_output import get_output
 
 # prefix == chat
 router = APIRouter()
@@ -17,50 +18,43 @@ async def post_chat(
 ):
     """
     기본 챗봇과의 대화 API\n
+    테스트용 입력 : COMPARE, INFO, RECOMMEND
     입력: ChatRequestDto(uuid, content)\n
     응답: ChatInfoDto, ChatCompareDto, ChatRecommendDto(type, content, modelNoLlist or modelNo)\n
     """
 
     print(chat_request_dto)
-
     response = None
-    data = {"type": chat_request_dto.content}
-    match data["type"]:
+    content = chat_request_dto.content
+    match content:
         case "INFO":
             data = dump.info_data
-            response = response_dto.ChatInfoDto(
-                type=data["type"],
-                content=data["content"],
-                model_no=data["model_list"][0]["제품_코드"]
-            )
+            response = response_dto.init_info_response(data)
         case "COMPARE":
             data = dump.compare_data
-            response = response_dto.ChatCompareDto(
-                type=data["type"],
-                content=data["content"],
-                model_no_list=get_model_no_list(data["model_list"])
-            )
+            response = response_dto.init_compare_response(data)
         case "RECOMMEND":
             data = dump.recommend_data
-            model = data["model_list"][0]
-            response = response_dto.ChatRecommendDto(
-                type=data["type"],
-                content={
-                    "message": data["content"],
-                    "spec": model
-                },
-                model_no=model["제품_코드"]
-            )
+            response = response_dto.init_recommend_response(data)
         case default:
-            raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=[
-                {
-                    "type": "error",
-                    "msg": "Content error",
-                    "input": {
-                        "content": "string"
-                    }
-                }
-            ])
+            data = get_output(user_input='RF85C90D1AP와 RF85C90D2AP의 차이점이 뭐야?', search=False)
+            match data["type"]:
+                case "INFO":
+                    response = response_dto.init_info_response(data)
+                case "COMPARE":
+                    response = response_dto.init_compare_response(data)
+                case "RECOMMEND":
+                    response = response_dto.init_recommend_response(data)
+                case default:
+                    raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=[
+                        {
+                            "type": "error",
+                            "msg": "Content error",
+                            "input": {
+                                "content": "string"
+                            }
+                        }
+                    ])
 
     print(response)
     return response
@@ -78,7 +72,3 @@ async def post_feedback(
 
     print(feedback_request_dto)
     return {"success": True}
-
-
-def get_model_no_list(model_list):
-    return [i["제품_코드"] for i in model_list]

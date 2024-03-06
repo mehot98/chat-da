@@ -1,34 +1,16 @@
-import sys
 import os
-import ast
-import json
 import mysql.connector
 
-# 현재 스크립트 파일의 절대 경로를 얻습니다.
-script_dir = os.path.dirname(os.path.abspath(__file__))
-
-# 'examples' 디렉토리의 상대 경로를 계산합니다.
-examples_dir = os.path.join(script_dir, 'examples')
-
-# 계산된 경로를 모듈 검색 경로에 추가합니다.
-sys.path.append(examples_dir)
-
-import keys
-
-import prompt
-
-from operator import itemgetter
+import RAG.prompt as prompt
 
 from langchain_openai import ChatOpenAI
 
 from langchain.chains import create_sql_query_chain
 
 from langchain_community.utilities.sql_database import SQLDatabase
-from langchain_community.tools.sql_database.tool import QuerySQLDataBaseTool
 
 from langchain_core.globals import set_debug
 from langchain_core.output_parsers import StrOutputParser
-from langchain_core.runnables import RunnablePassthrough
 
 # 체인 중간 과정 보기
 set_debug(True)
@@ -113,7 +95,7 @@ def get_output(user_input, search):
 
     # 유저 입력으로부터 답변 생성
     result = answer_chain.invoke({"question": user_input, "query": query[0], "result": result})
-    
+
     return {
         "type": user_input_type,
         "content": result,

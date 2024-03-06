@@ -1,4 +1,4 @@
-from input_type import RECOMMEND
+from RAG.input_type import RECOMMEND
 
 examples = [
     {

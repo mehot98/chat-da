@@ -1,4 +1,4 @@
-from input_type import COMPARE
+from RAG.input_type import COMPARE
 
 examples = [
     {
