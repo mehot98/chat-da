@@ -1,7 +1,7 @@
 import * as Comp from "@root/src/components";
 import * as S from "./style";
-import { MessageProps } from "@root/src/types";
-import chatDAIconPath from "@root/public/ChatDA_icon_128.png";
+import { MessageProps } from "@src/types";
+import chatDAIconPath from "@root/public/icons/ChatDA_icon_128.png";
 
 export default function Message(props: MessageProps) {
   const chatDAIconSrc = chrome.runtime.getURL(chatDAIconPath);

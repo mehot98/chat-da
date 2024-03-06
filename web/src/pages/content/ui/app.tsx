@@ -1,13 +1,13 @@
 import { useState, useEffect } from "react";
 import * as S from "./style";
-import chatDAIconPath from "@root/public/ChatDA_icon_128.png";
+import chatDAIconPath from "@root/public/icons/ChatDA_icon_128.png";
 // import rankingIconPath from "@root/public/ranking_icon.png";
 // import searchIconPath from "@root/public/search_icon.png";
 import * as Comp from "@root/src/components";
 // import theme from "@assets/style/theme.module.scss";
 
-const rankingIconPath = "ranking_icon.png";
-const searchIconPath = "search_icon.png";
+const rankingIconPath = "icons/ranking_icon.png";
+const searchIconPath = "icons/search_icon.png";
 
 import { StyledEngineProvider } from "@mui/material/styles";
 
