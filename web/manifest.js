@@ -24,13 +24,13 @@ const manifest = {
   },
   action: {
     default_popup: "src/pages/popup/index.html",
-    default_icon: "ChatDA_icon_32.png",
+    default_icon: "icons/ChatDA_icon_32.png",
   },
   icons: {
-    16: "ChatDA_icon_16.png",
-    32: "ChatDA_icon_32.png",
-    48: "ChatDA_icon_48.png",
-    128: "ChatDA_icon_128.png",
+    16: "icons/ChatDA_icon_16.png",
+    32: "icons/ChatDA_icon_32.png",
+    48: "icons/ChatDA_icon_48.png",
+    128: "icons/ChatDA_icon_128.png",
   },
   content_scripts: [
     {
@@ -44,7 +44,7 @@ const manifest = {
   ],
   web_accessible_resources: [
     {
-      resources: ["assets/js/*.js", "assets/css/*.css", "*.png", "assets/png/*.png"],
+      resources: ["assets/js/*.js", "assets/css/*.css", "icons/*.png", "assets/png/*.png"],
       matches: ["*://*/*"],
     },
   ],
