@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
 import * as S from "./style";
 import chatDAIconPath from "@root/public/ChatDA_icon_128.png";
+import rankingIconPath from "@root/public/ranking_icon.png";
+import searchIconPath from "@root/public/search_icon.png";
 import * as Comp from "@root/src/components";
-import styled from "@emotion/styled";
 import theme from "@assets/style/theme.module.scss";
 
 import { StyledEngineProvider } from "@mui/material/styles";
@@ -45,9 +46,13 @@ export default function App() {
     setIsOpenMainModal(false);
   };
 
+  // 모달 header 아이콘
+  const rankingIconSrc = chrome.runtime.getURL(rankingIconPath);
+  const searchIconSrc = chrome.runtime.getURL(searchIconPath);
+
   return (
     <>
-      {isOpenMainModal && (
+      {/* {isOpenMainModal && (
         <S.ModalOverlay>
           <S.ModalContentWrapper>
             <S.ModalContent>
@@ -58,7 +63,7 @@ export default function App() {
             </S.ModalContent>
           </S.ModalContentWrapper>
         </S.ModalOverlay>
-      )}
+      )} */}
       {/* mui component를 사용하는 경우 아래와 같이 StyledEngineProvider를 반드시 사용해야 합니다!*/}
       <StyledEngineProvider injectFirst>
         <S.ChatMainModal
@@ -66,7 +71,29 @@ export default function App() {
           onClose={handleCloseMainModal}
           disableScrollLock={true}
         >
-          <button onClick={handleCloseMainModal}>x</button>
+          {/* <button onClick={handleCloseMainModal}>x</button> */}
+          <S.ChatMainWrapper>
+            <S.ChatMainHeader>
+              <S.HeaderWords>
+                <p>
+                  상품 <b>비교</b>, 상세 정보 <b>설명</b>, <b>추천</b>까지!
+                </p>
+                <p>삼성의 가전제품들을</p>
+                <p>이해하기 쉽게 알려드립니다 😊</p>
+              </S.HeaderWords>
+              <S.IconWrapper>
+                <img src={rankingIconSrc} alt="ranking-icon" width={35} height={35} />
+                <span>인기순위</span>
+              </S.IconWrapper>
+              <S.IconWrapper>
+                <img src={searchIconSrc} alt="search-icon" width={35} height={35} />
+                <span>검색하기</span>
+              </S.IconWrapper>
+            </S.ChatMainHeader>
+            <S.ChatMainContent>
+              <Comp.ChatbotMain />
+            </S.ChatMainContent>
+          </S.ChatMainWrapper>
         </S.ChatMainModal>
       </StyledEngineProvider>
     </>

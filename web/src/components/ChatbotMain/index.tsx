@@ -7,7 +7,7 @@ export default function ChatbotMain() {
   const [messages, setMessages] = useState([]);
   const [currentTypingId, setCurrentTypingId] = useState(null);
 
-  const openAiKey = "";
+  const openAiKey = "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";
 
   const generateText = async (prompt: string) => {
     try {
@@ -85,16 +85,17 @@ export default function ChatbotMain() {
   }, [messages, currentTypingId]);
 
   return (
-    <S.ChatBotMainWrapper>
-      <div className="chat-box">
-        <h1>ChatDA</h1>
+    <S.ChatMainWrapper>
+      <S.ChatMessageWrapper>
         <Sub.MessageList
           messages={messages}
           currentTypingId={currentTypingId}
           onEndTyping={handleEndTyping}
         />
+      </S.ChatMessageWrapper>
+      <S.ChatInputWrapper>
         <Sub.MessageForm onSendMessage={handleSendMessage} />
-      </div>
-    </S.ChatBotMainWrapper>
+      </S.ChatInputWrapper>
+    </S.ChatMainWrapper>
   );
 }
