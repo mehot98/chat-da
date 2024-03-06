@@ -61,13 +61,15 @@ export const ChatExpandModal = styled(ChatMainModal)`
   }
 `;
 
-export const ChatModalBackdrop = styled.div<{ open: boolean }>`
+export const ChatModalBackdrop = styled.div<{ open: boolean; expandOpen: boolean }>`
   ${(props) => (props.open ? "position: fixed" : "display: none")};
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
   z-index: 1200;
+  background-color: ${(props) => (props.expandOpen ? "rgba(0, 0, 0, 0.5)" : "rgba(0, 0, 0, 0)")};
+  transition: all 225ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
 `;
 
 export const ChatMainWrapper = styled.div`

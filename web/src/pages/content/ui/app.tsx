@@ -117,6 +117,7 @@ export default function App() {
         className="backdrop"
         onClick={handleClickBackdrop}
         open={isOpenMainModal}
+        expandOpen={isOpenExpandModal}
       />
     </>
   );
