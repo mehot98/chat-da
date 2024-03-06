@@ -6,7 +6,9 @@ export default function ChatbotRecommend(props: ChatbotRecommendCardProps) {
   return (
     <S.RecommendWrapper>
       <S.RecommendMessageWrapper>
-        <span>{props.message}</span>
+        <div>
+          <span>{props.message}</span>
+        </div>
       </S.RecommendMessageWrapper>
       <S.RecommendCardWrapper>
         <Sub.ChatbotRecommendCard {...props} />

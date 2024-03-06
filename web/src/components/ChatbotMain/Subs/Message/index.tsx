@@ -1,5 +1,5 @@
 import * as Comp from "@root/src/components";
-// import * as S from "./style";
+import * as S from "./style";
 import { MessageProps } from "@root/src/types";
 import chatDAIconPath from "@root/public/ChatDA_icon_128.png";
 
@@ -7,9 +7,9 @@ export default function Message(props: MessageProps) {
   const chatDAIconSrc = chrome.runtime.getURL(chatDAIconPath);
   if (props.isUser) {
     return (
-      <p>
-        <b>User</b>: {props.text}
-      </p>
+      <S.UserMessageWrapper>
+        <p>{props.text}</p>
+      </S.UserMessageWrapper>
     );
   } else {
     if (props.text[0] === "1") {
@@ -35,19 +35,21 @@ export default function Message(props: MessageProps) {
       };
       console.log(props.text);
       return (
-        <div>
-          <img src={chatDAIconSrc} alt="ChatDA-logo" />
+        <S.AiMessageWrapper>
+          <img src={chatDAIconSrc} alt="ChatDA-logo" width={43} height={42} />
           <Comp.ChatbotRecommend {...recommendProps} />
-        </div>
+        </S.AiMessageWrapper>
       );
     } else {
       return (
-        <div>
-          <img src={chatDAIconSrc} alt="ChatDA-logo" />
-          <p>
-            <b>ChatDA</b>: {props.text}
-          </p>
-        </div>
+        <S.AiMessageWrapper>
+          <img src={chatDAIconSrc} alt="ChatDA-logo" width={43} height={42} />
+          <S.AiMessageDiv>
+            <div>
+              <p>{props.text}</p>
+            </div>
+          </S.AiMessageDiv>
+        </S.AiMessageWrapper>
       );
     }
   }
