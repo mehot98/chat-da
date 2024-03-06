@@ -1,5 +1,8 @@
 import os
 import mysql.connector
+from RAG.keys import setup
+
+setup()
 
 import RAG.prompt as prompt
 
@@ -33,9 +36,6 @@ llm = ChatOpenAI(model="gpt-3.5-turbo", temperature=0, verbose=True)
 
 # join문까지 포함된 sql을 이용하여 모든 정보를 가져와서 list를 만드는 함수
 def make_model_list(query):
-    # SQL query 실행
-    result = db.run(query, include_columns=True)
-
     # 데이터베이스 연결 설정
     config = {
         'user': os.environ['MYSQL_ID'],  # 데이터베이스 사용자 이름
@@ -105,4 +105,11 @@ def get_output(user_input, search):
 
 # 테스트용
 if __name__ == '__main__':
-    get_output(user_input='RF85C90D1AP와 RF85C90D2AP의 차이점이 뭐야?', search=False)
+    # # 비교 예시
+    # print(get_output(user_input='RF85C90D1AP와 RF85C90D2AP의 차이점이 뭐야?', search=False))
+
+    # # 설명 예시
+    # print(get_output(user_input='RF85C90D1AP에 대해서 설명해줘', search=False))
+
+    # 추천 예시
+    print(get_output(user_input='150만원 이내의 큰 냉장고를 찾고 있는데 추천해 줄 수 있어?', search=False))
