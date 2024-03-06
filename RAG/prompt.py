@@ -12,7 +12,7 @@ sys.path.append(examples_dir)
 
 from langchain_core.prompts import FewShotPromptTemplate, PromptTemplate
 
-from examples import examples_main
+from examples import make_examples
 
 # 답변 생성용 프롬프트
 answer_prompt = PromptTemplate.from_template(
@@ -74,7 +74,7 @@ mysql_prompt_suffix = """User input: {input}"""
 # SQL 생성용 프롬프트
 def sql_prompt(user_input):
     # 유저 입력과 관련된 예시들과 유저 입력의 타입을 가져옴
-    user_examples, user_input_type = examples_main.get_examples(user_input)
+    user_examples, input_type = make_examples.get_examples(user_input)
 
     # SQL 생성용 프롬프트 최종
     prompt = FewShotPromptTemplate(
@@ -85,7 +85,7 @@ def sql_prompt(user_input):
         input_variables=["input", "table_info", "top_k"],
     )
 
-    return prompt, user_input_type
+    return prompt, input_type
 
 
 # 테스트 용
