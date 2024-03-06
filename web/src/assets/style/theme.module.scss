@@ -1,9 +1,13 @@
 $chatDA-chat-color: #eeeeee;
 $user-chat-color: #6c9bd5;
 $border-color: #3a6da9;
+$input-footer-color: #f4f4f4;
+$header-color: #98c1f1;
 
 :export {
   chatDAchatcolor: $chatDA-chat-color;
-  userchatcolor: $chatDA-chat-color;
+  userchatcolor: $user-chat-color;
   bordercolor: $border-color;
+  inputfootercolor: $input-footer-color;
+  headercolor: $header-color;
 }

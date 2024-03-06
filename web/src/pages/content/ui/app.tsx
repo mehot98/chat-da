@@ -88,8 +88,8 @@ export default function App() {
           onClose={handleCloseMainModal}
           disableScrollLock={true}
         >
-          <button onClick={handleCloseMainModal}>x</button>
-          <button onClick={() => setIsOpenExpandModal(true)}>확장 모달 열기</button>
+          {/* <button onClick={handleCloseMainModal}>x</button>
+          <button onClick={() => setIsOpenExpandModal(true)}>확장 모달 열기</button> */}
           {/* <button onClick={handleCloseMainModal}>x</button> */}
           <S.ChatMainWrapper>
             <S.ChatMainHeader>
@@ -100,21 +100,16 @@ export default function App() {
                 <p>삼성의 가전제품들을</p>
                 <p>이해하기 쉽게 알려드립니다 😊</p>
               </S.HeaderWords>
-              <S.IconWrapper>
-                <img
-                  src={rankingIconSrc}
-                  id="rankingIcon"
-                  alt="ranking-icon"
-                  width={35}
-                  height={35}
-                />
+              <S.IconWrapper onClick={() => setIsOpenExpandModal(true)}>
+                <img src={rankingIconSrc} alt="ranking-icon" width={35} height={35} />
                 <span>인기순위</span>
               </S.IconWrapper>
-              <S.IconWrapper>
-                <img src={searchIconSrc} id="searchIcon" alt="search-icon" width={35} height={35} />
+              <S.IconWrapper onClick={() => setIsOpenExpandModal(true)}>
+                <img src={searchIconSrc} alt="search-icon" width={35} height={35} />
                 <span>검색하기</span>
               </S.IconWrapper>
             </S.ChatMainHeader>
+
             <S.ChatMainContent>
               <Comp.ChatbotMain />
             </S.ChatMainContent>
