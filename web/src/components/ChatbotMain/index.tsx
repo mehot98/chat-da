@@ -8,7 +8,7 @@ export default function ChatbotMain() {
   const [messages, setMessages] = useState<T.MessagesProps>([]);
   const [currentTypingId, setCurrentTypingId] = useState<number | null>(null);
 
-  const openAiKey = "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";
+  const openAiKey = "";
 
   const generateText = async (prompt: string) => {
     try {
