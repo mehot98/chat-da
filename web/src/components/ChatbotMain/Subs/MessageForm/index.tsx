@@ -1,17 +1,27 @@
 import { useState } from "react";
 // import nextIconPath from "@root/public/next_icon.png";
 
-const nextIconPath = "next_icon.png";
+const nextIconPath = "icons/next_icon.png";
 
 export default function MessageForm({ onSendMessage }) {
   const nextIcon = chrome.runtime.getURL(nextIconPath);
 
   const [message, setMessage] = useState("");
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (
+    event: React.FormEvent<HTMLFormElement> | React.KeyboardEvent<HTMLTextAreaElement>,
+  ) => {
     event.preventDefault();
-    onSendMessage(message);
-    setMessage("");
+    if (message) {
+      onSendMessage(message);
+      setMessage("");
+    }
+  };
+
+  const handleEnterSubmit = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (event.key === "Enter") {
+      handleSubmit(event);
+    }
   };
 
   return (
@@ -19,6 +29,7 @@ export default function MessageForm({ onSendMessage }) {
       <textarea
         value={message}
         onChange={(event) => setMessage(event.target.value)}
+        onKeyDown={handleEnterSubmit}
         className="message-input"
       />
       <button type="submit" className="send-button">

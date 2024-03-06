@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import theme from "@assets/style/theme.module.scss";
 
 export const UserMessageWrapper = styled.div`
   width: fit-content;
@@ -6,7 +7,7 @@ export const UserMessageWrapper = styled.div`
   padding: 14px 28px;
   border-radius: 17px 0 17px 17px;
   color: white;
-  background-color: #6c9bd5;
+  background-color: ${theme.userchatcolor};
   margin-left: auto;
 `;
 
@@ -22,6 +23,6 @@ export const AiMessageDiv = styled.div`
     width: fit-content;
     padding: 14px 28px;
     border-radius: 0 17px 17px 17px;
-    background-color: #c4c4c4;
+    background-color: ${theme.chatDAchatcolor};
   }
 `;

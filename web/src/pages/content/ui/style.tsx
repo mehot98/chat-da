@@ -79,13 +79,13 @@ export const ChatMainWrapper = styled.div`
 
 export const ChatMainHeader = styled.div`
   width: 100%;
-  height: 13.4%;
+  height: 13.5%;
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 20px;
   border-radius: 9px 9px 0 0;
-  background-color: #98c1f1;
+  background-color: ${theme.headercolor};
   position: relative;
   z-index: 99;
 `;
@@ -106,4 +106,5 @@ export const IconWrapper = styled.div`
 
 export const ChatMainContent = styled.div`
   width: 100%;
+  height: 86.5%;
 `;
