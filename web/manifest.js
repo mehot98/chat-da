@@ -34,34 +34,17 @@ const manifest = {
   },
   content_scripts: [
     {
-      // matches: ["http://*/*", "https://*/*", "<all_urls>"],
       matches: ["https://www.samsung.com/*"],
       js: ["src/pages/contentInjected/index.js"],
-      // KEY for cache invalidation
-      // css: ["assets/css/contentStyle<KEY>.chunk.css"],
     },
     {
-      // matches: ["http://*/*", "https://*/*", "<all_urls>"],
       matches: ["https://www.samsung.com/*"],
       js: ["src/pages/contentUI/index.js"],
     },
   ],
   web_accessible_resources: [
     {
-      resources: [
-        "assets/js/*.js",
-        "assets/css/*.css",
-        "ChatDA_icon_128.png",
-        "ChatDA_icon_48.png",
-        "ChatDA_icon_32.png",
-        "ChatDA_icon_16.png",
-        "*.png",
-        "assets/png/*.png",
-        // "assets/png/next_icon.chunk.png",
-        // "assets/png/ranking_icon.chunk.png",
-        // "assets/png/search_icon.chunk.png",
-        // "assets/png/ChatDA_icon_128.chunk.png",
-      ],
+      resources: ["assets/js/*.js", "assets/css/*.css", "*.png", "assets/png/*.png"],
       matches: ["*://*/*"],
     },
   ],

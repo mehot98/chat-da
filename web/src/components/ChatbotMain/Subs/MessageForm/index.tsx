@@ -1,5 +1,7 @@
 import { useState } from "react";
-import nextIconPath from "@root/public/next_icon.png";
+// import nextIconPath from "@root/public/next_icon.png";
+
+const nextIconPath = "next_icon.png";
 
 export default function MessageForm({ onSendMessage }) {
   const nextIcon = chrome.runtime.getURL(nextIconPath);
