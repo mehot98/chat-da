@@ -50,13 +50,22 @@ export default function ChatbotMain() {
     }
   };
 
+  useEffect(() => {
+    if (messages.length > 0 && messages[messages.length - 1].id === 0) {
+      console.log("답변 생성중");
+    }
+  }, [messages]);
+
   const handleSendMessage = async (message: string) => {
-    setMessages((prev) => [...prev, { text: message, isUser: true }]);
-
-    const response = await generateText(message);
-
     setMessages((prev) => [
       ...prev,
+      { text: message, isUser: true },
+      { text: "", isUser: false, isTyping: true, id: 0 },
+    ]);
+
+    const response = await generateText(message);
+    setMessages((prev) => [
+      ...prev.slice(0, prev.length - 1), // 성능적으로 괜찮은지, 더 좋은 방법이 있는지 고민해 봐야할 필요 있음
       {
         text: response,
         isUser: false,
