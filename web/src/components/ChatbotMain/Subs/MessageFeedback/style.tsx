@@ -11,6 +11,7 @@ export const BtnWrapper = styled.div`
 
 export const Btn = styled(Button)`
   border-radius: 100px;
+  font-size: 10px;
 
   &:focus {
     outline: none;

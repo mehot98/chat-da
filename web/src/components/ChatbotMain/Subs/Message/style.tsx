@@ -1,5 +1,6 @@
 import styled from "@emotion/styled";
 import theme from "@assets/style/theme.module.scss";
+import { Button } from "@mui/material";
 
 export const UserMessageWrapper = styled.div`
   display: flex;
@@ -37,5 +38,21 @@ export const AiMessageDiv = styled.div`
     padding: 14px 28px;
     border-radius: 0 17px 17px 17px;
     background-color: ${theme.chatDAchatcolor};
+  }
+`;
+
+export const ExpandOpenBtn = styled(Button)`
+  width: 80%;
+  background-color: ${theme.bordercolor};
+  color: white;
+  border-radius: 100px;
+  margin: auto;
+
+  &:hover {
+    background-color: ${theme.userchatcolor};
+  }
+
+  &:focus {
+    outline: none;
   }
 `;

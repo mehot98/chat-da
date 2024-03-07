@@ -6,7 +6,6 @@ import * as S from "./style";
 import * as T from "@root/src/types";
 
 export default function ChatbotMain() {
-  const [type, setType] = useState<string>("");
   const [messages, setMessages] = useState<T.MessagesProps>([]);
   const [currentTypingId, setCurrentTypingId] = useState<number | null>(null);
 
@@ -63,20 +62,63 @@ export default function ChatbotMain() {
     });
     const { data } = response;
 
-    console.log(data);
+    if (data.type === "recommend") {
+      setMessages((prev) => [
+        ...prev,
+        { text: message, isUser: true },
+        {
+          type: data.type,
+          text: data.content.message,
+          isUser: false,
+          isTyping: true,
+          id: Date.now(),
+          modelNo: data.modelNo,
+          spec: data.content.spec,
+        },
+      ]);
+    } else if (data.type === "info") {
+      setMessages((prev) => [
+        ...prev,
+        { text: message, isUser: true },
+        {
+          type: data.type,
+          text: data.content,
+          isUser: false,
+          isTyping: true,
+          id: Date.now(),
+          modelNo: data.modelNo,
+          btnString: "상세 스펙 보기",
+        },
+      ]);
+    } else if (data.type === "compare") {
+      setMessages((prev) => [
+        ...prev,
+        { text: message, isUser: true },
+        {
+          type: data.type,
+          text: data.content,
+          isUser: false,
+          isTyping: true,
+          id: Date.now(),
+          modelNoList: data.modelNoList,
+          btnString: "자세히 비교하기",
+        },
+      ]);
+    }
 
-    setType(data.type);
-
-    setMessages((prev) => [
-      ...prev,
-      { text: message, isUser: true },
-      {
-        text: data.content,
-        isUser: false,
-        isTyping: true,
-        id: Date.now(),
-      },
-    ]);
+    // setMessages((prev) => [
+    //   ...prev,
+    //   { text: message, isUser: true },
+    //   {
+    //     type: data.type,
+    //     text: data.content,
+    //     isUser: false,
+    //     isTyping: true,
+    //     id: Date.now(),
+    //     modelNo: data?.modelNo,
+    //     modelNoList: data?.modelNoList,
+    //   },
+    // ]);
   };
 
   // const handleEndTyping: (id: number) => void = (id: number) => {
