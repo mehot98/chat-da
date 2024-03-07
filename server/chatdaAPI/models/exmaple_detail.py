@@ -1,5 +1,5 @@
 detail_data = {
-    "type": "DETAILINFO",
+    "type": "detailinfo",
     "content": "상세 정보",
     "model_list": [
         {

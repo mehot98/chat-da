@@ -99,7 +99,7 @@ def get_output(user_input, search):
     return {
         "type": user_input_type,
         "content": result,
-        "model_no_list": model_list
+        "model_list": model_list
     }
 
 
