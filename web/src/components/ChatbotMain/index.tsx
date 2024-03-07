@@ -1,10 +1,12 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { request } from "@src/apis/requestBuilder";
 import * as Sub from "./Subs";
 import * as S from "./style";
 import * as T from "@root/src/types";
 
 export default function ChatbotMain() {
+  const [type, setType] = useState<string>("");
   const [messages, setMessages] = useState<T.MessagesProps>([]);
   const [currentTypingId, setCurrentTypingId] = useState<number | null>(null);
 
@@ -51,13 +53,25 @@ export default function ChatbotMain() {
   };
 
   const handleSendMessage = async (message: string) => {
-    const response = await generateText(message);
+    // const response = await generateText(message);
+    const sessionId = window.sessionStorage.getItem("_da_da_sessionId");
+    const tabHash = window.sessionStorage.getItem("di_tab_hash");
+
+    const response = await request.post("/chat", {
+      uuid: `${sessionId}_${tabHash}`,
+      content: message,
+    });
+    const { data } = response;
+
+    console.log(data);
+
+    setType(data.type);
 
     setMessages((prev) => [
       ...prev,
       { text: message, isUser: true },
       {
-        text: response,
+        text: data.content,
         isUser: false,
         isTyping: true,
         id: Date.now(),
@@ -88,10 +102,7 @@ export default function ChatbotMain() {
   return (
     <S.ChatMainWrapper>
       <S.ChatMessageWrapper>
-        <Sub.MessageList
-          messages={messages}
-          currentTypingId={currentTypingId}
-        />
+        <Sub.MessageList messages={messages} currentTypingId={currentTypingId} />
       </S.ChatMessageWrapper>
       <S.ChatInputWrapper>
         <Sub.MessageForm onSendMessage={handleSendMessage} />

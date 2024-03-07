@@ -1,10 +1,7 @@
 import { useState, useEffect } from "react";
 import * as S from "./style";
 import chatDAIconPath from "@root/public/icons/ChatDA_icon_128.png";
-// import rankingIconPath from "@root/public/ranking_icon.png";
-// import searchIconPath from "@root/public/search_icon.png";
 import * as Comp from "@root/src/components";
-// import theme from "@assets/style/theme.module.scss";
 
 const rankingIconPath = "icons/ranking_icon.png";
 const searchIconPath = "icons/search_icon.png";
@@ -33,10 +30,8 @@ export default function App() {
     chatDAIcon.style.cursor = "pointer";
 
     // When click chatDAIcon, the dialog open
-    chatDAIcon.onclick = (e: MouseEvent) => {
-      console.log(e);
+    chatDAIcon.onclick = () => {
       setIsOpenMainModal(true);
-      console.log("chat da 클릭됨!!", isOpenMainModal);
     };
 
     existingChatbotIcon.prepend(chatDAIcon);
