@@ -1,5 +1,6 @@
 import * as Comp from "@root/src/components";
 import * as S from "./style";
+import MessageFeedback from "../MessageFeedback";
 import { MessageProps } from "@src/types";
 import chatDAIconPath from "@root/public/icons/ChatDA_icon_128.png";
 
@@ -9,7 +10,7 @@ export default function Message(props: MessageProps) {
     return (
       <S.UserMessageWrapper>
         <div>
-        <p>{props.text}</p>
+          <p>{props.text}</p>
         </div>
       </S.UserMessageWrapper>
     );
@@ -45,12 +46,16 @@ export default function Message(props: MessageProps) {
     } else {
       return (
         <S.AiMessageWrapper>
-          <img src={chatDAIconSrc} alt="ChatDA-logo" width={43} height={42} />
-          <S.AiMessageDiv>
-            <div>
-              <p>{props.text}</p>
-            </div>
-          </S.AiMessageDiv>
+          <S.AiMessageRow>
+            <img src={chatDAIconSrc} alt="ChatDA-logo" width={43} height={42} />
+            <S.AiMessageDiv>
+              <div>
+                <p>{props.text}</p>
+              </div>
+            </S.AiMessageDiv>
+          </S.AiMessageRow>
+
+          <MessageFeedback></MessageFeedback>
         </S.AiMessageWrapper>
       );
     }

@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 import theme from "@assets/style/theme.module.scss";
 
 export const UserMessageWrapper = styled.div`
-display: flex;
+  display: flex;
   justify-content: end;
   width: 100%;
   height: fit-content;
@@ -19,6 +19,12 @@ display: flex;
 `;
 
 export const AiMessageWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+`;
+
+export const AiMessageRow = styled.div`
   display: flex;
   gap: 8px;
 `;
