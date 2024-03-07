@@ -112,4 +112,4 @@ if __name__ == '__main__':
     # print(get_output(user_input='RF85C90D1AP에 대해서 설명해줘', search=False))
 
     # 추천 예시
-    print(get_output(user_input='150만원 이내의 큰 냉장고를 찾고 있는데 추천해 줄 수 있어?', search=False))
+    print(get_output(user_input='BESPOKE 냉장고 4도어 875 L(에너지 효율 초절전) 이 상품에 대해서 설명해줘', search=False))
