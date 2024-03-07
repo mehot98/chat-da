@@ -1,15 +1,20 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import * as Sub from "./Subs";
 import * as S from "./style";
 import * as T from "@root/src/types";
 
-export default function ChatbotMain(props: { props: T.ComparePrdProps[] }) {
-  // const compareList = props.props
-  const [messages, setMessages] = useState<T.MessagesProps>([]);
+export default function ChatbotMain(props: {
+  props: T.ComparePrdProps[];
+  setComparePrds: Dispatch<SetStateAction<T.ComparePrdProps[]>>;
+  messages: T.MessagesProps;
+  setMessages: Dispatch<SetStateAction<T.MessagesProps>>;
+}) {
   const [currentTypingId, setCurrentTypingId] = useState<number | null>(null);
 
-  const openAiKey = "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";
+  const openAiKey = "";
+
+  console.log("props: ", props);
 
   const generateText = async (prompt: string) => {
     try {
@@ -35,15 +40,14 @@ export default function ChatbotMain(props: { props: T.ComparePrdProps[] }) {
           },
         },
       );
-      console.log(response);
       const { choices } = response.data;
       const text = choices[0].message.content.trim();
       return text;
     } catch (e: any) {
       if (e.response?.status === 500) {
         alert("OpenAI 서버에 오류가 발생했습니다.");
-        setMessages([
-          ...messages,
+        props.setMessages([
+          ...props.messages,
           { text: prompt, sender: "user" },
           { text: "오류가 발생했습니다.", sender: "bot" },
         ]);
@@ -51,20 +55,20 @@ export default function ChatbotMain(props: { props: T.ComparePrdProps[] }) {
     }
   };
   // 비교버튼 누를 시 메시지 생성
-  useEffect(() => {
-    if (props.props && props.props.length > 0) {
-      setMessages((prev) => [
-        ...prev,
-        ...props.props.map((item) => ({
-          text: `${item.제품명}\n${item.modelNo}`,
-          isUser: true,
-          isTyping: true,
-          id: Date.now(),
-          isCompared: true,
-        })),
-      ]);
-    }
-  }, [props.props]);
+  // useEffect(() => {
+  //   if (props.props && props.props.length > 0) {
+  //     props.setMessages((prev) => [
+  //       ...prev,
+  //       ...props.props.map((item) => ({
+  //         text: `${item.제품명}\n${item.modelNo}`,
+  //         isUser: true,
+  //         isTyping: true,
+  //         id: item.id,
+  //         isCompared: true,
+  //       })),
+  //     ]);
+  //   }
+  // }, [props.props]);
 
   // useEffect(() => {
   //   if (messages.length > 0 && messages[messages.length - 1].id === 0) {
@@ -73,14 +77,14 @@ export default function ChatbotMain(props: { props: T.ComparePrdProps[] }) {
   // }, [messages]);
 
   const handleSendMessage = async (message: string) => {
-    setMessages((prev) => [
+    props.setMessages((prev) => [
       ...prev,
       { text: message, isUser: true, isCompared: false },
       // { text: "", isUser: false, isTyping: true, id: 0 },
     ]);
 
     const response = await generateText(message);
-    setMessages((prev) => [
+    props.setMessages((prev) => [
       // ...prev.slice(0, prev.length - 1), // 성능적으로 괜찮은지, 더 좋은 방법이 있는지 고민해 봐야할 필요 있음
       ...prev,
       {
@@ -102,24 +106,25 @@ export default function ChatbotMain(props: { props: T.ComparePrdProps[] }) {
   //   setCurrentTypingId(null);
   // };
 
-  useEffect(() => {
-    if (currentTypingId === null) {
-      const nextTypingMessage = messages.find((msg) => {
-        !msg.isUser && msg.isTyping;
-      });
-      if (nextTypingMessage) {
-        setCurrentTypingId(nextTypingMessage.id);
-      }
-    }
-  }, [messages, currentTypingId]);
+  // useEffect(() => {
+  //   if (currentTypingId === null) {
+  //     const nextTypingMessage = props.messages.find((msg) => {
+  //       !msg.isUser && msg.isTyping;
+  //     });
+  //     if (nextTypingMessage) {
+  //       setCurrentTypingId(nextTypingMessage.id);
+  //     }
+  //   }
+  // }, [props.messages, currentTypingId]);
 
   return (
     <S.ChatMainWrapper>
       <S.ChatMessageWrapper>
         <Sub.MessageList
-          messages={messages}
+          messages={props.messages}
           currentTypingId={currentTypingId}
-          setMessages={setMessages}
+          setMessages={props.setMessages}
+          setComparePrds={props.setComparePrds}
         />
       </S.ChatMessageWrapper>
       <S.ChatInputWrapper>

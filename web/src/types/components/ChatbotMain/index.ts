@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction } from "react";
+import * as T from "../../index";
 
 export interface MsgProps {
-  [x: string]: any;
   text?: string;
   sender?: "user" | "bot";
   isUser?: boolean;
@@ -38,8 +38,8 @@ export interface MessageProps {
   reviewCount?: string;
   rating?: string;
   imageUrl?: string;
-  messages: MsgProps;
   setMessages?: Dispatch<SetStateAction<MessagesProps>>;
+  setComparePrds?: Dispatch<SetStateAction<T.ComparePrdProps[]>>;
 }
 
 export interface MessageListProps {

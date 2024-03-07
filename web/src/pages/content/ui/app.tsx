@@ -15,10 +15,6 @@ export default function App() {
   const [isOpenMainModal, setIsOpenMainModal] = useState<boolean>(false);
   const [isOpenExpandModal, setIsOpenExpandModal] = useState<boolean>(false);
 
-  useEffect(() => {
-    console.log("content view loaded");
-  }, []);
-
   // Find existing chatbot icon, and insert chatda icon
   const existingChatbotIcon: Element = document.getElementsByClassName("menu01")[0];
 
@@ -78,9 +74,11 @@ export default function App() {
       });
     }
   }, [currentUrl]);
-
+  // 메시지 정보 담는 곳
+  const [messages, setMessages] = useState<T.MessagesProps>([]);
   // 비교하기 아이콘 붙이기 + 클릭시 제품명, 코드 저장
-  const [comparePrds, setComparePrds] = useState<T.ComparePrdProps[] | null>(null);
+  // 비교상품 정보 담는 곳
+  const [comparePrds, setComparePrds] = useState<T.ComparePrdProps[]>([]);
   useEffect(() => {
     if (fridgeList && fridgeList.length > 0) {
       fridgeList.forEach((element: Element) => {
@@ -143,18 +141,39 @@ export default function App() {
           const parentElement = compareButton.parentElement;
           const detailElement = parentElement.querySelector(".card-detail");
           const spanTags = detailElement.querySelectorAll("span");
-          setComparePrds((prev) => [
-            ...(prev || []),
-            {
-              제품명: spanTags[0].textContent,
-              modelNo: spanTags[1].textContent,
-            },
-          ]);
+          const time = Date.now();
+
+          setComparePrds((prev) => {
+            return [
+              ...prev,
+              {
+                제품명: spanTags[0].textContent,
+                modelNo: spanTags[1].textContent,
+                id: time,
+              },
+            ];
+          });
+
+          setMessages((prev) => {
+            return [
+              ...prev,
+              {
+                text: `${spanTags[0].textContent}\n${spanTags[1].textContent}`,
+                isUser: true,
+                isTyping: true,
+                id: time,
+                isCompared: true,
+              },
+            ];
+          });
         });
       });
     }
   }, [fridgeList]);
 
+  useEffect(() => {
+    console.log("prd를 좀 보자:", comparePrds);
+  }, [comparePrds]);
   return (
     <>
       {/* mui component를 사용하는 경우 아래와 같이 StyledEngineProvider를 반드시 사용해야 합니다!*/}
@@ -196,7 +215,12 @@ export default function App() {
             </S.ChatMainHeader>
 
             <S.ChatMainContent>
-              <Comp.ChatbotMain props={comparePrds} />
+              <Comp.ChatbotMain
+                props={comparePrds}
+                setComparePrds={setComparePrds}
+                messages={messages}
+                setMessages={setMessages}
+              />
             </S.ChatMainContent>
           </S.ChatMainWrapper>
         </S.ChatMainModal>

@@ -1,25 +1,26 @@
 import * as Comp from "@root/src/components";
 import * as S from "./style";
-import { MessageProps } from "@src/types";
+import * as T from "@src/types";
 
-export default function Message(props: MessageProps) {
+export default function Message(props: T.MessageProps) {
   const chatDAIconSrc = chrome.runtime.getURL("icons/ChatDA_icon_128.png");
   const minusIconSrc = chrome.runtime.getURL("icons/minus_icon.png");
 
+  function handleCancelButton() {
+    props.setMessages((prev) => {
+      return prev.filter((message: T.MsgProps) => message.id !== props.id);
+    });
+    props.setComparePrds((prev2) => {
+      return prev2.filter((prd: T.ComparePrdProps) => prd.id !== props.id);
+    });
+  }
   if (props.isUser) {
     if (props.isCompared) {
-      function handleCancelButton(id: number) {
-        const filteredMessages = props.messages.filter(
-          (message) => message.isUser && message.id !== id,
-        );
-        console.log(filteredMessages);
-        props.setMessages(filteredMessages);
-      }
       return (
         <S.UserMessageWrapper>
           <div className="compare">
             <span>{props.text}</span>
-            <button onClick={() => handleCancelButton(props.id)}>
+            <button onClick={handleCancelButton}>
               <img src={minusIconSrc} alt="cancel-compare" width={20} height={20} />
             </button>
           </div>
