@@ -1,18 +1,39 @@
 import * as Comp from "@root/src/components";
 import * as S from "./style";
 import { MessageProps } from "@src/types";
-import chatDAIconPath from "@root/public/icons/ChatDA_icon_128.png";
 
 export default function Message(props: MessageProps) {
-  const chatDAIconSrc = chrome.runtime.getURL(chatDAIconPath);
+  const chatDAIconSrc = chrome.runtime.getURL("icons/ChatDA_icon_128.png");
+  const minusIconSrc = chrome.runtime.getURL("icons/minus_icon.png");
+
   if (props.isUser) {
-    return (
-      <S.UserMessageWrapper>
-        <div>
-        <p>{props.text}</p>
-        </div>
-      </S.UserMessageWrapper>
-    );
+    if (props.isCompared) {
+      function handleCancelButton(id: number) {
+        const filteredMessages = props.messages.filter(
+          (message) => message.isUser && message.id !== id,
+        );
+        console.log(filteredMessages);
+        props.setMessages(filteredMessages);
+      }
+      return (
+        <S.UserMessageWrapper>
+          <div className="compare">
+            <span>{props.text}</span>
+            <button onClick={() => handleCancelButton(props.id)}>
+              <img src={minusIconSrc} alt="cancel-compare" width={20} height={20} />
+            </button>
+          </div>
+        </S.UserMessageWrapper>
+      );
+    } else {
+      return (
+        <S.UserMessageWrapper>
+          <div>
+            <p>{props.text}</p>
+          </div>
+        </S.UserMessageWrapper>
+      );
+    }
   } else {
     if (props.text[0] === "1") {
       // const recommendProps = {

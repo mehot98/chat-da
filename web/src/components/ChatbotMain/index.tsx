@@ -4,7 +4,8 @@ import * as Sub from "./Subs";
 import * as S from "./style";
 import * as T from "@root/src/types";
 
-export default function ChatbotMain() {
+export default function ChatbotMain(props: { props: T.ComparePrdProps[] }) {
+  // const compareList = props.props
   const [messages, setMessages] = useState<T.MessagesProps>([]);
   const [currentTypingId, setCurrentTypingId] = useState<number | null>(null);
 
@@ -49,28 +50,45 @@ export default function ChatbotMain() {
       }
     }
   };
-
+  // 비교버튼 누를 시 메시지 생성
   useEffect(() => {
-    if (messages.length > 0 && messages[messages.length - 1].id === 0) {
-      console.log("답변 생성중");
+    if (props.props && props.props.length > 0) {
+      setMessages((prev) => [
+        ...prev,
+        ...props.props.map((item) => ({
+          text: `${item.제품명}\n${item.modelNo}`,
+          isUser: true,
+          isTyping: true,
+          id: Date.now(),
+          isCompared: true,
+        })),
+      ]);
     }
-  }, [messages]);
+  }, [props.props]);
+
+  // useEffect(() => {
+  //   if (messages.length > 0 && messages[messages.length - 1].id === 0) {
+  //     console.log("답변 생성중");
+  //   }
+  // }, [messages]);
 
   const handleSendMessage = async (message: string) => {
     setMessages((prev) => [
       ...prev,
-      { text: message, isUser: true },
-      { text: "", isUser: false, isTyping: true, id: 0 },
+      { text: message, isUser: true, isCompared: false },
+      // { text: "", isUser: false, isTyping: true, id: 0 },
     ]);
 
     const response = await generateText(message);
     setMessages((prev) => [
-      ...prev.slice(0, prev.length - 1), // 성능적으로 괜찮은지, 더 좋은 방법이 있는지 고민해 봐야할 필요 있음
+      // ...prev.slice(0, prev.length - 1), // 성능적으로 괜찮은지, 더 좋은 방법이 있는지 고민해 봐야할 필요 있음
+      ...prev,
       {
         text: response,
         isUser: false,
         isTyping: true,
         id: Date.now(),
+        isCompared: false,
       },
     ]);
   };
@@ -98,7 +116,11 @@ export default function ChatbotMain() {
   return (
     <S.ChatMainWrapper>
       <S.ChatMessageWrapper>
-        <Sub.MessageList messages={messages} currentTypingId={currentTypingId} />
+        <Sub.MessageList
+          messages={messages}
+          currentTypingId={currentTypingId}
+          setMessages={setMessages}
+        />
       </S.ChatMessageWrapper>
       <S.ChatInputWrapper>
         <Sub.MessageForm onSendMessage={handleSendMessage} />

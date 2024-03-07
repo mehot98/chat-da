@@ -2,20 +2,34 @@ import styled from "@emotion/styled";
 import theme from "@assets/style/theme.module.scss";
 
 export const UserMessageWrapper = styled.div`
-display: flex;
+  display: flex;
   justify-content: end;
   width: 100%;
   height: fit-content;
   color: white;
   div {
     width: fit-content;
+    max-width: 83%;
     padding: 14px 28px;
     border-radius: 17px 0 17px 17px;
     background-color: ${theme.userchatcolor};
   }
-  p {
+  div & .compare {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 14px 24px;
+  }
+  img {
+    max-width: none;
+  }
+  span {
     word-break: break-all;
   }
+`;
+
+export const CompareMessageWrapper = styled.div`
+  display: block;
 `;
 
 export const AiMessageWrapper = styled.div`
