@@ -8,7 +8,7 @@ export default function ChatbotMain() {
   const [messages, setMessages] = useState<T.MessagesProps>([]);
   const [currentTypingId, setCurrentTypingId] = useState<number | null>(null);
 
-  const openAiKey = "";
+  const openAiKey = "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";
 
   const generateText = async (prompt: string) => {
     try {
@@ -51,11 +51,12 @@ export default function ChatbotMain() {
   };
 
   const handleSendMessage = async (message: string) => {
+    setMessages((prev) => [...prev, { text: message, isUser: true }]);
+
     const response = await generateText(message);
 
     setMessages((prev) => [
       ...prev,
-      { text: message, isUser: true },
       {
         text: response,
         isUser: false,
@@ -88,10 +89,7 @@ export default function ChatbotMain() {
   return (
     <S.ChatMainWrapper>
       <S.ChatMessageWrapper>
-        <Sub.MessageList
-          messages={messages}
-          currentTypingId={currentTypingId}
-        />
+        <Sub.MessageList messages={messages} currentTypingId={currentTypingId} />
       </S.ChatMessageWrapper>
       <S.ChatInputWrapper>
         <Sub.MessageForm onSendMessage={handleSendMessage} />

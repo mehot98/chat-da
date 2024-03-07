@@ -63,18 +63,23 @@ export const ChatMainHeader = styled.div`
 `;
 
 export const HeaderWords = styled.div`
-  font-size: 14px;
-  font-weight: light;
-  color: white;
+  p {
+    font-size: 14px;
+    font-weight: light;
+    color: white;
+  }
 `;
 
 export const IconWrapper = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 10px;
-  font-size: 10px;
-  font-weight: bold;
   color: white;
+  span {
+    font-size: 10px;
+    font-weight: bold;
+  }
 `;
 
 export const ChatMainContent = styled.div`
