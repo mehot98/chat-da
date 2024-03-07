@@ -37,7 +37,7 @@ async def post_chat(
             data = dump.recommend_data
             response = response_dto.init_recommend_response(data)
         case default:
-            data = get_output(user_input='RF85C90D1AP와 RF85C90D2AP의 차이점이 뭐야?', search=False)
+            data = get_output(user_input=chat_request_dto.content, search=False)
             print(data)
             match data["type"]:
                 case "info":
