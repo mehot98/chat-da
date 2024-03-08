@@ -1,5 +1,5 @@
 compare_data = {
-    "type": "DETAILCOMPARE",
+    "type": "detailcompare",
     "content": "상세 비교",
     "model_list": [
         {

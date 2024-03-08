@@ -18,7 +18,7 @@ async def post_chat(
 ):
     """
     기본 챗봇과의 대화 API\n
-    테스트용 입력 : COMPARE, INFO, RECOMMEND
+    테스트용 입력 : compare, info, recommend
     입력: ChatRequestDto(uuid, content)\n
     응답: ChatInfoDto, ChatCompareDto, ChatRecommendDto(type, content, modelNoLlist or modelNo)\n
     """
@@ -27,23 +27,24 @@ async def post_chat(
     response = None
     content = chat_request_dto.content
     match content:
-        case "INFO":
+        case "info":
             data = dump.info_data
             response = response_dto.init_info_response(data)
-        case "COMPARE":
+        case "compare":
             data = dump.compare_data
             response = response_dto.init_compare_response(data)
-        case "RECOMMEND":
+        case "recommend":
             data = dump.recommend_data
             response = response_dto.init_recommend_response(data)
         case default:
-            data = get_output(user_input='RF85C90D1AP와 RF85C90D2AP의 차이점이 뭐야?', search=False)
+            data = get_output(user_input=chat_request_dto.content, search=False)
+            print(data)
             match data["type"]:
-                case "INFO":
+                case "info":
                     response = response_dto.init_info_response(data)
-                case "COMPARE":
+                case "compare":
                     response = response_dto.init_compare_response(data)
-                case "RECOMMEND":
+                case "recommend":
                     response = response_dto.init_recommend_response(data)
                 case default:
                     raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=[

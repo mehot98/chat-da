@@ -1,5 +1,5 @@
 compare_data = {
-    "type": "COMPARE",
+    "type": "compare",
     "content": "A와 B제품의 차이점은 ~~~",
     "model_list": [
         {
@@ -47,7 +47,7 @@ compare_data = {
 }
 
 info_data = {
-    "type": "INFO",
+    "type": "info",
     "content": "A은 가볍고~~~",
     "model_list": [
         {
@@ -75,7 +75,7 @@ info_data = {
 }
 
 recommend_data = {
-    "type": "RECOMMEND",
+    "type": "recommend",
     "content": "이 제품은 어떠세요?",
     "model_list": [
         {
