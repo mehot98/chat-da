@@ -7,6 +7,7 @@ from routers.chat import router as chat_router
 from routers.detail import router as detail_router
 from routers.compare import router as compare_router
 from routers.summary import router as summary_router
+from routers.natural import router as natural_router
 
 app = FastAPI()
 
@@ -21,3 +22,6 @@ app.include_router(compare_router, prefix="/compare", tags=["compare"])
 
 # 요약 정보 라우터
 app.include_router(summary_router, prefix="/summary", tags=["summary"])
+
+# 요약 정보 라우터
+app.include_router(natural_router, prefix="/naturalSearch", tags=["naturalSearch"])
