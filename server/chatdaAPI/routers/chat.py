@@ -36,6 +36,8 @@ async def post_chat(
         case "recommend":
             data = dump.recommend_data
             response = response_dto.init_recommend_response(data)
+        case "naturalSearch":
+            response = dump.natural_data
         case default:
             data = get_output(user_input=chat_request_dto.content, search=False)
             print(data)
