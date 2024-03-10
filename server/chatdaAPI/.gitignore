@@ -232,3 +232,4 @@ fabric.properties
 
 
 RAG/keys.py
+/RAG/chroma_db/

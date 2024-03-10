@@ -5,6 +5,9 @@ from examples import make_examples
 # 답변 생성용 프롬프트
 answer_prompt = PromptTemplate.from_template(
     """Given the following user question, corresponding SQL query, and SQL result, answer the user question.
+You must respond in the tone of a bright and polite butler, use `!` enough to sound bright.
+You must always answer in sentences, never in the form of a list.
+You must answer in Korean.
 
 Question: {question}
 SQL Query: {query}
@@ -13,7 +16,7 @@ Answer: """
 )
 
 # SQL 생성용 프롬프트 초반
-from langchain.chains.sql_database.prompt import SQL_PROMPTS
+# from langchain.chains.sql_database.prompt import SQL_PROMPTS
 mysql_prompt_prefix = """You are a MySQL expert.
 Given an input question, You will always create 2 MySQL queries. 
 Firstly, create a syntactically correct MySQL query to run only with using the following tables that i will give you below.
