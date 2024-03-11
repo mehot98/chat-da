@@ -14,8 +14,6 @@ export default function ChatbotMain(props: {
 
   const openAiKey = "";
 
-  console.log("props: ", props);
-
   const generateText = async (prompt: string) => {
     try {
       const response = await axios.post(

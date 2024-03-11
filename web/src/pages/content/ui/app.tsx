@@ -56,7 +56,6 @@ export default function App() {
 
   // 현재 url 가져오기
   const currentUrl = window.location.href;
-  console.log("Current URL:", currentUrl);
 
   // 냉장고 페이지에서 모든 리스트 선택
   const [fridgeList, setFridgeList] = useState<NodeListOf<Element>>();
@@ -70,7 +69,6 @@ export default function App() {
 
       moreBtn.addEventListener("click", () => {
         setFridgeList(newLiElements);
-        console.log(fridgeList);
       });
     }
   }, [currentUrl]);
@@ -144,36 +142,38 @@ export default function App() {
           const time = Date.now();
 
           setComparePrds((prev) => {
-            return [
-              ...prev,
-              {
-                제품명: spanTags[0].textContent,
-                modelNo: spanTags[1].textContent,
-                id: time,
-              },
-            ];
-          });
-
-          setMessages((prev) => {
-            return [
-              ...prev,
-              {
-                text: `${spanTags[0].textContent}\n${spanTags[1].textContent}`,
-                isUser: true,
-                isTyping: true,
-                id: time,
-                isCompared: true,
-              },
-            ];
+            const isDuplicate = prev.some((itme) => itme.modelNo === spanTags[1].textContent);
+            if (isDuplicate) {
+              return prev;
+            } else {
+              setMessages((prev2) => {
+                return [
+                  ...prev2,
+                  {
+                    text: `${spanTags[0].textContent}\n${spanTags[1].textContent}`,
+                    isUser: true,
+                    isTyping: true,
+                    id: time,
+                    isCompared: true,
+                  },
+                ];
+              });
+              return [
+                ...prev,
+                {
+                  제품명: spanTags[0].textContent,
+                  modelNo: spanTags[1].textContent,
+                  id: time,
+                },
+              ];
+            }
           });
         });
       });
     }
   }, [fridgeList]);
 
-  useEffect(() => {
-    console.log("prd를 좀 보자:", comparePrds);
-  }, [comparePrds]);
+  useEffect(() => {}, [comparePrds]);
   return (
     <>
       {/* mui component를 사용하는 경우 아래와 같이 StyledEngineProvider를 반드시 사용해야 합니다!*/}

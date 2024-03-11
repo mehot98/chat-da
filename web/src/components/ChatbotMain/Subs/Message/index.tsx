@@ -57,7 +57,6 @@ export default function Message(props: T.MessageProps) {
         imageUrl: chatDAIconSrc,
         message: props.text,
       };
-      console.log(props.text);
       return (
         <S.AiMessageWrapper>
           <img src={chatDAIconSrc} alt="ChatDA-logo" width={43} height={42} />
