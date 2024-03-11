@@ -79,8 +79,8 @@ def get_examples(user_input):
             continue
 
         user_examples.append({
-            "input": example.page_content,
-            "query": example.metadata["query"]
+            "input": example["input"],
+            "query": example["query"]
         })
 
         count += 1
