@@ -8,8 +8,23 @@ from routers.detail import router as detail_router
 from routers.compare import router as compare_router
 from routers.summary import router as summary_router
 from routers.natural import router as natural_router
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
+
+
+origins = [
+    "*"
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 
 # 채팅 관련 라우터
 app.include_router(chat_router, prefix="/chat", tags=["chat"])
