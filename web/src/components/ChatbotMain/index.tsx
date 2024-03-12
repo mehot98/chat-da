@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import * as Sub from "./Subs";
 import * as S from "./style";
 import * as T from "@root/src/types";

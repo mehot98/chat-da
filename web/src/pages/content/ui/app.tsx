@@ -63,11 +63,11 @@ export default function App() {
   useEffect(() => {
     if (currentUrl === "https://www.samsung.com/sec/refrigerators/all-refrigerators/") {
       const moreBtn: HTMLButtonElement | null = document.querySelector("#morePrd");
-      moreBtn.style.backgroundColor = "black";
       let newLiElements: NodeListOf<Element> = document.querySelectorAll(".item-inner");
       setFridgeList(newLiElements);
 
       moreBtn.addEventListener("click", () => {
+        newLiElements = document.querySelectorAll(".item-inner");
         setFridgeList(newLiElements);
       });
     }
