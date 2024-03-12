@@ -15,6 +15,8 @@ from langchain_community.utilities.sql_database import SQLDatabase
 from langchain_core.globals import set_debug
 from langchain_core.output_parsers import StrOutputParser
 
+from RAG.input_type import SEARCH
+
 # 체인 중간 과정 보기
 set_debug(True)
 
@@ -64,9 +66,6 @@ def get_output(user_input, search):
     # 사용자 입력으로부터 SQL 프롬프트와 제품을 리스트 형태로 보여줘야 하는지의 여부를 가져옴
     sql_prompt, user_input_type = prompt.sql_prompt(user_input)
 
-    if search:
-        is_list = True
-
     # SQL 생성을 위한 chain
     create_sql = create_sql_query_chain(llm, db, sql_prompt)
 
@@ -83,6 +82,14 @@ def get_output(user_input, search):
 
     # model list 생성
     model_list = make_model_list(query[1])
+    
+    # 검색 기능인 경우 model list만 생성후 리턴
+    if search:
+        return {
+            "type": SEARCH,
+            "content": "",
+            "model_no_list": model_list
+        }
 
     # 최대 행 개수 설정
     db._sample_rows_in_table_info = max_rows
@@ -93,8 +100,11 @@ def get_output(user_input, search):
     # 얻은 결과로 답변 생성하는 체인 구성
     answer_chain = prompt.answer_prompt | llm | StrOutputParser()
 
-    # 유저 입력으로부터 답변 생성
-    result = answer_chain.invoke({"question": user_input, "query": query[0], "result": result})
+    if result:
+        # 유저 입력으로부터 답변 생성
+        result = answer_chain.invoke({"question": user_input, "query": query[0], "result": result})
+    else:
+        result = "제품에 대한 정보가 존재하지 않습니다!"
 
     return {
         "type": user_input_type,
