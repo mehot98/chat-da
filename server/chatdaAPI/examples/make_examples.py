@@ -2,13 +2,13 @@ import os
 
 import shutil
 
-import RAG.keys
-
 import RAG.input_type as input_type
 
-import examples.examples_compare as examples_compare
-import examples.examples_info as examples_info
-import examples.examples_recommend as examples_recommend
+import examples.examples_compare
+import examples.examples_info
+import examples.examples_recommend
+import examples.examples_ranking
+import examples.examples_search
 
 from langchain_community.vectorstores import Chroma
 from langchain.schema import Document
@@ -30,7 +30,9 @@ if make_new_vectorDB or not os.path.exists(persist_directory):
         shutil.rmtree(persist_directory)
 
     # SQL 예시들
-    examples = examples_compare.examples
+    examples_all = (examples.examples_compare.examples + examples.examples_info.examples
+                + examples.examples_recommend.examples + examples.examples_ranking.examples
+                + examples.examples_search.examples)
 
     # Dictionary 형태의 examples를 vector DB에 저장하기 위해 docs 형태로 변환
     few_shot_docs = [
@@ -38,7 +40,7 @@ if make_new_vectorDB or not os.path.exists(persist_directory):
             page_content=example["input"],
             metadata={"query": example["query"], "type": example["type"], "index": example["index"]}
         )
-        for example in examples
+        for example in examples_all
     ]
 
     # 로컬에 저장
@@ -61,11 +63,17 @@ def get_examples(user_input):
     # 같은 타입의 예제들을 가져오기
     user_input_type = most_relevant_example.metadata["type"]
     if user_input_type == input_type.COMPARE:
-        examples_temp = examples_compare.examples
+        examples_temp = examples.examples_compare.examples
     elif user_input_type == input_type.INFO:
-        examples_temp = examples_info.examples
+        examples_temp = examples.examples_info.examples
+    elif user_input_type == input_type.RECOMMEND:
+        examples_temp = examples.examples_recommend.examples
+    elif user_input_type == input_type.RANKING:
+        examples_temp = examples.examples_ranking.examples
+    elif user_input_type == input_type.SEARCH:
+        examples_temp = examples.examples_search.examples
     else:
-        examples_temp = examples_recommend.examples
+        return [], input_type.GENERAL
 
     # 유저 입력과 관련있는 예제들 Dictionary 객체로 생성
     user_examples = [{
@@ -92,6 +100,6 @@ def get_examples(user_input):
     return user_examples, user_input_type
 
 
-# 테스트 용
-if __name__ == '__main__':
-    get_examples("RF85C90D1AP와 RF85C90D2AP의 차이점이 뭐야?")
+# # 테스트 용
+# if __name__ == '__main__':
+#     get_examples("RF85C90D1AP와 RF85C90D2AP의 차이점이 뭐야?")

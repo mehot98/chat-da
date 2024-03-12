@@ -10,7 +10,7 @@ examples = [
         "index": 0
     },
     {
-        "input": "`BESPOKE 냉장고 4도어` 제품에 대해 설명해줘",
+        "input": "BESPOKE 냉장고 4도어 제품에 대해 설명해줘",
         "query": "SELECT * FROM '냉장고' WHERE `제품명` LIKE '%BESPOKE 냉장고 4도어%';\n\n"
         f"{join} WHERE '냉장고'.`제품명` LIKE '%BESPOKE 냉장고 4도어%';",
         "type": INFO,

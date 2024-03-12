@@ -25,8 +25,8 @@ db = SQLDatabase.from_uri(
     f"mysql+pymysql://{os.environ['MYSQL_ID']}:{os.environ['MYSQL_PWD']}"
     f"@{os.environ['MYSQL_HOST']}/{os.environ['MYSQL_SCHEMA']}?charset=utf8mb4",
     sample_rows_in_table_info=1,
-    include_tables=["냉장고"],
-    max_string_length=100000
+    include_tables=["냉장고", "리뷰_정보"],
+    max_string_length=400
 )
 
 # DB 테이블 정보
@@ -113,8 +113,8 @@ def get_output(user_input, search):
     }
 
 
-# 테스트용
-if __name__ == '__main__':
-    res = get_output(user_input='RF85C90D1AP와 RF85C90D2AP의 주요 기능 및 성능을 비교해주세요.', search=False)
-    print(f"type : {res['type']}")
-    print(f"content : {res['content']}")
+# # 테스트용
+# if __name__ == '__main__':
+#     res = get_output(user_input='냉장고 중에 평점이 높고 리뷰가 많은 제품들을 나열해줘', search=False)
+#     print(f"type : {res['type']}")
+#     print(f"content : {res['content']}")
