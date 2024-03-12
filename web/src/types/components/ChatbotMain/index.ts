@@ -1,9 +1,13 @@
+import { Dispatch, SetStateAction } from "react";
+import * as T from "../../index";
+
 export interface MsgProps {
   text?: string;
   sender?: "user" | "bot";
   isUser?: boolean;
   isTyping?: boolean;
   id?: number;
+  isCompared?: boolean;
 }
 
 export interface MessagesProps extends Array<MsgProps> {}
@@ -16,6 +20,7 @@ export interface MessageProps {
   isUser: boolean;
   isTyping: boolean;
   id: number;
+  isCompared: boolean;
   currentTypingId: number;
   modelNo?: string;
   modelNoList?: Array<string>;
@@ -40,6 +45,8 @@ export interface MessageProps {
   reviewCount?: string;
   rating?: string;
   imageUrl?: string;
+  setMessages?: Dispatch<SetStateAction<MessagesProps>>;
+  setComparePrds?: Dispatch<SetStateAction<T.ComparePrdProps[]>>;
 }
 
 export interface MessageListProps {

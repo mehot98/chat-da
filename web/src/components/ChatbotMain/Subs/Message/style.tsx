@@ -10,13 +10,27 @@ export const UserMessageWrapper = styled.div`
   color: white;
   div {
     width: fit-content;
+    max-width: 83%;
     padding: 14px 28px;
     border-radius: 17px 0 17px 17px;
     background-color: ${theme.userchatcolor};
   }
-  p {
+  div & .compare {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 14px 24px;
+  }
+  img {
+    max-width: none;
+  }
+  span {
     word-break: break-all;
   }
+`;
+
+export const CompareMessageWrapper = styled.div`
+  display: block;
 `;
 
 export const AiMessageWrapper = styled.div`

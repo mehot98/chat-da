@@ -1,21 +1,41 @@
+import MessageFeedback from "../MessageFeedback";
 import * as Comp from "@root/src/components";
 import * as S from "./style";
-import MessageFeedback from "../MessageFeedback";
-import { MessageProps, ChatbotRecommendCardProps } from "@src/types";
-import chatDAIconPath from "@root/public/icons/ChatDA_icon_128.png";
-// import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import * as T from "@src/types";
 
-export default function Message(props: MessageProps) {
-  const chatDAIconSrc = chrome.runtime.getURL(chatDAIconPath);
+export default function Message(props: T.MessageProps) {
+  const chatDAIconSrc = chrome.runtime.getURL("icons/ChatDA_icon_128.png");
+  const minusIconSrc = chrome.runtime.getURL("icons/minus_icon.png");
 
+  function handleCancelButton() {
+    props.setMessages((prev) => {
+      return prev.filter((message: T.MsgProps) => message.id !== props.id);
+    });
+    props.setComparePrds((prev2) => {
+      return prev2.filter((prd: T.ComparePrdProps) => prd.id !== props.id);
+    });
+  }
   if (props.isUser) {
-    return (
-      <S.UserMessageWrapper>
-        <div>
-          <p>{props.text}</p>
-        </div>
-      </S.UserMessageWrapper>
-    );
+    if (props.isCompared) {
+      return (
+        <S.UserMessageWrapper>
+          <div className="compare">
+            <span>{props.text}</span>
+            <button onClick={handleCancelButton}>
+              <img src={minusIconSrc} alt="cancel-compare" width={20} height={20} />
+            </button>
+          </div>
+        </S.UserMessageWrapper>
+      );
+    } else {
+      return (
+        <S.UserMessageWrapper>
+          <div>
+            <p>{props.text}</p>
+          </div>
+        </S.UserMessageWrapper>
+      );
+    }
   } else {
     // if (props.text[0] === "1") {
     //   // const recommendProps = {
@@ -53,7 +73,7 @@ export default function Message(props: MessageProps) {
       //   imageUrl: props.imageUrl,
       //   message: props.text,
       // };
-      const recommendProps: ChatbotRecommendCardProps = props.spec;
+      const recommendProps: T.ChatbotRecommendCardProps = props.spec;
 
       return (
         <S.AiMessageWrapper>
