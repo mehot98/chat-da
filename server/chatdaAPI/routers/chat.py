@@ -10,6 +10,13 @@ from RAG.make_output import get_output
 # prefix == chat
 router = APIRouter()
 
+import api.naver
+
+
+@router.get("/api/test")
+async def get():
+    api.naver.stt()
+
 
 @router.post("", status_code=status.HTTP_201_CREATED,
              response_model=Union[response_dto.ChatInfoDto, response_dto.ChatCompareDto, response_dto.ChatRecommendDto])
