@@ -5,9 +5,9 @@ from examples import make_examples
 # 답변 생성용 프롬프트
 answer_prompt = PromptTemplate.from_template(
     """Given the following user question, corresponding SQL query, and SQL result, answer the user question.
-You must respond in the tone of a bright and polite butler, use `!` enough to sound bright.
+Your answer must be in the tone of a bright and polite butler using `!` enough to sound bright.
 You must always answer in sentences, never in the form of a list.
-You must answer in Korean. You need to use a speaking style that ends with '요', not one that ends with '다' in Korean to sound bright.
+You must answer in Korean.
 
 Question: {question}
 SQL Query: {query}

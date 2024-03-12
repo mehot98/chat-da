@@ -1,0 +1,205 @@
+[chain/start] [1:chain:RunnableSequence] Entering Chain run with input:
+{
+  "question": "RF85C90D1AP와 RF85C90D2AP의 주요 기능 및 성능을 비교해주세요.",
+  "top_k": 4,
+  "table_info": "\nCREATE TABLE `냉장고` (\n\tid INTEGER NOT NULL AUTO_INCREMENT, \n\t`제품_코드` VARCHAR(20) NOT NULL, \n\t`제품명` VARCHAR(255) NOT NULL, \n\t`가격` VARCHAR(30), \n\t`가로` VARCHAR(20), \n\t`높이` VARCHAR(20), \n\t`깊이` VARCHAR(20), \n\t`제품_타입` VARCHAR(255), \n\t`무게` VARCHAR(20), \n\t`전체_용량` VARCHAR(20), \n\t`냉장실_용량` VARCHAR(20), \n\t`냉동실_용량` VARCHAR(20), \n\t`맞춤보관실_용량` VARCHAR(20), \n\t`소비효율등급` VARCHAR(10), \n\t`소비_전력` VARCHAR(20), \n\tPRIMARY KEY (id)\n)COLLATE utf8mb4_0900_ai_ci ENGINE=InnoDB DEFAULT CHARSET=utf8mb4\n\n/*\n1 rows from 냉장고 table:\nid\t제품_코드\t제품명\t가격\t가로\t높이\t깊이\t제품_타입\t무게\t전체_용량\t냉장실_용량\t냉동실_용량\t맞춤보관실_용량\t소비효율등급\t소비_전력\n1\tRF85C9101AP\tBESPOKE 냉장고 4도어 870 L\t3240000 원\t912 mm\t1853 mm\t930 mm\tBESPOKE 냉장고 4도어\t150 kg\t870 L\t517 L\t177 L\t176 L\t1등급\t42.8 kWh/월\n*/"
+}
+[chain/start] [1:chain:RunnableSequence > 2:chain:RunnableAssign<input,table_info>] Entering Chain run with input:
+{
+  "question": "RF85C90D1AP와 RF85C90D2AP의 주요 기능 및 성능을 비교해주세요.",
+  "top_k": 4,
+  "table_info": "\nCREATE TABLE `냉장고` (\n\tid INTEGER NOT NULL AUTO_INCREMENT, \n\t`제품_코드` VARCHAR(20) NOT NULL, \n\t`제품명` VARCHAR(255) NOT NULL, \n\t`가격` VARCHAR(30), \n\t`가로` VARCHAR(20), \n\t`높이` VARCHAR(20), \n\t`깊이` VARCHAR(20), \n\t`제품_타입` VARCHAR(255), \n\t`무게` VARCHAR(20), \n\t`전체_용량` VARCHAR(20), \n\t`냉장실_용량` VARCHAR(20), \n\t`냉동실_용량` VARCHAR(20), \n\t`맞춤보관실_용량` VARCHAR(20), \n\t`소비효율등급` VARCHAR(10), \n\t`소비_전력` VARCHAR(20), \n\tPRIMARY KEY (id)\n)COLLATE utf8mb4_0900_ai_ci ENGINE=InnoDB DEFAULT CHARSET=utf8mb4\n\n/*\n1 rows from 냉장고 table:\nid\t제품_코드\t제품명\t가격\t가로\t높이\t깊이\t제품_타입\t무게\t전체_용량\t냉장실_용량\t냉동실_용량\t맞춤보관실_용량\t소비효율등급\t소비_전력\n1\tRF85C9101AP\tBESPOKE 냉장고 4도어 870 L\t3240000 원\t912 mm\t1853 mm\t930 mm\tBESPOKE 냉장고 4도어\t150 kg\t870 L\t517 L\t177 L\t176 L\t1등급\t42.8 kWh/월\n*/"
+}
+[chain/start] [1:chain:RunnableSequence > 2:chain:RunnableAssign<input,table_info> > 3:chain:RunnableParallel<input,table_info>] Entering Chain run with input:
+{
+  "question": "RF85C90D1AP와 RF85C90D2AP의 주요 기능 및 성능을 비교해주세요.",
+  "top_k": 4,
+  "table_info": "\nCREATE TABLE `냉장고` (\n\tid INTEGER NOT NULL AUTO_INCREMENT, \n\t`제품_코드` VARCHAR(20) NOT NULL, \n\t`제품명` VARCHAR(255) NOT NULL, \n\t`가격` VARCHAR(30), \n\t`가로` VARCHAR(20), \n\t`높이` VARCHAR(20), \n\t`깊이` VARCHAR(20), \n\t`제품_타입` VARCHAR(255), \n\t`무게` VARCHAR(20), \n\t`전체_용량` VARCHAR(20), \n\t`냉장실_용량` VARCHAR(20), \n\t`냉동실_용량` VARCHAR(20), \n\t`맞춤보관실_용량` VARCHAR(20), \n\t`소비효율등급` VARCHAR(10), \n\t`소비_전력` VARCHAR(20), \n\tPRIMARY KEY (id)\n)COLLATE utf8mb4_0900_ai_ci ENGINE=InnoDB DEFAULT CHARSET=utf8mb4\n\n/*\n1 rows from 냉장고 table:\nid\t제품_코드\t제품명\t가격\t가로\t높이\t깊이\t제품_타입\t무게\t전체_용량\t냉장실_용량\t냉동실_용량\t맞춤보관실_용량\t소비효율등급\t소비_전력\n1\tRF85C9101AP\tBESPOKE 냉장고 4도어 870 L\t3240000 원\t912 mm\t1853 mm\t930 mm\tBESPOKE 냉장고 4도어\t150 kg\t870 L\t517 L\t177 L\t176 L\t1등급\t42.8 kWh/월\n*/"
+}
+[chain/start] [1:chain:RunnableSequence > 2:chain:RunnableAssign<input,table_info> > 3:chain:RunnableParallel<input,table_info> > 4:chain:RunnableLambda] Entering Chain run with input:
+{
+  "question": "RF85C90D1AP와 RF85C90D2AP의 주요 기능 및 성능을 비교해주세요.",
+  "top_k": 4,
+  "table_info": "\nCREATE TABLE `냉장고` (\n\tid INTEGER NOT NULL AUTO_INCREMENT, \n\t`제품_코드` VARCHAR(20) NOT NULL, \n\t`제품명` VARCHAR(255) NOT NULL, \n\t`가격` VARCHAR(30), \n\t`가로` VARCHAR(20), \n\t`높이` VARCHAR(20), \n\t`깊이` VARCHAR(20), \n\t`제품_타입` VARCHAR(255), \n\t`무게` VARCHAR(20), \n\t`전체_용량` VARCHAR(20), \n\t`냉장실_용량` VARCHAR(20), \n\t`냉동실_용량` VARCHAR(20), \n\t`맞춤보관실_용량` VARCHAR(20), \n\t`소비효율등급` VARCHAR(10), \n\t`소비_전력` VARCHAR(20), \n\tPRIMARY KEY (id)\n)COLLATE utf8mb4_0900_ai_ci ENGINE=InnoDB DEFAULT CHARSET=utf8mb4\n\n/*\n1 rows from 냉장고 table:\nid\t제품_코드\t제품명\t가격\t가로\t높이\t깊이\t제품_타입\t무게\t전체_용량\t냉장실_용량\t냉동실_용량\t맞춤보관실_용량\t소비효율등급\t소비_전력\n1\tRF85C9101AP\tBESPOKE 냉장고 4도어 870 L\t3240000 원\t912 mm\t1853 mm\t930 mm\tBESPOKE 냉장고 4도어\t150 kg\t870 L\t517 L\t177 L\t176 L\t1등급\t42.8 kWh/월\n*/"
+}
+[chain/start] [1:chain:RunnableSequence > 2:chain:RunnableAssign<input,table_info> > 3:chain:RunnableParallel<input,table_info> > 5:chain:RunnableLambda] Entering Chain run with input:
+{
+  "question": "RF85C90D1AP와 RF85C90D2AP의 주요 기능 및 성능을 비교해주세요.",
+  "top_k": 4,
+  "table_info": "\nCREATE TABLE `냉장고` (\n\tid INTEGER NOT NULL AUTO_INCREMENT, \n\t`제품_코드` VARCHAR(20) NOT NULL, \n\t`제품명` VARCHAR(255) NOT NULL, \n\t`가격` VARCHAR(30), \n\t`가로` VARCHAR(20), \n\t`높이` VARCHAR(20), \n\t`깊이` VARCHAR(20), \n\t`제품_타입` VARCHAR(255), \n\t`무게` VARCHAR(20), \n\t`전체_용량` VARCHAR(20), \n\t`냉장실_용량` VARCHAR(20), \n\t`냉동실_용량` VARCHAR(20), \n\t`맞춤보관실_용량` VARCHAR(20), \n\t`소비효율등급` VARCHAR(10), \n\t`소비_전력` VARCHAR(20), \n\tPRIMARY KEY (id)\n)COLLATE utf8mb4_0900_ai_ci ENGINE=InnoDB DEFAULT CHARSET=utf8mb4\n\n/*\n1 rows from 냉장고 table:\nid\t제품_코드\t제품명\t가격\t가로\t높이\t깊이\t제품_타입\t무게\t전체_용량\t냉장실_용량\t냉동실_용량\t맞춤보관실_용량\t소비효율등급\t소비_전력\n1\tRF85C9101AP\tBESPOKE 냉장고 4도어 870 L\t3240000 원\t912 mm\t1853 mm\t930 mm\tBESPOKE 냉장고 4도어\t150 kg\t870 L\t517 L\t177 L\t176 L\t1등급\t42.8 kWh/월\n*/"
+}
+[chain/end] [1:chain:RunnableSequence > 2:chain:RunnableAssign<input,table_info> > 3:chain:RunnableParallel<input,table_info> > 5:chain:RunnableLambda] [0ms] Exiting Chain run with output:
+{
+  "output": "RF85C90D1AP와 RF85C90D2AP의 주요 기능 및 성능을 비교해주세요.\nSQLQuery: "
+}[chain/end] [1:chain:RunnableSequence > 2:chain:RunnableAssign<input,table_info> > 3:chain:RunnableParallel<input,table_info> > 4:chain:RunnableLambda] [2ms] Exiting Chain run with output:
+{
+  "output": "\nCREATE TABLE `냉장고` (\n\tid INTEGER NOT NULL AUTO_INCREMENT, \n\t`제품_코드` VARCHAR(20) NOT NULL, \n\t`제품명` VARCHAR(255) NOT NULL, \n\t`가격` VARCHAR(30), \n\t`가로` VARCHAR(20), \n\t`높이` VARCHAR(20), \n\t`깊이` VARCHAR(20), \n\t`제품_타입` VARCHAR(255), \n\t`무게` VARCHAR(20), \n\t`전체_용량` VARCHAR(20), \n\t`냉장실_용량` VARCHAR(20), \n\t`냉동실_용량` VARCHAR(20), \n\t`맞춤보관실_용량` VARCHAR(20), \n\t`소비효율등급` VARCHAR(10), \n\t`소비_전력` VARCHAR(20), \n\tPRIMARY KEY (id)\n)COLLATE utf8mb4_0900_ai_ci ENGINE=InnoDB DEFAULT CHARSET=utf8mb4\n\n/*\n1 rows from 냉장고 table:\nid\t제품_코드\t제품명\t가격\t가로\t높이\t깊이\t제품_타입\t무게\t전체_용량\t냉장실_용량\t냉동실_용량\t맞춤보관실_용량\t소비효율등급\t소비_전력\n1\tRF85C9101AP\tBESPOKE 냉장고 4도어 870 L\t3240000 원\t912 mm\t1853 mm\t930 mm\tBESPOKE 냉장고 4도어\t150 kg\t870 L\t517 L\t177 L\t176 L\t1등급\t42.8 kWh/월\n*/"
+}
+
+[chain/end] [1:chain:RunnableSequence > 2:chain:RunnableAssign<input,table_info> > 3:chain:RunnableParallel<input,table_info>] [4ms] Exiting Chain run with output:
+{
+  "input": "RF85C90D1AP와 RF85C90D2AP의 주요 기능 및 성능을 비교해주세요.\nSQLQuery: ",
+  "table_info": "\nCREATE TABLE `냉장고` (\n\tid INTEGER NOT NULL AUTO_INCREMENT, \n\t`제품_코드` VARCHAR(20) NOT NULL, \n\t`제품명` VARCHAR(255) NOT NULL, \n\t`가격` VARCHAR(30), \n\t`가로` VARCHAR(20), \n\t`높이` VARCHAR(20), \n\t`깊이` VARCHAR(20), \n\t`제품_타입` VARCHAR(255), \n\t`무게` VARCHAR(20), \n\t`전체_용량` VARCHAR(20), \n\t`냉장실_용량` VARCHAR(20), \n\t`냉동실_용량` VARCHAR(20), \n\t`맞춤보관실_용량` VARCHAR(20), \n\t`소비효율등급` VARCHAR(10), \n\t`소비_전력` VARCHAR(20), \n\tPRIMARY KEY (id)\n)COLLATE utf8mb4_0900_ai_ci ENGINE=InnoDB DEFAULT CHARSET=utf8mb4\n\n/*\n1 rows from 냉장고 table:\nid\t제품_코드\t제품명\t가격\t가로\t높이\t깊이\t제품_타입\t무게\t전체_용량\t냉장실_용량\t냉동실_용량\t맞춤보관실_용량\t소비효율등급\t소비_전력\n1\tRF85C9101AP\tBESPOKE 냉장고 4도어 870 L\t3240000 원\t912 mm\t1853 mm\t930 mm\tBESPOKE 냉장고 4도어\t150 kg\t870 L\t517 L\t177 L\t176 L\t1등급\t42.8 kWh/월\n*/"
+}
+[chain/end] [1:chain:RunnableSequence > 2:chain:RunnableAssign<input,table_info>] [8ms] Exiting Chain run with output:
+{
+  "question": "RF85C90D1AP와 RF85C90D2AP의 주요 기능 및 성능을 비교해주세요.",
+  "top_k": 4,
+  "table_info": "\nCREATE TABLE `냉장고` (\n\tid INTEGER NOT NULL AUTO_INCREMENT, \n\t`제품_코드` VARCHAR(20) NOT NULL, \n\t`제품명` VARCHAR(255) NOT NULL, \n\t`가격` VARCHAR(30), \n\t`가로` VARCHAR(20), \n\t`높이` VARCHAR(20), \n\t`깊이` VARCHAR(20), \n\t`제품_타입` VARCHAR(255), \n\t`무게` VARCHAR(20), \n\t`전체_용량` VARCHAR(20), \n\t`냉장실_용량` VARCHAR(20), \n\t`냉동실_용량` VARCHAR(20), \n\t`맞춤보관실_용량` VARCHAR(20), \n\t`소비효율등급` VARCHAR(10), \n\t`소비_전력` VARCHAR(20), \n\tPRIMARY KEY (id)\n)COLLATE utf8mb4_0900_ai_ci ENGINE=InnoDB DEFAULT CHARSET=utf8mb4\n\n/*\n1 rows from 냉장고 table:\nid\t제품_코드\t제품명\t가격\t가로\t높이\t깊이\t제품_타입\t무게\t전체_용량\t냉장실_용량\t냉동실_용량\t맞춤보관실_용량\t소비효율등급\t소비_전력\n1\tRF85C9101AP\tBESPOKE 냉장고 4도어 870 L\t3240000 원\t912 mm\t1853 mm\t930 mm\tBESPOKE 냉장고 4도어\t150 kg\t870 L\t517 L\t177 L\t176 L\t1등급\t42.8 kWh/월\n*/",
+  "input": "RF85C90D1AP와 RF85C90D2AP의 주요 기능 및 성능을 비교해주세요.\nSQLQuery: "
+}
+[chain/start] [1:chain:RunnableSequence > 6:chain:RunnableLambda] Entering Chain run with input:
+{
+  "question": "RF85C90D1AP와 RF85C90D2AP의 주요 기능 및 성능을 비교해주세요.",
+  "top_k": 4,
+  "table_info": "\nCREATE TABLE `냉장고` (\n\tid INTEGER NOT NULL AUTO_INCREMENT, \n\t`제품_코드` VARCHAR(20) NOT NULL, \n\t`제품명` VARCHAR(255) NOT NULL, \n\t`가격` VARCHAR(30), \n\t`가로` VARCHAR(20), \n\t`높이` VARCHAR(20), \n\t`깊이` VARCHAR(20), \n\t`제품_타입` VARCHAR(255), \n\t`무게` VARCHAR(20), \n\t`전체_용량` VARCHAR(20), \n\t`냉장실_용량` VARCHAR(20), \n\t`냉동실_용량` VARCHAR(20), \n\t`맞춤보관실_용량` VARCHAR(20), \n\t`소비효율등급` VARCHAR(10), \n\t`소비_전력` VARCHAR(20), \n\tPRIMARY KEY (id)\n)COLLATE utf8mb4_0900_ai_ci ENGINE=InnoDB DEFAULT CHARSET=utf8mb4\n\n/*\n1 rows from 냉장고 table:\nid\t제품_코드\t제품명\t가격\t가로\t높이\t깊이\t제품_타입\t무게\t전체_용량\t냉장실_용량\t냉동실_용량\t맞춤보관실_용량\t소비효율등급\t소비_전력\n1\tRF85C9101AP\tBESPOKE 냉장고 4도어 870 L\t3240000 원\t912 mm\t1853 mm\t930 mm\tBESPOKE 냉장고 4도어\t150 kg\t870 L\t517 L\t177 L\t176 L\t1등급\t42.8 kWh/월\n*/",
+  "input": "RF85C90D1AP와 RF85C90D2AP의 주요 기능 및 성능을 비교해주세요.\nSQLQuery: "
+}
+[chain/end] [1:chain:RunnableSequence > 6:chain:RunnableLambda] [0ms] Exiting Chain run with output:
+{
+  "top_k": 4,
+  "table_info": "\nCREATE TABLE `냉장고` (\n\tid INTEGER NOT NULL AUTO_INCREMENT, \n\t`제품_코드` VARCHAR(20) NOT NULL, \n\t`제품명` VARCHAR(255) NOT NULL, \n\t`가격` VARCHAR(30), \n\t`가로` VARCHAR(20), \n\t`높이` VARCHAR(20), \n\t`깊이` VARCHAR(20), \n\t`제품_타입` VARCHAR(255), \n\t`무게` VARCHAR(20), \n\t`전체_용량` VARCHAR(20), \n\t`냉장실_용량` VARCHAR(20), \n\t`냉동실_용량` VARCHAR(20), \n\t`맞춤보관실_용량` VARCHAR(20), \n\t`소비효율등급` VARCHAR(10), \n\t`소비_전력` VARCHAR(20), \n\tPRIMARY KEY (id)\n)COLLATE utf8mb4_0900_ai_ci ENGINE=InnoDB DEFAULT CHARSET=utf8mb4\n\n/*\n1 rows from 냉장고 table:\nid\t제품_코드\t제품명\t가격\t가로\t높이\t깊이\t제품_타입\t무게\t전체_용량\t냉장실_용량\t냉동실_용량\t맞춤보관실_용량\t소비효율등급\t소비_전력\n1\tRF85C9101AP\tBESPOKE 냉장고 4도어 870 L\t3240000 원\t912 mm\t1853 mm\t930 mm\tBESPOKE 냉장고 4도어\t150 kg\t870 L\t517 L\t177 L\t176 L\t1등급\t42.8 kWh/월\n*/",
+  "input": "RF85C90D1AP와 RF85C90D2AP의 주요 기능 및 성능을 비교해주세요.\nSQLQuery: "
+}
+[chain/start] [1:chain:RunnableSequence > 7:prompt:FewShotPromptTemplate] Entering Prompt run with input:
+{
+  "top_k": 4,
+  "table_info": "\nCREATE TABLE `냉장고` (\n\tid INTEGER NOT NULL AUTO_INCREMENT, \n\t`제품_코드` VARCHAR(20) NOT NULL, \n\t`제품명` VARCHAR(255) NOT NULL, \n\t`가격` VARCHAR(30), \n\t`가로` VARCHAR(20), \n\t`높이` VARCHAR(20), \n\t`깊이` VARCHAR(20), \n\t`제품_타입` VARCHAR(255), \n\t`무게` VARCHAR(20), \n\t`전체_용량` VARCHAR(20), \n\t`냉장실_용량` VARCHAR(20), \n\t`냉동실_용량` VARCHAR(20), \n\t`맞춤보관실_용량` VARCHAR(20), \n\t`소비효율등급` VARCHAR(10), \n\t`소비_전력` VARCHAR(20), \n\tPRIMARY KEY (id)\n)COLLATE utf8mb4_0900_ai_ci ENGINE=InnoDB DEFAULT CHARSET=utf8mb4\n\n/*\n1 rows from 냉장고 table:\nid\t제품_코드\t제품명\t가격\t가로\t높이\t깊이\t제품_타입\t무게\t전체_용량\t냉장실_용량\t냉동실_용량\t맞춤보관실_용량\t소비효율등급\t소비_전력\n1\tRF85C9101AP\tBESPOKE 냉장고 4도어 870 L\t3240000 원\t912 mm\t1853 mm\t930 mm\tBESPOKE 냉장고 4도어\t150 kg\t870 L\t517 L\t177 L\t176 L\t1등급\t42.8 kWh/월\n*/",
+  "input": "RF85C90D1AP와 RF85C90D2AP의 주요 기능 및 성능을 비교해주세요.\nSQLQuery: "
+}
+[chain/end] [1:chain:RunnableSequence > 7:prompt:FewShotPromptTemplate] [0ms] Exiting Prompt run with output:
+[outputs]
+[llm/start] [1:chain:RunnableSequence > 8:llm:ChatOpenAI] Entering LLM run with input:
+{
+  "prompts": [
+    "Human: You are a MySQL expert.\nGiven an input question, You will always create 2 MySQL queries. \nFirstly, create a syntactically correct MySQL query to run only with using the following tables that i will give you below.\nPay attention to use only the column names you can see in the tables below.\n\nOnly use the following tables for the first MySQL query:\n\nCREATE TABLE `냉장고` (\n\tid INTEGER NOT NULL AUTO_INCREMENT, \n\t`제품_코드` VARCHAR(20) NOT NULL, \n\t`제품명` VARCHAR(255) NOT NULL, \n\t`가격` VARCHAR(30), \n\t`가로` VARCHAR(20), \n\t`높이` VARCHAR(20), \n\t`깊이` VARCHAR(20), \n\t`제품_타입` VARCHAR(255), \n\t`무게` VARCHAR(20), \n\t`전체_용량` VARCHAR(20), \n\t`냉장실_용량` VARCHAR(20), \n\t`냉동실_용량` VARCHAR(20), \n\t`맞춤보관실_용량` VARCHAR(20), \n\t`소비효율등급` VARCHAR(10), \n\t`소비_전력` VARCHAR(20), \n\tPRIMARY KEY (id)\n)COLLATE utf8mb4_0900_ai_ci ENGINE=InnoDB DEFAULT CHARSET=utf8mb4\n\n/*\n1 rows from 냉장고 table:\nid\t제품_코드\t제품명\t가격\t가로\t높이\t깊이\t제품_타입\t무게\t전체_용량\t냉장실_용량\t냉동실_용량\t맞춤보관실_용량\t소비효율등급\t소비_전력\n1\tRF85C9101AP\tBESPOKE 냉장고 4도어 870 L\t3240000 원\t912 mm\t1853 mm\t930 mm\tBESPOKE 냉장고 4도어\t150 kg\t870 L\t517 L\t177 L\t176 L\t1등급\t42.8 kWh/월\n*/\n\nAnd secondly, create a syntactically correct MySQL query to run like the first one.\nBut in this case you will join more tables.\nYou will only need table's names to join and the column to join with the main table\n\nHere is the additional table names to join:\n[`냉장고_추가정보`,`리뷰_정보`,`제품_정보`,`할인_정보`]\n\nAnd here is the standard column name to join:\n`제품_코드`\n\nSeparate first query and second query using two line breakings like `\\n\\n`\nYou can order the results to return the most informative data in the database.\nAlways query for all columns from a table using * after SELECT.\nUnless the user specifies in the question a specific number of examples to obtain,\nquery for at most 4 results using the LIMIT clause as per MySQL\nWrap each column name in backticks (`) to denote them as delimited identifiers.\nBe careful to not query for columns that do not exist.\nAlso, pay attention to which column is in which table.\n\nUse the following format:\n\nUser input: User input here\nSQLquery: First SQL Query to run\nSecond SQL Query to run\n\nBelow are a number of examples of questions and their corresponding SQL queries.\n\nUser input: RF85C90D1AP와 RF85C90D2AP의 주요 기능 및 성능을 비교해주세요.\nSQLquery: SELECT * FROM '냉장고' WHERE `제품_코드`='RF85C90D1AP' OR `제품_코드`='RF85C90D2AP';\n\n\n\nUser input: RF85C90D1AP와 RF85C90D2AP의 차이점이 뭐야?\nSQLquery: SELECT * FROM '냉장고' WHERE `제품_코드`='RF85C90D1AP' OR `제품_코드`='RF85C90D2AP';\n\n\n\nUser input: RF85C90D1AP와 RF85C90D2AP는 이름은 같은데 가격이 달라. 왜 다른거야?\nSQLquery: SELECT * FROM '냉장고' WHERE `제품_코드`='RF85C90D1AP' OR `제품_코드`='RF85C90D2AP';\n\n\n\nUser input: RF85C90D1AP와 RF85C90D2AP의 주요 기능 및 성능을 비교해주세요.\nSQLQuery:"
+  ]
+}
+[llm/end] [1:chain:RunnableSequence > 8:llm:ChatOpenAI] [6.49s] Exiting LLM run with output:
+{
+  "generations": [
+    [
+      {
+        "text": "SELECT * FROM `냉장고` WHERE `제품_코드`='RF85C90D1AP' OR `제품_코드`='RF85C90D2AP' LIMIT 4;\n\nSELECT * \nFROM `냉장고` \nLEFT JOIN `냉장고_추가정보` ON `냉장고`.`제품_코드` = `냉장고_추가정보`.`제품_코드`\nLEFT JOIN `리뷰_정보` ON `냉장고`.`제품_코드` = `리뷰_정보`.`제품_코드`\nLEFT JOIN `제품_정보` ON `냉장고`.`제품_코드` = `제품_정보`.`제품_코드`\nLEFT JOIN `할인_정보` ON `냉장고`.`제품_코드` = `할인_정보`.`제품_코드`\nWHERE `냉장고`.`제품_코드`='RF85C90D1AP' OR `냉장고`.`제품_코드`='RF85C90D2AP' LIMIT 4;",
+        "generation_info": {
+          "finish_reason": "stop",
+          "logprobs": null
+        },
+        "type": "ChatGeneration",
+        "message": {
+          "lc": 1,
+          "type": "constructor",
+          "id": [
+            "langchain",
+            "schema",
+            "messages",
+            "AIMessage"
+          ],
+          "kwargs": {
+            "content": "SELECT * FROM `냉장고` WHERE `제품_코드`='RF85C90D1AP' OR `제품_코드`='RF85C90D2AP' LIMIT 4;\n\nSELECT * \nFROM `냉장고` \nLEFT JOIN `냉장고_추가정보` ON `냉장고`.`제품_코드` = `냉장고_추가정보`.`제품_코드`\nLEFT JOIN `리뷰_정보` ON `냉장고`.`제품_코드` = `리뷰_정보`.`제품_코드`\nLEFT JOIN `제품_정보` ON `냉장고`.`제품_코드` = `제품_정보`.`제품_코드`\nLEFT JOIN `할인_정보` ON `냉장고`.`제품_코드` = `할인_정보`.`제품_코드`\nWHERE `냉장고`.`제품_코드`='RF85C90D1AP' OR `냉장고`.`제품_코드`='RF85C90D2AP' LIMIT 4;",
+            "additional_kwargs": {}
+          }
+        }
+      }
+    ]
+  ],
+  "llm_output": {
+    "token_usage": {
+      "completion_tokens": 302,
+      "prompt_tokens": 1102,
+      "total_tokens": 1404
+    },
+    "model_name": "gpt-3.5-turbo",
+    "system_fingerprint": "fp_4f0b692a78"
+  },
+  "run": null
+}
+[chain/start] [1:chain:RunnableSequence > 9:parser:StrOutputParser] Entering Parser run with input:
+[inputs]
+[chain/end] [1:chain:RunnableSequence > 9:parser:StrOutputParser] [0ms] Exiting Parser run with output:
+{
+  "output": "SELECT * FROM `냉장고` WHERE `제품_코드`='RF85C90D1AP' OR `제품_코드`='RF85C90D2AP' LIMIT 4;\n\nSELECT * \nFROM `냉장고` \nLEFT JOIN `냉장고_추가정보` ON `냉장고`.`제품_코드` = `냉장고_추가정보`.`제품_코드`\nLEFT JOIN `리뷰_정보` ON `냉장고`.`제품_코드` = `리뷰_정보`.`제품_코드`\nLEFT JOIN `제품_정보` ON `냉장고`.`제품_코드` = `제품_정보`.`제품_코드`\nLEFT JOIN `할인_정보` ON `냉장고`.`제품_코드` = `할인_정보`.`제품_코드`\nWHERE `냉장고`.`제품_코드`='RF85C90D1AP' OR `냉장고`.`제품_코드`='RF85C90D2AP' LIMIT 4;"
+}
+[chain/start] [1:chain:RunnableSequence > 10:chain:_strip] Entering Chain run with input:
+{
+  "input": "SELECT * FROM `냉장고` WHERE `제품_코드`='RF85C90D1AP' OR `제품_코드`='RF85C90D2AP' LIMIT 4;\n\nSELECT * \nFROM `냉장고` \nLEFT JOIN `냉장고_추가정보` ON `냉장고`.`제품_코드` = `냉장고_추가정보`.`제품_코드`\nLEFT JOIN `리뷰_정보` ON `냉장고`.`제품_코드` = `리뷰_정보`.`제품_코드`\nLEFT JOIN `제품_정보` ON `냉장고`.`제품_코드` = `제품_정보`.`제품_코드`\nLEFT JOIN `할인_정보` ON `냉장고`.`제품_코드` = `할인_정보`.`제품_코드`\nWHERE `냉장고`.`제품_코드`='RF85C90D1AP' OR `냉장고`.`제품_코드`='RF85C90D2AP' LIMIT 4;"
+}
+[chain/end] [1:chain:RunnableSequence > 10:chain:_strip] [0ms] Exiting Chain run with output:
+{
+  "output": "SELECT * FROM `냉장고` WHERE `제품_코드`='RF85C90D1AP' OR `제품_코드`='RF85C90D2AP' LIMIT 4;\n\nSELECT * \nFROM `냉장고` \nLEFT JOIN `냉장고_추가정보` ON `냉장고`.`제품_코드` = `냉장고_추가정보`.`제품_코드`\nLEFT JOIN `리뷰_정보` ON `냉장고`.`제품_코드` = `리뷰_정보`.`제품_코드`\nLEFT JOIN `제품_정보` ON `냉장고`.`제품_코드` = `제품_정보`.`제품_코드`\nLEFT JOIN `할인_정보` ON `냉장고`.`제품_코드` = `할인_정보`.`제품_코드`\nWHERE `냉장고`.`제품_코드`='RF85C90D1AP' OR `냉장고`.`제품_코드`='RF85C90D2AP' LIMIT 4;"
+}
+[chain/end] [1:chain:RunnableSequence] [6.51s] Exiting Chain run with output:
+{
+  "output": "SELECT * FROM `냉장고` WHERE `제품_코드`='RF85C90D1AP' OR `제품_코드`='RF85C90D2AP' LIMIT 4;\n\nSELECT * \nFROM `냉장고` \nLEFT JOIN `냉장고_추가정보` ON `냉장고`.`제품_코드` = `냉장고_추가정보`.`제품_코드`\nLEFT JOIN `리뷰_정보` ON `냉장고`.`제품_코드` = `리뷰_정보`.`제품_코드`\nLEFT JOIN `제품_정보` ON `냉장고`.`제품_코드` = `제품_정보`.`제품_코드`\nLEFT JOIN `할인_정보` ON `냉장고`.`제품_코드` = `할인_정보`.`제품_코드`\nWHERE `냉장고`.`제품_코드`='RF85C90D1AP' OR `냉장고`.`제품_코드`='RF85C90D2AP' LIMIT 4;"
+}
+[chain/start] [1:chain:RunnableSequence] Entering Chain run with input:
+{
+  "question": "RF85C90D1AP와 RF85C90D2AP의 주요 기능 및 성능을 비교해주세요.",
+  "query": "SELECT * FROM `냉장고` WHERE `제품_코드`='RF85C90D1AP' OR `제품_코드`='RF85C90D2AP' LIMIT 4;",
+  "result": "[{'id': 4, '제품_코드': 'RF85C90D1AP', '제품명': 'BESPOKE 냉장고 4도어 875 L', '가격': '2740000 원', '가로': '912 mm', '높이': '1853 mm', '깊이': '930 mm', '제품_타입': 'BESPOKE 냉장고 4도어', '무게': '144 kg', '전체_용량': '875 L', '냉장실_용량': '522 L', '냉동실_용량': '177 L', '맞춤보관실_용량': '176 L', '소비효율등급': '1등급', '소비_전력': '43.0 kWh/월'}, {'id': 9, '제품_코드': 'RF85C90D2AP', '제품명': 'BESPOKE 냉장고 4도어 875 L', '가격': '2640000 원', '가로': '912 mm', '높이': '1853 mm', '깊이': '930 mm', '제품_타입': 'BESPOKE 냉장고 4도어', '무게': '131 kg', '전체_용량': '875 L', '냉장실_용량': '522 L', '냉동실_용량': '177 L', '맞춤보관실_용량': '176 L', '소비효율등급': '2등급', '소비_전력': '55.9 kWh/월'}]"
+}
+[chain/start] [1:chain:RunnableSequence > 2:prompt:PromptTemplate] Entering Prompt run with input:
+{
+  "question": "RF85C90D1AP와 RF85C90D2AP의 주요 기능 및 성능을 비교해주세요.",
+  "query": "SELECT * FROM `냉장고` WHERE `제품_코드`='RF85C90D1AP' OR `제품_코드`='RF85C90D2AP' LIMIT 4;",
+  "result": "[{'id': 4, '제품_코드': 'RF85C90D1AP', '제품명': 'BESPOKE 냉장고 4도어 875 L', '가격': '2740000 원', '가로': '912 mm', '높이': '1853 mm', '깊이': '930 mm', '제품_타입': 'BESPOKE 냉장고 4도어', '무게': '144 kg', '전체_용량': '875 L', '냉장실_용량': '522 L', '냉동실_용량': '177 L', '맞춤보관실_용량': '176 L', '소비효율등급': '1등급', '소비_전력': '43.0 kWh/월'}, {'id': 9, '제품_코드': 'RF85C90D2AP', '제품명': 'BESPOKE 냉장고 4도어 875 L', '가격': '2640000 원', '가로': '912 mm', '높이': '1853 mm', '깊이': '930 mm', '제품_타입': 'BESPOKE 냉장고 4도어', '무게': '131 kg', '전체_용량': '875 L', '냉장실_용량': '522 L', '냉동실_용량': '177 L', '맞춤보관실_용량': '176 L', '소비효율등급': '2등급', '소비_전력': '55.9 kWh/월'}]"
+}
+[chain/end] [1:chain:RunnableSequence > 2:prompt:PromptTemplate] [1ms] Exiting Prompt run with output:
+[outputs]
+[llm/start] [1:chain:RunnableSequence > 3:llm:ChatOpenAI] Entering LLM run with input:
+{
+  "prompts": [
+    "Human: Given the following user question, corresponding SQL query, and SQL result, answer the user question.\nYour answer must be in the tone of a bright and polite butler using `!` enough to sound bright.\nYou must always answer in sentences, never in the form of a list.\nYou must answer in Korean.\n\nQuestion: RF85C90D1AP와 RF85C90D2AP의 주요 기능 및 성능을 비교해주세요.\nSQL Query: SELECT * FROM `냉장고` WHERE `제품_코드`='RF85C90D1AP' OR `제품_코드`='RF85C90D2AP' LIMIT 4;\nSQL Result: [{'id': 4, '제품_코드': 'RF85C90D1AP', '제품명': 'BESPOKE 냉장고 4도어 875 L', '가격': '2740000 원', '가로': '912 mm', '높이': '1853 mm', '깊이': '930 mm', '제품_타입': 'BESPOKE 냉장고 4도어', '무게': '144 kg', '전체_용량': '875 L', '냉장실_용량': '522 L', '냉동실_용량': '177 L', '맞춤보관실_용량': '176 L', '소비효율등급': '1등급', '소비_전력': '43.0 kWh/월'}, {'id': 9, '제품_코드': 'RF85C90D2AP', '제품명': 'BESPOKE 냉장고 4도어 875 L', '가격': '2640000 원', '가로': '912 mm', '높이': '1853 mm', '깊이': '930 mm', '제품_타입': 'BESPOKE 냉장고 4도어', '무게': '131 kg', '전체_용량': '875 L', '냉장실_용량': '522 L', '냉동실_용량': '177 L', '맞춤보관실_용량': '176 L', '소비효율등급': '2등급', '소비_전력': '55.9 kWh/월'}]\nAnswer:"
+  ]
+}
+[llm/end] [1:chain:RunnableSequence > 3:llm:ChatOpenAI] [5.26s] Exiting LLM run with output:
+{
+  "generations": [
+    [
+      {
+        "text": "RF85C90D1AP와 RF85C90D2AP의 주요 기능 및 성능을 비교해 드리겠습니다! RF85C90D1AP은 소비효율등급이 1등급이며 소비 전력은 43.0 kWh/월입니다. 한편, RF85C90D2AP은 소비효율등급이 2등급이며 소비 전력은 55.9 kWh/월입니다. 두 제품의 전체 용량, 냉장실 용량, 냉동실 용량, 맞춤보관실 용량은 동일합니다. 이와 같이 두 제품의 주요 기능 및 성능을 비교해 드렸습니다. 어떤 점이 궁금하신가요?",
+        "generation_info": {
+          "finish_reason": "stop",
+          "logprobs": null
+        },
+        "type": "ChatGeneration",
+        "message": {
+          "lc": 1,
+          "type": "constructor",
+          "id": [
+            "langchain",
+            "schema",
+            "messages",
+            "AIMessage"
+          ],
+          "kwargs": {
+            "content": "RF85C90D1AP와 RF85C90D2AP의 주요 기능 및 성능을 비교해 드리겠습니다! RF85C90D1AP은 소비효율등급이 1등급이며 소비 전력은 43.0 kWh/월입니다. 한편, RF85C90D2AP은 소비효율등급이 2등급이며 소비 전력은 55.9 kWh/월입니다. 두 제품의 전체 용량, 냉장실 용량, 냉동실 용량, 맞춤보관실 용량은 동일합니다. 이와 같이 두 제품의 주요 기능 및 성능을 비교해 드렸습니다. 어떤 점이 궁금하신가요?",
+            "additional_kwargs": {}
+          }
+        }
+      }
+    ]
+  ],
+  "llm_output": {
+    "token_usage": {
+      "completion_tokens": 238,
+      "prompt_tokens": 610,
+      "total_tokens": 848
+    },
+    "model_name": "gpt-3.5-turbo",
+    "system_fingerprint": "fp_4f0b692a78"
+  },
+  "run": null
+}
+[chain/start] [1:chain:RunnableSequence > 4:parser:StrOutputParser] Entering Parser run with input:
+[inputs]
+[chain/end] [1:chain:RunnableSequence > 4:parser:StrOutputParser] [1ms] Exiting Parser run with output:
+{
+  "output": "RF85C90D1AP와 RF85C90D2AP의 주요 기능 및 성능을 비교해 드리겠습니다! RF85C90D1AP은 소비효율등급이 1등급이며 소비 전력은 43.0 kWh/월입니다. 한편, RF85C90D2AP은 소비효율등급이 2등급이며 소비 전력은 55.9 kWh/월입니다. 두 제품의 전체 용량, 냉장실 용량, 냉동실 용량, 맞춤보관실 용량은 동일합니다. 이와 같이 두 제품의 주요 기능 및 성능을 비교해 드렸습니다. 어떤 점이 궁금하신가요?"
+}
+[chain/end] [1:chain:RunnableSequence] [5.26s] Exiting Chain run with output:
+{
+  "output": "RF85C90D1AP와 RF85C90D2AP의 주요 기능 및 성능을 비교해 드리겠습니다! RF85C90D1AP은 소비효율등급이 1등급이며 소비 전력은 43.0 kWh/월입니다. 한편, RF85C90D2AP은 소비효율등급이 2등급이며 소비 전력은 55.9 kWh/월입니다. 두 제품의 전체 용량, 냉장실 용량, 냉동실 용량, 맞춤보관실 용량은 동일합니다. 이와 같이 두 제품의 주요 기능 및 성능을 비교해 드렸습니다. 어떤 점이 궁금하신가요?"
+}
+type : compare
+content : RF85C90D1AP와 RF85C90D2AP의 주요 기능 및 성능을 비교해 드리겠습니다! RF85C90D1AP은 소비효율등급이 1등급이며 소비 전력은 43.0 kWh/월입니다. 한편, RF85C90D2AP은 소비효율등급이 2등급이며 소비 전력은 55.9 kWh/월입니다. 두 제품의 전체 용량, 냉장실 용량, 냉동실 용량, 맞춤보관실 용량은 동일합니다. 이와 같이 두 제품의 주요 기능 및 성능을 비교해 드렸습니다. 어떤 점이 궁금하신가요?

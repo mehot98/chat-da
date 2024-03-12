@@ -115,11 +115,6 @@ def get_output(user_input, search):
 
 # 테스트용
 if __name__ == '__main__':
-    # # 비교 예시
-    # print(get_output(user_input='RF85C90D1AP와 RF85C90D2AP의 차이점이 뭐야?', search=False))
-
-    # 설명 예시
-    print(get_output(user_input='BESPOKE 냉장고 4도어 제품에 대해 설명해줘', search=False))
-
-    # # 추천 예시
-    # print(get_output(user_input='BESPOKE 냉장고 4도어 875 L(에너지 효율 초절전) 이 상품에 대해서 설명해줘', search=False))
+    res = get_output(user_input='RF85C90D1AP와 RF85C90D2AP의 주요 기능 및 성능을 비교해주세요.', search=False)
+    print(f"type : {res['type']}")
+    print(f"content : {res['content']}")
