@@ -1,5 +1,7 @@
+/* eslint-disable */
 import axios from "axios";
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState, useRef } from "react";
+import { request } from "@src/apis/requestBuilder";
 import * as Sub from "./Subs";
 import * as S from "./style";
 import * as T from "@root/src/types";
@@ -11,6 +13,9 @@ export default function ChatbotMain(props: {
   setMessages: Dispatch<SetStateAction<T.MessagesProps>>;
 }) {
   const [currentTypingId, setCurrentTypingId] = useState<number | null>(null);
+
+  const [lastHeight, setLastHeight] = useState(null);
+  const chatElement = useRef<HTMLDivElement>();
 
   const openAiKey = "";
 
@@ -75,24 +80,94 @@ export default function ChatbotMain(props: {
   // }, [messages]);
 
   const handleSendMessage = async (message: string) => {
-    props.setMessages((prev) => [
-      ...prev,
-      { text: message, isUser: true, isCompared: false },
-      // { text: "", isUser: false, isTyping: true, id: 0 },
-    ]);
+    // props.setMessages((prev) => [
+    //   ...prev,
+    //   { text: message, isUser: true, isCompared: false },
+    //   // { text: "", isUser: false, isTyping: true, id: 0 },
+    // ]);
 
-    const response = await generateText(message);
-    props.setMessages((prev) => [
-      // ...prev.slice(0, prev.length - 1), // 성능적으로 괜찮은지, 더 좋은 방법이 있는지 고민해 봐야할 필요 있음
-      ...prev,
-      {
-        text: response,
-        isUser: false,
-        isTyping: true,
-        id: Date.now(),
-        isCompared: false,
-      },
-    ]);
+    // const response = await generateText(message);
+    // props.setMessages((prev) => [
+    //   // ...prev.slice(0, prev.length - 1), // 성능적으로 괜찮은지, 더 좋은 방법이 있는지 고민해 봐야할 필요 있음
+    //   ...prev,
+    //   {
+    //     text: response,
+    //     isUser: false,
+    //     isTyping: true,
+    //     id: Date.now(),
+    //     isCompared: false,
+    //   },
+    // ]);
+    // const response = await generateText(message);
+    const sessionId = window.sessionStorage.getItem("_da_da_sessionId");
+    const tabHash = window.sessionStorage.getItem("di_tab_hash");
+
+    const response = await request.post("/chat", {
+      uuid: `${sessionId}_${tabHash}`,
+      content: message,
+    });
+    const { data } = response;
+
+    if (data.type === "recommend") {
+      props.setMessages((prev) => [
+        ...prev,
+        { text: message, isUser: true },
+        {
+          type: data.type,
+          text: data.content.message,
+          isUser: false,
+          isTyping: true,
+          isCompared: false,
+          id: Date.now(),
+          modelNo: data.modelNo,
+          spec: data.content.spec,
+        },
+      ]);
+    } else if (data.type === "info") {
+      props.setMessages((prev) => [
+        ...prev,
+        { text: message, isUser: true },
+        {
+          type: data.type,
+          text: data.content,
+          isUser: false,
+          isTyping: true,
+          isCompared: false,
+          id: Date.now(),
+          modelNo: data.modelNo,
+          btnString: "상세 스펙 보기",
+        },
+      ]);
+    } else if (data.type === "compare") {
+      props.setMessages((prev) => [
+        ...prev,
+        { text: message, isUser: true },
+        {
+          type: data.type,
+          text: data.content,
+          isUser: false,
+          isTyping: true,
+          isCompared: true,
+          id: Date.now(),
+          modelNoList: data.modelNoList,
+          btnString: "자세히 비교하기",
+        },
+      ]);
+    }
+
+    // setMessages((prev) => [
+    //   ...prev,
+    //   { text: message, isUser: true },
+    //   {
+    //     type: data.type,
+    //     text: data.content,
+    //     isUser: false,
+    //     isTyping: true,
+    //     id: Date.now(),
+    //     modelNo: data?.modelNo,
+    //     modelNoList: data?.modelNoList,
+    //   },
+    // ]);
   };
 
   // const handleEndTyping: (id: number) => void = (id: number) => {
@@ -115,9 +190,27 @@ export default function ChatbotMain(props: {
   //   }
   // }, [props.messages, currentTypingId]);
 
+  useEffect(() => {
+    const { scrollTop, scrollHeight, clientHeight } = chatElement.current;
+
+    if (scrollTop + clientHeight >= scrollHeight - 100) {
+      chatElement.current.scrollTop = scrollHeight;
+      return;
+    }
+
+    if (!lastHeight) {
+      chatElement.current.scrollTop = scrollHeight;
+    } else {
+      if (scrollTop === 0) {
+        const diff = scrollHeight - lastHeight;
+        chatElement.current.scrollTop = diff;
+      }
+    }
+  }, [props.messages, lastHeight]);
+
   return (
     <S.ChatMainWrapper>
-      <S.ChatMessageWrapper>
+      <S.ChatMessageWrapper ref={chatElement}>
         <Sub.MessageList
           messages={props.messages}
           currentTypingId={currentTypingId}

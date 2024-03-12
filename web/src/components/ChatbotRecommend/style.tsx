@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import theme from "@assets/style/theme.module.scss";
 
 export const RecommendWrapper = styled.div`
   width: 100%;
@@ -16,7 +17,7 @@ export const RecommendMessageWrapper = styled.div`
     width: fit-content;
     padding: 14px 28px;
     border-radius: 0 17px 17px 17px;
-    background-color: #c4c4c4;
+    background-color: ${theme.chatDAchatcolor};
   }
 `;
 

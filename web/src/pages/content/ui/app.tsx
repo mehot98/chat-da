@@ -9,7 +9,6 @@ const rankingIconPath = "icons/ranking_icon.png";
 const searchIconPath = "icons/search_icon.png";
 
 import { StyledEngineProvider } from "@mui/material/styles";
-import ReactDOMServer from "react-dom/server";
 
 export default function App() {
   const [isOpenMainModal, setIsOpenMainModal] = useState<boolean>(false);
@@ -29,10 +28,8 @@ export default function App() {
     chatDAIcon.style.cursor = "pointer";
 
     // When click chatDAIcon, the dialog open
-    chatDAIcon.onclick = (e: MouseEvent) => {
-      console.log(e);
+    chatDAIcon.onclick = () => {
       setIsOpenMainModal(true);
-      console.log("chat da 클릭됨!!", isOpenMainModal);
     };
 
     existingChatbotIcon.prepend(chatDAIcon);
