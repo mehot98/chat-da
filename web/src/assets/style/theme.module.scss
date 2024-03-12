@@ -1,9 +1,21 @@
 $chatDA-chat-color: #eeeeee;
 $user-chat-color: #6c9bd5;
 $border-color: #3a6da9;
+$input-footer-color: #f4f4f4;
+$header-color: #98c1f1;
+$input-border-color: #e0e0e0;
+
+$like-btn-color: #6c9bd5;
+$unlike-btn-color: #e56262;
 
 :export {
   chatDAchatcolor: $chatDA-chat-color;
-  userchatcolor: $chatDA-chat-color;
+  userchatcolor: $user-chat-color;
   bordercolor: $border-color;
+  inputfootercolor: $input-footer-color;
+  headercolor: $header-color;
+  inputbordercolor: $input-border-color;
+
+  likebtncolor: $like-btn-color;
+  unlikebtncolor: $unlike-btn-color;
 }

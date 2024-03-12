@@ -19,9 +19,10 @@ export const RecommendCardNo = styled.span`
 `;
 
 export const ReommendCardPriceWrapper = styled.div`
+  width: 100%;
   font-size: 16px;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
 `;
 export const ReommendCardPrice = styled.span`
   color: ${theme.bordercolor};

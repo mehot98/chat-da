@@ -1,11 +1,16 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
+import { request } from "@src/apis/requestBuilder";
 import * as Sub from "./Subs";
 import * as S from "./style";
+import * as T from "@root/src/types";
 
 export default function ChatbotMain() {
-  const [messages, setMessages] = useState([]);
-  const [currentTypingId, setCurrentTypingId] = useState(null);
+  const [messages, setMessages] = useState<T.MessagesProps>([]);
+  const [currentTypingId, setCurrentTypingId] = useState<number | null>(null);
+
+  const [lastHeight, setLastHeight] = useState(null);
+  const chatElement = useRef<HTMLDivElement>();
 
   const openAiKey = "";
 
@@ -50,28 +55,83 @@ export default function ChatbotMain() {
   };
 
   const handleSendMessage = async (message: string) => {
-    const response = await generateText(message);
+    // const response = await generateText(message);
+    const sessionId = window.sessionStorage.getItem("_da_da_sessionId");
+    const tabHash = window.sessionStorage.getItem("di_tab_hash");
 
-    setMessages((prev) => [
-      ...prev,
-      { text: message, isUser: true },
-      {
-        text: response,
-        isUser: false,
-        isTyping: true,
-        id: Date.now(),
-      },
-    ]);
+    const response = await request.post("/chat", {
+      uuid: `${sessionId}_${tabHash}`,
+      content: message,
+    });
+    const { data } = response;
+
+    if (data.type === "recommend") {
+      setMessages((prev) => [
+        ...prev,
+        { text: message, isUser: true },
+        {
+          type: data.type,
+          text: data.content.message,
+          isUser: false,
+          isTyping: true,
+          id: Date.now(),
+          modelNo: data.modelNo,
+          spec: data.content.spec,
+        },
+      ]);
+    } else if (data.type === "info") {
+      setMessages((prev) => [
+        ...prev,
+        { text: message, isUser: true },
+        {
+          type: data.type,
+          text: data.content,
+          isUser: false,
+          isTyping: true,
+          id: Date.now(),
+          modelNo: data.modelNo,
+          btnString: "상세 스펙 보기",
+        },
+      ]);
+    } else if (data.type === "compare") {
+      setMessages((prev) => [
+        ...prev,
+        { text: message, isUser: true },
+        {
+          type: data.type,
+          text: data.content,
+          isUser: false,
+          isTyping: true,
+          id: Date.now(),
+          modelNoList: data.modelNoList,
+          btnString: "자세히 비교하기",
+        },
+      ]);
+    }
+
+    // setMessages((prev) => [
+    //   ...prev,
+    //   { text: message, isUser: true },
+    //   {
+    //     type: data.type,
+    //     text: data.content,
+    //     isUser: false,
+    //     isTyping: true,
+    //     id: Date.now(),
+    //     modelNo: data?.modelNo,
+    //     modelNoList: data?.modelNoList,
+    //   },
+    // ]);
   };
 
-  const handleEndTyping = (id: number) => {
-    setMessages((prev) =>
-      prev.map((msg) => {
-        msg.id === id ? { ...msg, isTyping: false } : msg;
-      }),
-    );
-    setCurrentTypingId(null);
-  };
+  // const handleEndTyping: (id: number) => void = (id: number) => {
+  //   setMessages((prev: T.MessagesProps) =>
+  //     prev.map((msg) => {
+  //       return msg.id === id ? { ...msg, isTyping: false } : msg;
+  //     }),
+  //   );
+  //   setCurrentTypingId(null);
+  // };
 
   useEffect(() => {
     if (currentTypingId === null) {
@@ -84,17 +144,32 @@ export default function ChatbotMain() {
     }
   }, [messages, currentTypingId]);
 
+  useEffect(() => {
+    const { scrollTop, scrollHeight, clientHeight } = chatElement.current;
+
+    if (scrollTop + clientHeight >= scrollHeight - 100) {
+      chatElement.current.scrollTop = scrollHeight;
+      return;
+    }
+
+    if (!lastHeight) {
+      chatElement.current.scrollTop = scrollHeight;
+    } else {
+      if (scrollTop === 0) {
+        const diff = scrollHeight - lastHeight;
+        chatElement.current.scrollTop = diff;
+      }
+    }
+  }, [messages, lastHeight]);
+
   return (
-    <S.ChatBotMainWrapper>
-      <div className="chat-box">
-        <h1>ChatDA</h1>
-        <Sub.MessageList
-          messages={messages}
-          currentTypingId={currentTypingId}
-          onEndTyping={handleEndTyping}
-        />
+    <S.ChatMainWrapper>
+      <S.ChatMessageWrapper ref={chatElement}>
+        <Sub.MessageList messages={messages} currentTypingId={currentTypingId} />
+      </S.ChatMessageWrapper>
+      <S.ChatInputWrapper>
         <Sub.MessageForm onSendMessage={handleSendMessage} />
-      </div>
-    </S.ChatBotMainWrapper>
+      </S.ChatInputWrapper>
+    </S.ChatMainWrapper>
   );
 }
