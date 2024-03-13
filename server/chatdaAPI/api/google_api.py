@@ -2,7 +2,7 @@ from google.cloud import texttospeech
 from google.oauth2 import service_account
 
 key_path = "./secret/google-cloud-key.json"
-output_path = "./public"
+output_path = "./public/output.mp3"
 
 
 def tts(text):
@@ -39,13 +39,14 @@ def tts(text):
 
     try:
         # output.mp3라는 이름으로 파일 생성
-        with open("output.mp3", "wb") as out:
+        with open(output_path, "wb") as out:
             out.write(response.audio_content)
+        return output_path
     except Exception as e:
         raise Exception("음성 파일 저장 오류")
 
 
 if __name__ == "__main__":
     key_path = "../secret/google-cloud-key.json"
-    output_path = "./"
+    output_path = "./output.mp3"
     tts("테스트 입니다")

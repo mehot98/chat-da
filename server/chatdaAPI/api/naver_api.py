@@ -28,9 +28,9 @@ def stt():
     # 호출 응답 코드가 200일 경우 성공입니다.
     rescode = response.status_code
     if rescode == 200:
-        print(response.text)
+        return response.text
     else:
-        print("Error : " + response.text)
+        raise Exception("응답 오류 : " + rescode + response.text)
 
 
 if __name__ == '__main__':
