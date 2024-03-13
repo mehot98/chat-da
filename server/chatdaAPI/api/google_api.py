@@ -49,4 +49,4 @@ def tts(text):
 if __name__ == "__main__":
     key_path = "../secret/google-cloud-key.json"
     output_path = "./output.mp3"
-    tts("테스트 입니다")
+    tts("BESPOKE 냉장고 4도어 제품에 대해 설명해줘")
