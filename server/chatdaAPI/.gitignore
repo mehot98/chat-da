@@ -233,3 +233,5 @@ fabric.properties
 
 keys.py
 /RAG/chroma_db/
+
+secret/*

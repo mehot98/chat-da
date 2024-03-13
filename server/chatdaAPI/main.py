@@ -8,6 +8,7 @@ from routers.detail import router as detail_router
 from routers.compare import router as compare_router
 from routers.summary import router as summary_router
 from routers.natural import router as natural_router
+from routers.openapi import router as openapi_router
 from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
@@ -40,3 +41,6 @@ app.include_router(summary_router, prefix="/summary", tags=["summary"])
 
 # 요약 정보 라우터
 app.include_router(natural_router, prefix="/naturalSearch", tags=["naturalSearch"])
+
+# 오픈 API 라우터
+app.include_router(openapi_router, prefix="/api", tags=["api"])
