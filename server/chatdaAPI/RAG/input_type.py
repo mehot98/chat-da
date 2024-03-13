@@ -3,3 +3,6 @@
 COMPARE = "compare"
 RECOMMEND = "recommend"
 INFO = "info"
+RANKING = "ranking"
+SEARCH = "search"
+GENERAL = "general"

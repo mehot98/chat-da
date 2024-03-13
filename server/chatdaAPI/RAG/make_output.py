@@ -1,5 +1,8 @@
 import os
 import mysql.connector
+from RAG.keys import setup
+
+setup()
 
 import RAG.prompt as prompt
 
@@ -12,6 +15,8 @@ from langchain_community.utilities.sql_database import SQLDatabase
 from langchain_core.globals import set_debug
 from langchain_core.output_parsers import StrOutputParser
 
+from RAG.input_type import SEARCH
+
 # 체인 중간 과정 보기
 set_debug(True)
 
@@ -20,8 +25,8 @@ db = SQLDatabase.from_uri(
     f"mysql+pymysql://{os.environ['MYSQL_ID']}:{os.environ['MYSQL_PWD']}"
     f"@{os.environ['MYSQL_HOST']}/{os.environ['MYSQL_SCHEMA']}?charset=utf8mb4",
     sample_rows_in_table_info=1,
-    include_tables=["냉장고"],
-    max_string_length=100000
+    include_tables=["냉장고", "리뷰_정보"],
+    max_string_length=400
 )
 
 # DB 테이블 정보
@@ -33,9 +38,6 @@ llm = ChatOpenAI(model="gpt-3.5-turbo", temperature=0, verbose=True)
 
 # join문까지 포함된 sql을 이용하여 모든 정보를 가져와서 list를 만드는 함수
 def make_model_list(query):
-    # SQL query 실행
-    result = db.run(query, include_columns=True)
-
     # 데이터베이스 연결 설정
     config = {
         'user': os.environ['MYSQL_ID'],  # 데이터베이스 사용자 이름
@@ -64,9 +66,6 @@ def get_output(user_input, search):
     # 사용자 입력으로부터 SQL 프롬프트와 제품을 리스트 형태로 보여줘야 하는지의 여부를 가져옴
     sql_prompt, user_input_type = prompt.sql_prompt(user_input)
 
-    if search:
-        is_list = True
-
     # SQL 생성을 위한 chain
     create_sql = create_sql_query_chain(llm, db, sql_prompt)
 
@@ -83,6 +82,14 @@ def get_output(user_input, search):
 
     # model list 생성
     model_list = make_model_list(query[1])
+    
+    # 검색 기능인 경우 model list만 생성후 리턴
+    if search:
+        return {
+            "type": SEARCH,
+            "content": "",
+            "model_no_list": model_list
+        }
 
     # 최대 행 개수 설정
     db._sample_rows_in_table_info = max_rows
@@ -93,8 +100,11 @@ def get_output(user_input, search):
     # 얻은 결과로 답변 생성하는 체인 구성
     answer_chain = prompt.answer_prompt | llm | StrOutputParser()
 
-    # 유저 입력으로부터 답변 생성
-    result = answer_chain.invoke({"question": user_input, "query": query[0], "result": result})
+    if result:
+        # 유저 입력으로부터 답변 생성
+        result = answer_chain.invoke({"question": user_input, "query": query[0], "result": result})
+    else:
+        result = "제품에 대한 정보가 존재하지 않습니다!"
 
     return {
         "type": user_input_type,
@@ -103,6 +113,8 @@ def get_output(user_input, search):
     }
 
 
-# 테스트용
-if __name__ == '__main__':
-    get_output(user_input='RF85C90D1AP와 RF85C90D2AP의 차이점이 뭐야?', search=False)
+# # 테스트용
+# if __name__ == '__main__':
+#     res = get_output(user_input='냉장고 중에 평점이 높고 리뷰가 많은 제품들을 나열해줘', search=False)
+#     print(f"type : {res['type']}")
+#     print(f"content : {res['content']}")

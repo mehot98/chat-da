@@ -24,39 +24,27 @@ const manifest = {
   },
   action: {
     default_popup: "src/pages/popup/index.html",
-    default_icon: "ChatDA_icon_32.png",
+    default_icon: "icons/ChatDA_icon_32.png",
   },
   icons: {
-    16: "ChatDA_icon_16.png",
-    32: "ChatDA_icon_32.png",
-    48: "ChatDA_icon_48.png",
-    128: "ChatDA_icon_128.png",
+    16: "icons/ChatDA_icon_16.png",
+    32: "icons/ChatDA_icon_32.png",
+    48: "icons/ChatDA_icon_48.png",
+    128: "icons/ChatDA_icon_128.png",
   },
   content_scripts: [
     {
-      // matches: ["http://*/*", "https://*/*", "<all_urls>"],
       matches: ["https://www.samsung.com/*"],
       js: ["src/pages/contentInjected/index.js"],
-      // KEY for cache invalidation
-      // css: ["assets/css/contentStyle<KEY>.chunk.css"],
     },
     {
-      // matches: ["http://*/*", "https://*/*", "<all_urls>"],
       matches: ["https://www.samsung.com/*"],
       js: ["src/pages/contentUI/index.js"],
     },
   ],
   web_accessible_resources: [
     {
-      resources: [
-        "assets/js/*.js",
-        "assets/css/*.css",
-        "ChatDA_icon_128.png",
-        "ChatDA_icon_48.png",
-        "ChatDA_icon_32.png",
-        "ChatDA_icon_16.png",
-        "assets/png/ChatDA_icon_128.chunk.png",
-      ],
+      resources: ["assets/js/*.js", "assets/css/*.css", "icons/*.png", "assets/png/*.png"],
       matches: ["*://*/*"],
     },
   ],

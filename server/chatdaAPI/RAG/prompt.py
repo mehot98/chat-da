@@ -5,6 +5,8 @@ from examples import make_examples
 # 답변 생성용 프롬프트
 answer_prompt = PromptTemplate.from_template(
     """Given the following user question, corresponding SQL query, and SQL result, answer the user question.
+Your answer must be in the tone of a bright and polite butler using `!` enough to sound bright.
+You must answer in Korean.
 
 Question: {question}
 SQL Query: {query}
@@ -13,10 +15,11 @@ Answer: """
 )
 
 # SQL 생성용 프롬프트 초반
-from langchain.chains.sql_database.prompt import SQL_PROMPTS
+# from langchain.chains.sql_database.prompt import SQL_PROMPTS
 mysql_prompt_prefix = """You are a MySQL expert.
 Given an input question, You will always create 2 MySQL queries. 
 Firstly, create a syntactically correct MySQL query to run only with using the following tables that i will give you below.
+Query for at most {top_k} results for this first query using the LIMIT clause as per MySQL.
 Pay attention to use only the column names you can see in the tables below.
 
 Only use the following tables for the first MySQL query:
@@ -24,7 +27,8 @@ Only use the following tables for the first MySQL query:
 
 And secondly, create a syntactically correct MySQL query to run like the first one.
 But in this case you will join more tables.
-You will only need table's names to join and the column to join with the main table
+You will only need table's names to join and the column to join with the main table.
+And never use the LIMIT clause for this second query to get all the results as per MySQL.
 
 Here is the additional table names to join:
 [`냉장고_추가정보`,`리뷰_정보`,`제품_정보`,`할인_정보`]
@@ -35,8 +39,6 @@ And here is the standard column name to join:
 Separate first query and second query using two line breakings like `\\n\\n`
 You can order the results to return the most informative data in the database.
 Always query for all columns from a table using * after SELECT.
-Unless the user specifies in the question a specific number of examples to obtain,
-query for at most {top_k} results using the LIMIT clause as per MySQL
 Wrap each column name in backticks (`) to denote them as delimited identifiers.
 Be careful to not query for columns that do not exist.
 Also, pay attention to which column is in which table.
@@ -76,8 +78,8 @@ def sql_prompt(user_input):
     return prompt, input_type
 
 
-# 테스트 용
-if __name__ == '__main__':
-    prom, user_input_type = sql_prompt("RF85C90D1AP와 RF85C90D2AP의 차이점이 뭐야?")
-
-    print(prom.pretty_print())
+# # 테스트 용
+# if __name__ == '__main__':
+#     prom, user_input_type = sql_prompt("RF85C90D1AP와 RF85C90D2AP의 차이점이 뭐야?")
+#
+#     print(prom.pretty_print())
