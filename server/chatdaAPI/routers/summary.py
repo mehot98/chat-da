@@ -14,7 +14,6 @@ async def get_review(
     응답: content\n
     """
 
-    print(model_no)
 
     response = {
         "content": "리뷰 내용 요약본입니다"
@@ -32,8 +31,6 @@ async def get_detail(
     입력: modelNo
     응답: content
     """
-
-    print(model_no)
 
     response = {
         "content": "제품 본문에 있는 설명 요약본입니다."

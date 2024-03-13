@@ -1,6 +1,6 @@
 import os
 import mysql.connector
-from RAG.keys import setup
+from keys import setup
 
 setup()
 
@@ -109,7 +109,7 @@ def get_output(user_input, search):
     return {
         "type": user_input_type,
         "content": result,
-        "model_no_list": model_list
+        "model_list": model_list
     }
 
 

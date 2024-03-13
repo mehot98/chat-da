@@ -18,34 +18,40 @@ async def post_chat(
 ):
     """
     기본 챗봇과의 대화 API\n
-    테스트용 입력 : COMPARE, INFO, RECOMMEND
+    테스트용 입력 : compare, info, recommend
     입력: ChatRequestDto(uuid, content)\n
     응답: ChatInfoDto, ChatCompareDto, ChatRecommendDto(type, content, modelNoLlist or modelNo)\n
     """
 
-    print(chat_request_dto)
     response = None
     content = chat_request_dto.content
+
+    # 제일 먼저 거치는 content는 테스트 입력을 위한 case를 만납니다. info, compare, recommend, naturalSearch
     match content:
-        case "INFO":
+        case "info":
             data = dump.info_data
             response = response_dto.init_info_response(data)
-        case "COMPARE":
+        case "compare":
             data = dump.compare_data
             response = response_dto.init_compare_response(data)
-        case "RECOMMEND":
+        case "recommend":
             data = dump.recommend_data
             response = response_dto.init_recommend_response(data)
+        case "naturalSearch":
+            response = dump.natural_data
+        # 위 예제 입력에서 걸리지 않은 입력에 대해서는 langchain을 활용한 답변을 생성합니다
         case default:
-            data = get_output(user_input='RF85C90D1AP와 RF85C90D2AP의 차이점이 뭐야?', search=False)
+            data = get_output(user_input=chat_request_dto.content, search=False)
             match data["type"]:
-                case "INFO":
+                # langchain으로 생성된 답변의 타입에 따라 응답으로 보낼 객체 형식을 변경합니다.
+                case "info":
                     response = response_dto.init_info_response(data)
-                case "COMPARE":
+                case "compare":
                     response = response_dto.init_compare_response(data)
-                case "RECOMMEND":
+                case "recommend":
                     response = response_dto.init_recommend_response(data)
                 case default:
+                    # 만약 type이 지정되지 않은 값이 나온다면 Exception을 발생시킵니다.
                     raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=[
                         {
                             "type": "error",
@@ -55,8 +61,6 @@ async def post_chat(
                             }
                         }
                     ])
-
-    print(response)
     return response
 
 
@@ -70,5 +74,4 @@ async def post_feedback(
     응답: HttpResponseDto(data, success)\n
     """
 
-    print(feedback_request_dto)
     return {"success": True}
