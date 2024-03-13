@@ -24,7 +24,7 @@ export interface MessageProps {
   currentTypingId: number;
   modelNo?: string;
   modelNoList?: Array<string>;
-  spec?: object;
+  spec?: T.ChatbotRecommendCardProps;
   btnString?: string;
 
   category?: string;
