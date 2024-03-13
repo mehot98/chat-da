@@ -1,6 +1,6 @@
 import os
 import mysql.connector
-from RAG.keys import setup
+from keys import setup
 
 setup()
 

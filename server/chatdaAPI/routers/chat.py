@@ -10,7 +10,7 @@ from RAG.make_output import get_output
 # prefix == chat
 router = APIRouter()
 
-import api.naver
+import api.naver_api
 
 
 @router.get("/api/test")

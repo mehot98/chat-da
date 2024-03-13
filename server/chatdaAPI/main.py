@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from RAG.keys import setup
+from keys import setup
 
 setup()
 
