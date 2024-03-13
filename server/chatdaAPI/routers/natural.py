@@ -16,7 +16,6 @@ async def get_search(
     응답: naturalResponseDto\n
     """
 
-    print(content)
     data = dump.natural_data
     response = response_dto.init_natural_response(data)
 
