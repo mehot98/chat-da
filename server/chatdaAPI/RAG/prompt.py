@@ -2,7 +2,19 @@ from langchain_core.prompts import FewShotPromptTemplate, PromptTemplate
 
 from examples import make_examples
 
-# 답변 생성용 프롬프트
+import RAG.input_type as input_types
+
+# 일반 답변 생성용 프롬프트
+general_answer_prompt = PromptTemplate.from_template(
+    """You are a butler kindly responding to customers' inquiries.
+Your answer must be in the tone of a bright and polite butler using `!` enough to sound bright.
+You must answer in Korean.
+
+Question: {question}
+Answer: """
+)
+
+# SQL 생성용 프롬프트
 answer_prompt = PromptTemplate.from_template(
     """Given the following user question, corresponding SQL query, and SQL result, answer the user question.
 Your answer must be in the tone of a bright and polite butler using `!` enough to sound bright.
@@ -64,7 +76,10 @@ mysql_prompt_suffix = """User input: {input}"""
 # SQL 생성용 프롬프트
 def sql_prompt(user_input):
     # 유저 입력과 관련된 예시들과 유저 입력의 타입을 가져옴
-    user_examples, input_type = make_examples.get_examples(user_input)
+    user_examples, got_input_type = make_examples.get_examples(user_input)
+
+    if got_input_type is input_types.GENERAL:
+        return general_answer_prompt, got_input_type
 
     # SQL 생성용 프롬프트 최종
     prompt = FewShotPromptTemplate(
@@ -75,7 +90,7 @@ def sql_prompt(user_input):
         input_variables=["input", "table_info", "top_k"],
     )
 
-    return prompt, input_type
+    return prompt, got_input_type
 
 
 # # 테스트 용
