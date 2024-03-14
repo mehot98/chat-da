@@ -25,8 +25,8 @@ db = SQLDatabase.from_uri(
     f"mysql+pymysql://{os.environ['MYSQL_ID']}:{os.environ['MYSQL_PWD']}"
     f"@{os.environ['MYSQL_HOST']}/{os.environ['MYSQL_SCHEMA']}?charset=utf8mb4",
     sample_rows_in_table_info=1,
-    include_tables=["냉장고", "리뷰_정보"],
-    max_string_length=400
+    include_tables=["냉장고", "리뷰_정보", "제품_정보"],
+    max_string_length=100
 )
 
 # DB 테이블 정보
@@ -73,7 +73,8 @@ def get_output(user_input, search):
         # SQL 생성을 위한 chain
         create_sql = create_sql_query_chain(llm, db, first_prompt)
 
-        max_rows = 4
+        # 최대 행 개수
+        max_rows = 2
 
         # SQL query 생성
         query = create_sql.invoke(
