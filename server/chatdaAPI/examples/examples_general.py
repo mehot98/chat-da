@@ -1,0 +1,70 @@
+from RAG.input_type import GENERAL
+
+examples = [
+    {
+        "input": "안녕",
+        "query": "",
+        "type": GENERAL,
+        "index": 0
+    },
+    {
+        "input": "재밌는 사실 하나 알려줘",
+        "query": "",
+        "type": GENERAL,
+        "index": 1
+    },
+    {
+        "input": "안녕, 오늘 날씨 어때?",
+        "query": "",
+        "type": GENERAL,
+        "index": 2
+    },
+    {
+        "input": "요즘 인기 있는 영화 추천해줘.",
+        "query": "",
+        "type": GENERAL,
+        "index": 3
+    },
+    {
+        "input": "오늘 기분이 좋지 않아.",
+        "query": "",
+        "type": GENERAL,
+        "index": 4
+    },
+    {
+        "input": "커피와 차 중에 뭐가 더 건강에 좋아?",
+        "query": "",
+        "type": GENERAL,
+        "index": 5
+    },
+    {
+        "input": "최근에 책 좀 읽었어? 추천해줄만한 책 있어?",
+        "query": "",
+        "type": GENERAL,
+        "index": 6
+    },
+    {
+        "input": "스트레스 받을 때 뭐 하는 게 좋아?",
+        "query": "",
+        "type": GENERAL,
+        "index": 7
+    },
+    {
+        "input": "최신 기술 트렌드 뭐가 있어?",
+        "query": "",
+        "type": GENERAL,
+        "index": 8
+    },
+    {
+        "input": "좋은 아침 메시지 좀 알려줘.",
+        "query": "",
+        "type": GENERAL,
+        "index": 9
+    },
+    {
+        "input": "음악 들을 때 무슨 앱 써?",
+        "query": "",
+        "type": GENERAL,
+        "index": 10
+    },
+]

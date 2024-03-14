@@ -235,3 +235,7 @@ keys.py
 /RAG/chroma_db/
 
 secret/*
+
+chroma_db
+.idea
+out.txt

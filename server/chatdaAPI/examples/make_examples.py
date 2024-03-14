@@ -9,6 +9,8 @@ import examples.examples_info
 import examples.examples_recommend
 import examples.examples_ranking
 import examples.examples_search
+import examples.examples_general
+import examples.examples_additional
 
 from langchain_community.vectorstores import Chroma
 from langchain.schema import Document
@@ -31,8 +33,9 @@ if make_new_vectorDB or not os.path.exists(persist_directory):
 
     # SQL 예시들
     examples_all = (examples.examples_compare.examples + examples.examples_info.examples
-                + examples.examples_recommend.examples + examples.examples_ranking.examples
-                + examples.examples_search.examples)
+                    + examples.examples_recommend.examples + examples.examples_ranking.examples
+                    + examples.examples_search.examples + examples.examples_general.examples
+                    + examples.examples_additional.examples)
 
     # Dictionary 형태의 examples를 vector DB에 저장하기 위해 docs 형태로 변환
     few_shot_docs = [
@@ -98,7 +101,6 @@ def get_examples(user_input):
             break
 
     return user_examples, user_input_type
-
 
 # # 테스트 용
 # if __name__ == '__main__':

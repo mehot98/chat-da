@@ -1,163 +1,25 @@
 [chain/start] [1:chain:RunnableSequence] Entering Chain run with input:
 {
-  "question": "냉장고 중에 평점이 높고 리뷰가 많은 제품들을 나열해줘",
-  "top_k": 4,
-  "table_info": "\nCREATE TABLE `냉장고` (\n\tid INTEGER NOT NULL AUTO_INCREMENT, \n\t`제품_코드` VARCHAR(20) NOT NULL, \n\t`제품명` VARCHAR(255) NOT NULL, \n\t`가격` VARCHAR(30), \n\t`가로` VARCHAR(20), \n\t`높이` VARCHAR(20), \n\t`깊이` VARCHAR(20), \n\t`제품_타입` VARCHAR(255), \n\t`무게` VARCHAR(20), \n\t`전체_용량` VARCHAR(20), \n\t`냉장실_용량` VARCHAR(20), \n\t`냉동실_용량` VARCHAR(20), \n\t`맞춤보관실_용량` VARCHAR(20), \n\t`소비효율등급` VARCHAR(10), \n\t`소비_전력` VARCHAR(20), \n\tPRIMARY KEY (id)\n)ENGINE=InnoDB COLLATE utf8mb4_0900_ai_ci DEFAULT CHARSET=utf8mb4\n\n/*\n1 rows from 냉장고 table:\nid\t제품_코드\t제품명\t가격\t가로\t높이\t깊이\t제품_타입\t무게\t전체_용량\t냉장실_용량\t냉동실_용량\t맞춤보관실_용량\t소비효율등급\t소비_전력\n1\tRF85C9101AP\tBESPOKE 냉장고 4도어 870 L\t3240000 원\t912 mm\t1853 mm\t930 mm\tBESPOKE 냉장고 4도어\t150 kg\t870 L\t517 L\t177 L\t176 L\t1등급\t42.8 kWh/월\n*/\n\n\nCREATE TABLE `리뷰_정보` (\n\tid INTEGER NOT NULL AUTO_INCREMENT, \n\t`제품_코드` VARCHAR(20) NOT NULL, \n\t`평점` VARCHAR(10) NOT NULL, \n\t`리뷰_개수` INTEGER NOT NULL, \n\t`리뷰_요약` TEXT, \n\tcreated_at DATETIME NOT NULL, \n\tPRIMARY KEY (id)\n)ENGINE=InnoDB COLLATE utf8mb4_0900_ai_ci DEFAULT CHARSET=utf8mb4\n\n/*\n1 rows from 리뷰_정보 table:\nid\t제품_코드\t평점\t리뷰_개수\t리뷰_요약\tcreated_at\n1\tRF85C9101AP\t4.8 / 5.0\t360\t[삼성전자이벤트참여]일단 기존에 쓰던 냉장고가 LG제품이였는데 10년이 넘으니 고장이 나서 더이상 A/S가 불가능하게 되어서 급하게 새 냉장고를 알아보게되었어요! 4도어에 쇼케이스\t2024-03-04 16:29:18\n*/"
-}
-[chain/start] [1:chain:RunnableSequence > 2:chain:RunnableAssign<input,table_info>] Entering Chain run with input:
-{
-  "question": "냉장고 중에 평점이 높고 리뷰가 많은 제품들을 나열해줘",
-  "top_k": 4,
-  "table_info": "\nCREATE TABLE `냉장고` (\n\tid INTEGER NOT NULL AUTO_INCREMENT, \n\t`제품_코드` VARCHAR(20) NOT NULL, \n\t`제품명` VARCHAR(255) NOT NULL, \n\t`가격` VARCHAR(30), \n\t`가로` VARCHAR(20), \n\t`높이` VARCHAR(20), \n\t`깊이` VARCHAR(20), \n\t`제품_타입` VARCHAR(255), \n\t`무게` VARCHAR(20), \n\t`전체_용량` VARCHAR(20), \n\t`냉장실_용량` VARCHAR(20), \n\t`냉동실_용량` VARCHAR(20), \n\t`맞춤보관실_용량` VARCHAR(20), \n\t`소비효율등급` VARCHAR(10), \n\t`소비_전력` VARCHAR(20), \n\tPRIMARY KEY (id)\n)ENGINE=InnoDB COLLATE utf8mb4_0900_ai_ci DEFAULT CHARSET=utf8mb4\n\n/*\n1 rows from 냉장고 table:\nid\t제품_코드\t제품명\t가격\t가로\t높이\t깊이\t제품_타입\t무게\t전체_용량\t냉장실_용량\t냉동실_용량\t맞춤보관실_용량\t소비효율등급\t소비_전력\n1\tRF85C9101AP\tBESPOKE 냉장고 4도어 870 L\t3240000 원\t912 mm\t1853 mm\t930 mm\tBESPOKE 냉장고 4도어\t150 kg\t870 L\t517 L\t177 L\t176 L\t1등급\t42.8 kWh/월\n*/\n\n\nCREATE TABLE `리뷰_정보` (\n\tid INTEGER NOT NULL AUTO_INCREMENT, \n\t`제품_코드` VARCHAR(20) NOT NULL, \n\t`평점` VARCHAR(10) NOT NULL, \n\t`리뷰_개수` INTEGER NOT NULL, \n\t`리뷰_요약` TEXT, \n\tcreated_at DATETIME NOT NULL, \n\tPRIMARY KEY (id)\n)ENGINE=InnoDB COLLATE utf8mb4_0900_ai_ci DEFAULT CHARSET=utf8mb4\n\n/*\n1 rows from 리뷰_정보 table:\nid\t제품_코드\t평점\t리뷰_개수\t리뷰_요약\tcreated_at\n1\tRF85C9101AP\t4.8 / 5.0\t360\t[삼성전자이벤트참여]일단 기존에 쓰던 냉장고가 LG제품이였는데 10년이 넘으니 고장이 나서 더이상 A/S가 불가능하게 되어서 급하게 새 냉장고를 알아보게되었어요! 4도어에 쇼케이스\t2024-03-04 16:29:18\n*/"
-}
-[chain/start] [1:chain:RunnableSequence > 2:chain:RunnableAssign<input,table_info> > 3:chain:RunnableParallel<input,table_info>] Entering Chain run with input:
-{
-  "question": "냉장고 중에 평점이 높고 리뷰가 많은 제품들을 나열해줘",
-  "top_k": 4,
-  "table_info": "\nCREATE TABLE `냉장고` (\n\tid INTEGER NOT NULL AUTO_INCREMENT, \n\t`제품_코드` VARCHAR(20) NOT NULL, \n\t`제품명` VARCHAR(255) NOT NULL, \n\t`가격` VARCHAR(30), \n\t`가로` VARCHAR(20), \n\t`높이` VARCHAR(20), \n\t`깊이` VARCHAR(20), \n\t`제품_타입` VARCHAR(255), \n\t`무게` VARCHAR(20), \n\t`전체_용량` VARCHAR(20), \n\t`냉장실_용량` VARCHAR(20), \n\t`냉동실_용량` VARCHAR(20), \n\t`맞춤보관실_용량` VARCHAR(20), \n\t`소비효율등급` VARCHAR(10), \n\t`소비_전력` VARCHAR(20), \n\tPRIMARY KEY (id)\n)ENGINE=InnoDB COLLATE utf8mb4_0900_ai_ci DEFAULT CHARSET=utf8mb4\n\n/*\n1 rows from 냉장고 table:\nid\t제품_코드\t제품명\t가격\t가로\t높이\t깊이\t제품_타입\t무게\t전체_용량\t냉장실_용량\t냉동실_용량\t맞춤보관실_용량\t소비효율등급\t소비_전력\n1\tRF85C9101AP\tBESPOKE 냉장고 4도어 870 L\t3240000 원\t912 mm\t1853 mm\t930 mm\tBESPOKE 냉장고 4도어\t150 kg\t870 L\t517 L\t177 L\t176 L\t1등급\t42.8 kWh/월\n*/\n\n\nCREATE TABLE `리뷰_정보` (\n\tid INTEGER NOT NULL AUTO_INCREMENT, \n\t`제품_코드` VARCHAR(20) NOT NULL, \n\t`평점` VARCHAR(10) NOT NULL, \n\t`리뷰_개수` INTEGER NOT NULL, \n\t`리뷰_요약` TEXT, \n\tcreated_at DATETIME NOT NULL, \n\tPRIMARY KEY (id)\n)ENGINE=InnoDB COLLATE utf8mb4_0900_ai_ci DEFAULT CHARSET=utf8mb4\n\n/*\n1 rows from 리뷰_정보 table:\nid\t제품_코드\t평점\t리뷰_개수\t리뷰_요약\tcreated_at\n1\tRF85C9101AP\t4.8 / 5.0\t360\t[삼성전자이벤트참여]일단 기존에 쓰던 냉장고가 LG제품이였는데 10년이 넘으니 고장이 나서 더이상 A/S가 불가능하게 되어서 급하게 새 냉장고를 알아보게되었어요! 4도어에 쇼케이스\t2024-03-04 16:29:18\n*/"
-}
-[chain/start] [1:chain:RunnableSequence > 2:chain:RunnableAssign<input,table_info> > 3:chain:RunnableParallel<input,table_info> > 4:chain:RunnableLambda] Entering Chain run with input:
-{
-  "question": "냉장고 중에 평점이 높고 리뷰가 많은 제품들을 나열해줘",
-  "top_k": 4,
-  "table_info": "\nCREATE TABLE `냉장고` (\n\tid INTEGER NOT NULL AUTO_INCREMENT, \n\t`제품_코드` VARCHAR(20) NOT NULL, \n\t`제품명` VARCHAR(255) NOT NULL, \n\t`가격` VARCHAR(30), \n\t`가로` VARCHAR(20), \n\t`높이` VARCHAR(20), \n\t`깊이` VARCHAR(20), \n\t`제품_타입` VARCHAR(255), \n\t`무게` VARCHAR(20), \n\t`전체_용량` VARCHAR(20), \n\t`냉장실_용량` VARCHAR(20), \n\t`냉동실_용량` VARCHAR(20), \n\t`맞춤보관실_용량` VARCHAR(20), \n\t`소비효율등급` VARCHAR(10), \n\t`소비_전력` VARCHAR(20), \n\tPRIMARY KEY (id)\n)ENGINE=InnoDB COLLATE utf8mb4_0900_ai_ci DEFAULT CHARSET=utf8mb4\n\n/*\n1 rows from 냉장고 table:\nid\t제품_코드\t제품명\t가격\t가로\t높이\t깊이\t제품_타입\t무게\t전체_용량\t냉장실_용량\t냉동실_용량\t맞춤보관실_용량\t소비효율등급\t소비_전력\n1\tRF85C9101AP\tBESPOKE 냉장고 4도어 870 L\t3240000 원\t912 mm\t1853 mm\t930 mm\tBESPOKE 냉장고 4도어\t150 kg\t870 L\t517 L\t177 L\t176 L\t1등급\t42.8 kWh/월\n*/\n\n\nCREATE TABLE `리뷰_정보` (\n\tid INTEGER NOT NULL AUTO_INCREMENT, \n\t`제품_코드` VARCHAR(20) NOT NULL, \n\t`평점` VARCHAR(10) NOT NULL, \n\t`리뷰_개수` INTEGER NOT NULL, \n\t`리뷰_요약` TEXT, \n\tcreated_at DATETIME NOT NULL, \n\tPRIMARY KEY (id)\n)ENGINE=InnoDB COLLATE utf8mb4_0900_ai_ci DEFAULT CHARSET=utf8mb4\n\n/*\n1 rows from 리뷰_정보 table:\nid\t제품_코드\t평점\t리뷰_개수\t리뷰_요약\tcreated_at\n1\tRF85C9101AP\t4.8 / 5.0\t360\t[삼성전자이벤트참여]일단 기존에 쓰던 냉장고가 LG제품이였는데 10년이 넘으니 고장이 나서 더이상 A/S가 불가능하게 되어서 급하게 새 냉장고를 알아보게되었어요! 4도어에 쇼케이스\t2024-03-04 16:29:18\n*/"
-}
-[chain/end] [1:chain:RunnableSequence > 2:chain:RunnableAssign<input,table_info> > 3:chain:RunnableParallel<input,table_info> > 4:chain:RunnableLambda] [1ms] Exiting Chain run with output:
-{
-  "output": "냉장고 중에 평점이 높고 리뷰가 많은 제품들을 나열해줘\nSQLQuery: "
-}
-[chain/start] [1:chain:RunnableSequence > 2:chain:RunnableAssign<input,table_info> > 3:chain:RunnableParallel<input,table_info> > 5:chain:RunnableLambda] Entering Chain run with input:
-{
-  "question": "냉장고 중에 평점이 높고 리뷰가 많은 제품들을 나열해줘",
-  "top_k": 4,
-  "table_info": "\nCREATE TABLE `냉장고` (\n\tid INTEGER NOT NULL AUTO_INCREMENT, \n\t`제품_코드` VARCHAR(20) NOT NULL, \n\t`제품명` VARCHAR(255) NOT NULL, \n\t`가격` VARCHAR(30), \n\t`가로` VARCHAR(20), \n\t`높이` VARCHAR(20), \n\t`깊이` VARCHAR(20), \n\t`제품_타입` VARCHAR(255), \n\t`무게` VARCHAR(20), \n\t`전체_용량` VARCHAR(20), \n\t`냉장실_용량` VARCHAR(20), \n\t`냉동실_용량` VARCHAR(20), \n\t`맞춤보관실_용량` VARCHAR(20), \n\t`소비효율등급` VARCHAR(10), \n\t`소비_전력` VARCHAR(20), \n\tPRIMARY KEY (id)\n)ENGINE=InnoDB COLLATE utf8mb4_0900_ai_ci DEFAULT CHARSET=utf8mb4\n\n/*\n1 rows from 냉장고 table:\nid\t제품_코드\t제품명\t가격\t가로\t높이\t깊이\t제품_타입\t무게\t전체_용량\t냉장실_용량\t냉동실_용량\t맞춤보관실_용량\t소비효율등급\t소비_전력\n1\tRF85C9101AP\tBESPOKE 냉장고 4도어 870 L\t3240000 원\t912 mm\t1853 mm\t930 mm\tBESPOKE 냉장고 4도어\t150 kg\t870 L\t517 L\t177 L\t176 L\t1등급\t42.8 kWh/월\n*/\n\n\nCREATE TABLE `리뷰_정보` (\n\tid INTEGER NOT NULL AUTO_INCREMENT, \n\t`제품_코드` VARCHAR(20) NOT NULL, \n\t`평점` VARCHAR(10) NOT NULL, \n\t`리뷰_개수` INTEGER NOT NULL, \n\t`리뷰_요약` TEXT, \n\tcreated_at DATETIME NOT NULL, \n\tPRIMARY KEY (id)\n)ENGINE=InnoDB COLLATE utf8mb4_0900_ai_ci DEFAULT CHARSET=utf8mb4\n\n/*\n1 rows from 리뷰_정보 table:\nid\t제품_코드\t평점\t리뷰_개수\t리뷰_요약\tcreated_at\n1\tRF85C9101AP\t4.8 / 5.0\t360\t[삼성전자이벤트참여]일단 기존에 쓰던 냉장고가 LG제품이였는데 10년이 넘으니 고장이 나서 더이상 A/S가 불가능하게 되어서 급하게 새 냉장고를 알아보게되었어요! 4도어에 쇼케이스\t2024-03-04 16:29:18\n*/"
-}
-[chain/end] [1:chain:RunnableSequence > 2:chain:RunnableAssign<input,table_info> > 3:chain:RunnableParallel<input,table_info> > 5:chain:RunnableLambda] [8ms] Exiting Chain run with output:
-{
-  "output": "\nCREATE TABLE `냉장고` (\n\tid INTEGER NOT NULL AUTO_INCREMENT, \n\t`제품_코드` VARCHAR(20) NOT NULL, \n\t`제품명` VARCHAR(255) NOT NULL, \n\t`가격` VARCHAR(30), \n\t`가로` VARCHAR(20), \n\t`높이` VARCHAR(20), \n\t`깊이` VARCHAR(20), \n\t`제품_타입` VARCHAR(255), \n\t`무게` VARCHAR(20), \n\t`전체_용량` VARCHAR(20), \n\t`냉장실_용량` VARCHAR(20), \n\t`냉동실_용량` VARCHAR(20), \n\t`맞춤보관실_용량` VARCHAR(20), \n\t`소비효율등급` VARCHAR(10), \n\t`소비_전력` VARCHAR(20), \n\tPRIMARY KEY (id)\n)ENGINE=InnoDB COLLATE utf8mb4_0900_ai_ci DEFAULT CHARSET=utf8mb4\n\n/*\n1 rows from 냉장고 table:\nid\t제품_코드\t제품명\t가격\t가로\t높이\t깊이\t제품_타입\t무게\t전체_용량\t냉장실_용량\t냉동실_용량\t맞춤보관실_용량\t소비효율등급\t소비_전력\n1\tRF85C9101AP\tBESPOKE 냉장고 4도어 870 L\t3240000 원\t912 mm\t1853 mm\t930 mm\tBESPOKE 냉장고 4도어\t150 kg\t870 L\t517 L\t177 L\t176 L\t1등급\t42.8 kWh/월\n*/\n\n\nCREATE TABLE `리뷰_정보` (\n\tid INTEGER NOT NULL AUTO_INCREMENT, \n\t`제품_코드` VARCHAR(20) NOT NULL, \n\t`평점` VARCHAR(10) NOT NULL, \n\t`리뷰_개수` INTEGER NOT NULL, \n\t`리뷰_요약` TEXT, \n\tcreated_at DATETIME NOT NULL, \n\tPRIMARY KEY (id)\n)ENGINE=InnoDB COLLATE utf8mb4_0900_ai_ci DEFAULT CHARSET=utf8mb4\n\n/*\n1 rows from 리뷰_정보 table:\nid\t제품_코드\t평점\t리뷰_개수\t리뷰_요약\tcreated_at\n1\tRF85C9101AP\t4.8 / 5.0\t360\t[삼성전자이벤트참여]일단 기존에 쓰던 냉장고가 LG제품이였는데 10년이 넘으니 고장이 나서 더이상 A/S가 불가능하게 되어서 급하게 새 냉장고를 알아보게되었어요! 4도어에 쇼케이스\t2024-03-04 16:29:18\n*/"
-}
-[chain/end] [1:chain:RunnableSequence > 2:chain:RunnableAssign<input,table_info> > 3:chain:RunnableParallel<input,table_info>] [12ms] Exiting Chain run with output:
-{
-  "input": "냉장고 중에 평점이 높고 리뷰가 많은 제품들을 나열해줘\nSQLQuery: ",
-  "table_info": "\nCREATE TABLE `냉장고` (\n\tid INTEGER NOT NULL AUTO_INCREMENT, \n\t`제품_코드` VARCHAR(20) NOT NULL, \n\t`제품명` VARCHAR(255) NOT NULL, \n\t`가격` VARCHAR(30), \n\t`가로` VARCHAR(20), \n\t`높이` VARCHAR(20), \n\t`깊이` VARCHAR(20), \n\t`제품_타입` VARCHAR(255), \n\t`무게` VARCHAR(20), \n\t`전체_용량` VARCHAR(20), \n\t`냉장실_용량` VARCHAR(20), \n\t`냉동실_용량` VARCHAR(20), \n\t`맞춤보관실_용량` VARCHAR(20), \n\t`소비효율등급` VARCHAR(10), \n\t`소비_전력` VARCHAR(20), \n\tPRIMARY KEY (id)\n)ENGINE=InnoDB COLLATE utf8mb4_0900_ai_ci DEFAULT CHARSET=utf8mb4\n\n/*\n1 rows from 냉장고 table:\nid\t제품_코드\t제품명\t가격\t가로\t높이\t깊이\t제품_타입\t무게\t전체_용량\t냉장실_용량\t냉동실_용량\t맞춤보관실_용량\t소비효율등급\t소비_전력\n1\tRF85C9101AP\tBESPOKE 냉장고 4도어 870 L\t3240000 원\t912 mm\t1853 mm\t930 mm\tBESPOKE 냉장고 4도어\t150 kg\t870 L\t517 L\t177 L\t176 L\t1등급\t42.8 kWh/월\n*/\n\n\nCREATE TABLE `리뷰_정보` (\n\tid INTEGER NOT NULL AUTO_INCREMENT, \n\t`제품_코드` VARCHAR(20) NOT NULL, \n\t`평점` VARCHAR(10) NOT NULL, \n\t`리뷰_개수` INTEGER NOT NULL, \n\t`리뷰_요약` TEXT, \n\tcreated_at DATETIME NOT NULL, \n\tPRIMARY KEY (id)\n)ENGINE=InnoDB COLLATE utf8mb4_0900_ai_ci DEFAULT CHARSET=utf8mb4\n\n/*\n1 rows from 리뷰_정보 table:\nid\t제품_코드\t평점\t리뷰_개수\t리뷰_요약\tcreated_at\n1\tRF85C9101AP\t4.8 / 5.0\t360\t[삼성전자이벤트참여]일단 기존에 쓰던 냉장고가 LG제품이였는데 10년이 넘으니 고장이 나서 더이상 A/S가 불가능하게 되어서 급하게 새 냉장고를 알아보게되었어요! 4도어에 쇼케이스\t2024-03-04 16:29:18\n*/"
-}
-[chain/end] [1:chain:RunnableSequence > 2:chain:RunnableAssign<input,table_info>] [15ms] Exiting Chain run with output:
-{
-  "question": "냉장고 중에 평점이 높고 리뷰가 많은 제품들을 나열해줘",
-  "top_k": 4,
-  "table_info": "\nCREATE TABLE `냉장고` (\n\tid INTEGER NOT NULL AUTO_INCREMENT, \n\t`제품_코드` VARCHAR(20) NOT NULL, \n\t`제품명` VARCHAR(255) NOT NULL, \n\t`가격` VARCHAR(30), \n\t`가로` VARCHAR(20), \n\t`높이` VARCHAR(20), \n\t`깊이` VARCHAR(20), \n\t`제품_타입` VARCHAR(255), \n\t`무게` VARCHAR(20), \n\t`전체_용량` VARCHAR(20), \n\t`냉장실_용량` VARCHAR(20), \n\t`냉동실_용량` VARCHAR(20), \n\t`맞춤보관실_용량` VARCHAR(20), \n\t`소비효율등급` VARCHAR(10), \n\t`소비_전력` VARCHAR(20), \n\tPRIMARY KEY (id)\n)ENGINE=InnoDB COLLATE utf8mb4_0900_ai_ci DEFAULT CHARSET=utf8mb4\n\n/*\n1 rows from 냉장고 table:\nid\t제품_코드\t제품명\t가격\t가로\t높이\t깊이\t제품_타입\t무게\t전체_용량\t냉장실_용량\t냉동실_용량\t맞춤보관실_용량\t소비효율등급\t소비_전력\n1\tRF85C9101AP\tBESPOKE 냉장고 4도어 870 L\t3240000 원\t912 mm\t1853 mm\t930 mm\tBESPOKE 냉장고 4도어\t150 kg\t870 L\t517 L\t177 L\t176 L\t1등급\t42.8 kWh/월\n*/\n\n\nCREATE TABLE `리뷰_정보` (\n\tid INTEGER NOT NULL AUTO_INCREMENT, \n\t`제품_코드` VARCHAR(20) NOT NULL, \n\t`평점` VARCHAR(10) NOT NULL, \n\t`리뷰_개수` INTEGER NOT NULL, \n\t`리뷰_요약` TEXT, \n\tcreated_at DATETIME NOT NULL, \n\tPRIMARY KEY (id)\n)ENGINE=InnoDB COLLATE utf8mb4_0900_ai_ci DEFAULT CHARSET=utf8mb4\n\n/*\n1 rows from 리뷰_정보 table:\nid\t제품_코드\t평점\t리뷰_개수\t리뷰_요약\tcreated_at\n1\tRF85C9101AP\t4.8 / 5.0\t360\t[삼성전자이벤트참여]일단 기존에 쓰던 냉장고가 LG제품이였는데 10년이 넘으니 고장이 나서 더이상 A/S가 불가능하게 되어서 급하게 새 냉장고를 알아보게되었어요! 4도어에 쇼케이스\t2024-03-04 16:29:18\n*/",
-  "input": "냉장고 중에 평점이 높고 리뷰가 많은 제품들을 나열해줘\nSQLQuery: "
-}
-[chain/start] [1:chain:RunnableSequence > 6:chain:RunnableLambda] Entering Chain run with input:
-{
-  "question": "냉장고 중에 평점이 높고 리뷰가 많은 제품들을 나열해줘",
-  "top_k": 4,
-  "table_info": "\nCREATE TABLE `냉장고` (\n\tid INTEGER NOT NULL AUTO_INCREMENT, \n\t`제품_코드` VARCHAR(20) NOT NULL, \n\t`제품명` VARCHAR(255) NOT NULL, \n\t`가격` VARCHAR(30), \n\t`가로` VARCHAR(20), \n\t`높이` VARCHAR(20), \n\t`깊이` VARCHAR(20), \n\t`제품_타입` VARCHAR(255), \n\t`무게` VARCHAR(20), \n\t`전체_용량` VARCHAR(20), \n\t`냉장실_용량` VARCHAR(20), \n\t`냉동실_용량` VARCHAR(20), \n\t`맞춤보관실_용량` VARCHAR(20), \n\t`소비효율등급` VARCHAR(10), \n\t`소비_전력` VARCHAR(20), \n\tPRIMARY KEY (id)\n)ENGINE=InnoDB COLLATE utf8mb4_0900_ai_ci DEFAULT CHARSET=utf8mb4\n\n/*\n1 rows from 냉장고 table:\nid\t제품_코드\t제품명\t가격\t가로\t높이\t깊이\t제품_타입\t무게\t전체_용량\t냉장실_용량\t냉동실_용량\t맞춤보관실_용량\t소비효율등급\t소비_전력\n1\tRF85C9101AP\tBESPOKE 냉장고 4도어 870 L\t3240000 원\t912 mm\t1853 mm\t930 mm\tBESPOKE 냉장고 4도어\t150 kg\t870 L\t517 L\t177 L\t176 L\t1등급\t42.8 kWh/월\n*/\n\n\nCREATE TABLE `리뷰_정보` (\n\tid INTEGER NOT NULL AUTO_INCREMENT, \n\t`제품_코드` VARCHAR(20) NOT NULL, \n\t`평점` VARCHAR(10) NOT NULL, \n\t`리뷰_개수` INTEGER NOT NULL, \n\t`리뷰_요약` TEXT, \n\tcreated_at DATETIME NOT NULL, \n\tPRIMARY KEY (id)\n)ENGINE=InnoDB COLLATE utf8mb4_0900_ai_ci DEFAULT CHARSET=utf8mb4\n\n/*\n1 rows from 리뷰_정보 table:\nid\t제품_코드\t평점\t리뷰_개수\t리뷰_요약\tcreated_at\n1\tRF85C9101AP\t4.8 / 5.0\t360\t[삼성전자이벤트참여]일단 기존에 쓰던 냉장고가 LG제품이였는데 10년이 넘으니 고장이 나서 더이상 A/S가 불가능하게 되어서 급하게 새 냉장고를 알아보게되었어요! 4도어에 쇼케이스\t2024-03-04 16:29:18\n*/",
-  "input": "냉장고 중에 평점이 높고 리뷰가 많은 제품들을 나열해줘\nSQLQuery: "
-}
-[chain/end] [1:chain:RunnableSequence > 6:chain:RunnableLambda] [1ms] Exiting Chain run with output:
-{
-  "top_k": 4,
-  "table_info": "\nCREATE TABLE `냉장고` (\n\tid INTEGER NOT NULL AUTO_INCREMENT, \n\t`제품_코드` VARCHAR(20) NOT NULL, \n\t`제품명` VARCHAR(255) NOT NULL, \n\t`가격` VARCHAR(30), \n\t`가로` VARCHAR(20), \n\t`높이` VARCHAR(20), \n\t`깊이` VARCHAR(20), \n\t`제품_타입` VARCHAR(255), \n\t`무게` VARCHAR(20), \n\t`전체_용량` VARCHAR(20), \n\t`냉장실_용량` VARCHAR(20), \n\t`냉동실_용량` VARCHAR(20), \n\t`맞춤보관실_용량` VARCHAR(20), \n\t`소비효율등급` VARCHAR(10), \n\t`소비_전력` VARCHAR(20), \n\tPRIMARY KEY (id)\n)ENGINE=InnoDB COLLATE utf8mb4_0900_ai_ci DEFAULT CHARSET=utf8mb4\n\n/*\n1 rows from 냉장고 table:\nid\t제품_코드\t제품명\t가격\t가로\t높이\t깊이\t제품_타입\t무게\t전체_용량\t냉장실_용량\t냉동실_용량\t맞춤보관실_용량\t소비효율등급\t소비_전력\n1\tRF85C9101AP\tBESPOKE 냉장고 4도어 870 L\t3240000 원\t912 mm\t1853 mm\t930 mm\tBESPOKE 냉장고 4도어\t150 kg\t870 L\t517 L\t177 L\t176 L\t1등급\t42.8 kWh/월\n*/\n\n\nCREATE TABLE `리뷰_정보` (\n\tid INTEGER NOT NULL AUTO_INCREMENT, \n\t`제품_코드` VARCHAR(20) NOT NULL, \n\t`평점` VARCHAR(10) NOT NULL, \n\t`리뷰_개수` INTEGER NOT NULL, \n\t`리뷰_요약` TEXT, \n\tcreated_at DATETIME NOT NULL, \n\tPRIMARY KEY (id)\n)ENGINE=InnoDB COLLATE utf8mb4_0900_ai_ci DEFAULT CHARSET=utf8mb4\n\n/*\n1 rows from 리뷰_정보 table:\nid\t제품_코드\t평점\t리뷰_개수\t리뷰_요약\tcreated_at\n1\tRF85C9101AP\t4.8 / 5.0\t360\t[삼성전자이벤트참여]일단 기존에 쓰던 냉장고가 LG제품이였는데 10년이 넘으니 고장이 나서 더이상 A/S가 불가능하게 되어서 급하게 새 냉장고를 알아보게되었어요! 4도어에 쇼케이스\t2024-03-04 16:29:18\n*/",
-  "input": "냉장고 중에 평점이 높고 리뷰가 많은 제품들을 나열해줘\nSQLQuery: "
-}
-[chain/start] [1:chain:RunnableSequence > 7:prompt:FewShotPromptTemplate] Entering Prompt run with input:
-{
-  "top_k": 4,
-  "table_info": "\nCREATE TABLE `냉장고` (\n\tid INTEGER NOT NULL AUTO_INCREMENT, \n\t`제품_코드` VARCHAR(20) NOT NULL, \n\t`제품명` VARCHAR(255) NOT NULL, \n\t`가격` VARCHAR(30), \n\t`가로` VARCHAR(20), \n\t`높이` VARCHAR(20), \n\t`깊이` VARCHAR(20), \n\t`제품_타입` VARCHAR(255), \n\t`무게` VARCHAR(20), \n\t`전체_용량` VARCHAR(20), \n\t`냉장실_용량` VARCHAR(20), \n\t`냉동실_용량` VARCHAR(20), \n\t`맞춤보관실_용량` VARCHAR(20), \n\t`소비효율등급` VARCHAR(10), \n\t`소비_전력` VARCHAR(20), \n\tPRIMARY KEY (id)\n)ENGINE=InnoDB COLLATE utf8mb4_0900_ai_ci DEFAULT CHARSET=utf8mb4\n\n/*\n1 rows from 냉장고 table:\nid\t제품_코드\t제품명\t가격\t가로\t높이\t깊이\t제품_타입\t무게\t전체_용량\t냉장실_용량\t냉동실_용량\t맞춤보관실_용량\t소비효율등급\t소비_전력\n1\tRF85C9101AP\tBESPOKE 냉장고 4도어 870 L\t3240000 원\t912 mm\t1853 mm\t930 mm\tBESPOKE 냉장고 4도어\t150 kg\t870 L\t517 L\t177 L\t176 L\t1등급\t42.8 kWh/월\n*/\n\n\nCREATE TABLE `리뷰_정보` (\n\tid INTEGER NOT NULL AUTO_INCREMENT, \n\t`제품_코드` VARCHAR(20) NOT NULL, \n\t`평점` VARCHAR(10) NOT NULL, \n\t`리뷰_개수` INTEGER NOT NULL, \n\t`리뷰_요약` TEXT, \n\tcreated_at DATETIME NOT NULL, \n\tPRIMARY KEY (id)\n)ENGINE=InnoDB COLLATE utf8mb4_0900_ai_ci DEFAULT CHARSET=utf8mb4\n\n/*\n1 rows from 리뷰_정보 table:\nid\t제품_코드\t평점\t리뷰_개수\t리뷰_요약\tcreated_at\n1\tRF85C9101AP\t4.8 / 5.0\t360\t[삼성전자이벤트참여]일단 기존에 쓰던 냉장고가 LG제품이였는데 10년이 넘으니 고장이 나서 더이상 A/S가 불가능하게 되어서 급하게 새 냉장고를 알아보게되었어요! 4도어에 쇼케이스\t2024-03-04 16:29:18\n*/",
-  "input": "냉장고 중에 평점이 높고 리뷰가 많은 제품들을 나열해줘\nSQLQuery: "
-}
-[chain/end] [1:chain:RunnableSequence > 7:prompt:FewShotPromptTemplate] [1ms] Exiting Prompt run with output:
-[outputs]
-[llm/start] [1:chain:RunnableSequence > 8:llm:ChatOpenAI] Entering LLM run with input:
-{
-  "prompts": [
-    "Human: You are a MySQL expert.\nGiven an input question, You will always create 2 MySQL queries. \nFirstly, create a syntactically correct MySQL query to run only with using the following tables that i will give you below.\nQuery for at most 4 results for this first query using the LIMIT clause as per MySQL.\nPay attention to use only the column names you can see in the tables below.\n\nOnly use the following tables for the first MySQL query:\n\nCREATE TABLE `냉장고` (\n\tid INTEGER NOT NULL AUTO_INCREMENT, \n\t`제품_코드` VARCHAR(20) NOT NULL, \n\t`제품명` VARCHAR(255) NOT NULL, \n\t`가격` VARCHAR(30), \n\t`가로` VARCHAR(20), \n\t`높이` VARCHAR(20), \n\t`깊이` VARCHAR(20), \n\t`제품_타입` VARCHAR(255), \n\t`무게` VARCHAR(20), \n\t`전체_용량` VARCHAR(20), \n\t`냉장실_용량` VARCHAR(20), \n\t`냉동실_용량` VARCHAR(20), \n\t`맞춤보관실_용량` VARCHAR(20), \n\t`소비효율등급` VARCHAR(10), \n\t`소비_전력` VARCHAR(20), \n\tPRIMARY KEY (id)\n)ENGINE=InnoDB COLLATE utf8mb4_0900_ai_ci DEFAULT CHARSET=utf8mb4\n\n/*\n1 rows from 냉장고 table:\nid\t제품_코드\t제품명\t가격\t가로\t높이\t깊이\t제품_타입\t무게\t전체_용량\t냉장실_용량\t냉동실_용량\t맞춤보관실_용량\t소비효율등급\t소비_전력\n1\tRF85C9101AP\tBESPOKE 냉장고 4도어 870 L\t3240000 원\t912 mm\t1853 mm\t930 mm\tBESPOKE 냉장고 4도어\t150 kg\t870 L\t517 L\t177 L\t176 L\t1등급\t42.8 kWh/월\n*/\n\n\nCREATE TABLE `리뷰_정보` (\n\tid INTEGER NOT NULL AUTO_INCREMENT, \n\t`제품_코드` VARCHAR(20) NOT NULL, \n\t`평점` VARCHAR(10) NOT NULL, \n\t`리뷰_개수` INTEGER NOT NULL, \n\t`리뷰_요약` TEXT, \n\tcreated_at DATETIME NOT NULL, \n\tPRIMARY KEY (id)\n)ENGINE=InnoDB COLLATE utf8mb4_0900_ai_ci DEFAULT CHARSET=utf8mb4\n\n/*\n1 rows from 리뷰_정보 table:\nid\t제품_코드\t평점\t리뷰_개수\t리뷰_요약\tcreated_at\n1\tRF85C9101AP\t4.8 / 5.0\t360\t[삼성전자이벤트참여]일단 기존에 쓰던 냉장고가 LG제품이였는데 10년이 넘으니 고장이 나서 더이상 A/S가 불가능하게 되어서 급하게 새 냉장고를 알아보게되었어요! 4도어에 쇼케이스\t2024-03-04 16:29:18\n*/\n\nAnd secondly, create a syntactically correct MySQL query to run like the first one.\nBut in this case you will join more tables.\nYou will only need table's names to join and the column to join with the main table.\nAnd never use the LIMIT clause for this second query to get all the results as per MySQL.\n\nHere is the additional table names to join:\n[`냉장고_추가정보`,`리뷰_정보`,`제품_정보`,`할인_정보`]\n\nAnd here is the standard column name to join:\n`제품_코드`\n\nSeparate first query and second query using two line breakings like `\\n\\n`\nYou can order the results to return the most informative data in the database.\nAlways query for all columns from a table using * after SELECT.\nWrap each column name in backticks (`) to denote them as delimited identifiers.\nBe careful to not query for columns that do not exist.\nAlso, pay attention to which column is in which table.\n\nUse the following format:\n\nUser input: User input here\nSQLquery: First SQL Query to run\nSecond SQL Query to run\n\nBelow are a number of examples of questions and their corresponding SQL queries.\n\nUser input: 냉장고 중에 평점이 높고 리뷰가 많은 제품들을 나열해줘\nSQLquery: SELECT * FROM '냉장고' JOIN `리뷰_정보` ON `냉장고`.`제품_코드` = `리뷰_정보`.`제품_코드` ORDER BY `리뷰_정보`.`평점` DESC, `리뷰_정보`.`리뷰_개수` DESC LIMIT 3;\n\nSELECT * FROM '냉장고' ORDER BY `리뷰_정보`.`평점` DESC, `리뷰_정보`.`리뷰_개수` DESC LIMIT 10;\n\nUser input: 냉장고 중에 평점이 높고 리뷰가 많은 제품들을 나열해줘\nSQLQuery:"
-  ]
-}
-[llm/end] [1:chain:RunnableSequence > 8:llm:ChatOpenAI] [4.02s] Exiting LLM run with output:
-{
-  "generations": [
-    [
-      {
-        "text": "SELECT * FROM `냉장고` JOIN `리뷰_정보` ON `냉장고`.`제품_코드` = `리뷰_정보`.`제품_코드` ORDER BY `리뷰_정보`.`평점` DESC, `리뷰_정보`.`리뷰_개수` DESC LIMIT 4;\n\nSELECT * FROM `냉장고` JOIN `리뷰_정보` ON `냉장고`.`제품_코드` = `리뷰_정보`.`제품_코드` ORDER BY `리뷰_정보`.`평점` DESC, `리뷰_정보`.`리뷰_개수` DESC;",
-        "generation_info": {
-          "finish_reason": "stop",
-          "logprobs": null
-        },
-        "type": "ChatGeneration",
-        "message": {
-          "lc": 1,
-          "type": "constructor",
-          "id": [
-            "langchain",
-            "schema",
-            "messages",
-            "AIMessage"
-          ],
-          "kwargs": {
-            "content": "SELECT * FROM `냉장고` JOIN `리뷰_정보` ON `냉장고`.`제품_코드` = `리뷰_정보`.`제품_코드` ORDER BY `리뷰_정보`.`평점` DESC, `리뷰_정보`.`리뷰_개수` DESC LIMIT 4;\n\nSELECT * FROM `냉장고` JOIN `리뷰_정보` ON `냉장고`.`제품_코드` = `리뷰_정보`.`제품_코드` ORDER BY `리뷰_정보`.`평점` DESC, `리뷰_정보`.`리뷰_개수` DESC;",
-            "additional_kwargs": {}
-          }
-        }
-      }
-    ]
-  ],
-  "llm_output": {
-    "token_usage": {
-      "completion_tokens": 187,
-      "prompt_tokens": 1361,
-      "total_tokens": 1548
-    },
-    "model_name": "gpt-3.5-turbo",
-    "system_fingerprint": "fp_4f0b692a78"
-  },
-  "run": null
-}
-[chain/start] [1:chain:RunnableSequence > 9:parser:StrOutputParser] Entering Parser run with input:
-[inputs]
-[chain/end] [1:chain:RunnableSequence > 9:parser:StrOutputParser] [0ms] Exiting Parser run with output:
-{
-  "output": "SELECT * FROM `냉장고` JOIN `리뷰_정보` ON `냉장고`.`제품_코드` = `리뷰_정보`.`제품_코드` ORDER BY `리뷰_정보`.`평점` DESC, `리뷰_정보`.`리뷰_개수` DESC LIMIT 4;\n\nSELECT * FROM `냉장고` JOIN `리뷰_정보` ON `냉장고`.`제품_코드` = `리뷰_정보`.`제품_코드` ORDER BY `리뷰_정보`.`평점` DESC, `리뷰_정보`.`리뷰_개수` DESC;"
-}
-[chain/start] [1:chain:RunnableSequence > 10:chain:_strip] Entering Chain run with input:
-{
-  "input": "SELECT * FROM `냉장고` JOIN `리뷰_정보` ON `냉장고`.`제품_코드` = `리뷰_정보`.`제품_코드` ORDER BY `리뷰_정보`.`평점` DESC, `리뷰_정보`.`리뷰_개수` DESC LIMIT 4;\n\nSELECT * FROM `냉장고` JOIN `리뷰_정보` ON `냉장고`.`제품_코드` = `리뷰_정보`.`제품_코드` ORDER BY `리뷰_정보`.`평점` DESC, `리뷰_정보`.`리뷰_개수` DESC;"
-}
-[chain/end] [1:chain:RunnableSequence > 10:chain:_strip] [1ms] Exiting Chain run with output:
-{
-  "output": "SELECT * FROM `냉장고` JOIN `리뷰_정보` ON `냉장고`.`제품_코드` = `리뷰_정보`.`제품_코드` ORDER BY `리뷰_정보`.`평점` DESC, `리뷰_정보`.`리뷰_개수` DESC LIMIT 4;\n\nSELECT * FROM `냉장고` JOIN `리뷰_정보` ON `냉장고`.`제품_코드` = `리뷰_정보`.`제품_코드` ORDER BY `리뷰_정보`.`평점` DESC, `리뷰_정보`.`리뷰_개수` DESC;"
-}
-[chain/end] [1:chain:RunnableSequence] [4.05s] Exiting Chain run with output:
-{
-  "output": "SELECT * FROM `냉장고` JOIN `리뷰_정보` ON `냉장고`.`제품_코드` = `리뷰_정보`.`제품_코드` ORDER BY `리뷰_정보`.`평점` DESC, `리뷰_정보`.`리뷰_개수` DESC LIMIT 4;\n\nSELECT * FROM `냉장고` JOIN `리뷰_정보` ON `냉장고`.`제품_코드` = `리뷰_정보`.`제품_코드` ORDER BY `리뷰_정보`.`평점` DESC, `리뷰_정보`.`리뷰_개수` DESC;"
-}
-[chain/start] [1:chain:RunnableSequence] Entering Chain run with input:
-{
-  "question": "냉장고 중에 평점이 높고 리뷰가 많은 제품들을 나열해줘",
-  "query": "SELECT * FROM `냉장고` JOIN `리뷰_정보` ON `냉장고`.`제품_코드` = `리뷰_정보`.`제품_코드` ORDER BY `리뷰_정보`.`평점` DESC, `리뷰_정보`.`리뷰_개수` DESC LIMIT 4;",
-  "result": "[{'id': 78, '제품_코드': 'RF85B92M1AP', '제품명': 'BESPOKE 냉장고 4도어 847 L (빅아이스, UV탈취)', '가격': None, '가로': '912 mm', '높이': '1853 mm', '깊이': '930 mm', '제품_타입': 'BESPOKE 냉장고 4도어', '무게': None, '전체_용량': '847 L', '냉장실_용량': '502 L', '냉동실_용량': '345 L', '맞춤보관실_용량': None, '소비효율등급': '1등급', '소비_전력': '41.7 kWh/월', '평점': '5.0 / 5.0', '리뷰_개수': 110, '리뷰_요약': '1. 구매이유집에 김치냉장고를 따로 설치하지 않을 생각이었기 때문에, 삼성 비스포크 냉장고의 우측하단 냉장고를 김치냉장고 기능으로 사용할 수 있어 해당 모델로 선택하였습니다.2. 배송후기약속했던 배송일에 맞춰 설치기사님께서 제 시간에 방문해주셨고, 빠른 설치 후 친절하게 설명해 주셨습니다.3. 실사용 후기1) 우측하단의 김치냉장고 사용삼성 비스포크 냉장고의 가장 큰 장점이 바로 이 점이라고 생각합니다.저같은 경우는 별도의 김치냉장고를 사용할 정도로 김치를 많이 먹는 편이 아닙니다.하지만 조금이라도 김치를 먹긴하는데 이 때문에 김치냉장고를 산다는 것이 조금 과하다고 생각했습니다. 하지만 삼성비스포크 냉장고는 이러한 저의 생활패턴에 맞게 우측하단의 냉장고를 여러기능으로 사용할 수 있어서 참 좋다고...', 'created_at': datetime.datetime(2024, 3, 4, 16, 29, 18)}, {'id': 147, '제품_코드': 'RF85B95H2APN', '제품명': 'BESPOKE 냉장고 4도어 패밀리허브 840 L (빅아이스, UV탈취)', '가격': None, '가로': '912 mm', '높이': '1853 mm', '깊이': '930 mm', '제품_타입': 'BESPOKE 냉장고 패밀리허브', '무게': None, '전체_용량': '840 L', '냉장실_용량': '495 L', '냉동실_용량': '345 L', '맞춤보관실_용량': None, '소비효율등급': '2등급', '소비_전력': '54.0 kWh/월', '평점': '5.0 / 5.0', '리뷰_개수': 67, '리뷰_요약': '제품이 너무 예뻐요ㅠㅠ그리고 노래듣기랑 vod시청도 가능하고 요리방법도 확인할 수 있는 똑똑한 냉장고에요가성비 최고 얼음 메이커 기능도 있어서 역시 삼성 최고에요ㅠㅠ 휴대폰까지 삼성 쓰고 있는 삼성 찐팬이에요ㅎㅎ\\n---\\n1년 사용했는데 성능그대로 디자인 이쁘고 아무탈 없이 사용중입니다.  의외로 많이 들어가고 냉동도 생각보다 많이들어가요. 얼음 얼리는것 편하고. 무선인터넷 연결되어 유튜브나. 검색도 됩니다. 빅스비 내장되어 좀더 편하게 사용하고 있어요. \\n---\\n말해뭐합니까??  넘 좋아요  신혼때 삼성냉장고 사서10년쓰고 또 삼성샀어요 얼음 트레이가 진심 최고예요 물만 넣음 자동으로 만들어지고 덕분에 얼음 좋아하는 우리가족 아이스크림대신 얼음 으로 잘먹어요 기승전결 삼성냉장고입니다\\n---\\n허브 제품...', 'created_at': datetime.datetime(2024, 3, 4, 16, 29, 18)}, {'id': 22, '제품_코드': 'RR40C7805AP', '제품명': 'BESPOKE 냉장고 1도어 키친핏 409 L (우열림)', '가격': '1499000 원', '가로': '595 mm', '높이': '1853 mm', '깊이': '688 mm', '제품_타입': 'BESPOKE 냉장고 1도어', '무게': None, '전체_용량': '409 L', '냉장실_용량': None, '냉동실_용량': None, '맞춤보관실_용량': None, '소비효율등급': '1등급', '소비_전력': '14.8 kWh/월', '평점': '5.0 / 5.0', '리뷰_개수': 44, '리뷰_요약': '비스포크 키친핏 고르기까지 굉장히 많은 시간을 투자  했습니다. 경쟁사 비교 등 결론은 역시나 갓 삼성으로 선택하게 된 점 너무 잘했다고 생각하고 있습니다. 가격을 떠나서 글로벌 삼성답게 디자인이나 성능 및 가격을 고려했을시 최고가 아닐까 생각합니다. 이번 키친핏 냉장고 세트 외 비스포크 빌트인 정수기, 오븐, 비데까지 싹 다 삼성으로 구매를 했습니다. 배송 설치 기사님은 진심 제가 미안할 정도로 차분한 언행과 친절함에 감동 받았습니다. 이번에 느낀건 고민은 저만 힘들게 할 뿐...  구매를 고민하고 계신분들은 아까운 시간 소비하지 마세요~~\\n---\\n갑자기 냉장고가 고장나서 여러가지 모델을 찾아보다 기존 사용하든 제품이 키친핏이라 같은 모델슬 찾아보다 비스포크를 선택했네요. 추가로 냉동고와...', 'created_at': datetime.datetime(2024, 3, 4, 16, 29, 18)}, {'id': 151, '제품_코드': 'RF85B92N1AP', '제품명': 'BESPOKE 냉장고 4도어 848 L (빅아이스, UV탈취)', '가격': None, '가로': '912 mm', '높이': '1853 mm', '깊이': '930 mm', '제품_타입': 'BESPOKE 냉장고 4도어', '무게': None, '전체_용량': '848 L', '냉장실_용량': '503 L', '냉동실_용량': '345 L', '맞춤보관실_용량': None, '소비효율등급': '1등급', '소비_전력': '41.8 kWh/월', '평점': '5.0 / 5.0', '리뷰_개수': 40, '리뷰_요약': '색상조합이 너무 이쁘고 좋아요냉장고 선택할때 조건을 다 갖춘거라서너무 쓰기 편하고 설치할때도 기사님이 너무 친절하게설명도 잘해주셔서 100프로 만족입니다잘 선택한것 같아요\\n---\\n이제 설치해서 성능이나 편의성까지는 생각을 못하겠고 실물을 보고 산건데도 너무 예쁘고 맘에 쏙 드네요. 거기엔 기사님의 친절함도 한 몫 했답니다. 아무리 예뻐도 기분 나쁘게 받으면 꽝이니까요. L사꺼랑 고민하다 샀는데 삼성의 친절함에 반해 지금 작은 가전들 사러 사이트 들어왔다 글남깁니다.\\n---\\n#삼성전자이벤트참여비스포크냉장고 색상선택 디자인 너무 맘에쏙들고 이뻐요.설치기사님 설명잘해주시고 친절해요.빅아이스얼음짱좋음  고기해동기능 좋고 선택버튼 사용도 편합니다.삼성냉장고 성능 디자인 만족합니다.\\n---\\n 인터넷...', 'created_at': datetime.datetime(2024, 3, 4, 16, 29, 18)}]"
+  "question": "재밌는 사실 하나 알려줘"
 }
 [chain/start] [1:chain:RunnableSequence > 2:prompt:PromptTemplate] Entering Prompt run with input:
 {
-  "question": "냉장고 중에 평점이 높고 리뷰가 많은 제품들을 나열해줘",
-  "query": "SELECT * FROM `냉장고` JOIN `리뷰_정보` ON `냉장고`.`제품_코드` = `리뷰_정보`.`제품_코드` ORDER BY `리뷰_정보`.`평점` DESC, `리뷰_정보`.`리뷰_개수` DESC LIMIT 4;",
-  "result": "[{'id': 78, '제품_코드': 'RF85B92M1AP', '제품명': 'BESPOKE 냉장고 4도어 847 L (빅아이스, UV탈취)', '가격': None, '가로': '912 mm', '높이': '1853 mm', '깊이': '930 mm', '제품_타입': 'BESPOKE 냉장고 4도어', '무게': None, '전체_용량': '847 L', '냉장실_용량': '502 L', '냉동실_용량': '345 L', '맞춤보관실_용량': None, '소비효율등급': '1등급', '소비_전력': '41.7 kWh/월', '평점': '5.0 / 5.0', '리뷰_개수': 110, '리뷰_요약': '1. 구매이유집에 김치냉장고를 따로 설치하지 않을 생각이었기 때문에, 삼성 비스포크 냉장고의 우측하단 냉장고를 김치냉장고 기능으로 사용할 수 있어 해당 모델로 선택하였습니다.2. 배송후기약속했던 배송일에 맞춰 설치기사님께서 제 시간에 방문해주셨고, 빠른 설치 후 친절하게 설명해 주셨습니다.3. 실사용 후기1) 우측하단의 김치냉장고 사용삼성 비스포크 냉장고의 가장 큰 장점이 바로 이 점이라고 생각합니다.저같은 경우는 별도의 김치냉장고를 사용할 정도로 김치를 많이 먹는 편이 아닙니다.하지만 조금이라도 김치를 먹긴하는데 이 때문에 김치냉장고를 산다는 것이 조금 과하다고 생각했습니다. 하지만 삼성비스포크 냉장고는 이러한 저의 생활패턴에 맞게 우측하단의 냉장고를 여러기능으로 사용할 수 있어서 참 좋다고...', 'created_at': datetime.datetime(2024, 3, 4, 16, 29, 18)}, {'id': 147, '제품_코드': 'RF85B95H2APN', '제품명': 'BESPOKE 냉장고 4도어 패밀리허브 840 L (빅아이스, UV탈취)', '가격': None, '가로': '912 mm', '높이': '1853 mm', '깊이': '930 mm', '제품_타입': 'BESPOKE 냉장고 패밀리허브', '무게': None, '전체_용량': '840 L', '냉장실_용량': '495 L', '냉동실_용량': '345 L', '맞춤보관실_용량': None, '소비효율등급': '2등급', '소비_전력': '54.0 kWh/월', '평점': '5.0 / 5.0', '리뷰_개수': 67, '리뷰_요약': '제품이 너무 예뻐요ㅠㅠ그리고 노래듣기랑 vod시청도 가능하고 요리방법도 확인할 수 있는 똑똑한 냉장고에요가성비 최고 얼음 메이커 기능도 있어서 역시 삼성 최고에요ㅠㅠ 휴대폰까지 삼성 쓰고 있는 삼성 찐팬이에요ㅎㅎ\\n---\\n1년 사용했는데 성능그대로 디자인 이쁘고 아무탈 없이 사용중입니다.  의외로 많이 들어가고 냉동도 생각보다 많이들어가요. 얼음 얼리는것 편하고. 무선인터넷 연결되어 유튜브나. 검색도 됩니다. 빅스비 내장되어 좀더 편하게 사용하고 있어요. \\n---\\n말해뭐합니까??  넘 좋아요  신혼때 삼성냉장고 사서10년쓰고 또 삼성샀어요 얼음 트레이가 진심 최고예요 물만 넣음 자동으로 만들어지고 덕분에 얼음 좋아하는 우리가족 아이스크림대신 얼음 으로 잘먹어요 기승전결 삼성냉장고입니다\\n---\\n허브 제품...', 'created_at': datetime.datetime(2024, 3, 4, 16, 29, 18)}, {'id': 22, '제품_코드': 'RR40C7805AP', '제품명': 'BESPOKE 냉장고 1도어 키친핏 409 L (우열림)', '가격': '1499000 원', '가로': '595 mm', '높이': '1853 mm', '깊이': '688 mm', '제품_타입': 'BESPOKE 냉장고 1도어', '무게': None, '전체_용량': '409 L', '냉장실_용량': None, '냉동실_용량': None, '맞춤보관실_용량': None, '소비효율등급': '1등급', '소비_전력': '14.8 kWh/월', '평점': '5.0 / 5.0', '리뷰_개수': 44, '리뷰_요약': '비스포크 키친핏 고르기까지 굉장히 많은 시간을 투자  했습니다. 경쟁사 비교 등 결론은 역시나 갓 삼성으로 선택하게 된 점 너무 잘했다고 생각하고 있습니다. 가격을 떠나서 글로벌 삼성답게 디자인이나 성능 및 가격을 고려했을시 최고가 아닐까 생각합니다. 이번 키친핏 냉장고 세트 외 비스포크 빌트인 정수기, 오븐, 비데까지 싹 다 삼성으로 구매를 했습니다. 배송 설치 기사님은 진심 제가 미안할 정도로 차분한 언행과 친절함에 감동 받았습니다. 이번에 느낀건 고민은 저만 힘들게 할 뿐...  구매를 고민하고 계신분들은 아까운 시간 소비하지 마세요~~\\n---\\n갑자기 냉장고가 고장나서 여러가지 모델을 찾아보다 기존 사용하든 제품이 키친핏이라 같은 모델슬 찾아보다 비스포크를 선택했네요. 추가로 냉동고와...', 'created_at': datetime.datetime(2024, 3, 4, 16, 29, 18)}, {'id': 151, '제품_코드': 'RF85B92N1AP', '제품명': 'BESPOKE 냉장고 4도어 848 L (빅아이스, UV탈취)', '가격': None, '가로': '912 mm', '높이': '1853 mm', '깊이': '930 mm', '제품_타입': 'BESPOKE 냉장고 4도어', '무게': None, '전체_용량': '848 L', '냉장실_용량': '503 L', '냉동실_용량': '345 L', '맞춤보관실_용량': None, '소비효율등급': '1등급', '소비_전력': '41.8 kWh/월', '평점': '5.0 / 5.0', '리뷰_개수': 40, '리뷰_요약': '색상조합이 너무 이쁘고 좋아요냉장고 선택할때 조건을 다 갖춘거라서너무 쓰기 편하고 설치할때도 기사님이 너무 친절하게설명도 잘해주셔서 100프로 만족입니다잘 선택한것 같아요\\n---\\n이제 설치해서 성능이나 편의성까지는 생각을 못하겠고 실물을 보고 산건데도 너무 예쁘고 맘에 쏙 드네요. 거기엔 기사님의 친절함도 한 몫 했답니다. 아무리 예뻐도 기분 나쁘게 받으면 꽝이니까요. L사꺼랑 고민하다 샀는데 삼성의 친절함에 반해 지금 작은 가전들 사러 사이트 들어왔다 글남깁니다.\\n---\\n#삼성전자이벤트참여비스포크냉장고 색상선택 디자인 너무 맘에쏙들고 이뻐요.설치기사님 설명잘해주시고 친절해요.빅아이스얼음짱좋음  고기해동기능 좋고 선택버튼 사용도 편합니다.삼성냉장고 성능 디자인 만족합니다.\\n---\\n 인터넷...', 'created_at': datetime.datetime(2024, 3, 4, 16, 29, 18)}]"
+  "question": "재밌는 사실 하나 알려줘"
 }
 [chain/end] [1:chain:RunnableSequence > 2:prompt:PromptTemplate] [1ms] Exiting Prompt run with output:
 [outputs]
 [llm/start] [1:chain:RunnableSequence > 3:llm:ChatOpenAI] Entering LLM run with input:
 {
   "prompts": [
-    "Human: Given the following user question, corresponding SQL query, and SQL result, answer the user question.\nYour answer must be in the tone of a bright and polite butler using `!` enough to sound bright.\nYou must answer in Korean.\n\nQuestion: 냉장고 중에 평점이 높고 리뷰가 많은 제품들을 나열해줘\nSQL Query: SELECT * FROM `냉장고` JOIN `리뷰_정보` ON `냉장고`.`제품_코드` = `리뷰_정보`.`제품_코드` ORDER BY `리뷰_정보`.`평점` DESC, `리뷰_정보`.`리뷰_개수` DESC LIMIT 4;\nSQL Result: [{'id': 78, '제품_코드': 'RF85B92M1AP', '제품명': 'BESPOKE 냉장고 4도어 847 L (빅아이스, UV탈취)', '가격': None, '가로': '912 mm', '높이': '1853 mm', '깊이': '930 mm', '제품_타입': 'BESPOKE 냉장고 4도어', '무게': None, '전체_용량': '847 L', '냉장실_용량': '502 L', '냉동실_용량': '345 L', '맞춤보관실_용량': None, '소비효율등급': '1등급', '소비_전력': '41.7 kWh/월', '평점': '5.0 / 5.0', '리뷰_개수': 110, '리뷰_요약': '1. 구매이유집에 김치냉장고를 따로 설치하지 않을 생각이었기 때문에, 삼성 비스포크 냉장고의 우측하단 냉장고를 김치냉장고 기능으로 사용할 수 있어 해당 모델로 선택하였습니다.2. 배송후기약속했던 배송일에 맞춰 설치기사님께서 제 시간에 방문해주셨고, 빠른 설치 후 친절하게 설명해 주셨습니다.3. 실사용 후기1) 우측하단의 김치냉장고 사용삼성 비스포크 냉장고의 가장 큰 장점이 바로 이 점이라고 생각합니다.저같은 경우는 별도의 김치냉장고를 사용할 정도로 김치를 많이 먹는 편이 아닙니다.하지만 조금이라도 김치를 먹긴하는데 이 때문에 김치냉장고를 산다는 것이 조금 과하다고 생각했습니다. 하지만 삼성비스포크 냉장고는 이러한 저의 생활패턴에 맞게 우측하단의 냉장고를 여러기능으로 사용할 수 있어서 참 좋다고...', 'created_at': datetime.datetime(2024, 3, 4, 16, 29, 18)}, {'id': 147, '제품_코드': 'RF85B95H2APN', '제품명': 'BESPOKE 냉장고 4도어 패밀리허브 840 L (빅아이스, UV탈취)', '가격': None, '가로': '912 mm', '높이': '1853 mm', '깊이': '930 mm', '제품_타입': 'BESPOKE 냉장고 패밀리허브', '무게': None, '전체_용량': '840 L', '냉장실_용량': '495 L', '냉동실_용량': '345 L', '맞춤보관실_용량': None, '소비효율등급': '2등급', '소비_전력': '54.0 kWh/월', '평점': '5.0 / 5.0', '리뷰_개수': 67, '리뷰_요약': '제품이 너무 예뻐요ㅠㅠ그리고 노래듣기랑 vod시청도 가능하고 요리방법도 확인할 수 있는 똑똑한 냉장고에요가성비 최고 얼음 메이커 기능도 있어서 역시 삼성 최고에요ㅠㅠ 휴대폰까지 삼성 쓰고 있는 삼성 찐팬이에요ㅎㅎ\\n---\\n1년 사용했는데 성능그대로 디자인 이쁘고 아무탈 없이 사용중입니다.  의외로 많이 들어가고 냉동도 생각보다 많이들어가요. 얼음 얼리는것 편하고. 무선인터넷 연결되어 유튜브나. 검색도 됩니다. 빅스비 내장되어 좀더 편하게 사용하고 있어요. \\n---\\n말해뭐합니까??  넘 좋아요  신혼때 삼성냉장고 사서10년쓰고 또 삼성샀어요 얼음 트레이가 진심 최고예요 물만 넣음 자동으로 만들어지고 덕분에 얼음 좋아하는 우리가족 아이스크림대신 얼음 으로 잘먹어요 기승전결 삼성냉장고입니다\\n---\\n허브 제품...', 'created_at': datetime.datetime(2024, 3, 4, 16, 29, 18)}, {'id': 22, '제품_코드': 'RR40C7805AP', '제품명': 'BESPOKE 냉장고 1도어 키친핏 409 L (우열림)', '가격': '1499000 원', '가로': '595 mm', '높이': '1853 mm', '깊이': '688 mm', '제품_타입': 'BESPOKE 냉장고 1도어', '무게': None, '전체_용량': '409 L', '냉장실_용량': None, '냉동실_용량': None, '맞춤보관실_용량': None, '소비효율등급': '1등급', '소비_전력': '14.8 kWh/월', '평점': '5.0 / 5.0', '리뷰_개수': 44, '리뷰_요약': '비스포크 키친핏 고르기까지 굉장히 많은 시간을 투자  했습니다. 경쟁사 비교 등 결론은 역시나 갓 삼성으로 선택하게 된 점 너무 잘했다고 생각하고 있습니다. 가격을 떠나서 글로벌 삼성답게 디자인이나 성능 및 가격을 고려했을시 최고가 아닐까 생각합니다. 이번 키친핏 냉장고 세트 외 비스포크 빌트인 정수기, 오븐, 비데까지 싹 다 삼성으로 구매를 했습니다. 배송 설치 기사님은 진심 제가 미안할 정도로 차분한 언행과 친절함에 감동 받았습니다. 이번에 느낀건 고민은 저만 힘들게 할 뿐...  구매를 고민하고 계신분들은 아까운 시간 소비하지 마세요~~\\n---\\n갑자기 냉장고가 고장나서 여러가지 모델을 찾아보다 기존 사용하든 제품이 키친핏이라 같은 모델슬 찾아보다 비스포크를 선택했네요. 추가로 냉동고와...', 'created_at': datetime.datetime(2024, 3, 4, 16, 29, 18)}, {'id': 151, '제품_코드': 'RF85B92N1AP', '제품명': 'BESPOKE 냉장고 4도어 848 L (빅아이스, UV탈취)', '가격': None, '가로': '912 mm', '높이': '1853 mm', '깊이': '930 mm', '제품_타입': 'BESPOKE 냉장고 4도어', '무게': None, '전체_용량': '848 L', '냉장실_용량': '503 L', '냉동실_용량': '345 L', '맞춤보관실_용량': None, '소비효율등급': '1등급', '소비_전력': '41.8 kWh/월', '평점': '5.0 / 5.0', '리뷰_개수': 40, '리뷰_요약': '색상조합이 너무 이쁘고 좋아요냉장고 선택할때 조건을 다 갖춘거라서너무 쓰기 편하고 설치할때도 기사님이 너무 친절하게설명도 잘해주셔서 100프로 만족입니다잘 선택한것 같아요\\n---\\n이제 설치해서 성능이나 편의성까지는 생각을 못하겠고 실물을 보고 산건데도 너무 예쁘고 맘에 쏙 드네요. 거기엔 기사님의 친절함도 한 몫 했답니다. 아무리 예뻐도 기분 나쁘게 받으면 꽝이니까요. L사꺼랑 고민하다 샀는데 삼성의 친절함에 반해 지금 작은 가전들 사러 사이트 들어왔다 글남깁니다.\\n---\\n#삼성전자이벤트참여비스포크냉장고 색상선택 디자인 너무 맘에쏙들고 이뻐요.설치기사님 설명잘해주시고 친절해요.빅아이스얼음짱좋음  고기해동기능 좋고 선택버튼 사용도 편합니다.삼성냉장고 성능 디자인 만족합니다.\\n---\\n 인터넷...', 'created_at': datetime.datetime(2024, 3, 4, 16, 29, 18)}]\nAnswer:"
+    "Human: You are a butler kindly responding to customers' inquiries.\nYour answer must be in the tone of a bright and polite butler using `!` enough to sound bright.\nYou must answer in Korean.\n\nQuestion: 재밌는 사실 하나 알려줘\nAnswer:"
   ]
 }
-[llm/end] [1:chain:RunnableSequence > 3:llm:ChatOpenAI] [6.27s] Exiting LLM run with output:
+[llm/end] [1:chain:RunnableSequence > 3:llm:ChatOpenAI] [1.94s] Exiting LLM run with output:
 {
   "generations": [
     [
       {
-        "text": "밝고 친절한 질문을 주셔서 감사합니다! 냉장고 중에서 평점이 높고 리뷰가 많은 제품들을 나열해드리겠습니다! 먼저, BESPOKE 냉장고 4도어 847 L (빅아이스, UV탈취) 제품이 있습니다. 그 다음으로 BESPOKE 냉장고 4도어 패밀리허브 840 L (빅아이스, UV탈취) 제품이 있습니다. 그리고 BESPOKE 냉장고 1도어 키친핏 409 L (우열림) 제품이 있습니다. 마지막으로 BESPOKE 냉장고 4도어 848 L (빅아이스, UV탈취) 제품이 있습니다. 이렇게 총 4가지 제품을 소개해드렸습니다! 궁금한 점이 있으시면 언제든지 물어봐주세요!",
+        "text": "물론이죠! 재밌는 사실 하나 알려드리겠습니다! 한국은 세계에서 가장 많은 노래방이 있는 나라라고 해요! 신기하죠?!",
         "generation_info": {
           "finish_reason": "stop",
           "logprobs": null
@@ -173,7 +35,7 @@
             "AIMessage"
           ],
           "kwargs": {
-            "content": "밝고 친절한 질문을 주셔서 감사합니다! 냉장고 중에서 평점이 높고 리뷰가 많은 제품들을 나열해드리겠습니다! 먼저, BESPOKE 냉장고 4도어 847 L (빅아이스, UV탈취) 제품이 있습니다. 그 다음으로 BESPOKE 냉장고 4도어 패밀리허브 840 L (빅아이스, UV탈취) 제품이 있습니다. 그리고 BESPOKE 냉장고 1도어 키친핏 409 L (우열림) 제품이 있습니다. 마지막으로 BESPOKE 냉장고 4도어 848 L (빅아이스, UV탈취) 제품이 있습니다. 이렇게 총 4가지 제품을 소개해드렸습니다! 궁금한 점이 있으시면 언제든지 물어봐주세요!",
+            "content": "물론이죠! 재밌는 사실 하나 알려드리겠습니다! 한국은 세계에서 가장 많은 노래방이 있는 나라라고 해요! 신기하죠?!",
             "additional_kwargs": {}
           }
         }
@@ -182,9 +44,9 @@
   ],
   "llm_output": {
     "token_usage": {
-      "completion_tokens": 290,
-      "prompt_tokens": 3044,
-      "total_tokens": 3334
+      "completion_tokens": 67,
+      "prompt_tokens": 70,
+      "total_tokens": 137
     },
     "model_name": "gpt-3.5-turbo",
     "system_fingerprint": "fp_4f0b692a78"
@@ -195,11 +57,11 @@
 [inputs]
 [chain/end] [1:chain:RunnableSequence > 4:parser:StrOutputParser] [1ms] Exiting Parser run with output:
 {
-  "output": "밝고 친절한 질문을 주셔서 감사합니다! 냉장고 중에서 평점이 높고 리뷰가 많은 제품들을 나열해드리겠습니다! 먼저, BESPOKE 냉장고 4도어 847 L (빅아이스, UV탈취) 제품이 있습니다. 그 다음으로 BESPOKE 냉장고 4도어 패밀리허브 840 L (빅아이스, UV탈취) 제품이 있습니다. 그리고 BESPOKE 냉장고 1도어 키친핏 409 L (우열림) 제품이 있습니다. 마지막으로 BESPOKE 냉장고 4도어 848 L (빅아이스, UV탈취) 제품이 있습니다. 이렇게 총 4가지 제품을 소개해드렸습니다! 궁금한 점이 있으시면 언제든지 물어봐주세요!"
+  "output": "물론이죠! 재밌는 사실 하나 알려드리겠습니다! 한국은 세계에서 가장 많은 노래방이 있는 나라라고 해요! 신기하죠?!"
 }
-[chain/end] [1:chain:RunnableSequence] [6.28s] Exiting Chain run with output:
+[chain/end] [1:chain:RunnableSequence] [1.94s] Exiting Chain run with output:
 {
-  "output": "밝고 친절한 질문을 주셔서 감사합니다! 냉장고 중에서 평점이 높고 리뷰가 많은 제품들을 나열해드리겠습니다! 먼저, BESPOKE 냉장고 4도어 847 L (빅아이스, UV탈취) 제품이 있습니다. 그 다음으로 BESPOKE 냉장고 4도어 패밀리허브 840 L (빅아이스, UV탈취) 제품이 있습니다. 그리고 BESPOKE 냉장고 1도어 키친핏 409 L (우열림) 제품이 있습니다. 마지막으로 BESPOKE 냉장고 4도어 848 L (빅아이스, UV탈취) 제품이 있습니다. 이렇게 총 4가지 제품을 소개해드렸습니다! 궁금한 점이 있으시면 언제든지 물어봐주세요!"
+  "output": "물론이죠! 재밌는 사실 하나 알려드리겠습니다! 한국은 세계에서 가장 많은 노래방이 있는 나라라고 해요! 신기하죠?!"
 }
-type : search
-content : 밝고 친절한 질문을 주셔서 감사합니다! 냉장고 중에서 평점이 높고 리뷰가 많은 제품들을 나열해드리겠습니다! 먼저, BESPOKE 냉장고 4도어 847 L (빅아이스, UV탈취) 제품이 있습니다. 그 다음으로 BESPOKE 냉장고 4도어 패밀리허브 840 L (빅아이스, UV탈취) 제품이 있습니다. 그리고 BESPOKE 냉장고 1도어 키친핏 409 L (우열림) 제품이 있습니다. 마지막으로 BESPOKE 냉장고 4도어 848 L (빅아이스, UV탈취) 제품이 있습니다. 이렇게 총 4가지 제품을 소개해드렸습니다! 궁금한 점이 있으시면 언제든지 물어봐주세요!
+type : general
+content : 물론이죠! 재밌는 사실 하나 알려드리겠습니다! 한국은 세계에서 가장 많은 노래방이 있는 나라라고 해요! 신기하죠?!
