@@ -230,12 +230,14 @@ fabric.properties
 # Android studio 3.1+ serialized cache file
 .idea/caches/build_file_checksums.ser
 
-
+# Config
 keys.py
-/chatdaAPI/RAG/chroma_db/
 
-secret/*
+# Secrets
+secret/**
 
+# Generated stuff
+.idea/
 chroma_db
-.idea
 out.txt
+output.mp3
