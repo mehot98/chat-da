@@ -238,6 +238,6 @@ secret/**
 
 # Generated stuff
 .idea/
-chroma_db
+chroma_db/
 out.txt
 output.mp3
