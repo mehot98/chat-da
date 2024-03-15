@@ -7,7 +7,7 @@ router = APIRouter()
 
 
 @router.get("/{content}", status_code=status.HTTP_200_OK, response_model=response_dto.NaturalResponseDto)
-async def get_search(
+def get_search(
         content: str
 ):
     """

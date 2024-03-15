@@ -8,7 +8,7 @@ router = APIRouter()
 
 
 @router.get("/{modelNo}", status_code=status.HTTP_200_OK, response_model=Dto.DetailResponseDto)
-async def get_spec(
+def get_spec(
         model_no: str = Query(..., alias="modelNo")
 ):
     """

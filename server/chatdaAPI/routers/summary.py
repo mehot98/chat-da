@@ -5,7 +5,7 @@ router = APIRouter()
 
 
 @router.get("/review", status_code=status.HTTP_200_OK)
-async def get_review(
+def get_review(
         model_no: str = Query(..., alias="modelNo")
 ):
     """
@@ -23,7 +23,7 @@ async def get_review(
 
 
 @router.get("/detail", status_code=status.HTTP_200_OK)
-async def get_detail(
+def get_detail(
         model_no: str = Query(..., alias="modelNo")
 ):
     """

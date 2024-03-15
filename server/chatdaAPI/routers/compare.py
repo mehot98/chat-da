@@ -9,7 +9,7 @@ router = APIRouter()
 
 
 @router.get("", status_code=status.HTTP_200_OK, response_model=Dto.CompareResponseDto)
-async def get_compare_detail(
+def get_compare_detail(
         model_no: str = Query(..., alias="modelNo")
 ):
     """
