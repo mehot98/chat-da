@@ -232,7 +232,7 @@ fabric.properties
 
 
 keys.py
-/RAG/chroma_db/
+/chatdaAPI/RAG/chroma_db/
 
 secret/*
 
