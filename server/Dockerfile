@@ -24,9 +24,6 @@ RUN adduser \
 
 # Copy the source code into the container.
 COPY . .
-COPY ./keys/keys.py /app/keys.py
-COPY ./keys/google-cloud-key.json /secret/google-cloud-key.json
-
 
 # Download dependencies as a separate step to take advantage of Docker's caching.
 # Leverage a cache mount to /root/.cache/pip to speed up subsequent builds.
