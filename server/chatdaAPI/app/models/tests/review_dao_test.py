@@ -22,4 +22,5 @@ def get_review(review_id: int):
 
 
 if __name__ == "__main__":
+    # 리뷰_정보 테이블에서 리뷰 번호가 31인 제품의 정보를 받아온 뒤 리뷰 요약 내용을 출력합니다.
     print(get_review(31).리뷰_요약)
