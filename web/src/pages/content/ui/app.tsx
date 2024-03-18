@@ -170,6 +170,16 @@ export default function App() {
     }
   }, [fridgeList]);
 
+  const popularItemProps: T.PopularItemProps = {
+    제품명: "BESPOKE 냉장고 4도어 875 L",
+    제품_코드: "RF85C900F01",
+    혜택가: "2,000,000",
+    imageUrl: "string",
+    reviewCount: "342",
+    reviewSummary: "정말 감동적인 상품이에요",
+    rating: "5.0",
+  };
+
   useEffect(() => {}, [comparePrds]);
   return (
     <>
@@ -180,6 +190,7 @@ export default function App() {
           onClose={handleCloseExpandModal}
           disableScrollLock={true}
         >
+          <Comp.PopularItem {...popularItemProps} />
           확장모달입니당
           <button onClick={handleCloseExpandModal}>확장 모달 닫기</button>
         </S.ChatExpandModal>

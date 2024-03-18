@@ -25,6 +25,7 @@ export const ChatMainModal = styled(Dialog)`
 `;
 
 export const ChatExpandModal = styled(ChatMainModal)`
+  padding-right: 346px;
   z-index: 1299;
 
   & .MuiDialog-paper {
