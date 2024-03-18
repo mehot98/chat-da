@@ -18,7 +18,7 @@ def get_review(review_id: int):
     # get_db()로 생성한다면 generator를 반환하므로 next를
     # 통해 세션을 받아주는 작업이 필요함
     db = get_db()
-    return dao.get_review(next(db), review_id=review_id)
+    return dao.get_review_using_id(next(db), review_id=review_id)
 
 
 if __name__ == "__main__":

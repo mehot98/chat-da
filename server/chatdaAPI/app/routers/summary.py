@@ -1,4 +1,9 @@
 from fastapi import APIRouter, Query, status
+from fastapi.params import Depends
+from sqlalchemy.orm import Session
+
+import chatdaAPI.app.models.dao.review_dao as dao
+from chatdaAPI.app.models.utils.database import get_db
 
 # prefix == summary
 router = APIRouter()
@@ -6,17 +11,18 @@ router = APIRouter()
 
 @router.get("/review", status_code=status.HTTP_200_OK)
 def get_review(
-        model_no: str = Query(..., alias="modelNo")
+        model_no: str = Query(..., alias="modelNo"),
+        db: Session = Depends(get_db)
 ):
     """
     특정 제품의 리뷰 요약 정보 조회 API\n
     입력: modelNo\n
     응답: content\n
     """
-
+    review = dao.get_review_using_model(db, 제품_코드=model_no)
 
     response = {
-        "content": "리뷰 내용 요약본입니다"
+        "content": review.리뷰_요약
     }
 
     return response
