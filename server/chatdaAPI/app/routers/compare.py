@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Query, status
 
-import models.dto.compare.CompareResponseDto as Dto
-import models.exmaple_compare as dump
+import chatdaAPI.app.models.dto.compare.CompareResponseDto as Dto
+import chatdaAPI.app.models.exmaple_compare as dump
 
 
 # prefix == compare

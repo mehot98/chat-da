@@ -1,5 +1,5 @@
 from fastapi.testclient import TestClient
-from app.main import app
+from chatdaAPI.app.main import app
 
 client = TestClient(app)
 

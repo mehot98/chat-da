@@ -1,8 +1,8 @@
 from fastapi import APIRouter, Query
 from fastapi.responses import FileResponse
-import api.naver_api as naver
-import api.google_api as google
-from RAG.make_output import get_output
+import chatdaAPI.app.api.naver_api as naver
+import chatdaAPI.app.api.google_api as google
+from chatdaAPI.RAG.make_output import get_output
 
 # prefix == compare
 router = APIRouter()

@@ -1,5 +1,5 @@
-from RAG.input_type import COMPARE
-from examples.base_query import join
+from chatdaAPI.RAG.input_type import COMPARE
+from chatdaAPI.examples.base_query import join
 
 base_query = f"SELECT * FROM '냉장고' WHERE `제품_코드`='RF85C90D1AP' OR `제품_코드`='RF85C90D2AP';\n\n"
 f"{join} WHERE '냉장고'.`제품_코드`='RF85C90D1AP' OR '냉장고'.`제품_코드`='RF85C90D2AP';"

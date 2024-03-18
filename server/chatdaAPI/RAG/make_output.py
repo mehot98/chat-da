@@ -1,10 +1,10 @@
 import os
 import mysql.connector
-from keys import setup
+from chatdaAPI.keys import setup
 
 setup()
 
-import RAG.prompt as prompt
+import chatdaAPI.RAG.prompt as prompt
 
 from langchain_openai import ChatOpenAI
 
@@ -15,10 +15,11 @@ from langchain_community.utilities.sql_database import SQLDatabase
 from langchain_core.globals import set_debug
 from langchain_core.output_parsers import StrOutputParser
 
-import RAG.input_type as input_types
+import chatdaAPI.RAG.input_type as input_types
 
 # 체인 중간 과정 보기
 set_debug(True)
+
 
 # DB 불러오기
 db = SQLDatabase.from_uri(

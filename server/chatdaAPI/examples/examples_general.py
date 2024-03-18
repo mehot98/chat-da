@@ -1,4 +1,4 @@
-from RAG.input_type import GENERAL
+from chatdaAPI.RAG.input_type import GENERAL
 
 examples = [
     {

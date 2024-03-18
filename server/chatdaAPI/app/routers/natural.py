@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Query, status
-import models.dto.natural.NaturalResponseDto as response_dto
-import models.example_natural as dump
+import chatdaAPI.app.models.dto.natural.NaturalResponseDto as response_dto
+import chatdaAPI.app.models.example_natural as dump
 
 # prefix == summary
 router = APIRouter()

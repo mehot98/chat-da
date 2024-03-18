@@ -2,10 +2,10 @@ from typing import Union
 
 from fastapi import APIRouter, status, HTTPException
 
-import models.dto.chat.ChatResponseDto as response_dto
-import models.dto.chat.ChatRequestDto as request_dto
-import models.exmaple_chat as dump
-from RAG.make_output import get_output
+import chatdaAPI.app.models.dto.chat.ChatResponseDto as response_dto
+import chatdaAPI.app.models.dto.chat.ChatRequestDto as request_dto
+import chatdaAPI.app.models.exmaple_chat as dump
+from chatdaAPI.RAG.make_output import get_output
 
 # prefix == chat
 router = APIRouter()

@@ -1,6 +1,6 @@
 from typing import List, Union, Any
 
-from models.CamelModel import CamelModel
+from chatdaAPI.app.models.CamelModel import CamelModel
 
 
 class ChatInfoDto(CamelModel):
