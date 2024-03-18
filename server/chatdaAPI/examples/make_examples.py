@@ -2,6 +2,8 @@ import os
 
 import shutil
 
+from dotenv import load_dotenv
+
 import chatdaAPI.RAG.input_type as input_type
 
 import chatdaAPI.examples.examples_compare as examples_compare
@@ -16,6 +18,8 @@ from langchain_community.vectorstores import Chroma
 from langchain.schema import Document
 
 from langchain_openai import OpenAIEmbeddings
+
+load_dotenv()
 
 # vector DB 저장 경로
 persist_directory = "./chroma_db"

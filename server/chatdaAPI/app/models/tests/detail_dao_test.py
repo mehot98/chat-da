@@ -1,8 +1,3 @@
-if __name__ == "__main__":
-    from chatdaAPI.keys import setup
-
-    setup()
-
 from fastapi import FastAPI
 
 import chatdaAPI.app.models.dao.detail_dao as dao
