@@ -1,13 +1,13 @@
 from fastapi import APIRouter, Query, status
-import models.dto.natural.NaturalResponseDto as response_dto
-import models.example_natural as dump
+import chatdaAPI.app.models.dto.natural.NaturalResponseDto as response_dto
+import chatdaAPI.app.models.example_natural as dump
 
 # prefix == summary
 router = APIRouter()
 
 
 @router.get("/{content}", status_code=status.HTTP_200_OK, response_model=response_dto.NaturalResponseDto)
-async def get_search(
+def get_search(
         content: str
 ):
     """

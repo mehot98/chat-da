@@ -1,14 +1,14 @@
 from fastapi import APIRouter, Query, status
 
-import models.dto.detail.DetailResponseDto as Dto
-import models.exmaple_detail as dump
+import chatdaAPI.app.models.dto.detail.DetailResponseDto as Dto
+import chatdaAPI.app.models.exmaple_detail as dump
 
 # prefix == detail
 router = APIRouter()
 
 
 @router.get("/{modelNo}", status_code=status.HTTP_200_OK, response_model=Dto.DetailResponseDto)
-async def get_spec(
+def get_spec(
         model_no: str = Query(..., alias="modelNo")
 ):
     """

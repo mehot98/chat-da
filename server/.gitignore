@@ -241,3 +241,6 @@ secret/**
 chroma_db/
 out.txt
 output.mp3
+
+chatdaAPI/chroma_db/
+tests/chroma_db/

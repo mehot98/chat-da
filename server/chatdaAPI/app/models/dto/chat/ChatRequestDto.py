@@ -1,6 +1,6 @@
 from typing import Literal
 
-from models.CamelModel import CamelModel
+from chatdaAPI.app.models.CamelModel import CamelModel
 
 
 class ChatRequestDto(CamelModel):

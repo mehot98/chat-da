@@ -2,15 +2,15 @@ import os
 
 import shutil
 
-import RAG.input_type as input_type
+import chatdaAPI.RAG.input_type as input_type
 
-import examples.examples_compare
-import examples.examples_info
-import examples.examples_recommend
-import examples.examples_ranking
-import examples.examples_search
-import examples.examples_general
-import examples.examples_additional
+import chatdaAPI.examples.examples_compare as examples_compare
+import chatdaAPI.examples.examples_info as examples_info
+import chatdaAPI.examples.examples_recommend as examples_recommend
+import chatdaAPI.examples.examples_ranking as examples_ranking
+import chatdaAPI.examples.examples_search as examples_search
+import chatdaAPI.examples.examples_general as examples_general
+import chatdaAPI.examples.examples_additional as examples_additional
 
 from langchain_community.vectorstores import Chroma
 from langchain.schema import Document
@@ -32,10 +32,10 @@ if make_new_vectorDB or not os.path.exists(persist_directory):
         shutil.rmtree(persist_directory)
 
     # SQL 예시들
-    examples_all = (examples.examples_compare.examples + examples.examples_info.examples
-                    + examples.examples_recommend.examples + examples.examples_ranking.examples
-                    + examples.examples_search.examples + examples.examples_general.examples
-                    + examples.examples_additional.examples)
+    examples_all = (examples_compare.examples + examples_info.examples
+                    + examples_recommend.examples + examples_ranking.examples
+                    + examples_search.examples + examples_general.examples
+                    + examples_additional.examples)
 
     # Dictionary 형태의 examples를 vector DB에 저장하기 위해 docs 형태로 변환
     few_shot_docs = [
@@ -66,15 +66,15 @@ def get_examples(user_input):
     # 같은 타입의 예제들을 가져오기
     user_input_type = most_relevant_example.metadata["type"]
     if user_input_type == input_type.COMPARE:
-        examples_temp = examples.examples_compare.examples
+        examples_temp = examples_compare.examples
     elif user_input_type == input_type.INFO:
-        examples_temp = examples.examples_info.examples
+        examples_temp = examples_info.examples
     elif user_input_type == input_type.RECOMMEND:
-        examples_temp = examples.examples_recommend.examples
+        examples_temp = examples_recommend.examples
     elif user_input_type == input_type.RANKING:
-        examples_temp = examples.examples_ranking.examples
+        examples_temp = examples_ranking.examples
     elif user_input_type == input_type.SEARCH:
-        examples_temp = examples.examples_search.examples
+        examples_temp = examples_search.examples
     else:
         return [], input_type.GENERAL
 

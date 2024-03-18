@@ -2,10 +2,10 @@ from typing import Union
 
 from fastapi import APIRouter, status, HTTPException
 
-import models.dto.chat.ChatResponseDto as response_dto
-import models.dto.chat.ChatRequestDto as request_dto
-import models.exmaple_chat as dump
-from RAG.make_output import get_output
+import chatdaAPI.app.models.dto.chat.ChatResponseDto as response_dto
+import chatdaAPI.app.models.dto.chat.ChatRequestDto as request_dto
+import chatdaAPI.app.models.exmaple_chat as dump
+from chatdaAPI.RAG.make_output import get_output
 
 # prefix == chat
 router = APIRouter()
@@ -13,7 +13,7 @@ router = APIRouter()
 
 @router.post("", status_code=status.HTTP_201_CREATED,
              response_model=Union[response_dto.ChatInfoDto, response_dto.ChatCompareDto, response_dto.ChatRecommendDto])
-async def post_chat(
+def post_chat(
         chat_request_dto: request_dto.ChatRequestDto
 ):
     """
@@ -65,7 +65,7 @@ async def post_chat(
 
 
 @router.post("/feedback", status_code=status.HTTP_201_CREATED)
-async def post_feedback(
+def post_feedback(
         feedback_request_dto: request_dto.FeedbackRequestDto
 ):
     """

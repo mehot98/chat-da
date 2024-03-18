@@ -1,25 +1,25 @@
 from fastapi import APIRouter, Query
 from fastapi.responses import FileResponse
-import api.naver_api as naver
-import api.google_api as google
-from RAG.make_output import get_output
+import chatdaAPI.app.api.naver_api as naver
+import chatdaAPI.app.api.google_api as google
+from chatdaAPI.RAG.make_output import get_output
 
 # prefix == compare
 router = APIRouter()
 
 
 @router.get("/test/naver")
-async def get_stt():
+def get_stt():
     return {"message": naver.stt("./api/test.mp3")}
 
 
 @router.get("/test/google")
-async def get_tts(content: str = Query(..., alias="content")):
+def get_tts(content: str = Query(..., alias="content")):
     return FileResponse(google.tts(content))
 
 
 @router.get("/test/converstation")
-async def get_conversation():
+def get_conversation():
     try:
         # 음성 파일로부터 텍스트를 추출합니다
         user_text = naver.stt("./public/test_converstation.mp3")

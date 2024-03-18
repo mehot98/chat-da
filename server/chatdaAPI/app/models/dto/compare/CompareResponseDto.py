@@ -1,7 +1,7 @@
 from typing import List
 
-from models.CamelModel import CamelModel
-from models.dto.Spec import DetailSpecDto
+from chatdaAPI.app.models.CamelModel import CamelModel
+from chatdaAPI.app.models.dto.Spec import DetailSpecDto
 
 
 class CompareResponseDto(CamelModel):

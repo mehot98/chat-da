@@ -1,5 +1,5 @@
-from RAG.input_type import RECOMMEND
-from examples.base_query import join
+from chatdaAPI.RAG.input_type import RECOMMEND
+from chatdaAPI.examples.base_query import join
 
 examples = [
     {

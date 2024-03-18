@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Query, status
 
-import models.dto.compare.CompareResponseDto as Dto
-import models.exmaple_compare as dump
+import chatdaAPI.app.models.dto.compare.CompareResponseDto as Dto
+import chatdaAPI.app.models.exmaple_compare as dump
 
 
 # prefix == compare
@@ -9,7 +9,7 @@ router = APIRouter()
 
 
 @router.get("", status_code=status.HTTP_200_OK, response_model=Dto.CompareResponseDto)
-async def get_compare_detail(
+def get_compare_detail(
         model_no: str = Query(..., alias="modelNo")
 ):
     """

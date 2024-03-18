@@ -1,8 +1,8 @@
 from langchain_core.prompts import FewShotPromptTemplate, PromptTemplate
 
-from examples import make_examples
+from chatdaAPI.examples import make_examples
 
-import RAG.input_type as input_types
+import chatdaAPI.RAG.input_type as input_types
 
 # 일반 답변 생성용 프롬프트
 general_answer_prompt = PromptTemplate.from_template(
