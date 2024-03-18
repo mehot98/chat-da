@@ -40,4 +40,4 @@ USER appuser
 EXPOSE 80
 
 # Run the application.
-CMD uvicorn main:app --host 0.0.0.0 --port 80 --root-path /api
+CMD uvicorn chatdaAPI.app.main:app --host 0.0.0.0 --port 80 --root-path /api
