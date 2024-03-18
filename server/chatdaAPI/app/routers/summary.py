@@ -37,7 +37,7 @@ def get_detail(
     입력: modelNo
     응답: content
     """
-
+    
     response = {
         "content": "제품 본문에 있는 설명 요약본입니다."
     }

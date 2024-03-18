@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
 
-from chatdaAPI.app.models.entity.review import Review
+from chatdaAPI.app.models.entity.Review import Review
 
 
 def get_review_using_id(db: Session, review_id: int):
