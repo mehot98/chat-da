@@ -1,30 +1,19 @@
-import os
-import mysql.connector
-from chatdaAPI.keys import setup
-
-setup()
-
+import chatdaAPI.RAG.input_type as input_types
 import chatdaAPI.RAG.prompt as prompt
-
-from langchain_openai import ChatOpenAI
-
+import mysql.connector
+from chatdaAPI.config import config
 from langchain.chains import create_sql_query_chain
-
 from langchain_community.utilities.sql_database import SQLDatabase
-
 from langchain_core.globals import set_debug
 from langchain_core.output_parsers import StrOutputParser
-
-import chatdaAPI.RAG.input_type as input_types
+from langchain_openai import ChatOpenAI
 
 # 체인 중간 과정 보기
 set_debug(True)
 
-
 # DB 불러오기
 db = SQLDatabase.from_uri(
-    f"mysql+pymysql://{os.environ['MYSQL_ID']}:{os.environ['MYSQL_PWD']}"
-    f"@{os.environ['MYSQL_HOST']}/{os.environ['MYSQL_SCHEMA']}?charset=utf8mb4",
+    f'mysql+pymysql://{config.user}:{config.password}@{config.mysql_host}:{config.mysql_port}/{config.mysql_database}?charset=utfmb4',
     sample_rows_in_table_info=1,
     include_tables=["냉장고", "리뷰_정보", "제품_정보"],
     max_string_length=100
@@ -41,10 +30,10 @@ llm = ChatOpenAI(model="gpt-3.5-turbo", temperature=0, verbose=True)
 def make_model_list(query):
     # 데이터베이스 연결 설정
     config = {
-        'user': os.environ['MYSQL_ID'],  # 데이터베이스 사용자 이름
-        'password': os.environ['MYSQL_PWD'],  # 데이터베이스 비밀번호
-        'host': os.environ['MYSQL_HOST'],  # 데이터베이스 호스트
-        'database': os.environ['MYSQL_SCHEMA'],  # 데이터베이스 이름
+        'user': config.mysql_user,  # 데이터베이스 사용자 이름
+        'password': config.mysql_password,  # 데이터베이스 비밀번호
+        'host': config.mysql_host,  # 데이터베이스 호스트
+        'database': config.mysql_database,  # 데이터베이스 이름
         'raise_on_warnings': True
     }
     # 데이터베이스에 연결
@@ -123,7 +112,6 @@ def get_output(user_input, search):
         "content": result,
         "model_list": model_list
     }
-
 
 # # 테스트용
 # if __name__ == '__main__':

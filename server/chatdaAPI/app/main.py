@@ -1,14 +1,10 @@
-from fastapi import FastAPI
-from chatdaAPI.keys import setup
-
-setup()
-
 from chatdaAPI.app.routers.chat import router as chat_router
-from chatdaAPI.app.routers.detail import router as detail_router
 from chatdaAPI.app.routers.compare import router as compare_router
-from chatdaAPI.app.routers.summary import router as summary_router
+from chatdaAPI.app.routers.detail import router as detail_router
 from chatdaAPI.app.routers.natural import router as natural_router
 from chatdaAPI.app.routers.openapi import router as openapi_router
+from chatdaAPI.app.routers.summary import router as summary_router
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
