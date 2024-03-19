@@ -177,7 +177,7 @@ export default function App() {
     imageUrl: "string",
     reviewCount: "342",
     reviewSummary: "정말 감동적인 상품이에요",
-    rating: "5.0",
+    rating: "4.5",
   };
 
   useEffect(() => {}, [comparePrds]);

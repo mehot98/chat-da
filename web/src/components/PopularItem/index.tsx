@@ -3,53 +3,50 @@ import AccordionDetails from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import * as S from "./style";
 import * as T from "@src/types";
+import * as Comp from "@src/components";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import downArrowPath from "@root/public/icons/popular_down_arrow.png";
+import { useState } from "react";
 
 export default function PopularItem(props: T.PopularItemProps) {
-  // const downArrowPathSrc = chrome.runtime.getURL(downArrowPath);
+  const [isExpanded, setIsExpanded] = useState(false);
+  const toggleAccordion = () => {
+    setIsExpanded(!isExpanded);
+  };
   return (
-    <Accordion>
-      <AccordionSummary id="panel1-header" aria-controls="panel-content">
-        <S.ContentWrapper>
+    <S.PopularItemWrapper>
+      <S.AccordionWrapper expanded={isExpanded} onChange={toggleAccordion}>
+        <S.AccordionSummaryWrapper
+          id="panel1-header"
+          aria-controls="panel-content"
+          expandIcon={<ExpandMoreIcon />}
+        >
           <img src={props.imageUrl} alt="popular-product" width={74} height={142} />
-          <S.ContentDiv>
+          <S.ContentDiv isExpanded={isExpanded}>
             <S.ProductNameWrapper>
               <S.ProductName>{props.제품명}</S.ProductName>
               <S.ProductModelNo>{props.제품_코드}</S.ProductModelNo>
             </S.ProductNameWrapper>
             <S.ReviewPriceWrapper>
               <S.ReviewWrapper>
-                {/* <img src="" alt="" /> */}
+                <Comp.StartRate props={props.rating} />
                 <S.RatingSpan>{props.rating}</S.RatingSpan>
-                <S.ReviewCount>{props.reviewCount}건</S.ReviewCount>
+                <S.ReviewCount>({props.reviewCount}건)</S.ReviewCount>
               </S.ReviewWrapper>
               <S.PriceWrapper>
-                <span>혜택가</span>
+                <S.PriceHead>혜택가</S.PriceHead>
                 <S.Price>{props.혜택가}원</S.Price>
               </S.PriceWrapper>
             </S.ReviewPriceWrapper>
+            {isExpanded && (
+              <S.AccordionDetailsWrapper>
+                <S.ReviewSummaryHead>ChatDA가 요약한 리뷰!!</S.ReviewSummaryHead>
+                <S.ReviewSummary>{props.reviewSummary}</S.ReviewSummary>
+              </S.AccordionDetailsWrapper>
+            )}
           </S.ContentDiv>
-          {/* <img src={downArrowPathSrc} alt="down-arrow" /> */}
-        </S.ContentWrapper>
-      </AccordionSummary>
-      <AccordionDetails>
-        <span>hi</span>
-      </AccordionDetails>
-    </Accordion>
-    // <Accordion>
-    //   <AccordionSummary
-    //     // expandIcon={<ArrowDownwardIcon />}
-    //     aria-controls="panel1-content"
-    //     id="panel1-header"
-    //   >
-    //     <span>Accordion 1</span>
-    //   </AccordionSummary>
-    //   <AccordionDetails>
-    //     <span>
-    //       Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
-    //       sit amet blandit leo lobortis eget.
-    //     </span>
-    //   </AccordionDetails>
-    // </Accordion>
+        </S.AccordionSummaryWrapper>
+      </S.AccordionWrapper>
+    </S.PopularItemWrapper>
   );
 }
