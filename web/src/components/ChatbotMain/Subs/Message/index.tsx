@@ -106,7 +106,12 @@ export default function Message(props: T.MessageProps) {
           <MessageFeedback isRecommend={false} />
 
           {props.btnString && (
-            <S.ExpandOpenBtn startIcon={<ArrowBackIcon />}>{props.btnString}</S.ExpandOpenBtn>
+            <S.ExpandOpenBtn
+              onClick={() => props.setIsOpenExpandModal(true)}
+              startIcon={<ArrowBackIcon />}
+            >
+              {props.btnString}
+            </S.ExpandOpenBtn>
           )}
         </S.AiMessageWrapper>
       );

@@ -35,15 +35,19 @@ export default function App() {
     existingChatbotIcon.prepend(chatDAIcon);
   }
 
-  const handleCloseMainModal: () => void = () => {
+  const handleOpenExpandModal = () => {
+    setIsOpenExpandModal(true);
+  };
+
+  const handleCloseMainModal = () => {
     setIsOpenMainModal(false);
   };
 
-  const handleCloseExpandModal: () => void = () => {
+  const handleCloseExpandModal = () => {
     setIsOpenExpandModal(false);
   };
 
-  const handleClickBackdrop: () => void = () => {
+  const handleClickBackdrop = () => {
     handleCloseMainModal();
     handleCloseExpandModal();
   };
@@ -189,9 +193,6 @@ export default function App() {
           onClose={handleCloseMainModal}
           disableScrollLock={true}
         >
-          {/* <button onClick={handleCloseMainModal}>x</button>
-          <button onClick={() => setIsOpenExpandModal(true)}>확장 모달 열기</button> */}
-          {/* <button onClick={handleCloseMainModal}>x</button> */}
           <S.ChatMainWrapper>
             <S.ChatMainHeader>
               <S.HeaderWords>
@@ -201,11 +202,11 @@ export default function App() {
                 <p>삼성의 가전제품들을</p>
                 <p>이해하기 쉽게 알려드립니다 😊</p>
               </S.HeaderWords>
-              <S.IconWrapper onClick={() => setIsOpenExpandModal(true)}>
+              <S.IconWrapper onClick={handleOpenExpandModal}>
                 <img src={rankingIconSrc} alt="ranking-icon" width={35} height={35} />
                 <span>인기순위</span>
               </S.IconWrapper>
-              <S.IconWrapper onClick={() => setIsOpenExpandModal(true)}>
+              <S.IconWrapper onClick={handleOpenExpandModal}>
                 <img src={searchIconSrc} alt="search-icon" width={35} height={35} />
                 <span>검색하기</span>
               </S.IconWrapper>
@@ -217,6 +218,7 @@ export default function App() {
                 setComparePrds={setComparePrds}
                 messages={messages}
                 setMessages={setMessages}
+                setIsOpenExpandModal={setIsOpenExpandModal}
               />
             </S.ChatMainContent>
           </S.ChatMainWrapper>

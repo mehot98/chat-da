@@ -1,4 +1,5 @@
 import ChatbotMain from "./ChatbotMain";
 import ChatbotRecommend from "./ChatbotRecommend";
+import ChatbotExpand from "./ChatbotExpand";
 
-export { ChatbotMain, ChatbotRecommend };
+export { ChatbotMain, ChatbotRecommend, ChatbotExpand };

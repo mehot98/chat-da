@@ -47,6 +47,7 @@ export interface MessageProps {
   imageUrl?: string;
   setMessages?: Dispatch<SetStateAction<MessagesProps>>;
   setComparePrds?: Dispatch<SetStateAction<T.ComparePrdProps[]>>;
+  setIsOpenExpandModal: Dispatch<SetStateAction<boolean>>;
 }
 
 export interface MessageListProps {
