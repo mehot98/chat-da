@@ -2,6 +2,7 @@ import MessageFeedback from "../MessageFeedback";
 import * as Comp from "@root/src/components";
 import * as S from "./style";
 import * as T from "@src/types";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 export default function Message(props: T.MessageProps) {
   const chatDAIconSrc = chrome.runtime.getURL("icons/ChatDA_icon_128.png");
@@ -104,7 +105,9 @@ export default function Message(props: T.MessageProps) {
 
           <MessageFeedback isRecommend={false} />
 
-          {props.btnString && <S.ExpandOpenBtn>{props.btnString}</S.ExpandOpenBtn>}
+          {props.btnString && (
+            <S.ExpandOpenBtn startIcon={<ArrowBackIcon />}>{props.btnString}</S.ExpandOpenBtn>
+          )}
         </S.AiMessageWrapper>
       );
     }
