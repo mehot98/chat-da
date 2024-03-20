@@ -38,6 +38,7 @@ export const ChatExpandModal = styled(ChatMainModal)`
     align-items: center;
     padding-right: 346px;
     gap: 30px;
+    user-select: none;
   }
 `;
 export const ModalHeaderWrapper = styled.div`
