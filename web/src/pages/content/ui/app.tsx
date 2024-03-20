@@ -221,7 +221,7 @@ export default function App() {
           </S.ModalHeaderWrapper>
           <S.ModalPopularItemWrapper>
             {PIProps.map((popularItemProps: T.PopularItemProps, index: number) => {
-              return <Comp.PopularItem {...popularItemProps} rank={index} />;
+              return <Comp.PopularItem {...popularItemProps} rank={index} key={index} />;
             })}
           </S.ModalPopularItemWrapper>
         </S.ChatExpandModal>
