@@ -16,4 +16,11 @@ examples = [
         "type": RECOMMEND,
         "index": 1
     },
+    {
+        "input": "냉장고 중에 100만원대의 냉장고를 10개 추천해줘",
+        "query": "SELECT * FROM '냉장고' WHERE `가격`<='1500000 원' ORDER BY `전체_용량` DESC;\n\n"
+        f"{join} WHERE `냉장고`.`가격`<='1000000 원' ORDER BY `냉장고`.`전체_용량` DESC LIMIT 10;",
+        "type": RECOMMEND,
+        "index": 2
+    },
 ]
