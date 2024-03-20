@@ -14,7 +14,7 @@ router = APIRouter()
 @router.post("", status_code=status.HTTP_201_CREATED,
              response_model=Union[
                  response_dto.ChatInfoDto, response_dto.ChatCompareDto, response_dto.ChatRecommendDto,
-                 response_dto.ChatRankingDto])
+                 response_dto.ChatRankingDto, response_dto.ChatGeneralDto])
 def post_chat(
         chat_request_dto: request_dto.ChatRequestDto
 ):
@@ -54,6 +54,8 @@ def post_chat(
                     response = response_dto.init_recommend_response(data)
                 case "ranking":
                     response = response_dto.init_ranking_response(data)
+                case "general":
+                    response = response_dto.init_general_respose(data)
                 case default:
                     # 만약 type이 지정되지 않은 값이 나온다면 Exception을 발생시킵니다.
                     raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=[

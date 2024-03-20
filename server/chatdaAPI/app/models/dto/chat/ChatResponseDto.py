@@ -60,6 +60,14 @@ class ChatRankingDto(CamelModel):
     model_no_list: List[str]
 
 
+class ChatGeneralDto(CamelModel):
+    """
+    일상 속 일반적인 대화
+    """
+    type: str
+    content: str
+
+
 # 모델 리스트를 배열로 추출하는 함수입니다
 def get_model_no_list(model_list):
     return [i["제품_코드"] for i in model_list]
@@ -100,4 +108,11 @@ def init_ranking_response(data):
         type=data["type"],
         content=data["content"],
         model_no_list=get_model_no_list(data["model_list"])
+    )
+
+
+def init_general_respose(data):
+    return ChatGeneralDto(
+        type=data["type"],
+        content=data["content"]
     )
