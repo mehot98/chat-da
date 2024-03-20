@@ -6,4 +6,5 @@ export interface PopularItemProps {
   reviewCount: string;
   reviewSummary: string;
   rating: string;
+  rank?: number;
 }

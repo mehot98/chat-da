@@ -7,7 +7,35 @@ interface ContentDivProps {
 }
 
 export const PopularItemWrapper = styled.div`
-  margin: 5px 0 5px 17px;
+  display: flex;
+  position: relative;
+`;
+
+export const RankWrapper = styled.div`
+  position: absolute;
+  top: -8px;
+  left: -8px;
+  width: 65px;
+  height: 63px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50px;
+  border: 5px solid ${theme.bordercolor};
+  background-color: white;
+  z-index: 2000;
+  cursor: default;
+  user-select: none;
+
+  span {
+    font-size: 36px;
+    font-weight: bold;
+    color: ${theme.bordercolor};
+  }
+`;
+
+export const PopularItemDiv = styled.div`
+  margin: 15px 0 15px 17px;
 `;
 
 export const AccordionWrapper = styled(Accordion)`
@@ -18,13 +46,18 @@ export const AccordionWrapper = styled(Accordion)`
 
 export const AccordionSummaryWrapper = styled(AccordionSummary)`
   && {
-    width: 630px;
+    width: 585px;
     display: flex;
+    gap: 15px;
     /* align-items: center; */
     justify-content: center;
-    padding: 6px 30px;
+    padding: 6px 15px 6px 48px;
     border-radius: 30px;
     box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.25);
+
+    .MuiAccordionSummary-contentGutters {
+      margin: 0;
+    }
 
     .MuiAccordionSummary-content {
       display: flex;
@@ -122,10 +155,19 @@ export const Price = styled.span`
   color: ${theme.bordercolor};
 `;
 
+export const ExpandMoreIconWrapper = styled.div`
+  width: fit-content;
+  height: 142px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+`;
+
 export const AccordionDetailsWrapper = styled(AccordionDetails)`
   display: flex;
   flex-direction: column;
   gap: 10px;
+  padding: 0 45px 30px 0;
 `;
 
 export const ReviewSummaryHead = styled.span`

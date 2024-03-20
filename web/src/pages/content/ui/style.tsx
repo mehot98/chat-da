@@ -1,6 +1,7 @@
 import styled from "@emotion/styled";
 import theme from "@assets/style/theme.module.scss";
 import { Dialog } from "@mui/material";
+import { StyleOutlined } from "@mui/icons-material";
 
 export const ChatMainModal = styled(Dialog)`
   width: 0;
@@ -25,13 +26,42 @@ export const ChatMainModal = styled(Dialog)`
 `;
 
 export const ChatExpandModal = styled(ChatMainModal)`
-  padding-right: 346px;
+  padding-right: 330px;
   z-index: 1299;
 
   & .MuiDialog-paper {
+    padding-top: 30px;
     width: 1014px;
     z-index: 1299;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-right: 346px;
+    gap: 30px;
   }
+`;
+export const ModalHeaderWrapper = styled.div`
+  width: fit-content;
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 11px;
+`;
+export const ModalHeaderSpan = styled.span`
+  font-size: 36px;
+  font-weight: bold;
+`;
+export const ModalHeaderSubSpan = styled.span`
+  font-size: 16px;
+  font-weight: 400;
+`;
+
+export const ModalPopularItemWrapper = styled.div`
+  width: fit-content;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
 `;
 
 export const ChatModalBackdrop = styled.div<{ open: boolean; expandOpen: boolean }>`
