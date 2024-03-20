@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import theme from "@assets/style/theme.module.scss";
-import { Dialog } from "@mui/material";
+import { Dialog, IconButton } from "@mui/material";
 
 export const ChatMainModal = styled(Dialog)`
   width: 0;
@@ -93,4 +93,9 @@ export const IconWrapper = styled.div`
 export const ChatMainContent = styled.div`
   width: 100%;
   height: 86.5%;
+`;
+
+export const CloseBtn = styled(IconButton)`
+  position: absolute;
+  right: 360px;
 `;

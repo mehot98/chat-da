@@ -5,11 +5,11 @@ import * as T from "@root/src/types";
 import * as P from "@pages/ExpandModal";
 import chatDAIconPath from "@root/public/icons/ChatDA_icon_128.png";
 import theme from "@assets/style/theme.module.scss";
+import { StyledEngineProvider } from "@mui/material/styles";
+import CloseIcon from "@mui/icons-material/Close";
 
 const rankingIconPath = "icons/ranking_icon.png";
 const searchIconPath = "icons/search_icon.png";
-
-import { StyledEngineProvider } from "@mui/material/styles";
 
 export default function App() {
   const [isOpenMainModal, setIsOpenMainModal] = useState<boolean>(false);
@@ -48,6 +48,7 @@ export default function App() {
 
   const handleCloseExpandModal = () => {
     setIsOpenExpandModal(false);
+    setExpandModalState(null);
   };
 
   const handleClickBackdrop = () => {
@@ -182,6 +183,10 @@ export default function App() {
     }
   }, [fridgeList]);
 
+  useEffect(() => {
+    console.log(expandModalState);
+  }, [expandModalState]);
+
   useEffect(() => {}, [comparePrds]);
   return (
     <>
@@ -192,8 +197,18 @@ export default function App() {
           onClose={handleCloseExpandModal}
           disableScrollLock={true}
         >
-          {/* <button onClick={handleCloseExpandModal}>확장 모달 닫기</button> */}
-          {expandModalState === "popular" ? <P.PopularItemPage /> : <p>인기순위아님</p>}
+          <S.CloseBtn onClick={handleCloseExpandModal}>
+            <CloseIcon />
+          </S.CloseBtn>
+          {expandModalState === "popular" ? (
+            <P.PopularItemPage />
+          ) : expandModalState === "info" ? (
+            <P.DetailSpecPage />
+          ) : expandModalState === "compare" ? (
+            <P.CompareSpecPage />
+          ) : (
+            expandModalState === "search" && <P.SearchPage />
+          )}
         </S.ChatExpandModal>
 
         <S.ChatMainModal
