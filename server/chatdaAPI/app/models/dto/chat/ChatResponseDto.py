@@ -68,6 +68,10 @@ class ChatGeneralDto(CamelModel):
     content: str
 
 
+class ChatExceptionDto(CamelModel):
+    content: str = "잘 모르겠어요. 다시 질문해주세요."
+
+
 # 모델 리스트를 배열로 추출하는 함수입니다
 def get_model_no_list(model_list):
     return [i["제품_코드"] for i in model_list]
@@ -92,15 +96,19 @@ def init_compare_response(data):
 
 
 def init_recommend_response(data):
-    model = data["model_list"][0]
-    return ChatRecommendDto(
-        type=data["type"],
-        content={
-            "message": data["content"],
-            "spec": model
-        },
-        model_no=model["제품_코드"]
-    )
+    if data["model_list"] is None:
+        return ChatExceptionDto()
+
+    else:
+        model = data["model_list"][0]
+        return ChatRecommendDto(
+            type=data["type"],
+            content={
+                "message": data["content"],
+                "spec": model
+            },
+            model_no=model["제품_코드"]
+        )
 
 
 def init_ranking_response(data):
