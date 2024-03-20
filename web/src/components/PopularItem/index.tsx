@@ -1,12 +1,8 @@
-import Accordion from "@mui/material/Accordion";
-import AccordionDetails from "@mui/material/Accordion";
-import AccordionSummary from "@mui/material/AccordionSummary";
 import * as S from "./style";
 import * as T from "@src/types";
 import * as Comp from "@src/components";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
-import downArrowPath from "@root/public/icons/popular_down_arrow.png";
 import { useState } from "react";
 
 export default function PopularItem(props: T.PopularItemProps) {

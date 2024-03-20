@@ -1,7 +1,6 @@
 import styled from "@emotion/styled";
 import theme from "@assets/style/theme.module.scss";
 import { Dialog } from "@mui/material";
-import { StyleOutlined } from "@mui/icons-material";
 
 export const ChatMainModal = styled(Dialog)`
   width: 0;
