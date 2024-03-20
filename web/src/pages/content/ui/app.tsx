@@ -87,7 +87,7 @@ export default function App() {
         compareIcon.style.position = "absolute";
         compareIcon.style.right = "8%";
         compareIcon.style.top = "44%";
-        compareIcon.style.zIndex = "100";
+        compareIcon.style.zIndex = "1";
         compareIcon.style.cursor = "pointer";
         compareIcon.style.display = "none";
 
@@ -199,8 +199,25 @@ export default function App() {
       rating: "5.0",
     },
   ];
+  useEffect(() => {
+    if (messages.length > 0) {
+      sessionStorage.setItem("messages", JSON.stringify(messages));
+    }
+  }, [messages]);
 
-  useEffect(() => {}, [comparePrds]);
+  useEffect(() => {
+    if (comparePrds.length > 0) {
+      sessionStorage.setItem("comparePrds", JSON.stringify(comparePrds));
+    }
+  }, [comparePrds]);
+
+  // useEffect(() => {
+  //   const storage = JSON.parse(sessionStorage.getItem("messages") || "[]");
+  //   const compare = JSON.parse(sessionStorage.getItem("comparePrds") || "[]");
+  //   setMessages(storage);
+  //   setMessages(compare);
+  // }, []);
+
   return (
     <>
       {/* mui component를 사용하는 경우 아래와 같이 StyledEngineProvider를 반드시 사용해야 합니다!*/}

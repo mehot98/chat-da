@@ -161,6 +161,17 @@ export const ExpandMoreIconWrapper = styled.div`
   display: flex;
   align-items: center;
   cursor: pointer;
+
+  & > svg {
+    width: 34px;
+    height: 34px;
+    fill: #a7a7a7;
+  }
+
+  &:hover {
+    & > svg {
+    }
+  }
 `;
 
 export const AccordionDetailsWrapper = styled(AccordionDetails)`

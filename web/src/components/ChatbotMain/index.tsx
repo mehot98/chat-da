@@ -155,6 +155,8 @@ export default function ChatbotMain(props: {
       ]);
     }
 
+    sessionStorage.setItem("messages", JSON.stringify(props.messages));
+
     // setMessages((prev) => [
     //   ...prev,
     //   { text: message, isUser: true },
@@ -207,6 +209,11 @@ export default function ChatbotMain(props: {
       }
     }
   }, [props.messages, lastHeight]);
+
+  useEffect(() => {
+    const storage = JSON.parse(sessionStorage.getItem("messages") || "[]");
+    props.setMessages(storage);
+  }, []);
 
   return (
     <S.ChatMainWrapper>
