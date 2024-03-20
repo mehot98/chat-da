@@ -24,7 +24,7 @@ db = SQLDatabase.from_uri(
 context = db.get_context()
 
 # 언어 모델 로드
-llm = ChatOpenAI(model="gpt-4", temperature=0, verbose=True)
+llm = ChatOpenAI(model="gpt-4", temperature=0.1, verbose=True)
 
 
 # join문까지 포함된 sql을 이용하여 모든 정보를 가져와서 list를 만드는 함수
