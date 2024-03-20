@@ -11,7 +11,7 @@ export default function ChatbotMain(props: {
   setComparePrds: Dispatch<SetStateAction<T.ComparePrdProps[]>>;
   messages: T.MessagesProps;
   setMessages: Dispatch<SetStateAction<T.MessagesProps>>;
-  setIsOpenExpandModal: Dispatch<SetStateAction<boolean>>;
+  handleOpenExpandModal: (st: T.ExpandModalStateType) => void;
 }) {
   const [currentTypingId, setCurrentTypingId] = useState<number | null>(null);
 
@@ -217,7 +217,7 @@ export default function ChatbotMain(props: {
           currentTypingId={currentTypingId}
           setMessages={props.setMessages}
           setComparePrds={props.setComparePrds}
-          setIsOpenExpandModal={props.setIsOpenExpandModal}
+          handleOpenExpandModal={props.handleOpenExpandModal}
         />
       </S.ChatMessageWrapper>
       <S.ChatInputWrapper>

@@ -8,13 +8,13 @@ export default function MessageList({
   currentTypingId,
   setMessages,
   setComparePrds,
-  setIsOpenExpandModal,
+  handleOpenExpandModal,
 }: {
   messages: T.MessagesProps;
   currentTypingId: number;
   setMessages: Dispatch<SetStateAction<T.MessagesProps>>;
   setComparePrds: Dispatch<SetStateAction<T.ComparePrdProps[]>>;
-  setIsOpenExpandModal: Dispatch<SetStateAction<boolean>>;
+  handleOpenExpandModal: (st: T.ExpandModalStateType) => void;
 }) {
   return (
     <S.MessageListWrapper>
@@ -25,7 +25,7 @@ export default function MessageList({
           currentTypingId={currentTypingId}
           setMessages={setMessages}
           setComparePrds={setComparePrds}
-          setIsOpenExpandModal={setIsOpenExpandModal}
+          handleOpenExpandModal={handleOpenExpandModal}
         />
       ))}
     </S.MessageListWrapper>

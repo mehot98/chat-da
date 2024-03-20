@@ -107,7 +107,7 @@ export default function Message(props: T.MessageProps) {
 
           {props.btnString && (
             <S.ExpandOpenBtn
-              onClick={() => props.setIsOpenExpandModal(true)}
+              onClick={() => props.handleOpenExpandModal(props.type)}
               startIcon={<ArrowBackIcon />}
             >
               {props.btnString}

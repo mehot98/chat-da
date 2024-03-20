@@ -14,6 +14,7 @@ import { StyledEngineProvider } from "@mui/material/styles";
 export default function App() {
   const [isOpenMainModal, setIsOpenMainModal] = useState<boolean>(false);
   const [isOpenExpandModal, setIsOpenExpandModal] = useState<boolean>(false);
+  const [expandModalState, setExpandModalState] = useState<T.ExpandModalStateType>(null);
 
   // Find existing chatbot icon, and insert chatda icon
   const existingChatbotIcon: Element = document.getElementsByClassName("menu01")[0];
@@ -36,8 +37,9 @@ export default function App() {
     existingChatbotIcon.prepend(chatDAIcon);
   }
 
-  const handleOpenExpandModal = () => {
+  const handleOpenExpandModal = (st: T.ExpandModalStateType) => {
     setIsOpenExpandModal(true);
+    changeExpandModalState(st);
   };
 
   const handleCloseMainModal = () => {
@@ -52,6 +54,11 @@ export default function App() {
     handleCloseMainModal();
     handleCloseExpandModal();
   };
+
+  const changeExpandModalState = (st: T.ExpandModalStateType) => {
+    setExpandModalState(st);
+  };
+
   // 모달 header 아이콘
   const rankingIconSrc = chrome.runtime.getURL(rankingIconPath);
   const searchIconSrc = chrome.runtime.getURL(searchIconPath);
@@ -186,16 +193,7 @@ export default function App() {
           disableScrollLock={true}
         >
           {/* <button onClick={handleCloseExpandModal}>확장 모달 닫기</button> */}
-          <P.PopularItemPage />
-          {/* <S.ModalHeaderWrapper>
-            <S.ModalHeaderSpan>ChatDA 인기순위</S.ModalHeaderSpan>
-            <S.ModalHeaderSubSpan>ChatDA에서 많이 검색한 상품을 알려드릴게요!</S.ModalHeaderSubSpan>
-          </S.ModalHeaderWrapper>
-          <S.ModalPopularItemWrapper>
-            {PIProps.map((popularItemProps: T.PopularItemProps, index: number) => {
-              return <Comp.PopularItem {...popularItemProps} rank={index} key={index} />;
-            })}
-          </S.ModalPopularItemWrapper> */}
+          {expandModalState === "popular" ? <P.PopularItemPage /> : <p>인기순위아님</p>}
         </S.ChatExpandModal>
 
         <S.ChatMainModal
@@ -212,11 +210,11 @@ export default function App() {
                 <p>삼성의 가전제품들을</p>
                 <p>이해하기 쉽게 알려드립니다 😊</p>
               </S.HeaderWords>
-              <S.IconWrapper onClick={handleOpenExpandModal}>
+              <S.IconWrapper onClick={() => handleOpenExpandModal("popular")}>
                 <img src={rankingIconSrc} alt="ranking-icon" width={35} height={35} />
                 <span>인기순위</span>
               </S.IconWrapper>
-              <S.IconWrapper onClick={handleOpenExpandModal}>
+              <S.IconWrapper onClick={() => handleOpenExpandModal("search")}>
                 <img src={searchIconSrc} alt="search-icon" width={35} height={35} />
                 <span>검색하기</span>
               </S.IconWrapper>
@@ -228,7 +226,7 @@ export default function App() {
                 setComparePrds={setComparePrds}
                 messages={messages}
                 setMessages={setMessages}
-                setIsOpenExpandModal={setIsOpenExpandModal}
+                handleOpenExpandModal={handleOpenExpandModal}
               />
             </S.ChatMainContent>
           </S.ChatMainWrapper>

@@ -1,4 +1,4 @@
-import { ComparePrdProps } from "./app";
+import { ComparePrdProps, ExpandModalStateType } from "./app";
 import { MessageProps, MsgProps, MessagesProps } from "./components/ChatbotMain";
 import { ChatbotRecommendCardProps } from "./components/ChatbotRecommend";
 import { PopularItemProps } from "./components/PopularItem";
@@ -10,4 +10,5 @@ export type {
   MessagesProps,
   ComparePrdProps,
   PopularItemProps,
+  ExpandModalStateType,
 };
