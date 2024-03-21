@@ -6,7 +6,7 @@ from chatdaAPI.app.models.entity.Review import Review
 from chatdaAPI.app.models.dto.detail.DetailResponseDto import init_detail_response
 
 
-def get_summary_detail_using_model(db: Session, 제품_코드: str):
+def get_product_all_detail_using_model(db: Session, 제품_코드: str):
     product = db.query(냉장고).filter(냉장고.제품_코드 == 제품_코드).first()
     if product is None:
         return {

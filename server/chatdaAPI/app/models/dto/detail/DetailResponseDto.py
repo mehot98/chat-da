@@ -1,6 +1,7 @@
-from typing import Optional
+from typing import Optional, Dict
 
 from chatdaAPI.app.models.CamelModel import CamelModel
+import json
 
 
 class DetailResponseDto(CamelModel):
@@ -26,6 +27,7 @@ class DetailResponseDto(CamelModel):
     평점: Optional[str] = None
     정보_요약: Optional[str] = None
     image_url: Optional[str] = None
+    raw: Optional[Dict] = None
 
 
 def init_detail_response(product, product_detail, summary_review, summary_detail):
@@ -48,5 +50,6 @@ def init_detail_response(product, product_detail, summary_review, summary_detail
         리뷰_개수=summary_review.리뷰_개수,
         평점=summary_review.평점,
         정보_요약=summary_detail.정보_요약,
-        image_url=product_detail.image_url
+        image_url=product_detail.image_url,
+        raw=json.loads(product_detail.raw)
     )
