@@ -1,5 +1,7 @@
 from typing import List, Union, Any
 
+from pydantic import Field
+
 from chatdaAPI.app.models.CamelModel import CamelModel
 
 
@@ -27,8 +29,8 @@ class ChatSpec(CamelModel):
     """
     제품_코드: str
     제품명: str
-    가격: str
-    혜택가: str
+    가격: str = Field(default=None)
+    혜택가: str = Field(default=None)
     image_url: str
 
 
@@ -47,6 +49,27 @@ class ChatRecommendDto(CamelModel):
     type: str
     content: ChatContent
     model_no: str
+
+
+class ChatRankingDto(CamelModel):
+    """
+    제품 순위 정보
+    """
+    type: str
+    content: str
+    model_no_list: List[str]
+
+
+class ChatGeneralDto(CamelModel):
+    """
+    일상 속 일반적인 대화
+    """
+    type: str
+    content: str
+
+
+class ChatExceptionDto(CamelModel):
+    content: str = "잘 모르겠어요. 다시 질문해주세요."
 
 
 # 모델 리스트를 배열로 추출하는 함수입니다
@@ -73,12 +96,31 @@ def init_compare_response(data):
 
 
 def init_recommend_response(data):
-    model = data["model_list"][0]
-    return ChatRecommendDto(
+    if data["model_list"] is None:
+        return ChatExceptionDto()
+
+    else:
+        model = data["model_list"][0]
+        return ChatRecommendDto(
+            type=data["type"],
+            content={
+                "message": data["content"],
+                "spec": model
+            },
+            model_no=model["제품_코드"]
+        )
+
+
+def init_ranking_response(data):
+    return ChatRankingDto(
         type=data["type"],
-        content={
-            "message": data["content"],
-            "spec": model
-        },
-        model_no=model["제품_코드"]
+        content=data["content"],
+        model_no_list=get_model_no_list(data["model_list"])
+    )
+
+
+def init_general_respose(data):
+    return ChatGeneralDto(
+        type=data["type"],
+        content=data["content"]
     )
