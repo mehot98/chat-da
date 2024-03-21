@@ -11,7 +11,7 @@ class Detail(Base):
     """
     제품 요약 정보에 대한 테이블과 관련된 Entity입니다
     """
-    __tablename__ = '제품_정보'
+    __tablename__ = 'refridgerator_details'
 
     id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
     제품_코드: Mapped[str] = mapped_column(String(20))
