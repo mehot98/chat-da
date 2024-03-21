@@ -9,7 +9,7 @@ class 냉장고(Base):
     """
     전체 냉장고 동일 스펙 기준 만들어진 테이블 entity
     """
-    __tablename__ = '냉장고'
+    __tablename__ = 'refridgerators'
 
     id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
     제품_코드: Mapped[str] = mapped_column(String(20))
@@ -32,7 +32,7 @@ class 냉장고_추가정보(Base):
     """
     각각의 냉장고마다 가지고 있는 추가 정보 테이블 Entity
     """
-    __tablename__ = '냉장고_추가정보'
+    __tablename__ = 'refridgerator_mores'
 
     id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
     제품_코드: Mapped[str] = mapped_column(String(20))
