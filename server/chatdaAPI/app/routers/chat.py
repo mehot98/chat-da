@@ -68,17 +68,16 @@ def post_search(
 ):
     """
     자연어 검색 리스트를 확인하는 API\n
-    입력: SearchRequestDto(uuid, content)
+    입력: SearchRequestDto(uuid, content)\n
     응답: ChatSearchResponseDto(type, content, model_no_list)
     """
 
     data = get_output(user_input=chat_request_dto.content, search=True)
 
-    return {
-        "type": "search",
-        "content": data["content"],
-        "model_list": data["model_no_list"][:10]
-    }
+    # 나중에 model_list는 model_no_list로 변경하기
+    data["model_list"] = data["model_no_list"][:10]
+
+    return response_dto.init_search_response(data)
 
 
 @router.post("/feedback", status_code=status.HTTP_201_CREATED)

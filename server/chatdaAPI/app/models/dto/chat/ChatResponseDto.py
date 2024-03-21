@@ -1,4 +1,6 @@
-from typing import List, Union, Any
+from typing import List, Union, Any, Optional
+
+from pydantic.v1 import Field
 
 from chatdaAPI.app.models.CamelModel import CamelModel
 
@@ -28,8 +30,31 @@ class ChatSpec(CamelModel):
     제품_코드: str
     제품명: str
     가격: str
-    혜택가: str
+    혜택가: Optional[str] = ""
     image_url: str
+
+
+class ChatSearchSpec(CamelModel):
+    """
+    자연어 검색에서 사용될 상세 정보, 각 제품마다의 상세 스펙
+    """
+    제품_코드: str
+    제품명: str
+    평점: Optional[str] = ""
+    리뷰_개수: Optional[int] = ""
+    가격: Optional[str]
+    혜택가: Optional[str] = ""
+    소비효율등급: Optional[str] = ""
+    가로: Optional[str] = ""
+    세로: Optional[str] = ""
+    높이: Optional[str] = ""
+    깊이: Optional[str] = ""
+    전체_용량: Optional[str] = ""
+    냉장실_용량: Optional[str] = ""
+    냉동실_용량: Optional[str] = ""
+    맞춤보관실_용량: Optional[str] = ""
+    smart_things: Optional[str] = "미지원"
+    image_url: Optional[str] = ""
 
 
 class ChatContent(CamelModel):
@@ -47,6 +72,12 @@ class ChatRecommendDto(CamelModel):
     type: str
     content: ChatContent
     model_no: str
+
+
+class ChatSearchResponseDto(CamelModel):
+    type: str
+    content: str
+    model_list: List[ChatSearchSpec]
 
 
 # 모델 리스트를 배열로 추출하는 함수입니다
@@ -81,4 +112,12 @@ def init_recommend_response(data):
             "spec": model
         },
         model_no=model["제품_코드"]
+    )
+
+
+def init_search_response(data):
+    return ChatSearchResponseDto(
+        type="search",
+        content=data["content"],
+        model_list=data["model_list"]
     )
