@@ -160,16 +160,22 @@ export const ExpandMoreIconWrapper = styled.div`
   height: 142px;
   display: flex;
   align-items: center;
-  cursor: pointer;
 
   & > svg {
     width: 34px;
     height: 34px;
     fill: #a7a7a7;
+    transition: transform 0.3s ease; /* 추가: 변환에 대한 전환 효과 */
   }
 
   &:hover {
     & > svg {
+      transform: scale(1.4); /* 추가: 호버 시 SVG를 확대 */
+      /* stroke: #ffffff;
+      stroke-width: 0.5px;
+      stroke-linecap: round; */
+      fill: white;
+      filter: drop-shadow(0 0 2px #2189ff);
     }
   }
 `;

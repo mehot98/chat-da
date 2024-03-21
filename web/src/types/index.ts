@@ -2,6 +2,7 @@ import { ComparePrdProps } from "./app";
 import { MessageProps, MsgProps, MessagesProps } from "./components/ChatbotMain";
 import { ChatbotRecommendCardProps } from "./components/ChatbotRecommend";
 import { PopularItemProps } from "./components/PopularItem";
+import { ProductSummaryInfo } from "./components/ProductSummary";
 
 export type {
   MessageProps,
@@ -10,4 +11,5 @@ export type {
   MessagesProps,
   ComparePrdProps,
   PopularItemProps,
+  ProductSummaryInfo,
 };
