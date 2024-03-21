@@ -36,7 +36,7 @@ export const ChatExpandModal = styled(ChatMainModal)`
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding-right: 346px;
+    padding-right: 376px;
     gap: 30px;
     user-select: none;
   }
