@@ -9,6 +9,8 @@ import chatdaAPI.RAG.input_type as input_types
 import chatdaAPI.RAG.prompt as prompt
 from chatdaAPI.config import config
 
+import chatdaAPI.examples.examples_ranking as examples_ranking
+
 # 체인 중간 과정 보기
 set_debug(True)
 
@@ -58,8 +60,27 @@ def get_output(user_input, search):
     first_prompt, user_input_type = prompt.sql_prompt(user_input)
     model_list = []
 
-    if user_input_type is not input_types.GENERAL:
-        # SQL문이 필요한 대화인 경우
+    # SQL문이 필요한 대화인 경우
+    if user_input_type != input_types.GENERAL:
+        # 랭킹인 경우 정해진 답변을 생성하여 리턴
+        if user_input_type == input_types.RANKING:
+            ranking_query = examples_ranking.examples[0]["query"].split("\n\n")[1]
+
+            model_list = make_model_list(ranking_query)
+
+            ranking_list = ""
+
+            # 3위까지 답변 생성
+            for i in range(3):
+                ranking_list += f"{i+1}위는 {model_list[i]['제품_코드']}\n"
+
+            return {
+                "type": user_input_type,
+                "content": "ChatDA가 가장 인기가 많은 냉장고 순위를 알려드릴게요!\n"
+                           f"{ranking_list}\n"
+                           "그 이외의 순위는 옆에서 확인해주세요!",
+                "model_no_list": model_list
+            }
 
         # SQL 생성을 위한 chain
         create_sql = create_sql_query_chain(llm, db, first_prompt)
@@ -101,9 +122,8 @@ def get_output(user_input, search):
             result = answer_chain.invoke({"question": user_input, "query": query[0], "result": result})
         else:
             result = "제품에 대한 정보가 존재하지 않습니다!"
+    # 일반적인 대화인 경우
     else:
-        # 일반적인 대화인 경우
-
         answer_chain = first_prompt | llm | StrOutputParser()
 
         result = answer_chain.invoke({"question": user_input})
@@ -114,8 +134,9 @@ def get_output(user_input, search):
         "model_list": model_list
     }
 
-# # 테스트용
-# if __name__ == '__main__':
-#     res = get_output(user_input='재밌는 사실 하나 알려줘', search=False)
-#     print(f"type : {res['type']}")
-#     print(f"content : {res['content']}")
+
+# 테스트용
+if __name__ == '__main__':
+    res = get_output(user_input='요새 잘 나가는 냉장고가 뭐야?', search=False)
+    print(f"type : {res['type']}")
+    print(f"content : {res['content']}")
