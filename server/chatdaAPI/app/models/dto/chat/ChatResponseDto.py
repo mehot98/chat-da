@@ -40,21 +40,21 @@ class ChatSearchSpec(CamelModel):
     """
     제품_코드: str
     제품명: str
-    평점: Optional[str] = ""
-    리뷰_개수: Optional[int] = ""
-    가격: Optional[str]
-    혜택가: Optional[str] = ""
-    소비효율등급: Optional[str] = ""
-    가로: Optional[str] = ""
-    세로: Optional[str] = ""
-    높이: Optional[str] = ""
-    깊이: Optional[str] = ""
-    전체_용량: Optional[str] = ""
-    냉장실_용량: Optional[str] = ""
-    냉동실_용량: Optional[str] = ""
-    맞춤보관실_용량: Optional[str] = ""
+    평점: Optional[str] = None
+    리뷰_개수: Optional[int] = None
+    가격: str
+    혜택가: Optional[str] = None
+    소비효율등급: Optional[str] = None
+    가로: Optional[str] = None
+    세로: Optional[str] = None
+    높이: Optional[str] = None
+    깊이: Optional[str] = None
+    전체_용량: Optional[str] = None
+    냉장실_용량: Optional[str] = None
+    냉동실_용량: Optional[str] = None
+    맞춤보관실_용량: Optional[str] = None
     smart_things: Optional[str] = "미지원"
-    image_url: Optional[str] = ""
+    image_url: Optional[str] = None
 
 
 class ChatContent(CamelModel):
