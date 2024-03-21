@@ -16,7 +16,7 @@ set_debug(True)
 
 # DB 불러오기
 db = SQLDatabase.from_uri(
-    f'mysql+pymysql://{config.mysql_user}:{config.mysql_password}@{config.mysql_host}:{config.mysql_port}/{config.mysql_database}?charset=utf8mb4',
+    f'mysql+pymysql://{config.mysql_user}:{config.mysql_password}@{config.mysql_host}:{config.mysql_port}/{config.mysql_database}',
     sample_rows_in_table_info=1,
     include_tables=["냉장고", "리뷰_정보", "제품_정보"],
     max_string_length=100
