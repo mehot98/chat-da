@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Query, status
-from fastapi.params import Depends
+from fastapi.params import Depends, Param
 from sqlalchemy.orm import Session
 
 import chatdaAPI.app.models.dto.detail.DetailResponseDto as Dto
@@ -10,7 +10,7 @@ from chatdaAPI.app.models.utils.database import get_db
 router = APIRouter()
 
 
-@router.get("/{modelNo}", status_code=status.HTTP_200_OK, response_model=Dto.DetailResponseDto)
+@router.get("/", status_code=status.HTTP_200_OK)
 def get_spec(
         model_no: str = Query(..., alias="modelNo"),
         db: Session = Depends(get_db)
@@ -20,5 +20,4 @@ def get_spec(
     입력: path variable - ModelNo\n
     응답: 제품에 대한 모든 상세 정보\n
     """
-    return get_product_all_detail_using_model(db,model_no)
-    
+    return get_product_all_detail_using_model(db, model_no)
