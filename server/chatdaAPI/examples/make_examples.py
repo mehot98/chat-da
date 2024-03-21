@@ -79,6 +79,8 @@ def get_examples(user_input):
         examples_temp = examples_ranking.examples
     elif user_input_type == input_type.SEARCH:
         examples_temp = examples_search.examples
+    elif user_input_type == input_type.ADDITIONAL:
+        examples_temp = examples_additional.examples
     else:
         return [], input_type.GENERAL
 
