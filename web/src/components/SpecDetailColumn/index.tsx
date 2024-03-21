@@ -53,8 +53,12 @@ export default function SpecDetailColumn({ selectedModelNo }: { selectedModelNo:
         <S.SpecListHeaderTitle>요약</S.SpecListHeaderTitle>
         <hr />
       </S.SpecListHeader>
-      <Sub.SpecSummarySizeIcon sizeSpec={sizeSpec} />
-      <Sub.SpecSummaryList summarySpec={summarySpec} />
+
+      <S.SpecWrapper>
+        <Sub.SpecSummarySizeIcon sizeSpec={sizeSpec} />
+        <Sub.SpecSummaryList summarySpec={summarySpec} />
+      </S.SpecWrapper>
+
       <Sub.SpecList />
     </S.SpecDetailColumnWrapper>
   );

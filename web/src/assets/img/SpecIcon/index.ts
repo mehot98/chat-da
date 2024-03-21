@@ -59,7 +59,6 @@ const specIconPath = {
 };
 
 Object.keys(specIconPath).map((path) => {
-  console.log(specIconPath[path]);
   specIconPath[path] = chrome.runtime.getURL(specIconPath[path]);
 });
 

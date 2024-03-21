@@ -1,14 +1,21 @@
-import specIconPath from "@assets/img/SpecIcon";
 import * as S from "./style";
 
-export default function SpecSummaryIcon() {
-  return (
-    <S.SpecSummaryIconWrapper>
-      <S.SpecSummaryIconImg src={specIconPath.sizePath} alt="spec-icon" />
-      <S.SpecSummaryIconTitle>제품 타입</S.SpecSummaryIconTitle>
-      <S.SpecSummaryIconDescription>BESPOKE 냉장고 4도어</S.SpecSummaryIconDescription>
-      <S.SpecSummaryIconTitle>설치 타입</S.SpecSummaryIconTitle>
-      <S.SpecSummaryIconDescription>프리스탠딩</S.SpecSummaryIconDescription>
-    </S.SpecSummaryIconWrapper>
-  );
+export default function SpecSummaryIcon({
+  specImg,
+  specKey,
+  specValue,
+}: {
+  specImg: string;
+  specKey: string;
+  specValue: string;
+}) {
+  if (specImg && specKey && specValue) {
+    return (
+      <S.SpecSummaryIconWrapper>
+        <S.SpecSummaryIconImg src={specImg} alt={specKey} />
+        <S.SpecSummaryIconTitle>{specKey}</S.SpecSummaryIconTitle>
+        <S.SpecSummaryIconDescription>{specValue}</S.SpecSummaryIconDescription>
+      </S.SpecSummaryIconWrapper>
+    );
+  }
 }
