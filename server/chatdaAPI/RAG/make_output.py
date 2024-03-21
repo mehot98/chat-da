@@ -26,7 +26,7 @@ db = SQLDatabase.from_uri(
 context = db.get_context()
 
 # 언어 모델 로드
-llm = ChatOpenAI(model="gpt-3.5-turbo", temperature=0, verbose=True)
+llm = ChatOpenAI(model="gpt-4", temperature=0.1, verbose=True)
 
 
 # join문까지 포함된 sql을 이용하여 모든 정보를 가져와서 list를 만드는 함수
@@ -114,14 +114,17 @@ def get_output(user_input, search):
         # SQL query 실행
         result = db.run(query[0], include_columns=True)
 
-        # 얻은 결과로 답변 생성하는 체인 구성
-        answer_chain = prompt.answer_prompt | llm | StrOutputParser()
+        if result and len(result) > 0:
+            # 얻은 결과로 답변 생성하는 체인 구성
+            answer_chain = prompt.answer_prompt | llm | StrOutputParser()
 
-        if result:
             # 유저 입력으로부터 답변 생성
             result = answer_chain.invoke({"question": user_input, "query": query[0], "result": result})
+
         else:
             result = "제품에 대한 정보가 존재하지 않습니다!"
+            model_list = None
+
     # 일반적인 대화인 경우
     else:
         answer_chain = first_prompt | llm | StrOutputParser()
