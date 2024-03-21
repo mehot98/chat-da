@@ -29,8 +29,9 @@ export const ChatExpandModal = styled(ChatMainModal)`
   z-index: 1299;
 
   & .MuiDialog-paper {
-    padding-top: 30px;
-    width: 1014px;
+    padding: 30px;
+    // width: 1014px;
+    width: fit-content;
     z-index: 1299;
     display: flex;
     flex-direction: column;
