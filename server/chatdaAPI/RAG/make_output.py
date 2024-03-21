@@ -26,7 +26,7 @@ db = SQLDatabase.from_uri(
 context = db.get_context()
 
 # 언어 모델 로드
-llm = ChatOpenAI(model="gpt-4", temperature=0.1, verbose=True)
+llm = ChatOpenAI(model="gpt-3.5-turbo-0125", temperature=0.1, verbose=True)
 
 
 # join문까지 포함된 sql을 이용하여 모든 정보를 가져와서 list를 만드는 함수
@@ -140,6 +140,6 @@ def get_output(user_input, search):
 
 # # 테스트용
 # if __name__ == '__main__':
-#     res = get_output(user_input='요새 잘 나가는 냉장고가 뭐야?', search=False)
+#     res = get_output(user_input='RF85C90D1AP와 RF85C90D2AP의 차이점이 뭐야?', search=False)
 #     print(f"type : {res['type']}")
 #     print(f"content : {res['content']}")
