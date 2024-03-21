@@ -9,6 +9,6 @@ export const ModalHeaderWrapper = styled.div`
 `;
 
 export const ModalHeaderSpan = styled.span`
-  font-size: 36px;
+  font-size: 24px;
   font-weight: bold;
 `;

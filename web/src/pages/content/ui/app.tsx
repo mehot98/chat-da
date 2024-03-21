@@ -15,6 +15,7 @@ export default function App() {
   const [isOpenMainModal, setIsOpenMainModal] = useState<boolean>(false);
   const [isOpenExpandModal, setIsOpenExpandModal] = useState<boolean>(false);
   const [expandModalState, setExpandModalState] = useState<T.ExpandModalStateType>(null);
+  const [selectedModelNo, setSelectedModelNo] = useState<string[]>([]);
 
   // Find existing chatbot icon, and insert chatda icon
   const existingChatbotIcon: Element = document.getElementsByClassName("menu01")[0];
@@ -58,6 +59,10 @@ export default function App() {
 
   const changeExpandModalState = (st: T.ExpandModalStateType) => {
     setExpandModalState(st);
+  };
+
+  const changeSelectedModelNo = (models: string[]) => {
+    setSelectedModelNo(models);
   };
 
   // 모달 header 아이콘
@@ -187,6 +192,10 @@ export default function App() {
     console.log(expandModalState);
   }, [expandModalState]);
 
+  useEffect(() => {
+    console.log(selectedModelNo);
+  }, [selectedModelNo]);
+
   useEffect(() => {}, [comparePrds]);
   return (
     <>
@@ -242,6 +251,7 @@ export default function App() {
                 messages={messages}
                 setMessages={setMessages}
                 handleOpenExpandModal={handleOpenExpandModal}
+                changeSelectedModelNo={changeSelectedModelNo}
               />
             </S.ChatMainContent>
           </S.ChatMainWrapper>

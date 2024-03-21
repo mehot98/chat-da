@@ -11,7 +11,7 @@ export const RecommendCardWrapper = styled.div`
 `;
 
 export const RecommendCardImg = styled.img`
-  max-height: 120px;
+  max-height: 100px;
 `;
 
 export const RecommendCardTitle = styled.span`
