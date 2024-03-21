@@ -76,7 +76,7 @@ def get_output(user_input, search):
 
             return {
                 "type": user_input_type,
-                "content": "ChatDA가 가장 인기가 많은 냉장고 순위를 알려드릴게요!\n"
+                "content": "ChatDA가 가장 인기가 많은 냉장고 순위를 알려드릴게요!\n\n"
                            f"{ranking_list}\n"
                            "그 이외의 순위는 옆에서 확인해주세요!",
                 "model_no_list": model_list
