@@ -4,7 +4,7 @@ import * as S from "./style";
 export default function ChatbotRecommendCard(props: ChatbotRecommendCardProps) {
   return (
     <S.RecommendCardWrapper>
-      <img src={props.imageUrl} alt="recommend-product" />
+      <S.RecommendCardImg src={props.imageUrl} alt="recommend-product" />
       <S.RecommendCardTitle>{props.제품명}</S.RecommendCardTitle>
       <S.RecommendCardNo>{props.제품_코드}</S.RecommendCardNo>
       <S.ReommendCardPriceWrapper>

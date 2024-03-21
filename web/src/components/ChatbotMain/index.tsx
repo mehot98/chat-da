@@ -12,6 +12,7 @@ export default function ChatbotMain(props: {
   messages: T.MessagesProps;
   setMessages: Dispatch<SetStateAction<T.MessagesProps>>;
   handleOpenExpandModal: (st: T.ExpandModalStateType) => void;
+  changeSelectedModelNo: (models: string[]) => void;
 }) {
   const [currentTypingId, setCurrentTypingId] = useState<number | null>(null);
 
@@ -108,6 +109,12 @@ export default function ChatbotMain(props: {
       content: message,
     });
     const { data } = response;
+
+    // const data = {
+    //   type: "info",
+    //   content: "테스트용",
+    //   modelNo: "11",
+    // };
 
     if (data.type === "recommend") {
       props.setMessages((prev) => [
@@ -218,6 +225,7 @@ export default function ChatbotMain(props: {
           setMessages={props.setMessages}
           setComparePrds={props.setComparePrds}
           handleOpenExpandModal={props.handleOpenExpandModal}
+          changeSelectedModelNo={props.changeSelectedModelNo}
         />
       </S.ChatMessageWrapper>
       <S.ChatInputWrapper>

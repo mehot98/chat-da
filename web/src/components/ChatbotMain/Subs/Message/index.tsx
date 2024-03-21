@@ -16,6 +16,13 @@ export default function Message(props: T.MessageProps) {
       return prev2.filter((prd: T.ComparePrdProps) => prd.id !== props.id);
     });
   }
+
+  const handleExpandOpenBtn = () => {
+    props.handleOpenExpandModal(props.type);
+    const models = props.modelNoList ? props.modelNoList : [props.modelNo];
+    props.changeSelectedModelNo(models);
+  };
+
   if (props.isUser) {
     if (props.isCompared) {
       return (
@@ -106,10 +113,7 @@ export default function Message(props: T.MessageProps) {
           <MessageFeedback isRecommend={false} />
 
           {props.btnString && (
-            <S.ExpandOpenBtn
-              onClick={() => props.handleOpenExpandModal(props.type)}
-              startIcon={<ArrowBackIcon />}
-            >
+            <S.ExpandOpenBtn onClick={handleExpandOpenBtn} startIcon={<ArrowBackIcon />}>
               {props.btnString}
             </S.ExpandOpenBtn>
           )}
