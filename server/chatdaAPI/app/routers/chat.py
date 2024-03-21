@@ -26,7 +26,7 @@ def post_chat(
     response = None
     content = chat_request_dto.content
 
-    # 제일 먼저 거치는 content는 테스트 입력을 위한 case를 만납니다. info, compare, recommend, naturalSearch
+    # 제일 먼저 거치는 content는 테스트 입력을 위한 case를 만납니다. info, compare, recommend
     match content:
         case "info":
             data = dump.info_data
@@ -37,8 +37,6 @@ def post_chat(
         case "recommend":
             data = dump.recommend_data
             response = response_dto.init_recommend_response(data)
-        case "naturalSearch":
-            response = dump.natural_data
         # 위 예제 입력에서 걸리지 않은 입력에 대해서는 langchain을 활용한 답변을 생성합니다
         case default:
             data = get_output(user_input=chat_request_dto.content, search=False)
@@ -62,6 +60,25 @@ def post_chat(
                         }
                     ])
     return response
+
+
+@router.post("/search")
+def post_search(
+        chat_request_dto: request_dto.ChatRequestDto
+):
+    """
+    자연어 검색 리스트를 확인하는 API\n
+    입력: SearchRequestDto(uuid, content)
+    응답: ChatSearchResponseDto(type, content, model_no_list)
+    """
+
+    data = get_output(user_input=chat_request_dto.content, search=True)
+
+    return {
+        "type": "search",
+        "content": data["content"],
+        "model_list": data["model_no_list"][:10]
+    }
 
 
 @router.post("/feedback", status_code=status.HTTP_201_CREATED)
