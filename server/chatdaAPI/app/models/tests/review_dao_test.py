@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 
-import chatdaAPI.app.models.dao.review_dao as dao
+import chatdaAPI.app.models.dao.summary_review_dao as dao
 from chatdaAPI.app.models.utils.database import sessionLocal, engine, Base, get_db
 
 Base.metadata.create_all(bind=engine)
@@ -16,23 +16,23 @@ app = FastAPI()
 """
 
 
-def get_review_using_id(review_id: int):
+def get_summary_review_using_id(review_id: int):
     """
         리뷰 요약 id를 통해 전체 요약 정보를 조회하는 함수 테스트
     """
     db = get_db()
-    return dao.get_review_using_id(next(db), review_id=review_id)
+    return dao.get_summary_review_using_id(next(db), review_id=review_id)
 
 
-def get_review_using_model(model_no: str):
+def get_summary_review_using_model(model_no: str):
     """
         리뷰 요약 id를 통해 전체 요약 정보를 조회하는 함수 테스트
     """
     db = get_db()
-    return dao.get_review_using_model(next(db), 제품_코드=model_no)
+    return dao.get_summary_review_using_model(next(db), 제품_코드=model_no)
 
 
 if __name__ == "__main__":
     # 리뷰_정보 테이블에서 제품 코드와 아이디를 통해 조회합니다.
-    print(get_review_using_id(31).리뷰_요약)
-    print(get_review_using_model("RF85C90D1AP").리뷰_요약)
+    print(get_summary_review_using_id(31).리뷰_요약)
+    print(get_summary_review_using_model("RF85C90D1AP").리뷰_요약)

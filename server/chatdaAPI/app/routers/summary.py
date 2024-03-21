@@ -2,8 +2,8 @@ from fastapi import APIRouter, Query, status
 from fastapi.params import Depends
 from sqlalchemy.orm import Session
 
-import chatdaAPI.app.models.dao.review_dao as review_dao
-import chatdaAPI.app.models.dao.detail_dao as detail_dao
+import chatdaAPI.app.models.dao.summary_review_dao as review_dao
+import chatdaAPI.app.models.dao.summary_detail_dao as detail_dao
 from chatdaAPI.app.models.utils.database import get_db
 
 # prefix == summary
@@ -20,11 +20,16 @@ def get_review(
     입력: modelNo\n
     응답: content\n
     """
-    review = review_dao.get_review_using_model(db, 제품_코드=model_no)
+    review = review_dao.get_summary_review_using_model(db, 제품_코드=model_no)
 
-    response = {
-        "content": review.리뷰_요약
-    }
+    if review:
+        response = {
+            "content": review.리뷰_요약
+        }
+    else:
+        response = {
+            "content": "존재하지 않는 제품입니다"
+        }
 
     return response
 
@@ -40,10 +45,14 @@ def get_detail(
     응답: content
     """
 
-    detail = detail_dao.get_detail_using_model(db, 제품_코드=model_no)
-
-    response = {
-        "content": detail.정보_요약
-    }
-
+    detail = detail_dao.get_summary_detail_using_model(db, 제품_코드=model_no)
+    if detail:
+        response = {
+            "content": detail.정보_요약
+        }
+    else: 
+        response = {
+            "content": "존재하지 않는 제품입니다"
+        }
+    
     return response

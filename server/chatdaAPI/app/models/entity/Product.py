@@ -7,7 +7,7 @@ from sqlalchemy.orm import Mapped, mapped_column
 from chatdaAPI.app.models.utils.database import Base
 
 
-class Detail(Base):
+class Product(Base):
     __tablename__ = '제품_정보'
 
     id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
