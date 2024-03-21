@@ -8,6 +8,9 @@ from chatdaAPI.app.models.utils.database import Base
 
 
 class Detail(Base):
+    """
+    제품 요약 정보에 대한 테이블과 관련된 Entity입니다
+    """
     __tablename__ = '제품_정보'
 
     id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)

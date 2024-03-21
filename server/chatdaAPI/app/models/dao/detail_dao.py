@@ -7,6 +7,9 @@ from chatdaAPI.app.models.dto.detail.DetailResponseDto import init_detail_respon
 
 
 def get_product_all_detail_using_model(db: Session, 제품_코드: str):
+    """
+    해당 제품 코드에 해당하는 냉장고의 모든 정보를 하나의 dto로 생성합니다
+    """
     product = db.query(냉장고).filter(냉장고.제품_코드 == 제품_코드).first()
     if product is None:
         return {

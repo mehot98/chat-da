@@ -20,7 +20,7 @@ def post_chat(
 ):
     """
     기본 챗봇과의 대화 API\n
-    테스트용 입력 : compare, info, recommend
+    테스트용 입력 : compare, info, recommend \n
     입력: ChatRequestDto(uuid, content)\n
     응답: ChatInfoDto, ChatCompareDto, ChatRecommendDto(type, content, modelNoLlist or modelNo)\n
     """
@@ -100,7 +100,8 @@ def post_search(
 
     data = get_output(user_input=chat_request_dto.content, search=True)
 
-    # 나중에 model_list는 model_no_list로 변경하기
+    # Error: 나중에 model_list는 model_no_list로 변경하기,
+    # 현재 리스트가 800개 조회되는 오류 발생
     data["model_list"] = data["model_no_list"][:10]
 
     return response_dto.init_search_response(data)

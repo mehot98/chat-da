@@ -6,6 +6,9 @@ from chatdaAPI.app.models.utils.database import Base
 
 
 class 냉장고(Base):
+    """
+    전체 냉장고 동일 스펙 기준 만들어진 테이블 entity
+    """
     __tablename__ = '냉장고'
 
     id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
@@ -26,6 +29,9 @@ class 냉장고(Base):
 
 
 class 냉장고_추가정보(Base):
+    """
+    각각의 냉장고마다 가지고 있는 추가 정보 테이블 Entity
+    """
     __tablename__ = '냉장고_추가정보'
 
     id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)

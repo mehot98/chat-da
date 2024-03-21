@@ -77,6 +77,9 @@ class ChatRecommendDto(CamelModel):
 
 
 class ChatSearchResponseDto(CamelModel):
+    """
+    자연어 검색 결과
+    """
     type: str
     content: str
     model_list: List[ChatSearchSpec]
@@ -100,6 +103,9 @@ class ChatGeneralDto(CamelModel):
 
 
 class ChatExceptionDto(CamelModel):
+    """
+    질문에 대한 답을 찾지 못했을 경우 예외 처리 대답
+    """
     content: str = "잘 모르겠어요. 다시 질문해주세요."
 
 
