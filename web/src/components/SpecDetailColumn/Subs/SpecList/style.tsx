@@ -4,7 +4,11 @@ export const SpecListWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 30px;
+  gap: 40px;
+`;
+
+export const SpecLineWrapper = styled(SpecListWrapper)`
+  gap: 10px;
 `;
 
 export const SpecTitle = styled.span`

@@ -8,6 +8,10 @@ from chatdaAPI.app.models.utils.database import Base
 
 
 class Review(Base):
+    """
+    리뷰 정보 요약 테이블 Entity
+    """
+
     __tablename__ = 'refridgerator_reviews'
 
     id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)

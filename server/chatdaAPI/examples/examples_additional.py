@@ -5,7 +5,7 @@ examples = [
     {
         "input": "최근에 리뷰가 추가된 냉장고 제품이 뭐야?",
         "query":
-            (f"SELECT * FROM '냉장고' JOIN `리뷰_정보` ON `냉장고`.제품_코드 = `리뷰_정보`.제품_코드 "
+            (f"SELECT * FROM 'refridgerator' JOIN `리뷰_정보` ON `refridgerator`.제품_코드 = `리뷰_정보`.제품_코드 "
              f"ORDER BY `리뷰_정보`.created_at DESC LIMIT 1;\n\n"
              f"{join} ORDER BY `리뷰_정보`.created_at DESC LIMIT 1;"),
         "type": ADDITIONAL,
@@ -14,7 +14,7 @@ examples = [
     {
         "input": "냉동실 용량이 100L 이상인 제품들의 정보를 알려줘.",
         "query":
-            (f"SELECT * FROM '냉장고' WHERE `냉동실_용량` >= '100L';\n\n"
+            (f"SELECT * FROM 'refridgerator' WHERE `냉동실_용량` >= '100L';\n\n"
              f"{join} WHERE `냉동실_용량` >= '100L';"),
         "type": ADDITIONAL,
         "index": 1
@@ -22,7 +22,7 @@ examples = [
     {
         "input": "가격이 1,000,000원 이하인 냉장고의 제품명과 가격을 보여줘.",
         "query":
-            (f"SELECT * FROM '냉장고' WHERE 가격 <= '1000000';\n\n"
+            (f"SELECT * FROM 'refridgerator' WHERE 가격 <= '1000000';\n\n"
              f"{join} WHERE 가격 <= '1000000';"),
         "type": ADDITIONAL,
         "index": 2
@@ -30,7 +30,7 @@ examples = [
     {
         "input": "소비 전력이 100W 이하인 제품의 제품명과 소비 전력을 알려줘.",
         "query":
-            (f"SELECT * FROM '냉장고' WHERE `소비_전력` <= '100W';\n\n"
+            (f"SELECT * FROM 'refridgerator' WHERE `소비_전력` <= '100W';\n\n"
              f"{join} WHERE `소비_전력` <= '100W';"),
         "type": ADDITIONAL,
         "index": 3

@@ -1,6 +1,6 @@
 from typing import List
 
-from chatdaAPI.app.models.CamelModel import CamelModel
+from chatdaAPI.app.models.utils.CamelModel import CamelModel
 from chatdaAPI.app.models.dto.Spec import DetailSpecDto
 
 

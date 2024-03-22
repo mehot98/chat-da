@@ -52,7 +52,7 @@ You will only need table's names to join and the column to join with the main ta
 And never use the LIMIT clause for this second query to get all the results as per MySQL.
 
 Here is the additional table names to join:
-[`냉장고_추가정보`,`리뷰_정보`,`제품_정보`,`할인_정보`]
+[`refridgerator_mores`,`refridgerator_reviews`,`refridgerator_details`,`refridgerator_prices`]
 
 And here is the standard column name to join:
 `제품_코드`

@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 
-import chatdaAPI.app.models.dao.detail_dao as dao
+import chatdaAPI.app.models.dao.summary_detail_dao as dao
 from chatdaAPI.app.models.utils.database import engine, Base, get_db
 
 Base.metadata.create_all(bind=engine)
@@ -16,24 +16,24 @@ app = FastAPI()
 """
 
 
-def get_detail_using_id(detail_id: int):
+def get_summary_detail_using_id(detail_id: int):
     """
         정보 요약 id를 통해 전체 요약 정보를 조회하는 함수 테스트
     """
     db = get_db()
-    return dao.get_detail_using_id(next(db), detail_id=detail_id)
+    return dao.get_summary_detail_using_id(next(db), detail_id=detail_id)
 
 
-def get_detail_using_model(model_no: str):
+def get_summary_detail_using_model(model_no: str):
     """
         제품 코드를 통해 제품 요약 정보를 조회하는 함수 테스트
     """
 
     db = get_db()
-    return dao.get_detail_using_model(next(db), 제품_코드=model_no)
+    return dao.get_summary_detail_using_model(next(db), 제품_코드=model_no)
 
 
 if __name__ == "__main__":
     # 제품_정보 테이블에서 제품 코드와 아이디를 통해 조회합니다.
-    print(get_detail_using_id(31).정보_요약)
-    print(get_detail_using_model("RF85C90D1AP").정보_요약)
+    print(get_summary_detail_using_id(31).정보_요약)
+    print(get_summary_detail_using_model("RF85C90D1AP").정보_요약)
