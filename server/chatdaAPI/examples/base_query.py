@@ -1,5 +1,5 @@
-join = ("SELECT * FROM `냉장고`"
-        " JOIN `냉장고_추가정보` ON `냉장고`.`제품_코드` = `냉장고_추가정보`.`제품_코드`"
-        " JOIN `리뷰_정보` ON `냉장고`.`제품_코드` = `리뷰_정보`.`제품_코드`"
-        " JOIN `제품_정보` ON `냉장고`.`제품_코드` = `제품_정보`.`제품_코드`"
-        " JOIN `할인_정보` ON `냉장고`.`제품_코드` = `할인_정보`.`제품_코드`")
+join = ("SELECT * FROM `refridgerator`"
+        " JOIN `refridgerator_mores` ON `refridgerator`.`제품_코드` = `refridgerator_mores`.`제품_코드`"
+        " JOIN `refridgerator_reviews` ON `refridgerator`.`제품_코드` = `refridgerator_reviews`.`제품_코드`"
+        " JOIN `refridgerator_details` ON `refridgerator`.`제품_코드` = `refridgerator_details`.`제품_코드`"
+        " JOIN `refridgerator_prices` ON `refridgerator`.`제품_코드` = `refridgerator_prices`.`제품_코드`")
