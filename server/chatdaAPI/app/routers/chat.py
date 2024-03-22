@@ -20,7 +20,7 @@ def post_chat(
 ):
     """
     기본 챗봇과의 대화 API\n
-    테스트용 입력 : compare, info, recommend
+    테스트용 입력 : compare, info, recommend \n
     입력: ChatRequestDto(uuid, content)\n
     응답: ChatInfoDto, ChatCompareDto, ChatRecommendDto(type, content, modelNoLlist or modelNo)\n
     """
@@ -46,7 +46,7 @@ def post_chat(
             # 위 예제 입력에서 걸리지 않은 입력에 대해서는 langchain을 활용한 답변을 생성합니다
             case default:
                 data = get_output(user_input=chat_request_dto.content, search=False)
-                
+
                 # 만약 model_list가 None이라면 DB에서 검색된 내용이 없다는 뜻
                 if data["model_list"] is None:
                     response = response_dto.ChatExceptionDto()
@@ -86,6 +86,27 @@ def post_chat(
             }
         ])
     return response
+
+
+@router.post("/search",
+             status_code=status.HTTP_200_OK,
+             response_model=response_dto.ChatSearchResponseDto)
+def post_search(
+        chat_request_dto: request_dto.ChatRequestDto
+):
+    """
+    자연어 검색 리스트를 확인하는 API\n
+    입력: SearchRequestDto(uuid, content)\n
+    응답: ChatSearchResponseDto(type, content, model_no_list)
+    """
+
+    data = get_output(user_input=chat_request_dto.content, search=True)
+
+    # Error: 나중에 model_list는 model_no_list로 변경하기,
+    # 현재 리스트가 800개 조회되는 오류 발생
+    data["model_list"] = data["model_no_list"][:10]
+
+    return response_dto.init_search_response(data)
 
 
 @router.post("/feedback", status_code=status.HTTP_201_CREATED)

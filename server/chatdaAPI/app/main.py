@@ -1,7 +1,6 @@
 from chatdaAPI.app.routers.chat import router as chat_router
 from chatdaAPI.app.routers.compare import router as compare_router
 from chatdaAPI.app.routers.detail import router as detail_router
-from chatdaAPI.app.routers.natural import router as natural_router
 from chatdaAPI.app.routers.openapi import router as openapi_router
 from chatdaAPI.app.routers.summary import router as summary_router
 from fastapi import FastAPI
@@ -34,9 +33,6 @@ app.include_router(compare_router, prefix="/compare", tags=["compare"])
 
 # 요약 정보 라우터
 app.include_router(summary_router, prefix="/summary", tags=["summary"])
-
-# 요약 정보 라우터
-app.include_router(natural_router, prefix="/naturalSearch", tags=["naturalSearch"])
 
 # 오픈 API 라우터
 app.include_router(openapi_router, prefix="/api", tags=["api"])

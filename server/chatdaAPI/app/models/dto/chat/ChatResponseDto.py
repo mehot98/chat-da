@@ -1,8 +1,8 @@
-from typing import List, Union, Any
+from typing import List, Optional
 
 from pydantic import Field
 
-from chatdaAPI.app.models.CamelModel import CamelModel
+from chatdaAPI.app.models.utils.CamelModel import CamelModel
 
 
 class ChatInfoDto(CamelModel):
@@ -34,6 +34,29 @@ class ChatSpec(CamelModel):
     image_url: str
 
 
+class ChatSearchSpec(CamelModel):
+    """
+    자연어 검색에서 사용될 상세 정보, 각 제품마다의 상세 스펙
+    """
+    제품_코드: str
+    제품명: str
+    평점: Optional[str] = None
+    리뷰_개수: Optional[int] = None
+    가격: str
+    혜택가: Optional[str] = None
+    소비효율등급: Optional[str] = None
+    가로: Optional[str] = None
+    세로: Optional[str] = None
+    높이: Optional[str] = None
+    깊이: Optional[str] = None
+    전체_용량: Optional[str] = None
+    냉장실_용량: Optional[str] = None
+    냉동실_용량: Optional[str] = None
+    맞춤보관실_용량: Optional[str] = None
+    smart_things: Optional[str] = "미지원"
+    image_url: Optional[str] = None
+
+
 class ChatContent(CamelModel):
     """
     제품 추천시 나타낼 메세지와 제품 정보
@@ -49,6 +72,15 @@ class ChatRecommendDto(CamelModel):
     type: str
     content: ChatContent
     model_no: str
+
+
+class ChatSearchResponseDto(CamelModel):
+    """
+    자연어 검색 결과
+    """
+    type: str
+    content: str
+    model_list: List[ChatSearchSpec]
 
 
 class ChatRankingDto(CamelModel):
@@ -69,6 +101,9 @@ class ChatGeneralDto(CamelModel):
 
 
 class ChatExceptionDto(CamelModel):
+    """
+    질문에 대한 답을 찾지 못했을 경우 예외 처리 대답
+    """
     content: str = "잘 모르겠어요. 다시 질문해주세요."
 
 
@@ -123,4 +158,12 @@ def init_general_respose(data):
     return ChatGeneralDto(
         type=data["type"],
         content=data["content"]
+    )
+
+
+def init_search_response(data):
+    return ChatSearchResponseDto(
+        type="search",
+        content=data["content"],
+        model_list=data["model_list"]
     )
