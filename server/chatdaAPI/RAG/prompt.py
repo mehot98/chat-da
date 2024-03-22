@@ -87,8 +87,10 @@ def sql_prompt(user_input):
     # 유저 입력과 관련된 예시들과 유저 입력의 타입을 가져옴
     user_examples, got_input_type = make_examples.get_examples(user_input)
 
-    if got_input_type is input_types.GENERAL:
+    if got_input_type == input_types.GENERAL:
         return general_answer_prompt, got_input_type
+    elif got_input_type == input_types.DICTIONARY:
+        return user_examples, got_input_type
 
     # SQL 생성용 프롬프트 최종
     prompt = FewShotPromptTemplate(
