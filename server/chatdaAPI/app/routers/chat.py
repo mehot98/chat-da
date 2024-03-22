@@ -88,7 +88,9 @@ def post_chat(
     return response
 
 
-@router.post("/search")
+@router.post("/search",
+             status_code=status.HTTP_200_OK,
+             response_model=response_dto.ChatSearchResponseDto)
 def post_search(
         chat_request_dto: request_dto.ChatRequestDto
 ):

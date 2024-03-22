@@ -6,7 +6,7 @@ import json
 
 class DetailResponseDto(CamelModel):
     """
-    제품 상세정보 스펙 요청
+    제품 상세정보 스펙 응답
     """
     제품_코드: str
     제품명: str
