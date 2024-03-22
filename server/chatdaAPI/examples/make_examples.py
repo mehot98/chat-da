@@ -40,7 +40,7 @@ if make_new_vectorDB or not os.path.exists(persist_directory):
     examples_all = (examples_compare.examples + examples_info.examples
                     + examples_recommend.examples + examples_ranking.examples
                     + examples_search.examples + examples_general.examples
-                    + examples_additional.examples + dictionary.terms)
+                    + examples_additional.examples + dictionary.examples)
 
     # Dictionary 형태의 examples를 vector DB에 저장하기 위해 docs 형태로 변환
     few_shot_docs = [
@@ -83,7 +83,10 @@ def get_examples(user_input):
     elif user_input_type == input_type.ADDITIONAL:
         examples_temp = examples_additional.examples
     elif user_input_type == input_type.DICTIONARY:
-        return most_relevant_example, user_input_type
+        return {
+            "input": most_relevant_example.page_content,
+            "query": most_relevant_example.metadata["query"]
+        }, user_input_type
     else:
         return [], input_type.GENERAL
 

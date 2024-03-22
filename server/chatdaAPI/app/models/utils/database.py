@@ -21,6 +21,7 @@ Base.metadata.create_all(engine)
 Base.metadata.bind = engine
 
 
+# db를 사용하면서 의존성 주입을 위해 사용되는 함수입니다.
 def get_db():
     db = sessionLocal()
     try:

@@ -10,6 +10,10 @@ export const RecommendCardWrapper = styled.div`
   gap: 10px;
 `;
 
+export const RecommendCardImg = styled.img`
+  max-height: 100px;
+`;
+
 export const RecommendCardTitle = styled.span`
   font-size: 16px;
 `;

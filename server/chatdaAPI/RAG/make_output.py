@@ -18,7 +18,7 @@ set_debug(True)
 db = SQLDatabase.from_uri(
     f'mysql+pymysql://{config.mysql_user}:{config.mysql_password}@{config.mysql_host}:{config.mysql_port}/{config.mysql_database}',
     sample_rows_in_table_info=1,
-    include_tables=["냉장고", "리뷰_정보", "제품_정보"],
+    include_tables=["refridgerators", "refridgerator_reviews", "refridgerator_details"],
     max_string_length=100
 )
 
@@ -143,6 +143,6 @@ def get_output(user_input, search):
 
 # # 테스트용
 # if __name__ == '__main__':
-#     res = get_output(user_input='최근에 리뷰가 추가된 냉장고 제품이 뭐야?', search=False)
+#     res = get_output(user_input='멀티 팬트리가 뭐야?', search=False)
 #     print(f"type : {res['type']}")
 #     print(f"content : {res['content']}")
