@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import theme from "@assets/style/theme.module.scss";
-import { Dialog } from "@mui/material";
+import { Dialog, IconButton } from "@mui/material";
 
 export const ChatMainModal = styled(Dialog)`
   width: 0;
@@ -25,43 +25,36 @@ export const ChatMainModal = styled(Dialog)`
 `;
 
 export const ChatExpandModal = styled(ChatMainModal)`
-  padding-right: 330px;
   z-index: 1299;
 
   & .MuiDialog-paper {
-    padding-top: 30px;
-    width: 1014px;
+    padding: 30px;
+    width: fit-content;
     z-index: 1299;
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding-right: 346px;
+    position: fixed;
+    right: 440px;
+    border-radius: 15px 0px 0px 15px;
+    border-right: 30px solid white;
     gap: 30px;
     user-select: none;
-  }
-`;
-export const ModalHeaderWrapper = styled.div`
-  width: fit-content;
-  height: fit-content;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 11px;
-`;
-export const ModalHeaderSpan = styled.span`
-  font-size: 36px;
-  font-weight: bold;
-`;
-export const ModalHeaderSubSpan = styled.span`
-  font-size: 16px;
-  font-weight: 400;
-`;
 
-export const ModalPopularItemWrapper = styled.div`
-  width: fit-content;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
+    ::-webkit-scrollbar {
+      background-color: transparent;
+      width: 10px;
+      margin: 1px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: ${theme.bordercolor};
+
+      background-clip: padding-box;
+      border: 1px solid transparent;
+      border-radius: 10px;
+    }
+  }
 `;
 
 export const ChatModalBackdrop = styled.div<{ open: boolean; expandOpen: boolean }>`
@@ -116,4 +109,10 @@ export const IconWrapper = styled.div`
 export const ChatMainContent = styled.div`
   width: 100%;
   height: 86.5%;
+`;
+
+export const CloseBtn = styled(IconButton)`
+  position: absolute;
+  right: 10px;
+  top: 10px;
 `;
