@@ -19,6 +19,7 @@ import iceCubeWhiskeyPath from "./ice_cube+whiskey.png";
 import iceWhiskeyPath from "./ice_whiskey.png";
 import iceMakerAutoPath from "./ice_maker_auto.png";
 import iceMakerBigPath from "./ice_maker_big.png";
+import iceMakerSlimPath from "./ice_maker_slim.png";
 import iceMakerDualPath from "./ice_maker_dual.png";
 import iceMakerTwistPath from "./ice_maker_twist.png";
 import sizePath from "./size.png";
@@ -48,6 +49,7 @@ const specIconPath = {
   iceCubePath,
   iceCubeWhiskeyPath,
   iceWhiskeyPath,
+  iceMakerSlimPath,
   iceMakerAutoPath,
   iceMakerBigPath,
   iceMakerDualPath,

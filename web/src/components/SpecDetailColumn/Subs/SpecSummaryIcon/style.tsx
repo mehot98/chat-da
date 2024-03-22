@@ -9,7 +9,7 @@ export const SpecSummaryIconWrapper = styled.div`
 
 export const SpecSummaryIconImg = styled.img`
   max-width: 145px;
-  max-height: 140px;
+  max-height: 80px;
 `;
 
 export const SpecSummaryIconTitle = styled.span`

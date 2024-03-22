@@ -3,7 +3,7 @@ import styled from "@emotion/styled";
 export const SpecDetailColumnWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 20px;
   margin: 10px;
 `;
 
@@ -20,5 +20,5 @@ export const SpecListHeaderTitle = styled.span`
 export const SpecWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 40px;
+  gap: 60px;
 `;
