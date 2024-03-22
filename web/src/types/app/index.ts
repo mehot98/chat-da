@@ -3,3 +3,5 @@ export interface ComparePrdProps {
   modelNo: string;
   id: number;
 }
+
+export type ExpandModalStateType = "popular" | "search" | "info" | "compare" | "recommend" | null;
