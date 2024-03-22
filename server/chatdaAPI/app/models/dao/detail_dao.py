@@ -1,3 +1,5 @@
+from typing import List
+
 from sqlalchemy.orm import Session
 
 from chatdaAPI.app.models.entity.Detail import Detail
@@ -20,5 +22,20 @@ def get_product_all_detail_using_model(db: Session, 제품_코드: str):
     summary_detail = db.query(Detail).filter(Detail.제품_코드 == 제품_코드).first()
 
     result = init_detail_response(product, product_detail, summary_review, summary_detail)
+
+    return result
+
+
+def get_product_list_detail_using_model(db: Session, model_no_list: List[str]):
+    result = []
+
+    for model_no in model_no_list:
+        product = db.query(냉장고).filter(냉장고.제품_코드 == model_no).first()
+        if product is not None:
+            product_detail = db.query(냉장고_추가정보).filter(냉장고_추가정보.제품_코드 == model_no).first()
+            summary_review = db.query(Review).filter(Review.제품_코드 == model_no).first()
+            summary_detail = db.query(Detail).filter(Detail.제품_코드 == model_no).first()
+
+            result.append(init_detail_response(product, product_detail, summary_review, summary_detail))
 
     return result

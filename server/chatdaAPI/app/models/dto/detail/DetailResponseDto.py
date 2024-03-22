@@ -1,6 +1,6 @@
 from typing import Optional, Dict
 
-from chatdaAPI.app.models.CamelModel import CamelModel
+from chatdaAPI.app.models.utils.CamelModel import CamelModel
 import json
 
 

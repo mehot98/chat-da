@@ -39,9 +39,9 @@ def get_detail(
         db: Session = Depends(get_db)
 ):
     """
-    특정 제품의 정보 요약 조회 API
-    입력: modelNo
-    응답: content
+    특정 제품의 정보 요약 조회 API\n
+    입력: modelNo\n
+    응답: content\n
     """
 
     detail = detail_dao.get_summary_detail_using_model(db, 제품_코드=model_no)

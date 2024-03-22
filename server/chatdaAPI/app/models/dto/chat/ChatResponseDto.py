@@ -1,10 +1,8 @@
-from typing import List, Union, Any, Optional
-
-from pydantic.v1 import Field
+from typing import List, Optional
 
 from pydantic import Field
 
-from chatdaAPI.app.models.CamelModel import CamelModel
+from chatdaAPI.app.models.utils.CamelModel import CamelModel
 
 
 class ChatInfoDto(CamelModel):

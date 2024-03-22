@@ -2,7 +2,7 @@ from fastapi import APIRouter, Query, status
 
 import chatdaAPI.app.models.dto.compare.CompareResponseDto as Dto
 import chatdaAPI.app.models.exmaple_compare as dump
-
+from chatdaAPI.app.models.dao.detail_dao import get_product_list_detail_using_model
 
 # prefix == compare
 router = APIRouter()
@@ -18,6 +18,8 @@ def get_compare_detail(
     응답: CompareResponseDto(type, spec[], model_no_list[])\n
     """
     model_no_list = model_no.split(",")
+    print(model_no_list)
+    ## print(get_product_list_detail_using_model(model_no_list))
     data = dump.compare_data
     response = Dto.CompareResponseDto(
         type=data["type"],
