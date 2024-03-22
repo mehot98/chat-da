@@ -96,7 +96,7 @@ def post_search(
 ):
     """
     자연어 검색 리스트를 확인하는 API\n
-    입력: SearchRequestDto(uuid, content)\n
+    입력: ChatRequestDto(uuid, content)\n
     응답: ChatSearchResponseDto(type, content, model_no_list)
     """
 
