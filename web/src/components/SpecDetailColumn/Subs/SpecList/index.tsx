@@ -1,6 +1,7 @@
 import * as S from "./style";
 
-export default function SpecList({ rawSpec }) {
+// eslint-disable-next-line
+export default function SpecList({ rawSpec }: { rawSpec: any }) {
   return (
     <S.SpecListWrapper>
       {Object.keys(rawSpec).map((key) => (

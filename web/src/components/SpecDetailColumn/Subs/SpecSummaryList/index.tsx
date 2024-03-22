@@ -1,4 +1,3 @@
-import * as S from "./style";
 import * as T from "@src/types/index";
 import specIconPath from "@assets/img/SpecIcon";
 import SpecSummaryIcon from "../SpecSummaryIcon";

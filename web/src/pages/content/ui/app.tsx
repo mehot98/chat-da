@@ -212,7 +212,7 @@ export default function App() {
           {expandModalState === "popular" ? (
             <P.PopularItemPage />
           ) : expandModalState === "info" ? (
-            <P.DetailSpecPage />
+            <P.DetailSpecPage selectedModelNo={selectedModelNo} />
           ) : expandModalState === "compare" ? (
             <P.CompareSpecPage />
           ) : (
