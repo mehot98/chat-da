@@ -25,20 +25,35 @@ export const ChatMainModal = styled(Dialog)`
 `;
 
 export const ChatExpandModal = styled(ChatMainModal)`
-  padding-right: 330px;
   z-index: 1299;
 
   & .MuiDialog-paper {
     padding: 30px;
-    // width: 1014px;
     width: fit-content;
     z-index: 1299;
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding-right: 376px;
+    position: fixed;
+    right: 440px;
+    border-radius: 15px 0px 0px 15px;
+    border-right: 30px solid white;
     gap: 30px;
     user-select: none;
+
+    ::-webkit-scrollbar {
+      background-color: transparent;
+      width: 10px;
+      margin: 1px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: ${theme.bordercolor};
+
+      background-clip: padding-box;
+      border: 1px solid transparent;
+      border-radius: 10px;
+    }
   }
 `;
 
@@ -98,5 +113,6 @@ export const ChatMainContent = styled.div`
 
 export const CloseBtn = styled(IconButton)`
   position: absolute;
-  right: 360px;
+  right: 10px;
+  top: 10px;
 `;
