@@ -15,6 +15,8 @@ export default function SpecSummaryList({ summarySpec }: { summarySpec: T.Summar
     const specObject: specObjectType = {};
 
     const value: string = summarySpec[key];
+    if (!value) return;
+
     specObject["specKey"] = key.replaceAll("_", " ");
     specObject["specValue"] = summarySpec[key];
 
