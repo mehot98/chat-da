@@ -23,4 +23,22 @@ examples = [
         "type": RECOMMEND,
         "index": 2
     },
+    {
+        "input": "에너지 효율이 좋으면서 리뷰 평점도 높은 냉장고 추천해줘",
+        "query": ("SELECT * FROM 'refridgerator'"
+                  " JOIN `refridgerator_reviews` ON `refridgerator`.제품_코드 = `refridgerator_reviews`.제품_코드 "
+                  "WHERE `refridgerator`.소비효율등급 <= '1등급'"
+                  " ORDER BY `refridgerator_reviews`.평점 DESC, `refridgerator`.소비효율등급;\n\n"
+                  f"{join} WHERE `refridgerator`.소비효율등급 <= '1등급'"
+                  f" ORDER BY `refridgerator_reviews`.평점 DESC, `refridgerator`.소비효율등급;"),
+        "type": RECOMMEND,
+        "index": 3
+    },
+    {
+        "input": "냉장실 용량이 크면서 소비 전력이 낮은 냉장고 추천해줘",
+        "query": ("SELECT * FROM 'refridgerator' ORDER BY `냉장실_용량` DESC, `소비_전력` LIMIT 1;\n\n"
+                  f"{join} ORDER BY `냉장실_용량` DESC, `소비_전력` LIMIT 1;"),
+        "type": RECOMMEND,
+        "index": 4
+    },
 ]

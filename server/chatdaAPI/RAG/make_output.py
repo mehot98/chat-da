@@ -60,8 +60,11 @@ def get_output(user_input, search):
     first_prompt, user_input_type = prompt.sql_prompt(user_input)
     model_list = []
 
+    # 용어에 대한 질문일 경우
+    if user_input_type == input_types.DICTIONARY:
+        result = first_prompt["query"]
     # SQL문이 필요한 대화인 경우
-    if user_input_type != input_types.GENERAL:
+    elif user_input_type != input_types.GENERAL:
         # 랭킹인 경우 정해진 답변을 생성하여 리턴
         if user_input_type == input_types.RANKING:
             ranking_query = examples_ranking.examples[0]["query"].split("\n\n")[1]
@@ -140,6 +143,6 @@ def get_output(user_input, search):
 
 # # 테스트용
 # if __name__ == '__main__':
-#     res = get_output(user_input='최근에 리뷰가 추가된 냉장고 제품이 뭐야?', search=False)
+#     res = get_output(user_input='멀티 팬트리가 뭐야?', search=False)
 #     print(f"type : {res['type']}")
 #     print(f"content : {res['content']}")
