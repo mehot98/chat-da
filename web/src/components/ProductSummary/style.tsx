@@ -7,8 +7,9 @@ interface SummaryContentCount {
 
 export const ReviewSummaryWrapper = styled.div<SummaryContentCount>`
   position: absolute;
-  top: 64px;
-  left: ${(props) => props.count * -200 - 95}px;
+  top: -400px;
+  /* left: ${(props) => props.count * -200 - 95}px; */
+  left: -800px;
   z-index: 999;
 `;
 export const ReviewSummaryDiv = styled.div`
@@ -36,15 +37,18 @@ export const ReviewSummaryHeader = styled.div`
   }
 `;
 export const ReviewSummaryContent = styled.div`
-  display: flex;
   width: fit-content;
   height: fit-content;
-  gap: 24px;
+  text-align: start;
   padding: 20px 30px;
   border-radius: 17px 0 17px 17px;
   background-color: ${theme.bordercolor};
   /* border: 7px solid ${theme.bordercolor}; */
   /* background-color: white; */
+
+  span.impact {
+    color: red;
+  }
 `;
 export const InfoWrapper = styled.div`
   display: flex;
