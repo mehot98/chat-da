@@ -11,8 +11,8 @@ from chatdaAPI.config import config
 
 import chatdaAPI.examples.examples_ranking as examples_ranking
 
-# 체인 중간 과정 보기
-set_debug(True)
+# # 체인 중간 과정 보기
+# set_debug(True)
 
 # DB 불러오기
 db = SQLDatabase.from_uri(
@@ -143,6 +143,6 @@ def get_output(user_input, search):
 
 # # 테스트용
 # if __name__ == '__main__':
-#     res = get_output(user_input='RF60DB9342AP에 대해서 설명해줘', search=False)
+#     res = get_output(user_input='RF85C9101AP와 RF85DB90B2AP의 차이점이 뭐야?', search=False)
 #     print(f"type : {res['type']}")
 #     print(f"content : {res['content']}")
