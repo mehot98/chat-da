@@ -46,7 +46,7 @@ def post_chat(
             # 위 예제 입력에서 걸리지 않은 입력에 대해서는 langchain을 활용한 답변을 생성합니다
             case default:
                 data = get_output(user_input=chat_request_dto.content, search=False)
-
+                print(data["type"])
                 # 만약 model_list가 None이라면 DB에서 검색된 내용이 없다는 뜻
                 if data["model_list"] is None:
                     response = response_dto.ChatExceptionDto()
@@ -63,6 +63,8 @@ def post_chat(
                             response = response_dto.init_ranking_response(data)
                         case "general":
                             response = response_dto.init_general_respose(data)
+                        case "search":
+                            response = response_dto.init_search_response(data)
                         case default:
                             # 만약 type이 지정되지 않은 값이 나온다면 Exception을 발생시킵니다.
                             raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=[
@@ -75,7 +77,6 @@ def post_chat(
                                 }
                             ])
     except Exception as e:
-        print(e)
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=[
             {
                 "type": "error",
@@ -85,6 +86,7 @@ def post_chat(
                 }
             }
         ])
+
     return StreamingResponse(returnData(response, data["content"], req),media_type="text/event-stream")
 
 
