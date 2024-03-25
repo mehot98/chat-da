@@ -1,34 +1,45 @@
-import { useEffect, useState, useMemo } from "react";
+import { useEffect } from "react";
 import ChatbotRecommend from "../ChatbotRecommend";
-import { request } from "@src/apis/requestBuilder";
+// import { request } from "@src/apis/requestBuilder";
 import * as Sub from "./Subs";
 import * as S from "./style";
 import * as T from "@src/types/index";
 
-export default function SpecDetailColumn({ selectedModelNo }: { selectedModelNo: string }) {
-  const [data, setData] = useState<T.ResDataType>({});
-  const [recommendProps, setRecommendProps] = useState<T.ChatbotRecommendCardProps>({
-    제품_코드: "",
-    제품명: "",
-    imageUrl: "",
-  });
-  const [summarySpec, setSummarySpec] = useState<T.SummarySpecType>({});
-  // const [sizeSpec, setSizeSpec] = useState<T.SummarySpecType>({});
-  // const [rawSpec, setRawSpec] = useState({});
+export default function SpecDetailColumn({
+  isCompare,
+  recommendProps,
+  sizeSpec,
+  summarySpec,
+  rawSpec,
+}: {
+  isCompare: boolean;
+  recommendProps: T.ChatbotRecommendCardProps;
+  sizeSpec: T.SummarySpecType;
+  summarySpec: T.SummarySpecType;
+  // eslint-disable-next-line
+  rawSpec: any;
+}) {
+  // const [data, setData] = useState<T.ResDataType>({});
+  // const [recommendProps, setRecommendProps] = useState<T.ChatbotRecommendCardProps>({
+  //   제품_코드: "",
+  //   제품명: "",
+  //   imageUrl: "",
+  // });
+  // const [summarySpec, setSummarySpec] = useState<T.SummarySpecType>({});
 
-  const sizeSpec = useMemo(() => {
-    return {
-      가로: summarySpec.가로,
-      높이: summarySpec.높이,
-      깊이: summarySpec.깊이,
-      제품_타입: summarySpec.제품_타입,
-      설치_타입: summarySpec.설치_타입,
-    };
-  }, [summarySpec]);
+  // const sizeSpec = useMemo(() => {
+  //   return {
+  //     가로: summarySpec.가로,
+  //     높이: summarySpec.높이,
+  //     깊이: summarySpec.깊이,
+  //     제품_타입: summarySpec.제품_타입,
+  //     설치_타입: summarySpec.설치_타입,
+  //   };
+  // }, [summarySpec]);
 
-  const rawSpec = useMemo(() => {
-    return data.raw;
-  }, [data]);
+  // const rawSpec = useMemo(() => {
+  //   return data.raw;
+  // }, [data]);
 
   // // RF85C90F1AP 상품 기준 더미데이터
   // const recommendProps: T.ChatbotRecommendCardProps = {
@@ -104,42 +115,48 @@ export default function SpecDetailColumn({ selectedModelNo }: { selectedModelNo:
   //     "결함·하자 등에 따른 소비자피해에 대해서는 소비자분쟁해결기준(소비자기본법 제16조)에 따라 보상가능",
   // };
 
-  const getData = async () => {
-    const res = await request.get(`/model?modelNo=${selectedModelNo}`);
-    const { data } = res;
+  // const getData = async () => {
+  //   const res = await request.get(`/model?modelNo=${selectedModelNo}`);
+  //   const { data } = res;
 
-    console.log(data);
-    setData(data);
-    setRecommendProps({
-      제품_코드: data["제품_코드"],
-      제품명: data["제품명"],
-      가격: data["가격"],
-      // 혜택가: data["혜택가"],
-      혜택가: "1,490,000원",
-      imageUrl: data["imageUrl"],
-    });
-    setSummarySpec({
-      가로: data["가로"],
-      높이: data["높이"],
-      깊이: data["깊이"],
-      제품_타입: data["제품_타입"],
-      설치_타입: data["raw"]["설치 타입"],
-      소비효율등급: data["소비효율등급"],
-      오토_오픈_도어: data["raw"]["오토 오픈 도어"],
-      투명_도어: data["raw"]["투명 도어"],
-      베버리지_센터: data["raw"]["베버리지 센터"],
-      푸드_쇼케이스: data["raw"]["푸드 쇼케이스"],
-      얼음_종류: data["raw"]["얼음 종류"],
-      제빙기: data["raw"]["제빙기"],
-      탈취기: data["raw"]["탈취기"],
-      쿨링커버: data["raw"]["쿨링커버"],
-      SmartThings_모바일_앱_지원: data["raw"]["SmartThings 모바일 앱 지원"],
-    });
-  };
+  //   console.log(data);
+  //   setData(data);
+  //   setRecommendProps({
+  //     제품_코드: data["제품_코드"],
+  //     제품명: data["제품명"],
+  //     가격: data["가격"],
+  //     // 혜택가: data["혜택가"],
+  //     혜택가: "1,490,000원",
+  //     imageUrl: data["imageUrl"],
+  //   });
+  //   setSummarySpec({
+  //     가로: data["가로"],
+  //     높이: data["높이"],
+  //     깊이: data["깊이"],
+  //     제품_타입: data["제품_타입"],
+  //     설치_타입: data["raw"]["설치 타입"],
+  //     소비효율등급: data["소비효율등급"],
+  //     오토_오픈_도어: data["raw"]["오토 오픈 도어"],
+  //     투명_도어: data["raw"]["투명 도어"],
+  //     베버리지_센터: data["raw"]["베버리지 센터"],
+  //     푸드_쇼케이스: data["raw"]["푸드 쇼케이스"],
+  //     얼음_종류: data["raw"]["얼음 종류"],
+  //     제빙기: data["raw"]["제빙기"],
+  //     탈취기: data["raw"]["탈취기"],
+  //     쿨링커버: data["raw"]["쿨링커버"],
+  //     SmartThings_모바일_앱_지원: data["raw"]["SmartThings 모바일 앱 지원"],
+  //   });
+  // };
 
   useEffect(() => {
-    getData();
+    // getData();
+    console.log("components에 이게 왓어", recommendProps, sizeSpec, summarySpec, rawSpec);
   }, []);
+
+  if (!recommendProps || !sizeSpec || !summarySpec || !rawSpec) {
+    console.log("components에 이게 왓어", recommendProps, sizeSpec, summarySpec, rawSpec);
+    return <></>;
+  }
 
   return (
     <S.SpecDetailColumnWrapper>
