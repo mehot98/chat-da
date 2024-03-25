@@ -94,10 +94,12 @@ export default function ProductSummary({ content }: { content: string }) {
 
   // 시간 지날때 점점 흐려지고 사라짐
   const timeRef = useRef<number | null>(null);
-  let hidden;
+  const hidden = setTimeout(() => {
+    modal[0].classList.add("hidden");
+  }, 12000);
 
+  const modal = document.getElementsByClassName("fade");
   useEffect(() => {
-    const modal = document.getElementsByClassName("fade");
     if (modal[0]) {
       modal[0].addEventListener("mouseenter", handleMouseEnter);
       modal[0].addEventListener("mouseleave", handleMouseLeave);
@@ -105,10 +107,6 @@ export default function ProductSummary({ content }: { content: string }) {
       setTimeout(() => {
         modal[0].classList.add("fade-out");
       }, 3000);
-
-      hidden = setTimeout(() => {
-        modal[0].classList.add("hidden");
-      }, 12000);
 
       () => hidden;
     }
@@ -122,7 +120,7 @@ export default function ProductSummary({ content }: { content: string }) {
         timeRef.current = null;
       }
       modal[0].classList.remove("fdae-out");
-      modal[0].classList.remove("hidden");
+      // modal[0].classList.remove("hidden");
       clearTimeout(hidden);
     }
   };
@@ -134,13 +132,9 @@ export default function ProductSummary({ content }: { content: string }) {
         modal[0].classList.add("fade-out");
         timeRef.current = null;
       }, 3000);
+
+      () => hidden;
     }
-
-    hidden = setTimeout(() => {
-      modal[0].classList.add("hidden");
-    }, 12000);
-
-    () => hidden;
   };
 
   // 말풍선 높이 계산
