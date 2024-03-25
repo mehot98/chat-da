@@ -4,7 +4,10 @@ from chatdaAPI.examples.base_query import join
 examples = [
     {
         "input": "RF85C90D1AP에 대해서 설명해줘",
-        "query": ("SELECT * FROM 'refridgerator' WHERE `제품_코드`='RF85C90D1AP';\n\n"
+        "query": ("SELECT * FROM 'refridgerator'"
+                  " JOIN `refridgerator_reviews` ON `refridgerator`.`제품_코드` = `refridgerator_reviews`.`제품_코드`"
+                  " JOIN `refridgerator_details` ON `refridgerator`.`제품_코드` = `refridgerator_details`.`제품_코드`"
+                  " WHERE 'refridgerator'.`제품_코드`='RF85C90D1AP';\n\n"
                   f"{join} WHERE 'refridgerator'.`제품_코드`='RF85C90D1AP';"),
         "type": INFO,
         "index": 0
@@ -15,5 +18,25 @@ examples = [
                   f"{join} WHERE 'refridgerator'.`제품명` LIKE '%BESPOKE 냉장고 4도어%';"),
         "type": INFO,
         "index": 1
+    },
+    {
+        "input": "RF85C90D1AP 어때?",
+        "query": ("SELECT * FROM 'refridgerator'"
+                  " JOIN `refridgerator_reviews` ON `refridgerator`.`제품_코드` = `refridgerator_reviews`.`제품_코드`"
+                  " JOIN `refridgerator_details` ON `refridgerator`.`제품_코드` = `refridgerator_details`.`제품_코드`"
+                  " WHERE 'refridgerator'.`제품_코드`='RF85C90D1AP';\n\n"
+                  f"{join} WHERE 'refridgerator'.`제품_코드`='RF85C90D1AP';"),
+        "type": INFO,
+        "index": 2
+    },
+    {
+        "input": "RF85C90D1AP 제품 정보",
+        "query": ("SELECT * FROM 'refridgerator'"
+                  " JOIN `refridgerator_reviews` ON `refridgerator`.`제품_코드` = `refridgerator_reviews`.`제품_코드`"
+                  " JOIN `refridgerator_details` ON `refridgerator`.`제품_코드` = `refridgerator_details`.`제품_코드`"
+                  " WHERE 'refridgerator'.`제품_코드`='RF85C90D1AP';\n\n"
+                  f"{join} WHERE 'refridgerator'.`제품_코드`='RF85C90D1AP';"),
+        "type": INFO,
+        "index": 3
     },
 ]
