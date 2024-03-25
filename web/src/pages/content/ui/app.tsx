@@ -240,7 +240,7 @@ export default function App() {
               </S.IconWrapper>
               <S.IconWrapper onClick={() => handleOpenExpandModal("search")}>
                 <img src={searchIconSrc} alt="search-icon" width={35} height={35} />
-                <span>검색하기</span>
+                <span>조건검색</span>
               </S.IconWrapper>
             </S.ChatMainHeader>
 
