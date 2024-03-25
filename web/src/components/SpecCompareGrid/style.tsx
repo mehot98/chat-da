@@ -1,7 +1,9 @@
 import styled from "@emotion/styled";
 import Grid from "@mui/material/Unstable_Grid2";
 
-export const GridWrapper = styled(Grid)``;
+export const GridWrapper = styled(Grid)`
+  margin: 20px 0;
+`;
 
 export const GridRow = styled(Grid)`
   display: flex;
