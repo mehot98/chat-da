@@ -10,6 +10,13 @@ export default function CompareSpecPage({ selectedModelNo }: { selectedModelNo: 
   const [sizeSpecList, setSizeSpecList] = useState<T.SummarySpecType[]>([]);
   const [rawSpecList, setRawSpecList] = useState([]);
 
+  const initState = () => {
+    setRecommendPropsList([]);
+    setSummarySpecList([]);
+    setSizeSpecList([]);
+    setRawSpecList([]);
+  };
+
   const getData = async (modelNo: string) => {
     const res = await request.get(`/model?modelNo=${modelNo}`);
     const { data } = res;
@@ -55,13 +62,14 @@ export default function CompareSpecPage({ selectedModelNo }: { selectedModelNo: 
         높이: data.높이,
         깊이: data.깊이,
         제품_타입: data.제품_타입,
-        설치_타입: data.설치_타입,
+        설치_타입: data["raw"]["설치 타입"],
       },
     ]);
     setRawSpecList((rawSpecList) => [...rawSpecList, data.raw]);
   };
 
   useEffect(() => {
+    initState();
     const promises = selectedModelNo.map((modelNo) => getData(modelNo));
     Promise.all(promises).then((json) => {
       json.forEach((data) => {
@@ -69,7 +77,38 @@ export default function CompareSpecPage({ selectedModelNo }: { selectedModelNo: 
       });
     });
     // eslint-disable-next-line
-  }, []);
+  }, [selectedModelNo]);
+
+  useEffect(() => {
+    console.log(summarySpecList);
+    // A제품 스펙 key U B제품 스펙 key U C제품 스펙 key ...
+    const specListKeysSet = new Set();
+
+    summarySpecList.forEach((specList) => {
+      Object.keys(specList).forEach((key) => {
+        if (!specList[key] || specList[key] === "없음") {
+          delete specList[key];
+        } else {
+          specListKeysSet.add(key);
+        }
+      });
+    });
+
+    [...specListKeysSet].forEach((key: string) => {
+      summarySpecList.forEach((specList, i) => {
+        if (!specList[key] || specList[key] === "없음") {
+          const newSpecList = summarySpecList[i];
+          newSpecList[key] = "---";
+          setSummarySpecList([
+            ...summarySpecList.slice(0, i),
+            newSpecList,
+            ...summarySpecList.slice(i + 1, summarySpecList.length),
+          ]);
+        }
+      });
+    });
+    console.log(summarySpecList);
+  }, [summarySpecList]);
 
   return (
     <>

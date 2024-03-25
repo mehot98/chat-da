@@ -21,6 +21,7 @@ export default function DetailSpecPage({ selectedModelNo }: { selectedModelNo: s
   };
 
   const setDatas = (data) => {
+    console.log(data);
     setRecommendProps({
       제품_코드: data["제품_코드"],
       제품명: data["제품명"],
@@ -51,7 +52,7 @@ export default function DetailSpecPage({ selectedModelNo }: { selectedModelNo: s
       높이: data.높이,
       깊이: data.깊이,
       제품_타입: data.제품_타입,
-      설치_타입: data.설치_타입,
+      설치_타입: data["raw"]["설치 타입"],
     });
     setRawSpec(data.raw);
   };
