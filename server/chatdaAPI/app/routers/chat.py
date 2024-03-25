@@ -1,6 +1,8 @@
+import json
 from typing import Union
 
-from fastapi import APIRouter, status, HTTPException
+from fastapi import APIRouter, status, HTTPException, Request
+from starlette.responses import StreamingResponse
 
 import chatdaAPI.app.models.dto.chat.ChatResponseDto as response_dto
 import chatdaAPI.app.models.dto.chat.ChatRequestDto as request_dto
@@ -11,12 +13,10 @@ from chatdaAPI.RAG.make_output import get_output
 router = APIRouter()
 
 
-@router.post("", status_code=status.HTTP_201_CREATED,
-             response_model=Union[
-                 response_dto.ChatInfoDto, response_dto.ChatCompareDto, response_dto.ChatRecommendDto,
-                 response_dto.ChatRankingDto, response_dto.ChatGeneralDto, response_dto.ChatExceptionDto])
+@router.post("", status_code=status.HTTP_201_CREATED)
 def post_chat(
-        chat_request_dto: request_dto.ChatRequestDto
+        chat_request_dto: request_dto.ChatRequestDto,
+        req: Request
 ):
     """
     기본 챗봇과의 대화 API\n
@@ -27,7 +27,7 @@ def post_chat(
 
     response = None
     content = chat_request_dto.content
-
+    data = None
     try:
 
         # 제일 먼저 거치는 content는 테스트 입력을 위한 case를 만납니다. info, compare, recommend, naturalSearch
@@ -85,7 +85,7 @@ def post_chat(
                 }
             }
         ])
-    return response
+    return StreamingResponse(returnData(response, data["content"], req),media_type="text/event-stream")
 
 
 @router.post("/search",
@@ -120,3 +120,19 @@ def post_feedback(
     """
 
     return {"success": True}
+
+
+async def returnData(data: any, stream: any, req: Request):
+    # 만약 request 측 세션이 끊어지면 해당 Stream을 종료시키기
+    is_disconnected = await req.is_disconnected()
+    if is_disconnected: return
+    
+    # 처음으로 보내는 값은 모델 정보와 채팅 타입에 대한 내용
+    yield f"data: {data.json(by_alias=True)}\n\n"
+
+    # GPT 응답에 대한 token을 EventStream으로 보내주기
+    for event in stream:
+        data = {
+            "data": event
+        }
+        yield f"data: {json.dumps(data)}\n\n"
