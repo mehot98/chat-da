@@ -19,7 +19,7 @@ db = SQLDatabase.from_uri(
     f'mysql+pymysql://{config.mysql_user}:{config.mysql_password}@{config.mysql_host}:{config.mysql_port}/{config.mysql_database}',
     sample_rows_in_table_info=1,
     include_tables=["refridgerators", "refridgerator_reviews", "refridgerator_details"],
-    max_string_length=100
+    max_string_length=300
 )
 
 # DB 테이블 정보
@@ -89,7 +89,7 @@ def get_output(user_input, search):
         create_sql = create_sql_query_chain(llm, db, first_prompt)
 
         # 최대 행 개수
-        max_rows = 2
+        max_rows = 5
 
         # SQL query 생성
         query = create_sql.invoke(
@@ -143,6 +143,6 @@ def get_output(user_input, search):
 
 # # 테스트용
 # if __name__ == '__main__':
-#     res = get_output(user_input='멀티 팬트리가 뭐야?', search=False)
+#     res = get_output(user_input='RF60DB9342AP에 대해서 설명해줘', search=False)
 #     print(f"type : {res['type']}")
 #     print(f"content : {res['content']}")
