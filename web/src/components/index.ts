@@ -3,5 +3,6 @@ import ChatbotRecommend from "./ChatbotRecommend";
 import PopularItem from "./PopularItem";
 import StartRate from "./StarRate";
 import SpecDetailColumn from "./SpecDetailColumn";
+import SpecCompareGrid from "./SpecCompareGrid";
 
-export { ChatbotMain, ChatbotRecommend, PopularItem, StartRate, SpecDetailColumn };
+export { ChatbotMain, ChatbotRecommend, PopularItem, StartRate, SpecDetailColumn, SpecCompareGrid };

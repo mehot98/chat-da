@@ -107,19 +107,18 @@ export default function CompareSpecPage({ selectedModelNo }: { selectedModelNo: 
         }
       });
     });
-    console.log(summarySpecList);
+    console.log("받은 summarySpec들 !!", summarySpecList);
   }, [summarySpecList]);
 
   return (
     <>
       <S.ModalHeaderWrapper>
         <S.ModalHeaderSpan>자세히 비교하기</S.ModalHeaderSpan>
-        <S.SpecDetailColumnWrapper>
+        {/* <S.SpecDetailColumnWrapper>
           {selectedModelNo.map((no: string, i: number) => (
             <>
               <Comp.SpecDetailColumn
                 key={no}
-                isCompare={true}
                 recommendProps={recommendPropsList[i]}
                 sizeSpec={sizeSpecList[i]}
                 summarySpec={summarySpecList[i]}
@@ -128,7 +127,15 @@ export default function CompareSpecPage({ selectedModelNo }: { selectedModelNo: 
               {i !== selectedModelNo.length - 1 && <S.VerticalLine />}
             </>
           ))}
-        </S.SpecDetailColumnWrapper>
+        </S.SpecDetailColumnWrapper> */}
+        {recommendPropsList.length !== 0 && (
+          <Comp.SpecCompareGrid
+            recommendProps={recommendPropsList}
+            sizeSpec={sizeSpecList}
+            summarySpec={summarySpecList}
+            rawSpec={rawSpecList}
+          />
+        )}
       </S.ModalHeaderWrapper>
     </>
   );

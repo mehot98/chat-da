@@ -67,7 +67,6 @@ export default function DetailSpecPage({ selectedModelNo }: { selectedModelNo: s
       <S.ModalHeaderWrapper>
         <S.ModalHeaderSpan>상세 스펙 보기</S.ModalHeaderSpan>
         <Comp.SpecDetailColumn
-          isCompare={false}
           recommendProps={recommendProps}
           sizeSpec={sizeSpec}
           summarySpec={summarySpec}

@@ -91,8 +91,12 @@ export default function SpecSummaryList({ summarySpec }: { summarySpec: T.Summar
       }
     }
 
-    if (specObject.specImg && specObject.specKey && specObject.specValue) {
+    if (
+      (specObject.specImg && specObject.specKey && specObject.specValue) ||
+      (specObject.specKey && specObject.specValue === "---")
+    ) {
       summarySpecList.push(specObject);
+      console.log("summary list에서 추가중", summarySpecList);
     }
   });
 

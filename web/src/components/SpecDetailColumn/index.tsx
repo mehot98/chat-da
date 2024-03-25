@@ -4,13 +4,11 @@ import * as S from "./style";
 import * as T from "@src/types/index";
 
 export default function SpecDetailColumn({
-  isCompare,
   recommendProps,
   sizeSpec,
   summarySpec,
   rawSpec,
 }: {
-  isCompare: boolean;
   recommendProps: T.ChatbotRecommendCardProps;
   sizeSpec: T.SummarySpecType;
   summarySpec: T.SummarySpecType;
