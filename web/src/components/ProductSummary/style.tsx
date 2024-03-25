@@ -1,16 +1,33 @@
 import styled from "@emotion/styled";
 import theme from "@assets/style/theme.module.scss";
 
-interface SummaryContentCount {
-  count: number;
+interface SummaryContentHeightProps {
+  summaryContentHeight: number;
 }
 
-export const ReviewSummaryWrapper = styled.div<SummaryContentCount>`
+/* left: ${(props) => props.count * -200 - 95}px; */
+export const ReviewSummaryWrapper = styled.div<SummaryContentHeightProps>`
   position: absolute;
-  top: -400px;
-  /* left: ${(props) => props.count * -200 - 95}px; */
-  left: -800px;
+  /* top: -38vh; */
+  bottom: ${(props) => props.summaryContentHeight - 100}px;
+  left: -390px;
   z-index: 999;
+
+  opacity: 1;
+  transition: opacity 9s ease-in-out;
+
+  &.fade-out {
+    opacity: 0;
+  }
+
+  &:hover {
+    opacity: 1;
+    transition: none;
+  }
+
+  &.hidden {
+    display: none;
+  }
 `;
 export const ReviewSummaryDiv = styled.div`
   position: relative;
@@ -19,8 +36,9 @@ export const ReviewSummaryDiv = styled.div`
 
 export const ReviewSummaryHeader = styled.div`
   position: absolute;
-  top: -35px;
-  right: 27px;
+  top: -30px;
+  right: 66.5px;
+  z-index: 999;
   width: fit-content;
   height: fit-content;
   display: flex;
@@ -30,6 +48,7 @@ export const ReviewSummaryHeader = styled.div`
   padding: 15px 30px;
   border: 5px solid ${theme.bordercolor};
   border-radius: 40px;
+
   span {
     color: ${theme.bordercolor};
     font-size: 20px;
@@ -37,19 +56,37 @@ export const ReviewSummaryHeader = styled.div`
   }
 `;
 export const ReviewSummaryContent = styled.div`
-  width: fit-content;
+  position: relative;
+  width: 360px;
   height: fit-content;
   text-align: start;
-  padding: 20px 30px;
-  border-radius: 17px 0 17px 17px;
+  padding: 52px 40px 25px 40px;
+  border-radius: 17px;
   background-color: ${theme.bordercolor};
-  /* border: 7px solid ${theme.bordercolor}; */
-  /* background-color: white; */
+  /* transform: translate(-50%, -50%); */
 
-  span.impact {
-    color: red;
+  color: white;
+
+  span {
+    font-size: 14px;
+    &.impact {
+      font-size: 15px;
+      color: #fffd8c;
+      font-weight: bold;
+    }
   }
 `;
+
+export const Triangle = styled.div`
+  position: absolute;
+  top: 70%;
+  right: -15px;
+  border-left: 15px solid transparent;
+  border-right: 15px solid transparent;
+  border-bottom: 26px solid ${theme.bordercolor};
+  transform: rotate(-30deg);
+`;
+
 export const InfoWrapper = styled.div`
   display: flex;
   flex-direction: column;

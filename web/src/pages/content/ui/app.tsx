@@ -12,6 +12,8 @@ import { StyledEngineProvider } from "@mui/material/styles";
 import React from "react";
 import ReactDOMServer from "react-dom/server";
 import ReactDOM from "react-dom";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryProvider } from "@root/src/lib";
 
 export default function App() {
   const [isOpenMainModal, setIsOpenMainModal] = useState<boolean>(false);
@@ -60,6 +62,7 @@ export default function App() {
   // 냉장고 페이지에서 모든 리스트 선택, 디테일 페이지일시 요약정보 제공
   const [fridgeList, setFridgeList] = useState<NodeListOf<Element>>();
   const [isDetailPage, setIsDetailPage] = useState(false);
+  const [modelNo, setModelNo] = useState("");
 
   useEffect(() => {
     if (currentUrl === "https://www.samsung.com/sec/refrigerators/all-refrigerators/") {
@@ -74,6 +77,8 @@ export default function App() {
       setIsDetailPage(false);
     } else if (currentUrl.includes("https://www.samsung.com/sec/refrigerators/")) {
       setIsDetailPage(true);
+      const url = currentUrl.split("/");
+      setModelNo(url[url.length - 2]);
     } else {
       setIsDetailPage(false);
     }
@@ -228,25 +233,39 @@ export default function App() {
   //   setMessages(compare);
   // }, []);\
 
+  function renderReactComponentToExternalElement(element, modelNo) {
+    // 외부 요소를 찾거나 생성합니다.
+    const menuElement = document.getElementsByClassName("menu01")[0];
+    let childElement = document.getElementById("summaryPlace");
+
+    if (!childElement) {
+      childElement = document.createElement("div");
+      childElement.id = "summaryPlace";
+      menuElement.appendChild(childElement);
+    }
+
+    // React Portal을 사용하여 외부 요소 안에 React 컴포넌트를 렌더링합니다.
+    ReactDOM.render(
+      <QueryClientProvider client={queryClient}>{element}</QueryClientProvider>,
+      childElement,
+    );
+  }
+
+  const queryClient = new QueryClient();
+
   // 제품 요약 말풍선 생성
   const [isProductSummaryRendered, setIsProductSummaryRendered] = useState<boolean>(false);
 
   useEffect(() => {
     if (isDetailPage && !isProductSummaryRendered) {
-      const menuElement = document.getElementsByClassName("menu01")[0];
-      const childElement = document.createElement("div");
-      childElement.id = "summaryPlace";
-      menuElement.appendChild(childElement);
-      if (childElement) {
-        const productSummaryElement: ReactElement = <Comp.ProductSummary />;
-        ReactDOM.render(productSummaryElement, childElement);
-        setIsProductSummaryRendered(true);
-      }
+      const productSummaryElement: ReactElement = <Comp.ProductSummary content={modelNo} />;
+      renderReactComponentToExternalElement(productSummaryElement, modelNo);
+      setIsProductSummaryRendered(true);
     }
   }, [isDetailPage, isProductSummaryRendered]);
 
   return (
-    <>
+    <QueryClientProvider client={queryClient}>
       {/* mui component를 사용하는 경우 아래와 같이 StyledEngineProvider를 반드시 사용해야 합니다!*/}
       <StyledEngineProvider injectFirst>
         <S.ChatExpandModal
@@ -312,6 +331,6 @@ export default function App() {
         open={isOpenMainModal}
         expandOpen={isOpenExpandModal}
       />
-    </>
+    </QueryClientProvider>
   );
 }

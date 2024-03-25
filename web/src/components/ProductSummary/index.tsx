@@ -1,69 +1,178 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import * as S from "./style";
 import * as T from "@src/types";
+import * as API from "@src/apis";
 import React from "react";
+import { useQuery } from "@tanstack/react-query";
 
-export default function ProductSummary() {
-  //   useEffect(() => {
-  //     const currentUrl = window.location.href;
-  //     console.log("현재 url :", currentUrl);
-  //   }, []);
+export default function ProductSummary({ content }: { content: string }) {
+  // 임팩트 단어 모음
+  const searchWords = [
+    "BESPOKE",
+    "SmartThings",
+    "트리플 독립 냉각 기능",
+    "UV 청정탈취",
+    "프리스탠딩",
+    "AI 절약 모드",
+    "1등급",
+    "2등급",
+    "제빙기",
+    "슬림",
+    "아이스메이커",
+    "청정탈취",
+    "쿨링커버",
+    "메탈",
+    "히든",
+    "심플",
+    "디스플레이",
+    "용량",
+    "비스포크",
+  ];
 
-  const text = {
-    content : "안녕하세요!BESPOKE 냉장고는 전기료를 절약하고 환경을 고려한 스마트한 제품입니다. SmartThings 기능으로 스마트하게 관리하고, AI 절약 모드로 최대 15%의 에너지를 절약할 수 있어요. 트리플 독립 냉각 기능으로 각 칸의 온도와 습도를 최적화하고, 맞춤보관실은 김치부터 양념까지 섬세하게 보관 가능합니다.  그리고 플랫 엣지 디자인과 취향에 맞는 다양한 컬러와 소재로 내부 공간도 넓고 깔끔하답니다. 또한, UV 청정탈취로 위생적으로 식품을 보관할 수 있어요.  만약 궁금한 점이 있으시면 언제든지 물어보세요!"
-};
-const searchWords = ["BESPOKE", "SmartThings", "트리플 독립 냉각 기능", "UV 청정탈취"];
+  // 요약 정보 요청
+  const queryKey = ["product-summary"];
+  const { data: response, error: isSummaryInfoFetching } = useQuery({
+    queryKey: queryKey,
+    queryFn: () => API.productSummary.getSummary({ modelNo: content }),
+  });
 
-// 검색어 찾기
-const regex = new RegExp(searchWords.join('|'), 'g');
-const styledText: (string | JSX.Element)[] = [];
-let lastIdx = 0;
-let match;
+  const summaryInfo = response?.data.content || "";
 
-// 스타일 입히기
-while((match = regex.exec(text.content)) !== null) {
-  const startIdx = match.index;
-  const endIdx = startIdx + match[0].length;
+  // 검색어 찾기
+  const regex = new RegExp(searchWords.join("|"), "g");
+  const styledText: (string | JSX.Element)[] = [];
+  let lastIdx = 0;
+  let match;
 
-  styledText.push(text.content.substring(lastIdx, startIdx));
+  // 스타일 입히기
+  while ((match = regex.exec(summaryInfo)) !== null) {
+    const startIdx = match.index;
+    const endIdx = startIdx + match[0].length;
 
-  styledText.push(
-    <span key={startIdx} className="impact">{text.content.substring(startIdx, endIdx)}</span>
-  );
+    styledText.push(summaryInfo.substring(lastIdx, startIdx));
 
-  lastIdx = endIdx;
-};
+    styledText.push(
+      <span key={startIdx} className="impact">
+        {summaryInfo.substring(startIdx, endIdx)}
+      </span>,
+    );
 
-styledText.push(text.content.substring(lastIdx));
-
-const summaryText = styledText.map((item:string | JSX.Element, idx:number) => {
-  if (typeof item === "string") {
-    const text = item.split('.').map((txt, idx) => (
-      <React.Fragment key={idx}>
-        <span>{txt.trim()}</span>
-        <br />
-        <br />
-      </React.Fragment>
-    ));
-    text.pop();
-    return text;
-  } else {
-    return item
+    lastIdx = endIdx;
   }
-})
+
+  styledText.push(summaryInfo.substring(lastIdx));
+
+  const summaryText = styledText.map((item: string | JSX.Element, idx: number) => {
+    if (typeof item === "string") {
+      const text = item.split(".").map((txt, idx) => (
+        <React.Fragment key={idx}>
+          <span>{txt}</span>
+          <br />
+          <br />
+        </React.Fragment>
+      ));
+      text.pop();
+      return text;
+    } else {
+      return item;
+    }
+  });
+
+  // 클릭시 사라짐
+  const [isClose, setIsClose] = useState(false);
+
+  // useEffect(() => {
+  //   const modal = document.getElementsByClassName("fade");
+  //   console.log(modal);
+  //   if (modal[0]) {
+  //     setTimeout(() => {
+  //       modal[0].classList.add("fade-out");
+  //       console.log(modal[0]);
+  //     }, 3000);
+  //   }
+  // }, []);
+
+  // 시간 지날때 점점 흐려지고 사라짐
+  const timeRef = useRef<number | null>(null);
+  let hidden;
+
+  useEffect(() => {
+    const modal = document.getElementsByClassName("fade");
+    if (modal[0]) {
+      modal[0].addEventListener("mouseenter", handleMouseEnter);
+      modal[0].addEventListener("mouseleave", handleMouseLeave);
+
+      setTimeout(() => {
+        modal[0].classList.add("fade-out");
+      }, 3000);
+
+      hidden = setTimeout(() => {
+        modal[0].classList.add("hidden");
+      }, 12000);
+
+      () => hidden;
+    }
+  }, []);
+
+  const handleMouseEnter = () => {
+    const modal = document.getElementsByClassName("fade");
+    if (modal[0]) {
+      if (timeRef.current) {
+        clearTimeout(timeRef.current);
+        timeRef.current = null;
+      }
+      modal[0].classList.remove("fdae-out");
+      modal[0].classList.remove("hidden");
+      clearTimeout(hidden);
+    }
+  };
+
+  const handleMouseLeave = () => {
+    const modal = document.getElementsByClassName("fade");
+    if (modal[0]) {
+      timeRef.current = window.setTimeout(() => {
+        modal[0].classList.add("fade-out");
+        timeRef.current = null;
+      }, 3000);
+    }
+
+    hidden = setTimeout(() => {
+      modal[0].classList.add("hidden");
+    }, 12000);
+
+    () => hidden;
+  };
+
+  // 말풍선 높이 계산
+  const [summaryContentHeight, setSummaryContentHeight] = useState(0);
+  const summaryContentRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (summaryContentRef.current) {
+      const height = summaryContentRef.current.clientHeight;
+      setSummaryContentHeight(height);
+    }
+  }, [summaryContentRef]);
 
   return (
     <>
-      <S.ReviewSummaryWrapper>
-        <S.ReviewSummaryDiv>
-          <S.ReviewSummaryHeader>
-            <span>이 제품의 특징이에요</span>
-          </S.ReviewSummaryHeader>
-          <S.ReviewSummaryContent>
-            {summaryText}
-          </S.ReviewSummaryContent>
-        </S.ReviewSummaryDiv>
-      </S.ReviewSummaryWrapper>
+      {!isClose && (
+        <S.ReviewSummaryWrapper
+          summaryContentHeight={summaryContentHeight}
+          onClick={() => setIsClose(true)}
+          className="fade"
+        >
+          <S.ReviewSummaryDiv>
+            <S.ReviewSummaryHeader>
+              <span>이 제품의 특징이에요</span>
+            </S.ReviewSummaryHeader>
+            <S.ReviewSummaryContent ref={summaryContentRef}>
+              {summaryText}
+              <S.Triangle />
+            </S.ReviewSummaryContent>
+          </S.ReviewSummaryDiv>
+        </S.ReviewSummaryWrapper>
+      )}
     </>
   );
 }
