@@ -5,7 +5,7 @@ import * as Sub from "./Subs";
 import * as S from "./style";
 import * as T from "@src/types/index";
 
-export default function SpecDetailColumn({ selectedModelNo }: { selectedModelNo: string[] }) {
+export default function SpecDetailColumn({ selectedModelNo }: { selectedModelNo: string }) {
   const [data, setData] = useState<T.ResDataType>({});
   const [recommendProps, setRecommendProps] = useState<T.ChatbotRecommendCardProps>({
     제품_코드: "",
@@ -105,7 +105,7 @@ export default function SpecDetailColumn({ selectedModelNo }: { selectedModelNo:
   // };
 
   const getData = async () => {
-    const res = await request.get(`/model?modelNo=${selectedModelNo[0]}`);
+    const res = await request.get(`/model?modelNo=${selectedModelNo}`);
     const { data } = res;
 
     console.log(data);

@@ -214,7 +214,7 @@ export default function App() {
           ) : expandModalState === "info" ? (
             <P.DetailSpecPage selectedModelNo={selectedModelNo} />
           ) : expandModalState === "compare" ? (
-            <P.CompareSpecPage />
+            <P.CompareSpecPage selectedModelNo={selectedModelNo} />
           ) : (
             expandModalState === "search" && <P.SearchPage />
           )}
