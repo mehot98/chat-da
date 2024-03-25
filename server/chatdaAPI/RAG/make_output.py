@@ -19,7 +19,7 @@ db = SQLDatabase.from_uri(
     f'mysql+pymysql://{config.mysql_user}:{config.mysql_password}@{config.mysql_host}:{config.mysql_port}/{config.mysql_database}',
     sample_rows_in_table_info=1,
     include_tables=["refridgerators", "refridgerator_reviews", "refridgerator_details"],
-    max_string_length=300
+    max_string_length=1000
 )
 
 # DB 테이블 정보
