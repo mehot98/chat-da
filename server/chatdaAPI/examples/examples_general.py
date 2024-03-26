@@ -14,16 +14,10 @@ examples = [
         "index": 1
     },
     {
-        "input": "안녕, 오늘 날씨 어때?",
+        "input": "가전제품은 어느 회사거가 최고야?",
         "query": "",
         "type": GENERAL,
         "index": 2
-    },
-    {
-        "input": "요즘 인기 있는 영화 추천해줘.",
-        "query": "",
-        "type": GENERAL,
-        "index": 3
     },
     {
         "input": "오늘 기분이 좋지 않아.",
