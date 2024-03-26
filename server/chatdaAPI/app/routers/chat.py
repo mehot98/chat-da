@@ -1,4 +1,5 @@
 import json
+import time
 from typing import Union
 
 from fastapi import APIRouter, status, HTTPException, Request
@@ -65,6 +66,8 @@ def post_chat(
                             response = response_dto.init_general_respose(data)
                         case "search":
                             response = response_dto.init_search_response(data)
+                        case "dictionary":
+                            response = response_dto.init_dictionary_response(data)
                         case default:
                             # 만약 type이 지정되지 않은 값이 나온다면 Exception을 발생시킵니다.
                             raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=[
@@ -131,10 +134,18 @@ async def returnData(data: any, stream: any, req: Request):
     
     # 처음으로 보내는 값은 모델 정보와 채팅 타입에 대한 내용
     yield f"data: {data.json(by_alias=True)}\n\n"
-
-    # GPT 응답에 대한 token을 EventStream으로 보내주기
-    for event in stream:
-        data = {
-            "data": event
-        }
-        yield f"data: {json.dumps(data)}\n\n"
+    if type(stream) is str:
+        # GPT 응답에 대한 token을 EventStream으로 보내주기
+        for event in stream:
+            data = {
+                "data": event
+            }
+            yield f"data: {json.dumps(data)}\n\n"
+            time.sleep(0.02)
+    else:
+        # GPT 응답에 대한 token을 EventStream으로 보내주기
+        for event in stream:
+            data = {
+                "data": event
+            }
+            yield f"data: {json.dumps(data)}\n\n"

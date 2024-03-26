@@ -24,6 +24,8 @@ WORKDIR /app
 
 # Copy the source code into the container.
 COPY . .
+RUN pip install --upgrade pip
+
 
 # Download dependencies as a separate step to take advantage of Docker's caching.
 # Leverage a cache mount to /root/.cache/pip to speed up subsequent builds.

@@ -87,6 +87,13 @@ class ChatGeneralDto(CamelModel):
     type: str
 
 
+class ChatDictionaryResponseDto(CamelModel):
+    """
+    용어 검색시 사용되는 response
+    """
+    type: str
+
+
 class ChatExceptionDto(CamelModel):
     """
     질문에 대한 답을 찾지 못했을 경우 예외 처리 대답
@@ -145,4 +152,10 @@ def init_search_response(data):
     return ChatSearchResponseDto(
         type="search",
         model_list=data["model_list"]
+    )
+
+
+def init_dictionary_response(data):
+    return ChatDictionaryResponseDto(
+        type="dictionary"
     )
