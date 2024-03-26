@@ -13,7 +13,7 @@ export default function PopularItem(props: T.PopularItemProps) {
   return (
     <S.PopularItemWrapper>
       <S.RankWrapper>
-        <span>{props.rank}</span>
+        <span>{props.rank + 1}</span>
       </S.RankWrapper>
       <S.PopularItemDiv>
         <S.AccordionWrapper expanded={isExpanded}>

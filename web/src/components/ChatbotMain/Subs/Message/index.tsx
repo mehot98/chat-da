@@ -10,10 +10,18 @@ export default function Message(props: T.MessageProps) {
 
   function handleCancelButton() {
     props.setMessages((prev) => {
-      return prev.filter((message: T.MsgProps) => message.id !== props.id);
+      const filteredMessages = prev.filter((message: T.MsgProps) => message.id !== props.id);
+      if (filteredMessages.length === 0) {
+        sessionStorage.setItem("messages", JSON.stringify(filteredMessages));
+      }
+      return filteredMessages;
     });
     props.setComparePrds((prev2) => {
-      return prev2.filter((prd: T.ComparePrdProps) => prd.id !== props.id);
+      const filteredPrd = prev2.filter((prd: T.ComparePrdProps) => prd.id !== props.id);
+      if (filteredPrd.length === 0) {
+        sessionStorage.setItem("comparePrds", JSON.stringify(filteredPrd));
+      }
+      return filteredPrd;
     });
   }
 
