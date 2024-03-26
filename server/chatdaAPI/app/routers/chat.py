@@ -106,13 +106,13 @@ def post_chat(
         "type": data["type"],
         "user_message": content,
         "system_message": response.content,
-        "model_no_list": data["model_list.제품_코드"][:5]
+        "model_no_list": data["model_list"][:10]
     }
 
     logger.info("chat_history", extra=log)
 
-    for model_no in data["model_list.제품_코드"][:5]:
-        logger.info("preference", extra={"model_no": model_no})
+    for model_no in data["model_list"][:10]:
+        logger.info("preference", extra={"model_no": model_no["제품_코드"]})
 
     return response
 
