@@ -106,7 +106,7 @@ def post_chat(
         "type": data["type"],
         "user_message": content,
         "system_message": response,
-        "model_no_list": data["model_no_list"]
+        "model_no_list": data["model_list"]
 
     }
 
