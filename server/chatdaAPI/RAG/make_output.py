@@ -151,6 +151,6 @@ def get_output(user_input, search):
 #
 # # 테스트용
 # if __name__ == '__main__':
-#     res = get_output(user_input='200만원대 냉장고 추천해줘', search=False)
+#     res = get_output(user_input='RF90DG9111S9 제품 어때?', search=False)
 #     print(f"type : {res['type']}")
 #     print(f"content : {res['content']}")
