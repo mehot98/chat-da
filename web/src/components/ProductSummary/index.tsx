@@ -1,8 +1,6 @@
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import * as S from "./style";
-import * as T from "@src/types";
 import * as API from "@src/apis";
-import React from "react";
 import { useQuery } from "@tanstack/react-query";
 
 export default function ProductSummary({ content }: { content: string }) {
@@ -31,7 +29,7 @@ export default function ProductSummary({ content }: { content: string }) {
 
   // 요약 정보 요청
   const queryKey = ["product-summary"];
-  const { data: response, error: isSummaryInfoFetching } = useQuery({
+  const { data: response } = useQuery({
     queryKey: queryKey,
     queryFn: () => API.productSummary.getSummary({ modelNo: content }),
   });
@@ -62,10 +60,10 @@ export default function ProductSummary({ content }: { content: string }) {
 
   styledText.push(summaryInfo.substring(lastIdx));
 
-  const summaryText = styledText.map((item: string | JSX.Element, idx: number) => {
+  const summaryText = styledText.map((item: string | JSX.Element) => {
     if (typeof item === "string") {
-      const text = item.split(".").map((txt, idx) => (
-        <React.Fragment key={idx}>
+      const text = item.split(".").map((txt, index) => (
+        <React.Fragment key={index}>
           <span>{txt}</span>
           <br />
           <br />

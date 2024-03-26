@@ -6,7 +6,7 @@ export default function StartRate({ props }: { props: string }) {
   const starIdxArr = ["first", "secoond", "third", "fourth", "last"];
   const [starRateArr, setStarRateArr] = useState<number[]>([0, 0, 0, 0, 0]);
   const calcStarRates = () => {
-    let tempStarRatesArr = [0, 0, 0, 0, 0];
+    const tempStarRatesArr = [0, 0, 0, 0, 0];
     let starVerScore = (rate * 90) / 5;
     let idx = 0;
     while (starVerScore > 18) {

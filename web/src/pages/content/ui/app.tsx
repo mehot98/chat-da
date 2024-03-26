@@ -9,11 +9,8 @@ const rankingIconPath = "icons/ranking_icon.png";
 const searchIconPath = "icons/search_icon.png";
 
 import { StyledEngineProvider } from "@mui/material/styles";
-import React from "react";
-import ReactDOMServer from "react-dom/server";
-import ReactDOM from "react-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { ReactQueryProvider } from "@root/src/lib";
+import { createRoot } from "react-dom/client";
 
 export default function App() {
   const [isOpenMainModal, setIsOpenMainModal] = useState<boolean>(false);
@@ -154,7 +151,7 @@ export default function App() {
           const time = Date.now();
 
           setComparePrds((prev) => {
-            const isDuplicate = prev.some((itme) => itme.modelNo === spanTags[1].textContent);
+            const isDuplicate = prev.some((item) => item.modelNo === spanTags[1].textContent);
             if (isDuplicate) {
               return prev;
             } else {
@@ -233,8 +230,8 @@ export default function App() {
   //   setMessages(compare);
   // }, []);\
 
-  function renderReactComponentToExternalElement(element, modelNo) {
-    // 외부 요소를 찾거나 생성합니다.
+  function renderReactComponentElement(element:ReactElement) {
+    // 외부 요소를 찾거나 생성
     const menuElement = document.getElementsByClassName("menu01")[0];
     let childElement = document.getElementById("summaryPlace");
 
@@ -244,11 +241,11 @@ export default function App() {
       menuElement.appendChild(childElement);
     }
 
-    // React Portal을 사용하여 외부 요소 안에 React 컴포넌트를 렌더링합니다.
-    ReactDOM.render(
-      <QueryClientProvider client={queryClient}>{element}</QueryClientProvider>,
-      childElement,
-    );
+    // React Portal을 사용하여 외부 요소 안에 React 컴포넌트를 렌더링
+    const root = createRoot(childElement);
+    root.render(
+      <QueryClientProvider client={queryClient}>{element}</QueryClientProvider>
+    )
   }
 
   const queryClient = new QueryClient();
@@ -259,7 +256,7 @@ export default function App() {
   useEffect(() => {
     if (isDetailPage && !isProductSummaryRendered) {
       const productSummaryElement: ReactElement = <Comp.ProductSummary content={modelNo} />;
-      renderReactComponentToExternalElement(productSummaryElement, modelNo);
+      renderReactComponentElement(productSummaryElement);
       setIsProductSummaryRendered(true);
     }
   }, [isDetailPage, isProductSummaryRendered]);
@@ -280,7 +277,7 @@ export default function App() {
           </S.ModalHeaderWrapper>
           <S.ModalPopularItemWrapper>
             {PIProps.map((popularItemProps: T.PopularItemProps, index: number) => {
-              return <Comp.PopularItem {...popularItemProps} rank={index} />;
+              return <Comp.PopularItem key={index} {...popularItemProps} rank={index} />;
             })}
           </S.ModalPopularItemWrapper>
         </S.ChatExpandModal>
