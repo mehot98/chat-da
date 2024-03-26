@@ -11,6 +11,14 @@ import logging
 import ecs_logging
 import time
 
+logger = logging.getLogger("app")
+logger.setLevel(logging.DEBUG)
+
+# 콘솔 핸들러 설정
+console_handler = logging.StreamHandler()
+console_handler.setFormatter(ecs_logging.StdlibFormatter())
+logger.addHandler(console_handler)
+
 # prefix == chat
 router = APIRouter()
 
@@ -92,13 +100,7 @@ def post_chat(
             }
         ])
 
-    logger = logging.getLogger("app")
-    logger.setLevel(logging.DEBUG)
 
-    # 콘솔 핸들러 설정
-    console_handler = logging.StreamHandler()
-    console_handler.setFormatter(ecs_logging.StdlibFormatter())
-    logger.addHandler(console_handler)
 
     log = {
         "uuid": chat_request_dto.uuid,
@@ -111,8 +113,8 @@ def post_chat(
 
     logger.info("chat_history", extra=log)
 
-    for model_no in data["model_list"][:10]:
-        logger.info("preference", extra={"model_no": model_no["제품_코드"]})
+    for model in data["model_list"][:10]:
+        logger.info("preference", extra={"model_no": model["제품_코드"]})
 
     return response
 
