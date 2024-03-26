@@ -44,3 +44,17 @@ def test_post_chat_recommend():
                            },
                            json=dump)
     assert response.json()["type"] == "recommend"
+
+
+def test_post_chat_search():
+
+    dump = {
+        "uuid": "13we65we-weqwe",
+        "content": "요새 잘나가는 냉장고가 뭐야?"
+    }
+    response = client.post("/chat/search",
+                           headers={
+                               "Content-Type": "application/json"
+                           },
+                           json=dump)
+    assert response.json()["type"] == "search"

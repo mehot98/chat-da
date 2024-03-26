@@ -1,6 +1,8 @@
-from typing import List, Union, Any
+from typing import List, Optional
 
-from chatdaAPI.app.models.CamelModel import CamelModel
+from pydantic import Field
+
+from chatdaAPI.app.models.utils.CamelModel import CamelModel
 
 
 class ChatInfoDto(CamelModel):
@@ -27,9 +29,32 @@ class ChatSpec(CamelModel):
     """
     제품_코드: str
     제품명: str
-    가격: str
-    혜택가: str
+    가격: str = Field(default=None)
+    혜택가: str = Field(default=None)
     image_url: str
+
+
+class ChatSearchSpec(CamelModel):
+    """
+    자연어 검색에서 사용될 상세 정보, 각 제품마다의 상세 스펙
+    """
+    제품_코드: str
+    제품명: str
+    평점: Optional[str] = None
+    리뷰_개수: Optional[int] = None
+    가격: str
+    혜택가: Optional[str] = None
+    소비효율등급: Optional[str] = None
+    가로: Optional[str] = None
+    세로: Optional[str] = None
+    높이: Optional[str] = None
+    깊이: Optional[str] = None
+    전체_용량: Optional[str] = None
+    냉장실_용량: Optional[str] = None
+    냉동실_용량: Optional[str] = None
+    맞춤보관실_용량: Optional[str] = None
+    smart_things: Optional[str] = "미지원"
+    image_url: Optional[str] = None
 
 
 class ChatContent(CamelModel):
@@ -47,6 +72,39 @@ class ChatRecommendDto(CamelModel):
     type: str
     content: ChatContent
     model_no: str
+
+
+class ChatSearchResponseDto(CamelModel):
+    """
+    자연어 검색 결과
+    """
+    type: str
+    content: str
+    model_list: List[ChatSearchSpec]
+
+
+class ChatRankingDto(CamelModel):
+    """
+    제품 순위 정보
+    """
+    type: str
+    content: str
+    model_no_list: List[str]
+
+
+class ChatGeneralDto(CamelModel):
+    """
+    일상 속 일반적인 대화
+    """
+    type: str
+    content: str
+
+
+class ChatExceptionDto(CamelModel):
+    """
+    질문에 대한 답을 찾지 못했을 경우 예외 처리 대답
+    """
+    content: str = "잘 모르겠어요. 다시 질문해주세요."
 
 
 # 모델 리스트를 배열로 추출하는 함수입니다
@@ -73,12 +131,39 @@ def init_compare_response(data):
 
 
 def init_recommend_response(data):
-    model = data["model_list"][0]
-    return ChatRecommendDto(
+    if data["model_list"] is None:
+        return ChatExceptionDto()
+
+    else:
+        model = data["model_list"][0]
+        return ChatRecommendDto(
+            type=data["type"],
+            content={
+                "message": data["content"],
+                "spec": model
+            },
+            model_no=model["제품_코드"]
+        )
+
+
+def init_ranking_response(data):
+    return ChatRankingDto(
         type=data["type"],
-        content={
-            "message": data["content"],
-            "spec": model
-        },
-        model_no=model["제품_코드"]
+        content=data["content"],
+        model_no_list=get_model_no_list(data["model_list"])
+    )
+
+
+def init_general_respose(data):
+    return ChatGeneralDto(
+        type=data["type"],
+        content=data["content"]
+    )
+
+
+def init_search_response(data):
+    return ChatSearchResponseDto(
+        type="search",
+        content=data["content"],
+        model_list=data["model_list"]
     )

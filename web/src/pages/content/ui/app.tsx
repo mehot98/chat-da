@@ -2,19 +2,23 @@ import { useState, useEffect, ReactElement } from "react";
 import * as Comp from "@root/src/components";
 import * as S from "./style";
 import * as T from "@root/src/types";
+import * as P from "@pages/ExpandModal";
 import chatDAIconPath from "@root/public/icons/ChatDA_icon_128.png";
 import theme from "@assets/style/theme.module.scss";
+import { StyledEngineProvider } from "@mui/material/styles";
+import CloseIcon from "@mui/icons-material/Close";
 
 const rankingIconPath = "icons/ranking_icon.png";
 const searchIconPath = "icons/search_icon.png";
 
-import { StyledEngineProvider } from "@mui/material/styles";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { createRoot } from "react-dom/client";
 
 export default function App() {
   const [isOpenMainModal, setIsOpenMainModal] = useState<boolean>(false);
   const [isOpenExpandModal, setIsOpenExpandModal] = useState<boolean>(false);
+  const [expandModalState, setExpandModalState] = useState<T.ExpandModalStateType>(null);
+  const [selectedModelNo, setSelectedModelNo] = useState<string[]>([]);
 
   // Find existing chatbot icon, and insert chatda icon
   const existingChatbotIcon: Element = document.getElementsByClassName("menu01")[0];
@@ -37,18 +41,33 @@ export default function App() {
     existingChatbotIcon.prepend(chatDAIcon);
   }
 
-  const handleCloseMainModal: () => void = () => {
+  const handleOpenExpandModal = (st: T.ExpandModalStateType) => {
+    setIsOpenExpandModal(true);
+    changeExpandModalState(st);
+  };
+
+  const handleCloseMainModal = () => {
     setIsOpenMainModal(false);
   };
 
-  const handleCloseExpandModal: () => void = () => {
+  const handleCloseExpandModal = () => {
     setIsOpenExpandModal(false);
+    setExpandModalState(null);
   };
 
-  const handleClickBackdrop: () => void = () => {
+  const handleClickBackdrop = () => {
     handleCloseMainModal();
     handleCloseExpandModal();
   };
+
+  const changeExpandModalState = (st: T.ExpandModalStateType) => {
+    setExpandModalState(st);
+  };
+
+  const changeSelectedModelNo = (models: string[]) => {
+    setSelectedModelNo(models);
+  };
+
   // 모달 header 아이콘
   const rankingIconSrc = chrome.runtime.getURL(rankingIconPath);
   const searchIconSrc = chrome.runtime.getURL(searchIconPath);
@@ -182,35 +201,6 @@ export default function App() {
     }
   }, [fridgeList]);
 
-  const PIProps: T.PopularItemProps[] = [
-    {
-      제품명: "BESPOKE 냉장고 4도어 875 L",
-      제품_코드: "RF85C900F01",
-      혜택가: "2,000,000",
-      imageUrl: "string",
-      reviewCount: "342",
-      reviewSummary: "정말 감동적인 상품이에요",
-      rating: "4.5",
-    },
-    {
-      제품명: "BESPOKE 냉장고 4도어 699 L",
-      제품_코드: "RF85C900F01",
-      혜택가: "1,999,998",
-      imageUrl: "string",
-      reviewCount: "342",
-      reviewSummary: "전체적으로 평이 좋다",
-      rating: "4.8",
-    },
-    {
-      제품명: "BESPOKE 냉장고 2332도어",
-      제품_코드: "RF85C900F01",
-      혜택가: "2,000,000",
-      imageUrl: "string",
-      reviewCount: "342",
-      reviewSummary: "정말 감동적인 상품이에요",
-      rating: "5.0",
-    },
-  ];
   useEffect(() => {
     if (messages.length > 0) {
       sessionStorage.setItem("messages", JSON.stringify(messages));
@@ -260,6 +250,13 @@ export default function App() {
       setIsProductSummaryRendered(true);
     }
   }, [isDetailPage, isProductSummaryRendered]);
+  useEffect(() => {
+    console.log(expandModalState);
+  }, [expandModalState]);
+
+  useEffect(() => {
+    console.log(selectedModelNo);
+  }, [selectedModelNo]);
 
   return (
     <QueryClientProvider client={queryClient}>
@@ -270,16 +267,18 @@ export default function App() {
           onClose={handleCloseExpandModal}
           disableScrollLock={true}
         >
-          {/* <button onClick={handleCloseExpandModal}>확장 모달 닫기</button> */}
-          <S.ModalHeaderWrapper>
-            <S.ModalHeaderSpan>ChatDA 인기순위</S.ModalHeaderSpan>
-            <S.ModalHeaderSubSpan>ChatDA에서 많이 검색한 상품을 알려드릴게요!</S.ModalHeaderSubSpan>
-          </S.ModalHeaderWrapper>
-          <S.ModalPopularItemWrapper>
-            {PIProps.map((popularItemProps: T.PopularItemProps, index: number) => {
-              return <Comp.PopularItem key={index} {...popularItemProps} rank={index} />;
-            })}
-          </S.ModalPopularItemWrapper>
+          <S.CloseBtn onClick={handleCloseExpandModal}>
+            <CloseIcon />
+          </S.CloseBtn>
+          {expandModalState === "popular" ? (
+            <P.PopularItemPage />
+          ) : expandModalState === "info" ? (
+            <P.DetailSpecPage selectedModelNo={selectedModelNo} />
+          ) : expandModalState === "compare" ? (
+            <P.CompareSpecPage />
+          ) : (
+            expandModalState === "search" && <P.SearchPage />
+          )}
         </S.ChatExpandModal>
 
         <S.ChatMainModal
@@ -287,9 +286,6 @@ export default function App() {
           onClose={handleCloseMainModal}
           disableScrollLock={true}
         >
-          {/* <button onClick={handleCloseMainModal}>x</button>
-          <button onClick={() => setIsOpenExpandModal(true)}>확장 모달 열기</button> */}
-          {/* <button onClick={handleCloseMainModal}>x</button> */}
           <S.ChatMainWrapper>
             <S.ChatMainHeader>
               <S.HeaderWords>
@@ -299,11 +295,11 @@ export default function App() {
                 <p>삼성의 가전제품들을</p>
                 <p>이해하기 쉽게 알려드립니다 😊</p>
               </S.HeaderWords>
-              <S.IconWrapper onClick={() => setIsOpenExpandModal(true)}>
+              <S.IconWrapper onClick={() => handleOpenExpandModal("popular")}>
                 <img src={rankingIconSrc} alt="ranking-icon" width={35} height={35} />
                 <span>인기순위</span>
               </S.IconWrapper>
-              <S.IconWrapper onClick={() => setIsOpenExpandModal(true)}>
+              <S.IconWrapper onClick={() => handleOpenExpandModal("search")}>
                 <img src={searchIconSrc} alt="search-icon" width={35} height={35} />
                 <span>검색하기</span>
               </S.IconWrapper>
@@ -315,6 +311,8 @@ export default function App() {
                 setComparePrds={setComparePrds}
                 messages={messages}
                 setMessages={setMessages}
+                handleOpenExpandModal={handleOpenExpandModal}
+                changeSelectedModelNo={changeSelectedModelNo}
               />
             </S.ChatMainContent>
           </S.ChatMainWrapper>

@@ -14,10 +14,7 @@ const manifest = {
   name: "ChatDA",
   version: packageJson.version,
   description: "삼성의 가전제품에 대해 궁금한 점이 있으신가요? ChatDA가 설명해드리겠습니다!",
-  permissions: ["storage", "sidePanel"],
-  side_panel: {
-    default_path: "src/pages/sidepanel/index.html",
-  },
+  permissions: ["storage"],
   background: {
     service_worker: "src/pages/background/index.js",
     type: "module",

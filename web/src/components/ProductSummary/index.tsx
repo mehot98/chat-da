@@ -79,17 +79,6 @@ export default function ProductSummary({ content }: { content: string }) {
   // 클릭시 사라짐
   const [isClose, setIsClose] = useState(false);
 
-  // useEffect(() => {
-  //   const modal = document.getElementsByClassName("fade");
-  //   console.log(modal);
-  //   if (modal[0]) {
-  //     setTimeout(() => {
-  //       modal[0].classList.add("fade-out");
-  //       console.log(modal[0]);
-  //     }, 3000);
-  //   }
-  // }, []);
-
   // 시간 지날때 점점 흐려지고 사라짐
   const timeRef = useRef<number | null>(null);
   const hidden = setTimeout(() => {
@@ -118,7 +107,6 @@ export default function ProductSummary({ content }: { content: string }) {
         timeRef.current = null;
       }
       modal[0].classList.remove("fdae-out");
-      // modal[0].classList.remove("hidden");
       clearTimeout(hidden);
     }
   };
