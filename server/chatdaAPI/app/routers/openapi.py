@@ -54,7 +54,7 @@ def test_log():
         if random1 > 11:
             random1 = 0
         if (random1 <= 4):
-            logger.info(messages[random1], extra={"_index": "INFO", "http.request.body.content": messages[random1]})
+            logger.info(messages[random1], extra={"http.request.body.content": messages[random1]})
         elif (random1 >= 5 and random1 <= 8):
             logger.warning(messages[random1], extra={"http.request.body.content": messages[random1]})
         elif (random1 >= 9 and random1 <= 10):
