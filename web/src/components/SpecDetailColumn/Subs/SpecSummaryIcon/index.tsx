@@ -7,10 +7,9 @@ export default function SpecSummaryIcon({
   specValue,
 }: {
   specImg?: string;
-  specKey: string;
-  specValue: string;
+  specKey?: string;
+  specValue?: string;
 }) {
-  console.log(specImg, specKey, specValue);
   if (specValue === "---") {
     return <SpecEmptyIcon />;
   } else if (specImg && specKey && specValue) {

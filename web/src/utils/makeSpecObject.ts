@@ -7,13 +7,7 @@ interface specObjectType {
   specValue?: string;
 }
 
-export default function makeSpecObject({
-  summarySpec,
-  key,
-}: {
-  summarySpec: T.SummarySpecType;
-  key: string;
-}) {
+export default function makeSpecObject(summarySpec: T.SummarySpecType, key: string) {
   const specObject: specObjectType = {};
 
   const value: string = summarySpec[key];
@@ -25,8 +19,6 @@ export default function makeSpecObject({
   if (key === "소비효율등급") {
     specObject["specImg"] =
       specIconPath[`energyClass${summarySpec.소비효율등급.replace("등급", "")}Path`];
-    // specObject["specKey"] = key;
-    // specObject["specValue"] = summarySpec.소비효율등급;
   } else if (key === "오토_오픈_도어") {
     specObject["specImg"] = specIconPath.autoOpenDoorPath;
   } else if (key === "투명_도어") {
@@ -93,10 +85,5 @@ export default function makeSpecObject({
     }
   }
 
-  if (
-    (specObject.specImg && specObject.specKey && specObject.specValue) ||
-    (specObject.specKey && specObject.specValue === "---")
-  ) {
-    return specObject;
-  }
+  return specObject;
 }

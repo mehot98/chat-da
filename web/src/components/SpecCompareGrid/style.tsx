@@ -12,7 +12,7 @@ export const GridRow = styled(Grid)`
 
 export const VerticalLine = styled.div`
   width: 1px;
-  height: 100%;
+  height: 180%;
   background-color: #e0e0e0;
 `;
 
@@ -29,4 +29,10 @@ export const SpecListHeaderTitle = styled.span`
 
 export const SpecWrapper = styled.div`
   width: 100%;
+`;
+
+export const EmptyWrapper = styled(SpecWrapper)`
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
