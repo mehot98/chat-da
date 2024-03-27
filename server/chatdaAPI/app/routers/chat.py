@@ -139,7 +139,7 @@ def post_search(
     입력: ChatRequestDto(uuid, content)\n
     응답: ChatSearchResponseDto(type, content, model_no_list)
     """
-    chat_id = uuid.uuid4().hex.hex
+    chat_id = uuid.uuid4().hex
 
     data = get_output(user_input=chat_request_dto.content, search=True)
 
@@ -175,6 +175,47 @@ def post_feedback(
     입력: FeedbackRequestDto(uuid,createdAt,content)\n
     응답: HttpResponseDto(data, success)\n
     """
+
+    query = """
+        {
+          "query": {
+            "bool": {
+              "must": [
+                {
+                  "match": {
+                    "message": "chat_history"
+                  }
+                },
+                {
+                  "match": {
+                    "chat_id": "66cac1547f1444ea92af165674e0fe231"
+                  }
+                }
+              ]
+            }
+          }
+        }
+        """
+
+    result = es.search(index="logs*", body=query)
+
+    if result['hits']['total']['value'] == 0:
+        return {"success": False}
+
+    target = result['hits']['hits'][0]
+
+    log = {
+        "chat_id": target['chat_id'],
+        "time": target['time'],
+        "uuid": target['uuid'],
+        "latency": target['latency'],
+        "type": target['type'],
+        "user_message": target['user_message'],
+        "system_message": target['system_message'],
+        "model_no_list": target['model_no_list']
+    }
+
+    logger.info('feedback', extra=log)
 
     return {"success": True}
 
