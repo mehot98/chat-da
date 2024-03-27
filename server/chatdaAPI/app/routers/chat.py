@@ -188,7 +188,7 @@ def post_feedback(
                 },
                 {
                   "match": {
-                    "chat_id": """ + "\""  + feedback_request_dto.chat_id + "\"" + """
+                    "chat_id": """ + "\""  + feedback_request_dto['chat_id'] + "\"" + """
                   }
                 }
               ]
@@ -213,7 +213,7 @@ def post_feedback(
         "user_message": target['user_message'],
         "system_message": target['system_message'],
         "model_no_list": target['model_no_list'],
-        "feedback": feedback_request_dto.feedback
+        "feedback": feedback_request_dto['feedback']
     }
 
     logger.info('feedback', extra=log)
