@@ -215,7 +215,7 @@ def post_feedback(
 
     result = es.search(index="logs*", body=query)
 
-    return result.keys()
+    return [d['key'] for d in result['aggregations']['top_model_no']['buckets']]
 
 async def returnData(response: any, stream: any, req: Request, log: Dict, data: any):
     # 만약 request 측 세션이 끊어지면 해당 Stream을 종료시키기
