@@ -3,6 +3,7 @@ import * as Comp from "@root/src/components";
 import * as S from "./style";
 import * as T from "@root/src/types";
 import * as P from "@pages/ExpandModal";
+import * as API from "@src/apis";
 import chatDAIconPath from "@root/public/icons/ChatDA_icon_128.png";
 import theme from "@assets/style/theme.module.scss";
 import { StyledEngineProvider } from "@mui/material/styles";
@@ -11,7 +12,7 @@ import CloseIcon from "@mui/icons-material/Close";
 const rankingIconPath = "icons/ranking_icon.png";
 const searchIconPath = "icons/search_icon.png";
 
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { QueryClient, QueryClientProvider, useQuery } from "@tanstack/react-query";
 import { createRoot } from "react-dom/client";
 
 export default function App() {
@@ -82,7 +83,7 @@ export default function App() {
   const [modelNo, setModelNo] = useState("");
 
   useEffect(() => {
-    if (currentUrl === "https://www.samsung.com/sec/refrigerators/all-refrigerators/") {
+    if (currentUrl.includes("https://www.samsung.com/sec/refrigerators/all-refrigerators/")) {
       const moreBtn: HTMLButtonElement | null = document.querySelector("#morePrd");
       let newLiElements: NodeListOf<Element> = document.querySelectorAll(".item-inner");
       fridgeList.current = newLiElements;
@@ -108,6 +109,12 @@ export default function App() {
   // 비교하기 아이콘 붙이기 + 클릭시 제품명, 코드 저장
   // 비교상품 정보 담는 곳
   const [comparePrds, setComparePrds] = useState<T.ComparePrdProps[]>([]);
+
+  /*
+  #===============================================================================#
+  |                             비교하기 버튼 appendChild                            |
+  #===============================================================================#
+  */
   useEffect(() => {
     if (fridgeList.current && fridgeList.current.length > 0) {
       fridgeList.current.forEach((element: Element) => {
@@ -203,6 +210,83 @@ export default function App() {
       });
     }
   }, [fridgeList]);
+
+  /*
+  #===============================================================================#
+  |                               리뷰 요약 appendChild                             |
+  #===============================================================================#
+  */
+  // 리뷰 요약 내용을 담을 state
+  const [reviewSummary, setReviewSummary] = useState<string>("리뷰가 없거나 요약을 못했어요😭");
+
+  const useReviewSummary = (modelNo: string) => {
+    const queryKey = ["review-summary"];
+    const { data: response } = useQuery({
+      queryKey: queryKey,
+      queryFn: () => API.reviewSummary.getSummary({ modelNo: modelNo }),
+    });
+    // setReviewSummary(response.content);
+    return response;
+  };
+
+  useEffect(() => {
+    if (linkReviewNodeList.current && linkReviewNodeList.current.length > 0) {
+      linkReviewNodeList.current.forEach((linkReviewNode: HTMLLinkElement) => {
+        // const urlList = linkReviewNode.href.split("/");
+        // const modelNo = urlList[urlList.length - 2];
+        // useReviewSummary(modelNo);
+
+        const reviewMessageDiv: HTMLDivElement = document.createElement("div");
+        const reviewMessageTitle: HTMLSpanElement = document.createElement("span");
+        const reviewMessageDetail: HTMLSpanElement = document.createElement("span");
+
+        reviewMessageTitle.textContent = "💬ChatDA가 요약한 이 제품의 리뷰 내용!";
+        reviewMessageTitle.style.color = "white";
+        reviewMessageTitle.style.fontSize = "14px";
+        reviewMessageTitle.style.fontWeight = "bold";
+
+        reviewMessageDetail.textContent = "리뷰가 없거나 요약을 못했어요😭";
+        // reviewMessageDetail.textContent = reviewSummary;
+        reviewMessageDetail.style.color = "white";
+        reviewMessageDetail.style.fontSize = "14px";
+
+        reviewMessageDiv.appendChild(reviewMessageTitle);
+        reviewMessageDiv.appendChild(reviewMessageDetail);
+        reviewMessageDiv.style.width = "300px";
+        reviewMessageDiv.style.position = "absolute";
+        reviewMessageDiv.style.bottom = "100%";
+        reviewMessageDiv.style.flexDirection = "column";
+        reviewMessageDiv.style.padding = "8px 20px";
+        reviewMessageDiv.style.gap = "10px";
+        reviewMessageDiv.style.zIndex = "100";
+        reviewMessageDiv.style.backgroundColor = `${theme.bordercolor}`;
+        reviewMessageDiv.style.borderRadius = "17px 17px 17px 0";
+        reviewMessageDiv.style.display = "none";
+        reviewMessageDiv.style.textAlign = "left";
+
+        linkReviewNode.appendChild(reviewMessageDiv);
+
+        linkReviewNode.addEventListener("mouseenter", () => {
+          const urlList = linkReviewNode.href.split("/");
+          const modelNo = urlList[urlList.length - 2];
+          console.log(modelNo);
+          // const queryKey = ["review-summary"];
+          // const { data: response } = useQuery({
+          //   queryKey: queryKey,
+          //   queryFn: () => API.reviewSummary.getSummary({ modelNo: modelNo }),
+          // });
+          // console.log(response);
+          // const res = useReviewSummary(modelNo);
+          // setReviewSummary(res.content);
+          reviewMessageDiv.style.display = "flex";
+        });
+
+        linkReviewNode.addEventListener("mouseleave", () => {
+          reviewMessageDiv.style.display = "none";
+        });
+      });
+    }
+  }, [linkReviewNodeList]);
 
   useEffect(() => {
     if (messages.length > 0) {
