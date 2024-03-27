@@ -128,7 +128,7 @@ def init_info_response(data, chat_id):
     return ChatInfoDto(
         type=data["type"],
         model_no=data["model_list"][0]["제품_코드"],
-        chat_id=created_at
+        chat_id=chat_id
     )
 
 
@@ -136,7 +136,7 @@ def init_compare_response(data, chat_id):
     return ChatCompareDto(
         type=data["type"],
         model_no_list=get_model_no_list(data["model_list"]),
-        chat_id=created_at
+        chat_id=chat_id
     )
 
 
