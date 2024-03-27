@@ -16,6 +16,8 @@ import logging
 import ecs_logging
 import time
 
+import uuid
+
 es = Elasticsearch(
     "http://docker-elk-elasticsearch-1:9200",
     basic_auth=("elastic", 'changeme')
@@ -49,7 +51,7 @@ def post_chat(
     content = chat_request_dto.content
     data = None
 
-    current_time = datetime.datetime.utcnow()
+    chat_id = uuid.uuid4()
 
     try:
 
@@ -57,13 +59,13 @@ def post_chat(
         match content:
             case "info":
                 data = dump.info_data
-                response = response_dto.init_info_response(data, current_time)
+                response = response_dto.init_info_response(data, chat_id)
             case "compare":
                 data = dump.compare_data
-                response = response_dto.init_compare_response(data, current_time)
+                response = response_dto.init_compare_response(data, chat_id)
             case "recommend":
                 data = dump.recommend_data
-                response = response_dto.init_recommend_response(data, current_time)
+                response = response_dto.init_recommend_response(data, chat_id)
             case "naturalSearch":
                 response = dump.natural_data
             # 위 예제 입력에서 걸리지 않은 입력에 대해서는 langchain을 활용한 답변을 생성합니다
@@ -77,19 +79,19 @@ def post_chat(
                     match data["type"]:
                         # langchain으로 생성된 답변의 타입에 따라 응답으로 보낼 객체 형식을 변경합니다.
                         case "info":
-                            response = response_dto.init_info_response(data, current_time)
+                            response = response_dto.init_info_response(data, chat_id)
                         case "compare":
-                            response = response_dto.init_compare_response(data, current_time)
+                            response = response_dto.init_compare_response(data, chat_id)
                         case "recommend":
-                            response = response_dto.init_recommend_response(data, current_time)
+                            response = response_dto.init_recommend_response(data, chat_id)
                         case "ranking":
-                            response = response_dto.init_ranking_response(data, current_time)
+                            response = response_dto.init_ranking_response(data, chat_id)
                         case "general":
-                            response = response_dto.init_general_respose(data, current_time)
+                            response = response_dto.init_general_respose(data, chat_id)
                         case "search":
-                            response = response_dto.init_search_response(data, current_time)
+                            response = response_dto.init_search_response(data, chat_id)
                         case "dictionary":
-                            response = response_dto.init_dictionary_response(data, current_time)
+                            response = response_dto.init_dictionary_response(data, chat_id)
                         case default:
                             # 만약 type이 지정되지 않은 값이 나온다면 Exception을 발생시킵니다.
                             raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=[
@@ -113,9 +115,10 @@ def post_chat(
         ])
 
     log = {
-        "time": current_time,
+        "chat_id": chat_id,
+        "time": datetime.utcnow(),
         "uuid": chat_request_dto.uuid,
-        "latency": datetime.datetime.utcnow() - current_time,
+        "latency": time.time(),
         "type": data["type"],
         "user_message": content,
         "system_message": "",
@@ -245,6 +248,8 @@ async def returnData(response: any, stream: any, req: Request, log: Dict, data: 
             result += event
             yield f"data: {json.dumps(token)}\n\n"
         log["system_message"] = result
+
+    log['latency'] = time.time() - log['latency']
 
     logger.info("chat_history", extra=log)
 
