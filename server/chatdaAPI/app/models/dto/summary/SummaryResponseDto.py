@@ -1,3 +1,4 @@
+from typing import Optional
 
 from chatdaAPI.app.models.utils.CamelModel import CamelModel
 
