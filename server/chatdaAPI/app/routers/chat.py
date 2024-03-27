@@ -139,7 +139,7 @@ def post_search(
     입력: ChatRequestDto(uuid, content)\n
     응답: ChatSearchResponseDto(type, content, model_no_list)
     """
-    current_time = datetime.datetime.utcnow()
+    chat_id = uuid.uuid4()
 
     data = get_output(user_input=chat_request_dto.content, search=True)
 
@@ -147,7 +147,7 @@ def post_search(
     # 현재 리스트가 800개 조회되는 오류 발생
     data["model_list"] = data["model_no_list"][:10]
 
-    return response_dto.init_search_response(data,current_time)
+    return response_dto.init_search_response(data,chat_id)
 
 
 @router.get("/ranking",
