@@ -6,8 +6,8 @@ export default function ChatbotHomeMessage() {
   const thumbUpIconSrc = chrome.runtime.getURL("icons/thumb_up.png");
   return (
     <S.HomeMessageWrapper>
-      <S.HomeCardWrapper className="fridge">
-        <S.HomeCard>
+      <S.HomeCardWrapper>
+        <S.HomeCard className="fridge">
           <span>BESPOKE 냉장고 4도어 870 L의 정보를 알려줘</span>
           <img src={fridgeIconSrc} alt="fridge" width={53} height={53} />
         </S.HomeCard>

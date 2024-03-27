@@ -49,9 +49,14 @@ export const AiMessageDiv = styled.div`
   height: fit-content;
   div {
     width: fit-content;
+    line-height: 1.2;
     padding: 14px 28px;
     border-radius: 0 17px 17px 17px;
     background-color: ${theme.chatDAchatcolor};
+    p {
+      white-space: pre-line;
+      word-break: break-all;
+    }
   }
 `;
 

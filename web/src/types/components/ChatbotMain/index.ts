@@ -3,6 +3,7 @@ import * as T from "../../index";
 
 export interface MsgProps {
   text?: string;
+  content?: string;
   sender?: "user" | "bot";
   isUser?: boolean;
   isTyping?: boolean;
@@ -16,12 +17,12 @@ export interface MessageProps {
   // type 추가 예정 ex -> 스펙에 대한 설명, 일상적인 대화 등
   // server의 type에 따라 추가 할 것
   type: "compare" | "info" | "recommend" | "home";
-  text: string;
+  content: string;
   isUser: boolean;
   isTyping: boolean;
   id: number;
   isCompared: boolean;
-  currentTypingId: number;
+  currentTypingId?: number;
   modelNo?: string;
   modelNoList?: Array<string>;
   spec?: T.ChatbotRecommendCardProps;

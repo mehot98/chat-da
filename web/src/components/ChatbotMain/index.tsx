@@ -1,14 +1,6 @@
 /* eslint-disable */
 import axios from "axios";
-import React, {
-  Dispatch,
-  SetStateAction,
-  useEffect,
-  useState,
-  useRef,
-  Component,
-  useCallback,
-} from "react";
+import { Dispatch, SetStateAction, useEffect, useState, useRef, useCallback, memo } from "react";
 import { request } from "@src/apis/requestBuilder";
 import * as Sub from "./Subs";
 import * as S from "./style";
@@ -28,54 +20,11 @@ const ChatbotMain = (props: {
   const [lastHeight, setLastHeight] = useState(null);
   const chatElement = useRef<HTMLDivElement>();
 
-  const openAiKey = "";
-
-  const generateText = async (prompt: string) => {
-    try {
-      const response = await axios.post(
-        "https://api.openai.com/v1/chat/completions",
-        {
-          model: "gpt-3.5-turbo",
-          messages: [
-            {
-              role: "system",
-              content: "You are a helpful assistant.",
-            },
-            {
-              role: "user",
-              content: prompt,
-            },
-          ],
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${openAiKey}`,
-          },
-        },
-      );
-      const { choices } = response.data;
-      const text = choices[0].message.content.trim();
-      return text;
-    } catch (e: any) {
-      if (e.response?.status === 500) {
-        alert("OpenAI 서버에 오류가 발생했습니다.");
-        props.setMessages([
-          ...props.messages,
-          { text: prompt, sender: "user" },
-          { text: "오류가 발생했습니다.", sender: "bot" },
-        ]);
-      }
-    }
-  };
-
-  const [text, setText] = useState("");
-  const [type, setType] = useState("");
-  const [modelNo, setModelNo] = useState([]);
-
   const { VITE_SERVER_END_POINT } = import.meta.env;
 
   const fetchData = async (message: string) => {
+    props.setMessages((prev) => [...prev, { content: message, isUser: true }]);
+
     await fetchEventSource(`${VITE_SERVER_END_POINT}/chat`, {
       method: "POST",
       headers: {
@@ -84,7 +33,7 @@ const ChatbotMain = (props: {
       },
       body: JSON.stringify({
         uuid: "sdasdasdasd",
-        content: "안녕",
+        content: message,
       }),
       onopen: async (res: Response) => {
         if (res.ok && res.status === 200) {
@@ -102,242 +51,126 @@ const ChatbotMain = (props: {
       // { "data" : "제"}
       // { "data" : "품"}
       onmessage(event) {
-        console.log("event입니다!!1 : ", event);
         const data = JSON.parse(event.data);
         handleMessage(data, message);
-        // 이 부분에서 먼저 data를 확인해서 첫번째 토큰인지 아닌지를 구분하면 될듯
-        // if (data.type !== undefined) {
-        //   if (data.type === "recommend") {
-        //     props.setMessages((prev) => [
-        //       ...prev,
-        //       { text: message, isUser: true },
-        //       {
-        //         type: data.type,
-        //         text: "",
-        //         isUser: false,
-        //         isTyping: true,
-        //         isCompared: false,
-        //         id: data.craetedAt,
-        //         modelNo: data.modelNo,
-        //         spec: data.content.content,
-        //       },
-        //     ]);
-        //   } else if (data.type === "info") {
-        //     props.setMessages((prev) => [
-        //       ...prev,
-        //       { text: message, isUser: true },
-        //       {
-        //         type: data.type,
-        //         text: "",
-        //         isUser: false,
-        //         isTyping: true,
-        //         isCompared: false,
-        //         id: data.craetedAt,
-        //         modelNo: data.modelNo,
-        //         btnString: "상세 스펙 보기",
-        //       },
-        //     ]);
-        //   } else if (data.type === "compare") {
-        //     props.setMessages((prev) => [
-        //       ...prev,
-        //       { text: message, isUser: true },
-        //       {
-        //         type: data.type,
-        //         text: "",
-        //         isUser: false,
-        //         isTyping: true,
-        //         isCompared: true,
-        //         id: data.craetedAt,
-        //         modelNoList: data.modelNoList,
-        //         btnString: "자세히 비교하기",
-        //       },
-        //     ]);
-        //   } else if (data.type === "general") {
-        //     props.setMessages((prev) => [
-        //       ...prev,
-        //       { text: message, isUser: true },
-        //       {
-        //         type: data.type,
-        //         text: "",
-        //         isUser: false,
-        //         isTyping: true,
-        //         isCompared: false,
-        //         id: data.craetedAt,
-        //       },
-        //     ]);
-        //   } else if (data.type === "ranking") {
-        //     props.setMessages((prev) => [
-        //       ...prev,
-        //       { text: message, isUser: true },
-        //       {
-        //         type: data.type,
-        //         text: "",
-        //         isUser: false,
-        //         isTyping: true,
-        //         isCompared: false,
-        //         id: data.craetedAt,
-        //         modelList: data.modelList,
-        //         btnString: "자세히 비교하기",
-        //       },
-        //     ]);
-        //   } else if (data.type === "search") {
-        //     props.setMessages((prev) => [
-        //       ...prev,
-        //       { text: message, isUser: true },
-        //       {
-        //         type: data.type,
-        //         text: "",
-        //         isUser: false,
-        //         isTyping: true,
-        //         isCompared: false,
-        //         id: data.craetedAt,
-        //         modelList: data.modelList,
-        //         btnString: "자세히 비교하기",
-        //       },
-        //     ]);
-        //   } else if (data.type === "dictionary") {
-        //     props.setMessages((prev) => [
-        //       ...prev,
-        //       { text: message, isUser: true },
-        //       {
-        //         type: data.type,
-        //         text: "",
-        //         isUser: false,
-        //         isTyping: true,
-        //         isCompared: false,
-        //         id: data.craetedAt,
-        //       },
-        //     ]);
-        //   } else {
-        //     // 이 부분에는 data.type이 없는 문제이므로 오류 문구 추가하면 될 것 같습니다.
-        //     console.log("예외처리해야함!!");
-        //   }
-        // }
-        // } else if (data.data !== undefined) {
-        //   const next = [...props.messages];
-        //   props.messages[props.messages.length - 1]["content"] + data.data;
-        //   props.setMessages(next);
-        // }
       },
     });
   };
 
-  const handleMessage = useCallback(
-    (data, message: string) => {
-      if (data.type !== undefined) {
-        if (data.type === "recommend") {
-          props.setMessages((prev) => [
-            ...prev,
-            { text: message, isUser: true },
-            {
-              type: data.type,
-              text: "",
-              isUser: false,
-              isTyping: true,
-              isCompared: false,
-              id: data.craetedAt,
-              modelNo: data.modelNo,
-              spec: data.content.content,
-            },
-          ]);
-        } else if (data.type === "info") {
-          props.setMessages((prev) => [
-            ...prev,
-            { text: message, isUser: true },
-            {
-              type: data.type,
-              text: "",
-              isUser: false,
-              isTyping: true,
-              isCompared: false,
-              id: data.craetedAt,
-              modelNo: data.modelNo,
-              btnString: "상세 스펙 보기",
-            },
-          ]);
-        } else if (data.type === "compare") {
-          props.setMessages((prev) => [
-            ...prev,
-            { text: message, isUser: true },
-            {
-              type: data.type,
-              text: "",
-              isUser: false,
-              isTyping: true,
-              isCompared: true,
-              id: data.craetedAt,
-              modelNoList: data.modelNoList,
-              btnString: "자세히 비교하기",
-            },
-          ]);
-        } else if (data.type === "general") {
-          props.setMessages((prev) => [
-            ...prev,
-            { text: message, isUser: true },
-            {
-              type: data.type,
-              text: "",
-              isUser: false,
-              isTyping: true,
-              isCompared: false,
-              id: data.craetedAt,
-            },
-          ]);
-        } else if (data.type === "ranking") {
-          props.setMessages((prev) => [
-            ...prev,
-            { text: message, isUser: true },
-            {
-              type: data.type,
-              text: "",
-              isUser: false,
-              isTyping: true,
-              isCompared: false,
-              id: data.craetedAt,
-              modelList: data.modelList,
-              btnString: "자세히 비교하기",
-            },
-          ]);
-        } else if (data.type === "search") {
-          props.setMessages((prev) => [
-            ...prev,
-            { text: message, isUser: true },
-            {
-              type: data.type,
-              text: "",
-              isUser: false,
-              isTyping: true,
-              isCompared: false,
-              id: data.craetedAt,
-              modelList: data.modelList,
-              btnString: "자세히 비교하기",
-            },
-          ]);
-        } else if (data.type === "dictionary") {
-          props.setMessages((prev) => [
-            ...prev,
-            { text: message, isUser: true },
-            {
-              type: data.type,
-              text: "",
-              isUser: false,
-              isTyping: true,
-              isCompared: false,
-              id: data.craetedAt,
-            },
-          ]);
-        } else {
-          // 이 부분에는 data.type이 없는 문제이므로 오류 문구 추가하면 될 것 같습니다.
-          console.log("예외처리해야함!!");
-        }
-      } else if (data.data !== undefined) {
-        const next = [...props.messages];
-        props.messages[props.messages.length - 1]["content"] + data.data;
-        props.setMessages(next);
+  const handleMessage = (data, message: string) => {
+    if (data.type !== undefined) {
+      if (data.type === "recommend") {
+        props.setMessages((prev) => [
+          ...prev,
+          {
+            type: data.type,
+            content: "",
+            isUser: false,
+            isTyping: true,
+            isCompared: false,
+            id: data.craetedAt,
+            modelNo: data.modelNo,
+            spec: data.content.content,
+          },
+        ]);
+      } else if (data.type === "info") {
+        props.setMessages((prev) => [
+          ...prev,
+          {
+            type: data.type,
+            content: "",
+            isUser: false,
+            isTyping: true,
+            isCompared: false,
+            id: data.craetedAt,
+            modelNo: data.modelNo,
+            btnString: "상세 스펙 보기",
+          },
+        ]);
+      } else if (data.type === "compare") {
+        props.setMessages((prev) => [
+          ...prev,
+          {
+            type: data.type,
+            content: "",
+            isUser: false,
+            isTyping: true,
+            isCompared: true,
+            id: data.craetedAt,
+            modelNoList: data.modelNoList,
+            btnString: "자세히 비교하기",
+          },
+        ]);
+      } else if (data.type === "general") {
+        props.setMessages((prev) => [
+          ...prev,
+          {
+            type: data.type,
+            content: "",
+            isUser: false,
+            isTyping: true,
+            isCompared: false,
+            id: data.craetedAt,
+          },
+        ]);
+      } else if (data.type === "ranking") {
+        props.setMessages((prev) => [
+          ...prev,
+          {
+            type: data.type,
+            content: "",
+            isUser: false,
+            isTyping: true,
+            isCompared: false,
+            id: data.craetedAt,
+            modelList: data.modelList,
+            btnString: "자세히 비교하기",
+          },
+        ]);
+      } else if (data.type === "search") {
+        props.setMessages((prev) => [
+          ...prev,
+          {
+            type: data.type,
+            content: "",
+            isUser: false,
+            isTyping: true,
+            isCompared: false,
+            id: data.craetedAt,
+            modelList: data.modelList,
+            btnString: "자세히 비교하기",
+          },
+        ]);
+      } else if (data.type === "dictionary") {
+        props.setMessages((prev) => [
+          ...prev,
+          {
+            type: data.type,
+            content: "",
+            isUser: false,
+            isTyping: true,
+            isCompared: false,
+            id: data.craetedAt,
+          },
+        ]);
+      } else {
+        // 이 부분에는 data.type이 없는 문제이므로 오류 문구 추가하면 될 것 같습니다.
+        console.log("예외처리해야함!!");
       }
-    },
-    [props.setMessages],
-  );
+    } else if (data.data !== undefined) {
+      props.setMessages((prev) => {
+        const lastMessageIndex = prev.length - 1;
+        const updatedMessages = [
+          ...prev.slice(0, lastMessageIndex),
+          {
+            ...prev[lastMessageIndex],
+            content: prev[lastMessageIndex]["content"] + data.data,
+          },
+        ];
+        return updatedMessages;
+      });
+    }
+  };
 
   // 비교버튼 누를 시 메시지 생성
   // useEffect(() => {
@@ -383,6 +216,8 @@ const ChatbotMain = (props: {
     // const response = await generateText(message);
     const sessionId = window.sessionStorage.getItem("_da_da_sessionId");
     const tabHash = window.sessionStorage.getItem("di_tab_hash");
+
+    // let textMessage = useMemo(() => message, [message]);
 
     fetchData(message);
 
@@ -494,11 +329,11 @@ const ChatbotMain = (props: {
     }
   }, [props.messages, lastHeight]);
 
-  //세션스토리지!!
-  // useEffect(() => {
-  //   const storage = JSON.parse(sessionStorage.getItem("messages") || "[]");
-  //   props.setMessages(storage);
-  // }, []);
+  // 세션스토리지
+  useEffect(() => {
+    const storage = JSON.parse(sessionStorage.getItem("messages") || "[]");
+    props.setMessages(storage);
+  }, []);
 
   return (
     <S.ChatMainWrapper>

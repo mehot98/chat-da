@@ -5,10 +5,9 @@ import * as T from "@src/types";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import React from "react";
 
-const Message = React.memo((props: T.MessageProps) => {
+const Message = (props: T.MessageProps) => {
   const chatDAIconSrc = chrome.runtime.getURL("icons/ChatDA_icon_128.png");
   const minusIconSrc = chrome.runtime.getURL("icons/minus_icon.png");
-
   function handleCancelButton() {
     // props.setMessages((prev) => {
     //   const filteredMessages = prev.filter((message: T.MsgProps) => message.id !== props.id);
@@ -38,7 +37,7 @@ const Message = React.memo((props: T.MessageProps) => {
       return (
         <S.UserMessageWrapper>
           <div className="compare">
-            <span>{props.text}</span>
+            <span>{props.content}</span>
             <button onClick={handleCancelButton}>
               <img src={minusIconSrc} alt="cancel-compare" width={20} height={20} />
             </button>
@@ -49,7 +48,7 @@ const Message = React.memo((props: T.MessageProps) => {
       return (
         <S.UserMessageWrapper>
           <div>
-            <p>{props.text}</p>
+            <p>{props.content}</p>
           </div>
         </S.UserMessageWrapper>
       );
@@ -99,7 +98,7 @@ const Message = React.memo((props: T.MessageProps) => {
             <img src={chatDAIconSrc} alt="ChatDA-logo" width={43} height={42} />
             <S.AiMessageDiv>
               <div>
-                <p>{props.text}</p>
+                <p>{props.content}</p>
               </div>
             </S.AiMessageDiv>
           </S.AiMessageRow>
@@ -115,13 +114,11 @@ const Message = React.memo((props: T.MessageProps) => {
             <img src={chatDAIconSrc} alt="ChatDA-logo" width={43} height={42} />
             <S.AiMessageDiv>
               <div>
-                <p>{props.text}</p>
+                <p>{props.content}</p>
               </div>
             </S.AiMessageDiv>
           </S.AiMessageRow>
-
           <Comp.ChatbotHomeMessage />
-          <MessageFeedback isRecommend={true} />
         </S.AiMessageWrapper>
       );
     } else {
@@ -131,7 +128,7 @@ const Message = React.memo((props: T.MessageProps) => {
             <img src={chatDAIconSrc} alt="ChatDA-logo" width={43} height={42} />
             <S.AiMessageDiv>
               <div>
-                <p>{props.text}</p>
+                <p>{props.content}</p>
               </div>
             </S.AiMessageDiv>
           </S.AiMessageRow>
@@ -147,6 +144,6 @@ const Message = React.memo((props: T.MessageProps) => {
       );
     }
   }
-});
+};
 
 export default Message;
