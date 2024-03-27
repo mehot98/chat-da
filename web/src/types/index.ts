@@ -2,8 +2,8 @@ import { ComparePrdProps, ExpandModalStateType } from "./app";
 import { MessageProps, MsgProps, MessagesProps } from "./components/ChatbotMain";
 import { ChatbotRecommendCardProps } from "./components/ChatbotRecommend";
 import { PopularItemProps } from "./components/PopularItem";
+import { SummarySpecType, ResDataType } from "./components/SpecDetailColumn";
 import { ProductSummaryInfo } from "./components/ProductSummary";
-import { SummarySpecType } from "./components/SpecDetailColumn";
 
 export type {
   MessageProps,
@@ -15,4 +15,5 @@ export type {
   ProductSummaryInfo,
   ExpandModalStateType,
   SummarySpecType,
+  ResDataType,
 };

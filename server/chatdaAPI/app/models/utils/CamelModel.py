@@ -6,5 +6,6 @@ class CamelModel(BaseModel):
     model_config = ConfigDict(
         alias_generator=to_camel,
         populate_by_name=True,
-        protected_namespaces=()
+        protected_namespaces=(),
+        from_attributes=True,
     )

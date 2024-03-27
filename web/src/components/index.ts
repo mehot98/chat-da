@@ -5,6 +5,7 @@ import StartRate from "./StarRate";
 import ProductSummary from "./ProductSummary";
 import SpecDetailColumn from "./SpecDetailColumn";
 import ChatbotHomeMessage from "./ChatbotHomeMessage";
+import SpecCompareGrid from "./SpecCompareGrid";
 
 export {
   ChatbotMain,
@@ -14,4 +15,5 @@ export {
   ProductSummary,
   SpecDetailColumn,
   ChatbotHomeMessage,
+  SpecCompareGrid,
 };

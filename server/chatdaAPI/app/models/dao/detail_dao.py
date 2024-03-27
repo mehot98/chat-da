@@ -30,7 +30,9 @@ def get_product_list_detail_using_model(db: Session, model_no_list: List[str]):
     result = []
 
     for model_no in model_no_list:
+        print(model_no)
         product = db.query(냉장고).filter(냉장고.제품_코드 == model_no).first()
+        print(product)
         if product is not None:
             product_detail = db.query(냉장고_추가정보).filter(냉장고_추가정보.제품_코드 == model_no).first()
             summary_review = db.query(Review).filter(Review.제품_코드 == model_no).first()
