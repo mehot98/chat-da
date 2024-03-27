@@ -49,11 +49,8 @@ def post_chat(
     content = chat_request_dto.content
     data = None
 
-    get_time = time.time()
-
     current_time = datetime.datetime.utcnow()
 
-    current_time = time.time()
     try:
 
         # 제일 먼저 거치는 content는 테스트 입력을 위한 case를 만납니다. info, compare, recommend, naturalSearch
@@ -116,8 +113,9 @@ def post_chat(
         ])
 
     log = {
+        "time": current_time,
         "uuid": chat_request_dto.uuid,
-        "latency": time.time() - get_time,
+        "latency": datetime.datetime.utcnow() - current_time,
         "type": data["type"],
         "user_message": content,
         "system_message": "",
@@ -178,11 +176,11 @@ def post_feedback(
     return {"success": True}
 
 
-@router.post("/rank", status_code=status.HTTP_200_OK)
+@router.post("/preference", status_code=status.HTTP_200_OK)
 def post_feedback(
 ):
 
-    return {"es info": es.info}
+    return {"es info": es.search(index="logs*", body={"query":{"match_all":{}}})}
 
 async def returnData(response: any, stream: any, req: Request, log: Dict, data: any):
     # 만약 request 측 세션이 끊어지면 해당 Stream을 종료시키기
