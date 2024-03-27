@@ -188,7 +188,7 @@ def post_feedback(
                 },
                 {
                   "match": {
-                    "chat_id": """ + feedback_request_dto.chat_id + """
+                    "chat_id": """ + "\""  + feedback_request_dto.chat_id + "\"" + """
                   }
                 }
               ]
