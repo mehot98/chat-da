@@ -5,6 +5,8 @@ from pydantic import Field
 
 from chatdaAPI.app.models.utils.CamelModel import CamelModel
 
+from uuid import UUID
+
 
 class ChatInfoDto(CamelModel):
     """
