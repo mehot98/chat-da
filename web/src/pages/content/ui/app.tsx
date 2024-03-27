@@ -1,4 +1,4 @@
-import { useState, useEffect, ReactElement } from "react";
+import { useState, useEffect, ReactElement, useRef } from "react";
 import * as Comp from "@root/src/components";
 import * as S from "./style";
 import * as T from "@root/src/types";
@@ -76,7 +76,8 @@ export default function App() {
   const currentUrl = window.location.href;
 
   // 냉장고 페이지에서 모든 리스트 선택, 디테일 페이지일시 요약정보 제공
-  const [fridgeList, setFridgeList] = useState<NodeListOf<Element>>();
+  // const [fridgeList, setFridgeList] = useState<NodeListOf<Element>>();
+  const fridgeList = useRef<NodeListOf<Element>>();
   const [isDetailPage, setIsDetailPage] = useState(false);
   const [modelNo, setModelNo] = useState("");
 
@@ -84,11 +85,13 @@ export default function App() {
     if (currentUrl === "https://www.samsung.com/sec/refrigerators/all-refrigerators/") {
       const moreBtn: HTMLButtonElement | null = document.querySelector("#morePrd");
       let newLiElements: NodeListOf<Element> = document.querySelectorAll(".item-inner");
-      setFridgeList(newLiElements);
+      // setFridgeList(newLiElements);
+      fridgeList.current = newLiElements;
 
       moreBtn.addEventListener("click", () => {
         newLiElements = document.querySelectorAll(".item-inner");
-        setFridgeList(newLiElements);
+        // setFridgeList(newLiElements);
+        fridgeList.current = newLiElements;
       });
       setIsDetailPage(false);
     } else if (currentUrl.includes("https://www.samsung.com/sec/refrigerators/")) {
@@ -106,8 +109,8 @@ export default function App() {
   // 비교상품 정보 담는 곳
   const [comparePrds, setComparePrds] = useState<T.ComparePrdProps[]>([]);
   useEffect(() => {
-    if (fridgeList && fridgeList.length > 0) {
-      fridgeList.forEach((element: Element) => {
+    if (fridgeList.current && fridgeList.current.length > 0) {
+      fridgeList.current.forEach((element: Element) => {
         const compareButton: HTMLButtonElement = document.createElement("button");
         compareButton.id = "ChatDAButton";
 
@@ -220,7 +223,7 @@ export default function App() {
   //   setMessages(compare);
   // }, []);\
 
-  function renderReactComponentElement(element:ReactElement) {
+  function renderReactComponentElement(element: ReactElement) {
     // 외부 요소를 찾거나 생성
     const menuElement = document.getElementsByClassName("menu01")[0];
     let childElement = document.getElementById("summaryPlace");
@@ -233,9 +236,7 @@ export default function App() {
 
     // React Portal을 사용하여 외부 요소 안에 React 컴포넌트를 렌더링
     const root = createRoot(childElement);
-    root.render(
-      <QueryClientProvider client={queryClient}>{element}</QueryClientProvider>
-    )
+    root.render(<QueryClientProvider client={queryClient}>{element}</QueryClientProvider>);
   }
 
   const queryClient = new QueryClient();
