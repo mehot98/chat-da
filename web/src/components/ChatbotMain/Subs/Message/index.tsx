@@ -2,6 +2,7 @@ import MessageFeedback from "../MessageFeedback";
 import * as Comp from "@root/src/components";
 import * as S from "./style";
 import * as T from "@src/types";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 export default function Message(props: T.MessageProps) {
   const chatDAIconSrc = chrome.runtime.getURL("icons/ChatDA_icon_128.png");
@@ -9,12 +10,28 @@ export default function Message(props: T.MessageProps) {
 
   function handleCancelButton() {
     props.setMessages((prev) => {
-      return prev.filter((message: T.MsgProps) => message.id !== props.id);
+      const filteredMessages = prev.filter((message: T.MsgProps) => message.id !== props.id);
+      if (filteredMessages.length === 0) {
+        sessionStorage.setItem("messages", JSON.stringify(filteredMessages));
+      }
+      return filteredMessages;
     });
     props.setComparePrds((prev2) => {
-      return prev2.filter((prd: T.ComparePrdProps) => prd.id !== props.id);
+      const filteredPrd = prev2.filter((prd: T.ComparePrdProps) => prd.id !== props.id);
+      if (filteredPrd.length === 0) {
+        sessionStorage.setItem("comparePrds", JSON.stringify(filteredPrd));
+      }
+      return filteredPrd;
     });
   }
+
+  const handleExpandOpenBtn = () => {
+    const modelsNoListSet = new Set(props.modelNoList);
+    const models = props.modelNoList ? [...modelsNoListSet] : [props.modelNo];
+    props.changeSelectedModelNo(models);
+    props.handleOpenExpandModal(props.type);
+  };
+
   if (props.isUser) {
     if (props.isCompared) {
       return (
@@ -104,7 +121,11 @@ export default function Message(props: T.MessageProps) {
 
           <MessageFeedback isRecommend={false} />
 
-          {props.btnString && <S.ExpandOpenBtn>{props.btnString}</S.ExpandOpenBtn>}
+          {props.btnString && (
+            <S.ExpandOpenBtn onClick={handleExpandOpenBtn} startIcon={<ArrowBackIcon />}>
+              {props.btnString}
+            </S.ExpandOpenBtn>
+          )}
         </S.AiMessageWrapper>
       );
     }

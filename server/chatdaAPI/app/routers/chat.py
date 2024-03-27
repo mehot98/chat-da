@@ -1,3 +1,4 @@
+import datetime
 import json
 from typing import Dict
 
@@ -48,6 +49,10 @@ def post_chat(
     content = chat_request_dto.content
     data = None
 
+    get_time = time.time()
+
+    current_time = datetime.datetime.utcnow()
+
     current_time = time.time()
     try:
 
@@ -55,13 +60,13 @@ def post_chat(
         match content:
             case "info":
                 data = dump.info_data
-                response = response_dto.init_info_response(data)
+                response = response_dto.init_info_response(data, current_time)
             case "compare":
                 data = dump.compare_data
-                response = response_dto.init_compare_response(data)
+                response = response_dto.init_compare_response(data, current_time)
             case "recommend":
                 data = dump.recommend_data
-                response = response_dto.init_recommend_response(data)
+                response = response_dto.init_recommend_response(data, current_time)
             case "naturalSearch":
                 response = dump.natural_data
             # 위 예제 입력에서 걸리지 않은 입력에 대해서는 langchain을 활용한 답변을 생성합니다
@@ -75,19 +80,19 @@ def post_chat(
                     match data["type"]:
                         # langchain으로 생성된 답변의 타입에 따라 응답으로 보낼 객체 형식을 변경합니다.
                         case "info":
-                            response = response_dto.init_info_response(data)
+                            response = response_dto.init_info_response(data, current_time)
                         case "compare":
-                            response = response_dto.init_compare_response(data)
+                            response = response_dto.init_compare_response(data, current_time)
                         case "recommend":
-                            response = response_dto.init_recommend_response(data)
+                            response = response_dto.init_recommend_response(data, current_time)
                         case "ranking":
-                            response = response_dto.init_ranking_response(data)
+                            response = response_dto.init_ranking_response(data, current_time)
                         case "general":
-                            response = response_dto.init_general_respose(data)
+                            response = response_dto.init_general_respose(data, current_time)
                         case "search":
-                            response = response_dto.init_search_response(data)
+                            response = response_dto.init_search_response(data, current_time)
                         case "dictionary":
-                            response = response_dto.init_dictionary_response(data)
+                            response = response_dto.init_dictionary_response(data, current_time)
                         case default:
                             # 만약 type이 지정되지 않은 값이 나온다면 Exception을 발생시킵니다.
                             raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=[
@@ -112,7 +117,7 @@ def post_chat(
 
     log = {
         "uuid": chat_request_dto.uuid,
-        "latency": time.time() - current_time,
+        "latency": time.time() - get_time,
         "type": data["type"],
         "user_message": content,
         "system_message": "",
@@ -133,6 +138,7 @@ def post_search(
     입력: ChatRequestDto(uuid, content)\n
     응답: ChatSearchResponseDto(type, content, model_no_list)
     """
+    current_time = datetime.datetime.utcnow()
 
     data = get_output(user_input=chat_request_dto.content, search=True)
 
@@ -140,7 +146,23 @@ def post_search(
     # 현재 리스트가 800개 조회되는 오류 발생
     data["model_list"] = data["model_no_list"][:10]
 
-    return response_dto.init_search_response(data)
+    return response_dto.init_search_response(data,current_time)
+
+
+@router.get("/ranking",
+            status_code=status.HTTP_200_OK,
+            response_model=response_dto.ChatRankingDetailDto)
+def get_ranking():
+    """
+    인기 순위 10개를 받아오는 API\n
+    응답: ChatRankingDto(type, content, model_list)
+    """
+
+    # 해당 입력을 넣어줌으로써 바로 랭킹 관련 데이터를 받아옵니다.
+    data = get_output(user_input="요새 잘 나가는 냉장고가 뭐야?", search=True)
+
+    current_time = datetime.datetime.utcnow()
+    return response_dto.init_ranking_detail_response(data, current_time)
 
 
 @router.post("/feedback", status_code=status.HTTP_201_CREATED)

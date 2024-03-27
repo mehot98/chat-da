@@ -11,45 +11,47 @@ from chatdaAPI.config import config
 
 import chatdaAPI.examples.examples_ranking as examples_ranking
 
-# 체인 중간 과정 보기
-set_debug(True)
-
 # DB 불러오기
 db = SQLDatabase.from_uri(
-    f'mysql+pymysql://{config.mysql_user}:{config.mysql_password}@{config.mysql_host}:{config.mysql_port}/{config.mysql_database}',
+    f'mysql+pymysql://{config.mysql_user}:{config.mysql_password}'
+    f'@{config.mysql_host}:{config.mysql_port}/{config.mysql_database}',
     sample_rows_in_table_info=1,
     include_tables=["refridgerators", "refridgerator_reviews", "refridgerator_details"],
-    max_string_length=100
+    max_string_length=1000
 )
 
 # DB 테이블 정보
 context = db.get_context()
 
 # 언어 모델 로드
-llm = ChatOpenAI(model="gpt-3.5-turbo-0125", temperature=0.1, verbose=True)
+llm = ChatOpenAI(model="gpt-3.5-turbo-16k", temperature=0.1, verbose=True)
+
+# 언어 모델 로드 with Stream
+llm_stream = ChatOpenAI(model="gpt-3.5-turbo-16k", temperature=0.1, verbose=True, streaming=True,)
+
+# 데이터베이스 연결 설정
+setup = {
+    'user': config.mysql_user,  # 데이터베이스 사용자 이름
+    'password': config.mysql_password,  # 데이터베이스 비밀번호
+    'host': config.mysql_host,  # 데이터베이스 호스트
+    'database': config.mysql_database,  # 데이터베이스 이름
+    'raise_on_warnings': True
+}
+# 데이터베이스에 연결
+conn = mysql.connector.connect(**setup)
+# 커서 생성 - 딕셔너리 형태로 결과를 가져오기 위해 dictionary=True 옵션 사용
+cursor = conn.cursor(dictionary=True)
 
 
 # join문까지 포함된 sql을 이용하여 모든 정보를 가져와서 list를 만드는 함수
 def make_model_list(query):
-    # 데이터베이스 연결 설정
-    setup = {
-        'user': config.mysql_user,  # 데이터베이스 사용자 이름
-        'password': config.mysql_password,  # 데이터베이스 비밀번호
-        'host': config.mysql_host,  # 데이터베이스 호스트
-        'database': config.mysql_database,  # 데이터베이스 이름
-        'raise_on_warnings': True
-    }
-    # 데이터베이스에 연결
-    conn = mysql.connector.connect(**setup)
-    # 커서 생성 - 딕셔너리 형태로 결과를 가져오기 위해 dictionary=True 옵션 사용
-    cursor = conn.cursor(dictionary=True)
     # SQL 쿼리 실행
     cursor.execute(query)
     # 모든 결과를 딕셔너리 리스트로 가져옴
     results = cursor.fetchall()
-    # 연결 종료
-    cursor.close()
-    conn.close()
+    # # 연결 종료
+    # cursor.close()
+    # conn.close()
 
     return results
 
@@ -60,14 +62,17 @@ def get_output(user_input, search):
     first_prompt, user_input_type = prompt.sql_prompt(user_input)
     model_list = []
 
+    # 용어에 대한 질문일 경우
+    if user_input_type == input_types.DICTIONARY:
+        result = first_prompt["query"]
     # SQL문이 필요한 대화인 경우
-    if user_input_type != input_types.GENERAL:
+    elif user_input_type != input_types.GENERAL:
         # 랭킹인 경우 정해진 답변을 생성하여 리턴
         if user_input_type == input_types.RANKING:
             ranking_query = examples_ranking.examples[0]["query"].split("\n\n")[1]
 
             model_list = make_model_list(ranking_query)
-
+            model_list = model_list[:3]
             ranking_list = ""
 
             # 3위까지 답변 생성
@@ -79,20 +84,23 @@ def get_output(user_input, search):
                 "content": "ChatDA가 가장 인기가 많은 냉장고 순위를 알려드릴게요!\n\n"
                            f"{ranking_list}\n"
                            "그 이외의 순위는 옆에서 확인해주세요!",
-                "model_no_list": model_list
+                "model_list": model_list
             }
 
         # SQL 생성을 위한 chain
         create_sql = create_sql_query_chain(llm, db, first_prompt)
 
-        # 최대 행 개수
-        max_rows = 2
+        # LLM 입력용 최대 행 개수
+        max_rows = 5
+        # 리스트용 최대 행 개수
+        max_rows2 = 10
 
         # SQL query 생성
         query = create_sql.invoke(
             {
                 "question": user_input,
                 "top_k": max_rows,
+                "top_k2": max_rows2,
                 "table_info": context["table_info"]
             }
         ).split("\n\n")
@@ -107,6 +115,13 @@ def get_output(user_input, search):
                 "content": "",
                 "model_no_list": model_list
             }
+        # 추천인 경우 정해진 답변과 제품 목록만 리턴
+        elif user_input_type == input_types.RECOMMEND:
+            return {
+                "type": user_input_type,
+                "content": "이 상품은 어떠세요?",
+                "model_no_list": model_list
+            }
 
         # 최대 행 개수 설정
         db._sample_rows_in_table_info = max_rows
@@ -116,20 +131,19 @@ def get_output(user_input, search):
 
         if result and len(result) > 0:
             # 얻은 결과로 답변 생성하는 체인 구성
-            answer_chain = prompt.answer_prompt | llm | StrOutputParser()
+            answer_chain = prompt.answer_prompt | llm_stream | StrOutputParser()
 
             # 유저 입력으로부터 답변 생성
-            result = answer_chain.invoke({"question": user_input, "query": query[0], "result": result})
+            result = answer_chain.stream({"question": user_input, "query": query[0], "result": result})
 
         else:
             result = "제품에 대한 정보가 존재하지 않습니다!"
             model_list = None
-
     # 일반적인 대화인 경우
     else:
-        answer_chain = first_prompt | llm | StrOutputParser()
+        answer_chain = first_prompt | llm_stream | StrOutputParser()
 
-        result = answer_chain.invoke({"question": user_input})
+        result = answer_chain.stream({"question": user_input})
 
     return {
         "type": user_input_type,
@@ -138,8 +152,11 @@ def get_output(user_input, search):
     }
 
 
+# # 체인 중간 과정 보기
+# set_debug(True)
+#
 # # 테스트용
 # if __name__ == '__main__':
-#     res = get_output(user_input='최근에 리뷰가 추가된 냉장고 제품이 뭐야?', search=False)
+#     res = get_output(user_input='요새 잘 나가는 냉장고가 뭐야?', search=False)
 #     print(f"type : {res['type']}")
 #     print(f"content : {res['content']}")
