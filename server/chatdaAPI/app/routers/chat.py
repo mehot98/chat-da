@@ -178,7 +178,7 @@ def post_feedback(
 
     query = """
         {
-          "query": {
+          "query": 
             "bool": {
               "must": [
                 {
@@ -188,7 +188,7 @@ def post_feedback(
                 },
                 {
                   "match": {
-                    "chat_id": "66cac1547f1444ea92af165674e0fe231"
+                    "chat_id": """ + feedback_request_dto.chat_id + """
                   }
                 }
               ]
@@ -212,7 +212,8 @@ def post_feedback(
         "type": target['type'],
         "user_message": target['user_message'],
         "system_message": target['system_message'],
-        "model_no_list": target['model_no_list']
+        "model_no_list": target['model_no_list'],
+        "feedback": feedback_request_dto.feedback
     }
 
     logger.info('feedback', extra=log)
