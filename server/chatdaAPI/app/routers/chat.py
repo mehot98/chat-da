@@ -17,7 +17,7 @@ import ecs_logging
 import time
 
 es = Elasticsearch(
-    "http://192.168.192.2:9200",
+    "http://docker-elk-elasticsearch-1:9200",
     basic_auth=("elastic", 'changeme')
 )
 
