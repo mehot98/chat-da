@@ -1,15 +1,24 @@
-from typing import Union
+import json
+from typing import Dict
 
-from fastapi import APIRouter, status, HTTPException
+from fastapi import APIRouter, status, HTTPException, Request
+from starlette.responses import StreamingResponse
 
 import chatdaAPI.app.models.dto.chat.ChatResponseDto as response_dto
 import chatdaAPI.app.models.dto.chat.ChatRequestDto as request_dto
 import chatdaAPI.app.models.exmaple_chat as dump
 from chatdaAPI.RAG.make_output import get_output
 
+from elasticsearch import Elasticsearch
+
 import logging
 import ecs_logging
 import time
+
+es = Elasticsearch(
+    "http://elasticsearch:9200",
+    basic_auth=("elastic", 'changeme')
+)
 
 logger = logging.getLogger("app")
 logger.setLevel(logging.DEBUG)
@@ -23,12 +32,10 @@ logger.addHandler(console_handler)
 router = APIRouter()
 
 
-@router.post("", status_code=status.HTTP_201_CREATED,
-             response_model=Union[
-                 response_dto.ChatInfoDto, response_dto.ChatCompareDto, response_dto.ChatRecommendDto,
-                 response_dto.ChatRankingDto, response_dto.ChatGeneralDto, response_dto.ChatExceptionDto])
+@router.post("", status_code=status.HTTP_201_CREATED)
 def post_chat(
-        chat_request_dto: request_dto.ChatRequestDto
+        chat_request_dto: request_dto.ChatRequestDto,
+        req: Request
 ):
     """
     기본 챗봇과의 대화 API\n
@@ -40,8 +47,8 @@ def post_chat(
     response = None
     content = chat_request_dto.content
     data = None
-    current_time = time.time()
 
+    current_time = time.time()
     try:
 
         # 제일 먼저 거치는 content는 테스트 입력을 위한 case를 만납니다. info, compare, recommend, naturalSearch
@@ -77,6 +84,10 @@ def post_chat(
                             response = response_dto.init_ranking_response(data)
                         case "general":
                             response = response_dto.init_general_respose(data)
+                        case "search":
+                            response = response_dto.init_search_response(data)
+                        case "dictionary":
+                            response = response_dto.init_dictionary_response(data)
                         case default:
                             # 만약 type이 지정되지 않은 값이 나온다면 Exception을 발생시킵니다.
                             raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=[
@@ -89,7 +100,6 @@ def post_chat(
                                 }
                             ])
     except Exception as e:
-        print(e)
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=[
             {
                 "type": "error",
@@ -100,23 +110,16 @@ def post_chat(
             }
         ])
 
-
-
     log = {
         "uuid": chat_request_dto.uuid,
         "latency": time.time() - current_time,
         "type": data["type"],
         "user_message": content,
-        "system_message": response.content,
+        "system_message": "",
         "model_no_list": data["model_list"][:10]
     }
 
-    logger.info("chat_history", extra=log)
-
-    for model in data["model_list"][:10]:
-        logger.info("preference", extra={"model_no": model["제품_코드"]})
-
-    return response
+    return StreamingResponse(returnData(response, data["content"], req, log, data), media_type="text/event-stream")
 
 
 @router.post("/search",
@@ -127,7 +130,7 @@ def post_search(
 ):
     """
     자연어 검색 리스트를 확인하는 API\n
-    입력: SearchRequestDto(uuid, content)\n
+    입력: ChatRequestDto(uuid, content)\n
     응답: ChatSearchResponseDto(type, content, model_no_list)
     """
 
@@ -151,3 +154,45 @@ def post_feedback(
     """
 
     return {"success": True}
+
+
+@router.post("/rank", status_code=status.HTTP_200_OK)
+def post_feedback(
+):
+
+    return {"es info": es.info}
+
+async def returnData(response: any, stream: any, req: Request, log: Dict, data: any):
+    # 만약 request 측 세션이 끊어지면 해당 Stream을 종료시키기
+    is_disconnected = await req.is_disconnected()
+    if is_disconnected: return
+
+    # 처음으로 보내는 값은 모델 정보와 채팅 타입에 대한 내용
+    yield f"data: {response.json(by_alias=True)}\n\n"
+
+    if type(stream) is str:
+        result = ""
+        # GPT 응답에 대한 token을 EventStream으로 보내주기
+        for event in stream:
+            token = {
+                "data": event
+            }
+            result += event
+            yield f"data: {json.dumps(token)}\n\n"
+            time.sleep(0.02)
+        log["system_message"] = result
+    else:
+        # GPT 응답에 대한 token을 EventStream으로 보내주기
+        result = ""
+        for event in stream:
+            token = {
+                "data": event
+            }
+            result += event
+            yield f"data: {json.dumps(token)}\n\n"
+        log["system_message"] = result
+
+    logger.info("chat_history", extra=log)
+
+    for model in data["model_list"]:
+        logger.info("preference", extra={"model_no": model["제품_코드"][:10]})
