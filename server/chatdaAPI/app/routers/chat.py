@@ -162,8 +162,8 @@ def get_ranking():
     # 해당 입력을 넣어줌으로써 바로 랭킹 관련 데이터를 받아옵니다.
     data = get_output(user_input="요새 잘 나가는 냉장고가 뭐야?", search=True)
 
-    current_time = datetime.datetime.utcnow()
-    return response_dto.init_ranking_detail_response(data, current_time)
+    chat_id = uuid.uuid4()
+    return response_dto.init_ranking_detail_response(data, chat_id)
 
 
 @router.post("/feedback", status_code=status.HTTP_201_CREATED)
