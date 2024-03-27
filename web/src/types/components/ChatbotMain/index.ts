@@ -15,7 +15,7 @@ export interface MessagesProps extends Array<MsgProps> {}
 export interface MessageProps {
   // type 추가 예정 ex -> 스펙에 대한 설명, 일상적인 대화 등
   // server의 type에 따라 추가 할 것
-  type: "compare" | "info" | "recommend";
+  type: "compare" | "info" | "recommend" | "home";
   text: string;
   isUser: boolean;
   isTyping: boolean;

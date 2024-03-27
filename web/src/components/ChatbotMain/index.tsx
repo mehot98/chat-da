@@ -5,6 +5,7 @@ import { request } from "@src/apis/requestBuilder";
 import * as Sub from "./Subs";
 import * as S from "./style";
 import * as T from "@root/src/types";
+import { fetchEventSource } from "@microsoft/fetch-event-source";
 
 export default function ChatbotMain(props: {
   props: T.ComparePrdProps[];

@@ -6,7 +6,7 @@ import axios, { AxiosError } from "axios";
 
 const customInstance = (contentType: string) => {
   const dynamicContentInstance = axios.create({
-    baseURL: "",
+    baseURL: "https://j10s004.p.ssafy.io/api",
     headers: {
       "Content-Type": contentType,
     },

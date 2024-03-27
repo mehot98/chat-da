@@ -106,6 +106,22 @@ export default function Message(props: T.MessageProps) {
           <MessageFeedback isRecommend={true} />
         </S.AiMessageWrapper>
       );
+    } else if (props.type === "home") {
+      return (
+        <S.AiMessageWrapper>
+          <S.AiMessageRow>
+            <img src={chatDAIconSrc} alt="ChatDA-logo" width={43} height={42} />
+            <S.AiMessageDiv>
+              <div>
+                <p>{props.text}</p>
+              </div>
+            </S.AiMessageDiv>
+          </S.AiMessageRow>
+
+          <Comp.ChatbotHomeMessage />
+          <MessageFeedback isRecommend={true} />
+        </S.AiMessageWrapper>
+      );
     } else {
       return (
         <S.AiMessageWrapper>
