@@ -48,13 +48,13 @@ def post_chat(
         match content:
             case "info":
                 data = dump.info_data
-                response = response_dto.init_info_response(data)
+                response = response_dto.init_info_response(data,current_time)
             case "compare":
                 data = dump.compare_data
-                response = response_dto.init_compare_response(data)
+                response = response_dto.init_compare_response(data,current_time)
             case "recommend":
                 data = dump.recommend_data
-                response = response_dto.init_recommend_response(data)
+                response = response_dto.init_recommend_response(data,current_time)
             case "naturalSearch":
                 response = dump.natural_data
             # 위 예제 입력에서 걸리지 않은 입력에 대해서는 langchain을 활용한 답변을 생성합니다
@@ -68,19 +68,19 @@ def post_chat(
                     match data["type"]:
                         # langchain으로 생성된 답변의 타입에 따라 응답으로 보낼 객체 형식을 변경합니다.
                         case "info":
-                            response = response_dto.init_info_response(data)
+                            response = response_dto.init_info_response(data,current_time)
                         case "compare":
-                            response = response_dto.init_compare_response(data)
+                            response = response_dto.init_compare_response(data,current_time)
                         case "recommend":
-                            response = response_dto.init_recommend_response(data)
+                            response = response_dto.init_recommend_response(data,current_time)
                         case "ranking":
-                            response = response_dto.init_ranking_response(data)
+                            response = response_dto.init_ranking_response(data,current_time)
                         case "general":
-                            response = response_dto.init_general_respose(data)
+                            response = response_dto.init_general_respose(data,current_time)
                         case "search":
-                            response = response_dto.init_search_response(data)
+                            response = response_dto.init_search_response(data,current_time)
                         case "dictionary":
-                            response = response_dto.init_dictionary_response(data)
+                            response = response_dto.init_dictionary_response(data,current_time)
                         case default:
                             # 만약 type이 지정되지 않은 값이 나온다면 Exception을 발생시킵니다.
                             raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=[

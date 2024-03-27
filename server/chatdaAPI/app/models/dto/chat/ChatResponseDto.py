@@ -11,6 +11,7 @@ class ChatInfoDto(CamelModel):
     """
     type: str
     model_no: str
+    craeted_at: float
 
 
 class ChatCompareDto(CamelModel):
@@ -19,6 +20,7 @@ class ChatCompareDto(CamelModel):
     """
     type: str
     model_no_list: List[str]
+    craeted_at: float
 
 
 class ChatSpec(CamelModel):
@@ -62,6 +64,7 @@ class ChatRecommendDto(CamelModel):
     type: str
     content: ChatSpec
     model_no: str
+    craeted_at: float
 
 
 class ChatSearchResponseDto(CamelModel):
@@ -70,6 +73,7 @@ class ChatSearchResponseDto(CamelModel):
     """
     type: str
     model_list: List[ChatSearchSpec]
+    craeted_at: float
 
 
 class ChatRankingDto(CamelModel):
@@ -78,6 +82,7 @@ class ChatRankingDto(CamelModel):
     """
     type: str
     model_no_list: List[str]
+    craeted_at: float
 
 
 class ChatGeneralDto(CamelModel):
@@ -85,6 +90,7 @@ class ChatGeneralDto(CamelModel):
     일상 속 일반적인 대화
     """
     type: str
+    craeted_at: float
 
 
 class ChatDictionaryResponseDto(CamelModel):
@@ -92,6 +98,7 @@ class ChatDictionaryResponseDto(CamelModel):
     용어 검색시 사용되는 response
     """
     type: str
+    craeted_at: float
 
 
 class ChatExceptionDto(CamelModel):
@@ -99,6 +106,7 @@ class ChatExceptionDto(CamelModel):
     질문에 대한 답을 찾지 못했을 경우 예외 처리 대답
     """
     content: str = "잘 모르겠어요. 다시 질문해주세요."
+    craeted_at: float
 
 
 # 모델 리스트를 배열로 추출하는 함수입니다
@@ -108,54 +116,61 @@ def get_model_no_list(model_list):
 
 # pydantic은 init 함수를 구현하면 안되므로 커스텀 함수를 구현합니다
 
-def init_info_response(data):
+def init_info_response(data,created_at):
     return ChatInfoDto(
         type=data["type"],
-        model_no=data["model_list"][0]["제품_코드"]
+        model_no=data["model_list"][0]["제품_코드"],
+        craeted_at=created_at
     )
 
 
-def init_compare_response(data):
+def init_compare_response(data,created_at):
     return ChatCompareDto(
         type=data["type"],
-        model_no_list=get_model_no_list(data["model_list"])
+        model_no_list=get_model_no_list(data["model_list"]),
+        craeted_at=created_at
     )
 
 
-def init_recommend_response(data):
+def init_recommend_response(data,created_at):
     if data["model_list"] is None:
-        return ChatExceptionDto()
+        return ChatExceptionDto(created_at)
 
     else:
         model = data["model_list"][0]
         return ChatRecommendDto(
             type=data["type"],
             content=model,
-            model_no=model["제품_코드"]
+            model_no=model["제품_코드"],
+        craeted_at=created_at
         )
 
 
-def init_ranking_response(data):
+def init_ranking_response(data,created_at):
     return ChatRankingDto(
         type=data["type"],
-        model_no_list=get_model_no_list(data["model_list"])
+        model_no_list=get_model_no_list(data["model_list"]),
+        craeted_at=created_at
     )
 
 
-def init_general_respose(data):
+def init_general_respose(data,created_at):
     return ChatGeneralDto(
-        type=data["type"]
+        type=data["type"],
+        craeted_at=created_at
     )
 
 
-def init_search_response(data):
+def init_search_response(data,created_at):
     return ChatSearchResponseDto(
         type="search",
-        model_list=data["model_list"]
+        model_list=data["model_list"],
+        craeted_at=created_at
     )
 
 
-def init_dictionary_response(data):
+def init_dictionary_response(data,created_at):
     return ChatDictionaryResponseDto(
-        type="dictionary"
+        type="dictionary",
+        craeted_at=created_at
     )
