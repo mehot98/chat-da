@@ -1,6 +1,5 @@
 import json
-import time
-from typing import Union
+from typing import Dict
 
 from fastapi import APIRouter, status, HTTPException, Request
 from starlette.responses import StreamingResponse
@@ -109,16 +108,11 @@ def post_chat(
         "latency": time.time() - current_time,
         "type": data["type"],
         "user_message": content,
-        "system_message": response.content,
+        "system_message": "",
         "model_no_list": data["model_list"][:10]
     }
 
-    logger.info("chat_history", extra=log)
-
-    for model in data["model_list"][:10]:
-        logger.info("preference", extra={"model_no": model["제품_코드"]})
-
-    return StreamingResponse(returnData(response, data["content"], req),media_type="text/event-stream")
+    return StreamingResponse(returnData(response, data["content"], req, log, data), media_type="text/event-stream")
 
 
 @router.post("/search",
@@ -155,25 +149,37 @@ def post_feedback(
     return {"success": True}
 
 
-async def returnData(data: any, stream: any, req: Request):
+async def returnData(response: any, stream: any, req: Request, log: Dict, data: any):
     # 만약 request 측 세션이 끊어지면 해당 Stream을 종료시키기
     is_disconnected = await req.is_disconnected()
     if is_disconnected: return
     
     # 처음으로 보내는 값은 모델 정보와 채팅 타입에 대한 내용
-    yield f"data: {data.json(by_alias=True)}\n\n"
+    yield f"data: {response.json(by_alias=True)}\n\n"
+
     if type(stream) is str:
+        result = ""
         # GPT 응답에 대한 token을 EventStream으로 보내주기
         for event in stream:
-            data = {
+            token = {
                 "data": event
             }
-            yield f"data: {json.dumps(data)}\n\n"
+            result += event
+            yield f"data: {json.dumps(token)}\n\n"
             time.sleep(0.02)
+        log["system_message"] = result
     else:
         # GPT 응답에 대한 token을 EventStream으로 보내주기
+        result = ""
         for event in stream:
-            data = {
+            token = {
                 "data": event
             }
-            yield f"data: {json.dumps(data)}\n\n"
+            result += event
+            yield f"data: {json.dumps(token)}\n\n"
+        log["system_message"] = result
+
+    logger.info("chat_history", extra=log)
+
+    for model in data["model_list"]:
+        logger.info("preference", extra={"model_no": model["제품_코드"]})
