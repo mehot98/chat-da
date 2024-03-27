@@ -76,7 +76,6 @@ export default function App() {
   const currentUrl = window.location.href;
 
   // 냉장고 페이지에서 모든 리스트 선택, 디테일 페이지일시 요약정보 제공
-  // const [fridgeList, setFridgeList] = useState<NodeListOf<Element>>();
   const fridgeList = useRef<NodeListOf<Element>>();
   const [isDetailPage, setIsDetailPage] = useState(false);
   const [modelNo, setModelNo] = useState("");
@@ -85,12 +84,10 @@ export default function App() {
     if (currentUrl === "https://www.samsung.com/sec/refrigerators/all-refrigerators/") {
       const moreBtn: HTMLButtonElement | null = document.querySelector("#morePrd");
       let newLiElements: NodeListOf<Element> = document.querySelectorAll(".item-inner");
-      // setFridgeList(newLiElements);
       fridgeList.current = newLiElements;
 
       moreBtn.addEventListener("click", () => {
         newLiElements = document.querySelectorAll(".item-inner");
-        // setFridgeList(newLiElements);
         fridgeList.current = newLiElements;
       });
       setIsDetailPage(false);
@@ -216,13 +213,6 @@ export default function App() {
     }
   }, [comparePrds]);
 
-  // useEffect(() => {
-  //   const storage = JSON.parse(sessionStorage.getItem("messages") || "[]");
-  //   const compare = JSON.parse(sessionStorage.getItem("comparePrds") || "[]");
-  //   setMessages(storage);
-  //   setMessages(compare);
-  // }, []);\
-
   function renderReactComponentElement(element: ReactElement) {
     // 외부 요소를 찾거나 생성
     const menuElement = document.getElementsByClassName("menu01")[0];
@@ -250,6 +240,7 @@ export default function App() {
       renderReactComponentElement(productSummaryElement);
       setIsProductSummaryRendered(true);
     }
+    // eslint-disable-next-line
   }, [isDetailPage, isProductSummaryRendered]);
   useEffect(() => {
     console.log(expandModalState);
@@ -320,7 +311,6 @@ export default function App() {
         </S.ChatMainModal>
         {/* 요약정보 말풍선 */}
       </StyledEngineProvider>
-      {/* {isDetailPage && <Comp.ProductSummary />} */}
       <S.ChatModalBackdrop
         className="backdrop"
         onClick={handleClickBackdrop}
