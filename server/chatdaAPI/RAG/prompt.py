@@ -61,7 +61,7 @@ Only use the following tables for the first MySQL query:
 And secondly, create a syntactically correct MySQL query to run like the first one.
 But in this case you will join more tables.
 You will only need table's names to join and the column to join with the main table.
-And never use the LIMIT clause for this second query to get all the results as per MySQL.
+Query for at most {top_k2} results for this second query using the LIMIT clause as per MySQL.
 
 Here is the additional table names to join:
 [`refridgerator_mores`,`refridgerator_reviews`,`refridgerator_details`,`refridgerator_prices`]
@@ -110,7 +110,7 @@ def sql_prompt(user_input):
         example_prompt=example_prompt,
         prefix=mysql_prompt_prefix,
         suffix=mysql_prompt_suffix,
-        input_variables=["input", "table_info", "top_k"],
+        input_variables=["input", "table_info", "top_k", "top_k2"],
     )
 
     return prompt, got_input_type
