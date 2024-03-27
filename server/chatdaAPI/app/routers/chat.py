@@ -10,9 +10,16 @@ import chatdaAPI.app.models.dto.chat.ChatRequestDto as request_dto
 import chatdaAPI.app.models.exmaple_chat as dump
 from chatdaAPI.RAG.make_output import get_output
 
+from elasticsearch import Elasticsearch
+
 import logging
 import ecs_logging
 import time
+
+es = Elasticsearch(
+    "http://elasticsearch:9200",
+    basic_auth=("elastic", 'changeme')
+)
 
 logger = logging.getLogger("app")
 logger.setLevel(logging.DEBUG)
@@ -46,6 +53,7 @@ def post_chat(
 
     current_time = datetime.datetime.utcnow()
 
+    current_time = time.time()
     try:
 
         # 제일 먼저 거치는 content는 테스트 입력을 위한 case를 만납니다. info, compare, recommend, naturalSearch
@@ -170,6 +178,12 @@ def post_feedback(
     return {"success": True}
 
 
+@router.post("/rank", status_code=status.HTTP_200_OK)
+def post_feedback(
+):
+
+    return {"es info": es.info}
+
 async def returnData(response: any, stream: any, req: Request, log: Dict, data: any):
     # 만약 request 측 세션이 끊어지면 해당 Stream을 종료시키기
     is_disconnected = await req.is_disconnected()
@@ -203,4 +217,4 @@ async def returnData(response: any, stream: any, req: Request, log: Dict, data: 
     logger.info("chat_history", extra=log)
 
     for model in data["model_list"]:
-        logger.info("preference", extra={"model_no": model["제품_코드"]})
+        logger.info("preference", extra={"model_no": model["제품_코드"][:10]})
