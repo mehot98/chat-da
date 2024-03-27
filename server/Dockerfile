@@ -42,4 +42,4 @@ RUN --mount=type=cache,target=/root/.cache/pip \
 EXPOSE 80
 
 # Run the application.
-CMD uvicorn chatdaAPI.app.main:app --host 0.0.0.0 --port 80 --root-path /api
+CMD uvicorn chatdaAPI.app.main:app --host 0.0.0.0 --port 80 --root-path /api --reload
