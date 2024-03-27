@@ -64,7 +64,7 @@ class ChatRecommendDto(CamelModel):
     type: str
     content: ChatSpec
     model_no: str
-    chat_id: str
+    chat_id: UUID
 
 
 class ChatSearchResponseDto(CamelModel):
@@ -73,7 +73,7 @@ class ChatSearchResponseDto(CamelModel):
     """
     type: str
     model_list: List[ChatSearchSpec]
-    chat_id: str
+    chat_id: UUID
 
 
 class ChatRankingDto(CamelModel):
@@ -81,7 +81,7 @@ class ChatRankingDto(CamelModel):
     제품 순위 정보
     """
     type: str
-    chat_id: str
+    chat_id: UUID
 
 
 class ChatRankingDetailDto(CamelModel):
@@ -90,7 +90,7 @@ class ChatRankingDetailDto(CamelModel):
     """
     type: str
     model_list: List[ChatSearchSpec]
-    chat_id: str
+    chat_id: UUID
 
 
 class ChatGeneralDto(CamelModel):
@@ -98,7 +98,7 @@ class ChatGeneralDto(CamelModel):
     일상 속 일반적인 대화
     """
     type: str
-    chat_id: str
+    chat_id: UUID
 
 
 class ChatDictionaryResponseDto(CamelModel):
@@ -106,7 +106,7 @@ class ChatDictionaryResponseDto(CamelModel):
     용어 검색시 사용되는 response
     """
     type: str
-    chat_id: str
+    chat_id: UUID
 
 
 class ChatExceptionDto(CamelModel):
@@ -114,7 +114,7 @@ class ChatExceptionDto(CamelModel):
     질문에 대한 답을 찾지 못했을 경우 예외 처리 대답
     """
     content: str = "잘 모르겠어요. 다시 질문해주세요."
-    chat_id: str
+    chat_id: UUID
 
 
 # 모델 리스트를 배열로 추출하는 함수입니다
