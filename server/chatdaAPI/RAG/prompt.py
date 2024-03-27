@@ -1,38 +1,49 @@
 from langchain_core.prompts import FewShotPromptTemplate, PromptTemplate
-
 from chatdaAPI.examples import make_examples
-
 import chatdaAPI.RAG.input_type as input_types
 
-# 일반 답변 생성용 프롬프트
-general_answer_prompt = PromptTemplate.from_template(
-    """
-    You are 'Chatda,' the chatbot for Samsung.com, a website that sells Samsung Electronics' home appliances. 
-    Please maintain a polite tone, acknowledging that you are a chatbot representing Samsung.com, and the user is the customer.
-    Remember to use formal language towards the customer. If the question is unrelated to Samsung.com, 
-    you should respond with "잘 모르겠어요. 다시 질문해주세요." (I'm not sure. Please ask again.) 
-    Answers should be in Korean and kept as concise as possible.
-    
-    Question: {question}
-    Answer: """
+# 자신의 역할에 대한 프롬프트
+role_prompt = ("You are 'ChatDA,' the chatbot for Samsung Electronics' home appliances.\n"
+               "If necessary, generate a response based on the company information provided below.\n"
+               "\ncontext: Based on the vision of becoming a home and lifestyle creator, "
+               "Samsung Electronics provides true consumer-centric innovation "
+               "that fully satisfies consumers' diverse lifestyles.\n")
+
+# 말투 설정에 관한 프롬프트
+tone_prompt = (
+    "Reply in a polite and a bright tone that frequently uses exclamation marks.\n"
+    "Please always respond like explaining in words. Don't display like table.\n"
+    "Please use line breaks appropriately "
+    "after the end of each sentence of your response.\n"
+    "Don't use emojis.\n"
+    "Please write in korean.\n"
 )
 
-# SQL 생성용 프롬프트
+# 안전성에 관한 프롬프트
+safety_prompt = ("If the question is unrelated to Samsung.com, "
+                 "you should respond with \"잘 모르겠어요. 다시 질문해주세요.\" (I'm not sure. Please ask again.)\n")
+
+# SQL없는 일반 답변 생성용 프롬프트
+general_answer_prompt = PromptTemplate.from_template(
+    f"{role_prompt}\n"
+    f"{tone_prompt}"
+    "\nPlease answer the following question based on the conditions listed above.\n"
+    "\nQuestion: {question}\n"
+    "Answer:"
+)
+
+# SQL 기반 답변 생성용 프롬프트
 answer_prompt = PromptTemplate.from_template(
-    """
-    You are 'Chatda,' the chatbot for Samsung.com, a website that sells Samsung Electronics' home appliances. 
-    Whenever a SQL query along with its result and a user question are provided, you should respond accordingly to match the appropriate query result. 
-    Please maintain a polite tone, acknowledging that you are a chatbot representing Samsung.com, and the user is the customer. 
-    Remember to use formal language towards the customer. If the question is unrelated to Samsung.com, 
-    you should respond with "잘 모르겠어요. 다시 질문해주세요." (I'm not sure. Please ask again.) 
-    Answers should be in Korean and kept as concise as possible.
-    
-    
-    
-    Question: {question}
-    SQL Query: {query}
-    SQL Result: {result}
-    Answer: """
+    # f"{role_prompt}"
+    f"{tone_prompt}"
+    "\nPlease answer the question given below based on the conditions listed above, "
+    "the SQL query provided below, and the results of that query.\n"
+    "If there is no data in some columns or the data is meaningless, "
+    "like 평점 is 0.0 / 5.0, you don't need to mention that data.\n"
+    "\nQuestion: {question}\n"
+    "SQL Query: {query}\n"
+    "SQL Result: {result}\n"
+    "Answer:"
 )
 
 # SQL 생성용 프롬프트 초반
@@ -40,6 +51,7 @@ answer_prompt = PromptTemplate.from_template(
 mysql_prompt_prefix = """You are a MySQL expert.
 Given an input question, You will always create 2 MySQL queries. 
 Firstly, create a syntactically correct MySQL query to run only with using the following tables that i will give you below.
+Use JOIN to retreive more information about the question.
 Query for at most {top_k} results for this first query using the LIMIT clause as per MySQL.
 Pay attention to use only the column names you can see in the tables below.
 
@@ -87,8 +99,10 @@ def sql_prompt(user_input):
     # 유저 입력과 관련된 예시들과 유저 입력의 타입을 가져옴
     user_examples, got_input_type = make_examples.get_examples(user_input)
 
-    if got_input_type is input_types.GENERAL:
+    if got_input_type == input_types.GENERAL:
         return general_answer_prompt, got_input_type
+    elif got_input_type == input_types.DICTIONARY:
+        return user_examples, got_input_type
 
     # SQL 생성용 프롬프트 최종
     prompt = FewShotPromptTemplate(
@@ -101,8 +115,9 @@ def sql_prompt(user_input):
 
     return prompt, got_input_type
 
+
 # # 테스트 용
 # if __name__ == '__main__':
-#     prom, user_input_type = sql_prompt("RF85C90D1AP와 RF85C90D2AP의 차이점이 뭐야?")
+#     prom, user_input_type = sql_prompt("RF60DB9342AP에 대해서 설명해줘")
 #
 #     print(prom.pretty_print())

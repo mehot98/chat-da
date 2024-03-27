@@ -5,9 +5,10 @@ examples = [
     {
         "input": "최근에 리뷰가 추가된 냉장고 제품이 뭐야?",
         "query":
-            (f"SELECT * FROM 'refridgerator' JOIN `리뷰_정보` ON `refridgerator`.제품_코드 = `리뷰_정보`.제품_코드 "
-             f"ORDER BY `리뷰_정보`.created_at DESC LIMIT 1;\n\n"
-             f"{join} ORDER BY `리뷰_정보`.created_at DESC LIMIT 1;"),
+            (f"SELECT * FROM 'refridgerator'"
+             f" JOIN `refridgerator_reviews` ON `refridgerator`.제품_코드 = `refridgerator_reviews`.제품_코드 "
+             f"ORDER BY `refridgerator_reviews`.created_at DESC LIMIT 1;\n\n"
+             f"{join} ORDER BY `refridgerator_reviews`.created_at DESC LIMIT 1;"),
         "type": ADDITIONAL,
         "index": 0
     },

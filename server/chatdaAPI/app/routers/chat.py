@@ -7,6 +7,18 @@ import chatdaAPI.app.models.dto.chat.ChatRequestDto as request_dto
 import chatdaAPI.app.models.exmaple_chat as dump
 from chatdaAPI.RAG.make_output import get_output
 
+import logging
+import ecs_logging
+import time
+
+logger = logging.getLogger("app")
+logger.setLevel(logging.DEBUG)
+
+# 콘솔 핸들러 설정
+console_handler = logging.StreamHandler()
+console_handler.setFormatter(ecs_logging.StdlibFormatter())
+logger.addHandler(console_handler)
+
 # prefix == chat
 router = APIRouter()
 
@@ -27,6 +39,8 @@ def post_chat(
 
     response = None
     content = chat_request_dto.content
+    data = None
+    current_time = time.time()
 
     try:
 
@@ -85,6 +99,23 @@ def post_chat(
                 }
             }
         ])
+
+
+
+    log = {
+        "uuid": chat_request_dto.uuid,
+        "latency": time.time() - current_time,
+        "type": data["type"],
+        "user_message": content,
+        "system_message": response.content,
+        "model_no_list": data["model_list"][:10]
+    }
+
+    logger.info("chat_history", extra=log)
+
+    for model in data["model_list"][:10]:
+        logger.info("preference", extra={"model_no": model["제품_코드"]})
+
     return response
 
 

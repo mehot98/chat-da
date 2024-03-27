@@ -11,15 +11,13 @@ from chatdaAPI.config import config
 
 import chatdaAPI.examples.examples_ranking as examples_ranking
 
-# 체인 중간 과정 보기
-set_debug(True)
-
 # DB 불러오기
 db = SQLDatabase.from_uri(
-    f'mysql+pymysql://{config.mysql_user}:{config.mysql_password}@{config.mysql_host}:{config.mysql_port}/{config.mysql_database}',
+    f'mysql+pymysql://{config.mysql_user}:{config.mysql_password}'
+    f'@{config.mysql_host}:{config.mysql_port}/{config.mysql_database}',
     sample_rows_in_table_info=1,
     include_tables=["refridgerators", "refridgerator_reviews", "refridgerator_details"],
-    max_string_length=100
+    max_string_length=1000
 )
 
 # DB 테이블 정보
@@ -60,8 +58,11 @@ def get_output(user_input, search):
     first_prompt, user_input_type = prompt.sql_prompt(user_input)
     model_list = []
 
+    # 용어에 대한 질문일 경우
+    if user_input_type == input_types.DICTIONARY:
+        result = first_prompt["query"]
     # SQL문이 필요한 대화인 경우
-    if user_input_type != input_types.GENERAL:
+    elif user_input_type != input_types.GENERAL:
         # 랭킹인 경우 정해진 답변을 생성하여 리턴
         if user_input_type == input_types.RANKING:
             ranking_query = examples_ranking.examples[0]["query"].split("\n\n")[1]
@@ -86,7 +87,7 @@ def get_output(user_input, search):
         create_sql = create_sql_query_chain(llm, db, first_prompt)
 
         # 최대 행 개수
-        max_rows = 2
+        max_rows = 5
 
         # SQL query 생성
         query = create_sql.invoke(
@@ -105,6 +106,13 @@ def get_output(user_input, search):
             return {
                 "type": input_types.SEARCH,
                 "content": "",
+                "model_no_list": model_list
+            }
+        # 추천인 경우 정해진 답변과 제품 목록만 리턴
+        elif user_input_type == input_types.RECOMMEND:
+            return {
+                "type": user_input_type,
+                "content": "이 상품은 어떠세요?",
                 "model_no_list": model_list
             }
 
@@ -138,8 +146,11 @@ def get_output(user_input, search):
     }
 
 
+# # 체인 중간 과정 보기
+# set_debug(True)
+#
 # # 테스트용
 # if __name__ == '__main__':
-#     res = get_output(user_input='최근에 리뷰가 추가된 냉장고 제품이 뭐야?', search=False)
+#     res = get_output(user_input='RF90DG9111S9 제품 어때?', search=False)
 #     print(f"type : {res['type']}")
 #     print(f"content : {res['content']}")
