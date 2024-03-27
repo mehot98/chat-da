@@ -17,7 +17,7 @@ import ecs_logging
 import time
 
 es = Elasticsearch(
-    "http://elasticsearch:9200",
+    "http://192.168.192.2:9200",
     basic_auth=("elastic", 'changeme')
 )
 
@@ -180,13 +180,47 @@ def post_feedback(
 def post_feedback(
 ):
 
-    return {"es info": es.search(index="logs*", body={"query":{"match_all":{}}})}
+    query = """
+    {
+      "size": 0,
+      "query": {
+        "bool": {
+          "must": [
+            {
+              "match": {
+                "container.name": "chatda-server"
+              }
+            },
+            {
+              "match": {
+                "message": "preference"
+              }
+            }
+          ]
+        }
+      },
+      "aggs": {
+        "top_model_no": {
+          "terms": {
+            "field": "model_no",
+            "size": 10,
+            "order": {
+              "_count": "desc"
+            }
+          }
+        }
+      }
+    }
+    """
+
+    result = es.search(index="logs*", body=query)
+
+    return result.keys()
 
 async def returnData(response: any, stream: any, req: Request, log: Dict, data: any):
     # 만약 request 측 세션이 끊어지면 해당 Stream을 종료시키기
     is_disconnected = await req.is_disconnected()
     if is_disconnected: return
-
     # 처음으로 보내는 값은 모델 정보와 채팅 타입에 대한 내용
     yield f"data: {response.json(by_alias=True)}\n\n"
 
