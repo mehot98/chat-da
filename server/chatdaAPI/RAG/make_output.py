@@ -26,28 +26,29 @@ context = db.get_context()
 # 언어 모델 로드
 llm = ChatOpenAI(model="gpt-3.5-turbo-0125", temperature=0.1, verbose=True)
 
+# 데이터베이스 연결 설정
+setup = {
+    'user': config.mysql_user,  # 데이터베이스 사용자 이름
+    'password': config.mysql_password,  # 데이터베이스 비밀번호
+    'host': config.mysql_host,  # 데이터베이스 호스트
+    'database': config.mysql_database,  # 데이터베이스 이름
+    'raise_on_warnings': True
+}
+# 데이터베이스에 연결
+conn = mysql.connector.connect(**setup)
+# 커서 생성 - 딕셔너리 형태로 결과를 가져오기 위해 dictionary=True 옵션 사용
+cursor = conn.cursor(dictionary=True)
+
 
 # join문까지 포함된 sql을 이용하여 모든 정보를 가져와서 list를 만드는 함수
 def make_model_list(query):
-    # 데이터베이스 연결 설정
-    setup = {
-        'user': config.mysql_user,  # 데이터베이스 사용자 이름
-        'password': config.mysql_password,  # 데이터베이스 비밀번호
-        'host': config.mysql_host,  # 데이터베이스 호스트
-        'database': config.mysql_database,  # 데이터베이스 이름
-        'raise_on_warnings': True
-    }
-    # 데이터베이스에 연결
-    conn = mysql.connector.connect(**setup)
-    # 커서 생성 - 딕셔너리 형태로 결과를 가져오기 위해 dictionary=True 옵션 사용
-    cursor = conn.cursor(dictionary=True)
     # SQL 쿼리 실행
     cursor.execute(query)
     # 모든 결과를 딕셔너리 리스트로 가져옴
     results = cursor.fetchall()
-    # 연결 종료
-    cursor.close()
-    conn.close()
+    # # 연결 종료
+    # cursor.close()
+    # conn.close()
 
     return results
 
@@ -86,14 +87,17 @@ def get_output(user_input, search):
         # SQL 생성을 위한 chain
         create_sql = create_sql_query_chain(llm, db, first_prompt)
 
-        # 최대 행 개수
+        # LLM 입력용 최대 행 개수
         max_rows = 5
+        # 리스트용 최대 행 개수
+        max_rows2 = 10
 
         # SQL query 생성
         query = create_sql.invoke(
             {
                 "question": user_input,
                 "top_k": max_rows,
+                "top_k2": max_rows2,
                 "table_info": context["table_info"]
             }
         ).split("\n\n")
@@ -132,7 +136,6 @@ def get_output(user_input, search):
         else:
             result = "제품에 대한 정보가 존재하지 않습니다!"
             model_list = None
-
     # 일반적인 대화인 경우
     else:
         answer_chain = first_prompt | llm | StrOutputParser()
@@ -146,11 +149,11 @@ def get_output(user_input, search):
     }
 
 
-# # 체인 중간 과정 보기
-# set_debug(True)
-#
-# # 테스트용
-# if __name__ == '__main__':
-#     res = get_output(user_input='RF90DG9111S9 제품 어때?', search=False)
-#     print(f"type : {res['type']}")
-#     print(f"content : {res['content']}")
+# 체인 중간 과정 보기
+set_debug(True)
+
+# 테스트용
+if __name__ == '__main__':
+    res = get_output(user_input='요새 잘 나가는 냉장고가 뭐야?', search=False)
+    print(f"type : {res['type']}")
+    print(f"content : {res['content']}")
