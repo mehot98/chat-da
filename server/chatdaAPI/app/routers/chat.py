@@ -178,7 +178,7 @@ def post_feedback(
 
     query = """
         {
-          "query": 
+          "query": {
             "bool": {
               "must": [
                 {
@@ -195,6 +195,7 @@ def post_feedback(
             }
           }
         }
+
         """
 
     result = es.search(index="logs*", body=query)
