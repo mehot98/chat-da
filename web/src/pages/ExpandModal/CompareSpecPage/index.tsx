@@ -156,20 +156,6 @@ export default function CompareSpecPage({ selectedModelNo }: { selectedModelNo: 
     <>
       <S.ModalHeaderWrapper>
         <S.ModalHeaderSpan>자세히 비교하기</S.ModalHeaderSpan>
-        {/* <S.SpecDetailColumnWrapper>
-          {selectedModelNo.map((no: string, i: number) => (
-            <>
-              <Comp.SpecDetailColumn
-                key={no}
-                recommendProps={recommendPropsList[i]}
-                sizeSpec={sizeSpecList[i]}
-                summarySpec={summarySpecList[i]}
-                rawSpec={rawSpecList[i]}
-              />
-              {i !== selectedModelNo.length - 1 && <S.VerticalLine />}
-            </>
-          ))}
-        </S.SpecDetailColumnWrapper> */}
         {recommendPropsList.length !== 0 && (
           <Comp.SpecCompareGrid
             recommendProps={recommendPropsList}

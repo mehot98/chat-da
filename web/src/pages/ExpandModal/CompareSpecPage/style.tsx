@@ -1,11 +1,12 @@
 import styled from "@emotion/styled";
 
 export const ModalHeaderWrapper = styled.div`
-  width: fit-content;
+  width: 100%;
   height: fit-content;
   display: flex;
   flex-direction: column;
   gap: 11px;
+  position: relative;
 `;
 
 export const ModalHeaderSpan = styled.span`

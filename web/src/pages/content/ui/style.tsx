@@ -35,7 +35,6 @@ export const ChatExpandModal = styled(ChatMainModal)`
     display: flex;
     flex-direction: column;
     align-items: center;
-    position: fixed;
     right: 440px;
     border-radius: 15px 0px 0px 15px;
     border-right: 30px solid white;
