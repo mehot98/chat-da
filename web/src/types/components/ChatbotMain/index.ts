@@ -45,7 +45,7 @@ export interface MessageProps {
   reviewCount?: string;
   rating?: string;
   imageUrl?: string;
-  setMessages?: Dispatch<SetStateAction<MessagesProps>>;
+  setMessages?: (data: any, message: string) => void;
   setComparePrds?: Dispatch<SetStateAction<T.ComparePrdProps[]>>;
   handleOpenExpandModal?: (st: T.ExpandModalStateType) => void;
   changeSelectedModelNo?: (models: string[]) => void;

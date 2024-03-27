@@ -3,19 +3,20 @@ import * as Comp from "@root/src/components";
 import * as S from "./style";
 import * as T from "@src/types";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import React from "react";
 
-export default function Message(props: T.MessageProps) {
+const Message = React.memo((props: T.MessageProps) => {
   const chatDAIconSrc = chrome.runtime.getURL("icons/ChatDA_icon_128.png");
   const minusIconSrc = chrome.runtime.getURL("icons/minus_icon.png");
 
   function handleCancelButton() {
-    props.setMessages((prev) => {
-      const filteredMessages = prev.filter((message: T.MsgProps) => message.id !== props.id);
-      if (filteredMessages.length === 0) {
-        sessionStorage.setItem("messages", JSON.stringify(filteredMessages));
-      }
-      return filteredMessages;
-    });
+    // props.setMessages((prev) => {
+    //   const filteredMessages = prev.filter((message: T.MsgProps) => message.id !== props.id);
+    //   if (filteredMessages.length === 0) {
+    //     sessionStorage.setItem("messages", JSON.stringify(filteredMessages));
+    //   }
+    //   return filteredMessages;
+    // });
     props.setComparePrds((prev2) => {
       const filteredPrd = prev2.filter((prd: T.ComparePrdProps) => prd.id !== props.id);
       if (filteredPrd.length === 0) {
@@ -146,4 +147,6 @@ export default function Message(props: T.MessageProps) {
       );
     }
   }
-}
+});
+
+export default Message;
