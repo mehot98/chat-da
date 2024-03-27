@@ -176,27 +176,26 @@ def post_feedback(
     응답: HttpResponseDto(data, success)\n
     """
 
-    query = """
-        {
-          "query": {
-            "bool": {
-              "must": [
-                {
-                  "match": {
-                    "message": "chat_history"
-                  }
-                },
-                {
-                  "match": {
-                    "chat_id": """ + "\""  + feedback_request_dto['chat_id'] + "\"" + """
-                  }
-                }
-              ]
-            }
-          }
-        }
-
-        """
+    query = f"""
+            {{
+              "query": {{
+                "bool": {{
+                  "must": [
+                    {{
+                      "match": {{
+                        "message": "chat_history"
+                      }}
+                    }},
+                    {{
+                      "match": {{
+                        "chat_id": "{feedback_request_dto.chat_id}"
+                      }}
+                    }}
+                  ]
+                }}
+              }}
+            }}
+    """
 
     result = es.search(index="logs*", body=query)
 
