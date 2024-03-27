@@ -77,6 +77,7 @@ export default function App() {
 
   // 냉장고 페이지에서 모든 리스트 선택, 디테일 페이지일시 요약정보 제공
   const fridgeList = useRef<NodeListOf<Element>>();
+  const linkReviewNodeList = useRef<NodeListOf<Element>>();
   const [isDetailPage, setIsDetailPage] = useState(false);
   const [modelNo, setModelNo] = useState("");
 
@@ -85,6 +86,8 @@ export default function App() {
       const moreBtn: HTMLButtonElement | null = document.querySelector("#morePrd");
       let newLiElements: NodeListOf<Element> = document.querySelectorAll(".item-inner");
       fridgeList.current = newLiElements;
+
+      linkReviewNodeList.current = document.querySelectorAll(".link-review");
 
       moreBtn.addEventListener("click", () => {
         newLiElements = document.querySelectorAll(".item-inner");
