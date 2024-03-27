@@ -5,9 +5,6 @@ from pydantic import Field
 
 from chatdaAPI.app.models.utils.CamelModel import CamelModel
 
-from uuid import UUID
-
-
 class ChatInfoDto(CamelModel):
     """
     챗봇과의 대화 중에서 제품 정보에 대한 응답 스키마
@@ -66,7 +63,7 @@ class ChatRecommendDto(CamelModel):
     type: str
     content: ChatSpec
     model_no: str
-    chat_id: UUID
+    chat_id: str
 
 
 class ChatSearchResponseDto(CamelModel):
@@ -75,7 +72,7 @@ class ChatSearchResponseDto(CamelModel):
     """
     type: str
     model_list: List[ChatSearchSpec]
-    chat_id: UUID
+    chat_id: str
 
 
 class ChatRankingDto(CamelModel):
@@ -83,7 +80,7 @@ class ChatRankingDto(CamelModel):
     제품 순위 정보
     """
     type: str
-    chat_id: UUID
+    chat_id: str
 
 
 class ChatRankingDetailDto(CamelModel):
@@ -92,7 +89,7 @@ class ChatRankingDetailDto(CamelModel):
     """
     type: str
     model_list: List[ChatSearchSpec]
-    chat_id: UUID
+    chat_id: str
 
 
 class ChatGeneralDto(CamelModel):
@@ -100,7 +97,7 @@ class ChatGeneralDto(CamelModel):
     일상 속 일반적인 대화
     """
     type: str
-    chat_id: UUID
+    chat_id: str
 
 
 class ChatDictionaryResponseDto(CamelModel):
@@ -108,7 +105,7 @@ class ChatDictionaryResponseDto(CamelModel):
     용어 검색시 사용되는 response
     """
     type: str
-    chat_id: UUID
+    chat_id: str
 
 
 class ChatExceptionDto(CamelModel):
@@ -116,7 +113,7 @@ class ChatExceptionDto(CamelModel):
     질문에 대한 답을 찾지 못했을 경우 예외 처리 대답
     """
     content: str = "잘 모르겠어요. 다시 질문해주세요."
-    chat_id: UUID
+    chat_id: str
 
 
 # 모델 리스트를 배열로 추출하는 함수입니다

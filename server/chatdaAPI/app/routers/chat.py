@@ -139,7 +139,7 @@ def post_search(
     입력: ChatRequestDto(uuid, content)\n
     응답: ChatSearchResponseDto(type, content, model_no_list)
     """
-    chat_id = uuid.uuid4()
+    chat_id = uuid.uuid4().hex
 
     data = get_output(user_input=chat_request_dto.content, search=True)
 
@@ -162,7 +162,7 @@ def get_ranking():
     # 해당 입력을 넣어줌으로써 바로 랭킹 관련 데이터를 받아옵니다.
     data = get_output(user_input="요새 잘 나가는 냉장고가 뭐야?", search=True)
 
-    chat_id = uuid.uuid4()
+    chat_id = uuid.uuid4().hex
     return response_dto.init_ranking_detail_response(data, chat_id)
 
 
