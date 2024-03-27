@@ -52,13 +52,13 @@ def post_chat(
         match content:
             case "info":
                 data = dump.info_data
-                response = response_dto.init_info_response(data,current_time)
+                response = response_dto.init_info_response(data, current_time)
             case "compare":
                 data = dump.compare_data
-                response = response_dto.init_compare_response(data,current_time)
+                response = response_dto.init_compare_response(data, current_time)
             case "recommend":
                 data = dump.recommend_data
-                response = response_dto.init_recommend_response(data,current_time)
+                response = response_dto.init_recommend_response(data, current_time)
             case "naturalSearch":
                 response = dump.natural_data
             # 위 예제 입력에서 걸리지 않은 입력에 대해서는 langchain을 활용한 답변을 생성합니다
@@ -72,19 +72,19 @@ def post_chat(
                     match data["type"]:
                         # langchain으로 생성된 답변의 타입에 따라 응답으로 보낼 객체 형식을 변경합니다.
                         case "info":
-                            response = response_dto.init_info_response(data,current_time)
+                            response = response_dto.init_info_response(data, current_time)
                         case "compare":
-                            response = response_dto.init_compare_response(data,current_time)
+                            response = response_dto.init_compare_response(data, current_time)
                         case "recommend":
-                            response = response_dto.init_recommend_response(data,current_time)
+                            response = response_dto.init_recommend_response(data, current_time)
                         case "ranking":
-                            response = response_dto.init_ranking_response(data,current_time)
+                            response = response_dto.init_ranking_response(data, current_time)
                         case "general":
-                            response = response_dto.init_general_respose(data,current_time)
+                            response = response_dto.init_general_respose(data, current_time)
                         case "search":
-                            response = response_dto.init_search_response(data,current_time)
+                            response = response_dto.init_search_response(data, current_time)
                         case "dictionary":
-                            response = response_dto.init_dictionary_response(data,current_time)
+                            response = response_dto.init_dictionary_response(data, current_time)
                         case default:
                             # 만약 type이 지정되지 않은 값이 나온다면 Exception을 발생시킵니다.
                             raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=[
@@ -140,6 +140,22 @@ def post_search(
     return response_dto.init_search_response(data)
 
 
+@router.get("/ranking",
+            status_code=status.HTTP_200_OK,
+            response_model=response_dto.ChatRankingDetailDto)
+def get_ranking():
+    """
+    인기 순위 10개를 받아오는 API\n
+    응답: ChatRankingDto(type, content, model_list)
+    """
+
+    # 해당 입력을 넣어줌으로써 바로 랭킹 관련 데이터를 받아옵니다.
+    data = get_output(user_input="요새 잘 나가는 냉장고가 뭐야?", search=True)
+
+    current_time = datetime.datetime.utcnow()
+    return response_dto.init_ranking_detail_response(data, current_time)
+
+
 @router.post("/feedback", status_code=status.HTTP_201_CREATED)
 def post_feedback(
         feedback_request_dto: request_dto.FeedbackRequestDto
@@ -157,7 +173,7 @@ async def returnData(response: any, stream: any, req: Request, log: Dict, data: 
     # 만약 request 측 세션이 끊어지면 해당 Stream을 종료시키기
     is_disconnected = await req.is_disconnected()
     if is_disconnected: return
-    
+
     # 처음으로 보내는 값은 모델 정보와 채팅 타입에 대한 내용
     yield f"data: {response.json(by_alias=True)}\n\n"
 
