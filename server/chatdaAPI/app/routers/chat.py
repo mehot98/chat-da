@@ -122,7 +122,7 @@ def post_chat(
         "model_no_list": data["model_list"][:10]
     }
 
-    return StreamingResponse(returnData(response, data["content"], req, log, data), media_type="text/event-stream")
+    return StreamingResponse(returnData(response, data["content"], req, log, data), headers={'X-Accel-Buffering': 'no'}, media_type="text/event-stream")
 
 
 @router.post("/search",
