@@ -116,7 +116,7 @@ def post_chat(
 
     log = {
         "chat_id": chat_id,
-        "time": datetime.utcnow(),
+        "time": datetime.datetime.utcnow(),
         "uuid": chat_request_dto.uuid,
         "latency": time.time(),
         "type": data["type"],
