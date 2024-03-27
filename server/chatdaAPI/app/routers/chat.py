@@ -1,3 +1,4 @@
+import datetime
 import json
 from typing import Dict
 
@@ -41,7 +42,10 @@ def post_chat(
     content = chat_request_dto.content
     data = None
 
-    current_time = time.time()
+    get_time = time.time()
+
+    current_time = datetime.datetime.utcnow()
+
     try:
 
         # 제일 먼저 거치는 content는 테스트 입력을 위한 case를 만납니다. info, compare, recommend, naturalSearch
@@ -105,7 +109,7 @@ def post_chat(
 
     log = {
         "uuid": chat_request_dto.uuid,
-        "latency": time.time() - current_time,
+        "latency": time.time() - get_time,
         "type": data["type"],
         "user_message": content,
         "system_message": "",

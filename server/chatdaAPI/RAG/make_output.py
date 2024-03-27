@@ -71,7 +71,7 @@ def get_output(user_input, search):
             ranking_query = examples_ranking.examples[0]["query"].split("\n\n")[1]
 
             model_list = make_model_list(ranking_query)
-
+            model_list = model_list[:3]
             ranking_list = ""
 
             # 3위까지 답변 생성
@@ -83,7 +83,7 @@ def get_output(user_input, search):
                 "content": "ChatDA가 가장 인기가 많은 냉장고 순위를 알려드릴게요!\n\n"
                            f"{ranking_list}\n"
                            "그 이외의 순위는 옆에서 확인해주세요!",
-                "model_no_list": model_list
+                "model_list": model_list
             }
 
         # SQL 생성을 위한 chain
