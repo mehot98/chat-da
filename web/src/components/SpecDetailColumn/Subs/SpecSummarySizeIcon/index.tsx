@@ -7,9 +7,9 @@ export default function SpecSummarySizeIcon({ sizeSpec }: { sizeSpec: T.SummaryS
     <S.SpecSummaryIconWrapper>
       {sizeSpec && sizeSpec.가로 && sizeSpec.가로 !== "없음" && (
         <S.SpecSummaryIconImgWrapper>
-          <S.widthSpan>{sizeSpec.가로}</S.widthSpan>
-          <S.heightSpan>{sizeSpec.높이}</S.heightSpan>
-          <S.depthSpan>{sizeSpec.깊이}</S.depthSpan>
+          <S.widthSpan>{sizeSpec.가로.replaceAll(" mm", "")}</S.widthSpan>
+          <S.heightSpan>{sizeSpec.높이.replaceAll(" mm", "")}</S.heightSpan>
+          <S.depthSpan>{sizeSpec.깊이.replaceAll(" mm", "")}</S.depthSpan>
           <S.SpecSummaryIconImg src={specIconPath.sizePath} alt="spec-icon" />
         </S.SpecSummaryIconImgWrapper>
       )}

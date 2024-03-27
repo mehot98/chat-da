@@ -1,12 +1,10 @@
 import axios, { AxiosError } from "axios";
 
-// require("dotenv").config();
-
-// console.log("baseURL : ", process.env.PUBLIC_PRODUCT_END_POINT);
+const { VITE_SERVER_END_POINT } = import.meta.env;
 
 const customInstance = (contentType: string) => {
   const dynamicContentInstance = axios.create({
-    baseURL: "",
+    baseURL: VITE_SERVER_END_POINT,
     headers: {
       "Content-Type": contentType,
     },

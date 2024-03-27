@@ -1,3 +1,4 @@
+import SpecEmptyIcon from "../SpecEmptyIcon";
 import * as S from "./style";
 
 export default function SpecSummaryIcon({
@@ -5,11 +6,13 @@ export default function SpecSummaryIcon({
   specKey,
   specValue,
 }: {
-  specImg: string;
-  specKey: string;
-  specValue: string;
+  specImg?: string;
+  specKey?: string;
+  specValue?: string;
 }) {
-  if (specImg && specKey && specValue) {
+  if (specValue === "---") {
+    return <SpecEmptyIcon />;
+  } else if (specImg && specKey && specValue) {
     return (
       <S.SpecSummaryIconWrapper>
         <S.SpecSummaryIconImg src={specImg} alt={specKey} />

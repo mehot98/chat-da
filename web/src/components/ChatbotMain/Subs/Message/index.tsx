@@ -26,9 +26,10 @@ export default function Message(props: T.MessageProps) {
   }
 
   const handleExpandOpenBtn = () => {
-    props.handleOpenExpandModal(props.type);
-    const models = props.modelNoList ? props.modelNoList : [props.modelNo];
+    const modelsNoListSet = new Set(props.modelNoList);
+    const models = props.modelNoList ? [...modelsNoListSet] : [props.modelNo];
     props.changeSelectedModelNo(models);
+    props.handleOpenExpandModal(props.type);
   };
 
   if (props.isUser) {
