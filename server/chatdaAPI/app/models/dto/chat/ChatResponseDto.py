@@ -47,7 +47,6 @@ class ChatSearchSpec(CamelModel):
     혜택가: Optional[str] = None
     소비효율등급: Optional[str] = None
     가로: Optional[str] = None
-    세로: Optional[str] = None
     높이: Optional[str] = None
     깊이: Optional[str] = None
     전체_용량: Optional[str] = None
@@ -82,7 +81,15 @@ class ChatRankingDto(CamelModel):
     제품 순위 정보
     """
     type: str
-    model_no_list: List[ChatSearchSpec]
+    craeted_at: datetime
+
+
+class ChatRankingDetailDto(CamelModel):
+    """
+    제품 순위 정보
+    """
+    type: str
+    model_list: List[ChatSearchSpec]
     craeted_at: datetime
 
 
@@ -149,6 +156,13 @@ def init_recommend_response(data, created_at):
 
 def init_ranking_response(data, created_at):
     return ChatRankingDto(
+        type=data["type"],
+        craeted_at=created_at
+    )
+
+
+def init_ranking_detail_response(data, created_at):
+    return ChatRankingDetailDto(
         type=data["type"],
         model_list=data["model_list"],
         craeted_at=created_at
