@@ -10,17 +10,26 @@ export default function Message(props: T.MessageProps) {
 
   function handleCancelButton() {
     props.setMessages((prev) => {
-      return prev.filter((message: T.MsgProps) => message.id !== props.id);
+      const filteredMessages = prev.filter((message: T.MsgProps) => message.id !== props.id);
+      if (filteredMessages.length === 0) {
+        sessionStorage.setItem("messages", JSON.stringify(filteredMessages));
+      }
+      return filteredMessages;
     });
     props.setComparePrds((prev2) => {
-      return prev2.filter((prd: T.ComparePrdProps) => prd.id !== props.id);
+      const filteredPrd = prev2.filter((prd: T.ComparePrdProps) => prd.id !== props.id);
+      if (filteredPrd.length === 0) {
+        sessionStorage.setItem("comparePrds", JSON.stringify(filteredPrd));
+      }
+      return filteredPrd;
     });
   }
 
   const handleExpandOpenBtn = () => {
-    props.handleOpenExpandModal(props.type);
-    const models = props.modelNoList ? props.modelNoList : [props.modelNo];
+    const modelsNoListSet = new Set(props.modelNoList);
+    const models = props.modelNoList ? [...modelsNoListSet] : [props.modelNo];
     props.changeSelectedModelNo(models);
+    props.handleOpenExpandModal(props.type);
   };
 
   if (props.isUser) {

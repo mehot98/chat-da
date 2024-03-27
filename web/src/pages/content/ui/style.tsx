@@ -30,6 +30,7 @@ export const ChatExpandModal = styled(ChatMainModal)`
   & .MuiDialog-paper {
     padding: 30px;
     width: fit-content;
+    max-width: 890px;
     z-index: 1299;
     display: flex;
     flex-direction: column;
@@ -44,6 +45,7 @@ export const ChatExpandModal = styled(ChatMainModal)`
     ::-webkit-scrollbar {
       background-color: transparent;
       width: 10px;
+      height: 10px;
       margin: 1px;
     }
 
