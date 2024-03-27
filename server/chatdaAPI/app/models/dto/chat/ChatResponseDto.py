@@ -30,9 +30,9 @@ class ChatSpec(CamelModel):
     """
     제품_코드: str
     제품명: str
-    가격: str = Field(default=None)
-    혜택가: str = Field(default=None)
-    image_url: str
+    가격: Optional[str] = None
+    혜택가: Optional[str] = None
+    image_url: Optional[str] = None
 
 
 class ChatSearchSpec(CamelModel):
@@ -43,7 +43,7 @@ class ChatSearchSpec(CamelModel):
     제품명: str
     평점: Optional[str] = None
     리뷰_개수: Optional[int] = None
-    가격: str
+    가격: Optional[str] = None
     혜택가: Optional[str] = None
     소비효율등급: Optional[str] = None
     가로: Optional[str] = None

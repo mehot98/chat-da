@@ -6,7 +6,7 @@ class SummaryResponseDto(CamelModel):
     """
     요약 내용 응답
     """
-    content: str
+    content: Optional[str] = None
 
 
 def init_summary_response(data):
