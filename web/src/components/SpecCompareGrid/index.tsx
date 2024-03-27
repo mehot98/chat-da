@@ -1,5 +1,4 @@
 import ChatbotRecommend from "../ChatbotRecommend";
-// import makeSpecObject from "@src/utils/makeSpecObject";
 import * as ColumnSub from "@components/SpecDetailColumn/Subs";
 import * as Sub from "./Subs";
 import * as S from "./style";
@@ -78,6 +77,14 @@ export default function SpecCompareGrid({
         {summarySpecKeys.map((key) => (
           <Sub.GridSpecSummaryIcon summarySpec={summarySpec} specKey={key} key={key} />
         ))}
+
+        {/* <S.GridRow xs={12}>
+          {rawSpec.map((raw, i: string) => (
+            <S.SpecWrapper key={i}>
+              <Sub.GridSpecList rawSpec={raw} key={i} />
+            </S.SpecWrapper>
+          ))}
+        </S.GridRow> */}
       </S.GridWrapper>
     );
   }

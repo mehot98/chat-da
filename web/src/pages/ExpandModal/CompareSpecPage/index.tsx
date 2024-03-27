@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { request } from "@src/apis/requestBuilder";
 import * as Comp from "@root/src/components";
 import * as S from "./style";
@@ -9,6 +9,7 @@ export default function CompareSpecPage({ selectedModelNo }: { selectedModelNo: 
   const [summarySpecList, setSummarySpecList] = useState<T.SummarySpecType[]>([]);
   const [sizeSpecList, setSizeSpecList] = useState<T.SummarySpecType[]>([]);
   const [rawSpecList, setRawSpecList] = useState([]);
+  // const rawSpecObjectList = useRef([])
 
   const initState = () => {
     setRecommendPropsList([]);
@@ -108,6 +109,47 @@ export default function CompareSpecPage({ selectedModelNo }: { selectedModelNo: 
       });
     });
     console.log("받은 summarySpec들 !!", summarySpecList);
+
+    // raw data 정제
+    const rawSpecListKeysSet = new Set();
+
+    rawSpecList.forEach((specList) => {
+      Object.keys(specList).forEach((key) => {
+        if (!specList[key] || specList[key] === "없음") {
+          delete specList[key];
+        } else {
+          rawSpecListKeysSet.add(key);
+        }
+      });
+    });
+
+    // for (let i; i < selectedModelNo.length; i++) {
+    //   rawSpecObjectList.current.push([])
+    // }
+
+    [...rawSpecListKeysSet].forEach((key: string, i) => {
+      rawSpecList.forEach((specList, j) => {
+        if (!specList[key] || specList[key] === "없음") {
+          const newSpecList = rawSpecList[j];
+          newSpecList[key] = "---";
+          setRawSpecList([
+            ...rawSpecList.slice(0, j),
+            newSpecList,
+            ...rawSpecList.slice(j + 1, rawSpecList.length),
+          ]);
+        } else {
+          const newSpecList = rawSpecList[j];
+          newSpecList[key] = rawSpecList[key];
+          setRawSpecList([
+            ...rawSpecList.slice(0, j),
+            newSpecList,
+            ...rawSpecList.slice(j + 1, rawSpecList.length),
+          ]);
+        }
+      });
+    });
+    console.log("받은 rawSpec들 !!", rawSpecList);
+    // eslint-disable-next-line
   }, [summarySpecList]);
 
   return (
