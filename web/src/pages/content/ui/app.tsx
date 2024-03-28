@@ -1,4 +1,4 @@
-import { useState, useEffect, ReactElement } from "react";
+import { useState, useEffect, ReactElement, useMemo } from "react";
 import * as Comp from "@root/src/components";
 import * as S from "./style";
 import * as T from "@root/src/types";
@@ -13,6 +13,8 @@ const searchIconPath = "icons/search_icon.png";
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { createRoot } from "react-dom/client";
+import { useSpeechInput } from "@root/src/hooks/useSpeechInput";
+import { fetchEventSource } from "@microsoft/fetch-event-source";
 
 export default function App() {
   const [isOpenMainModal, setIsOpenMainModal] = useState<boolean>(false);
@@ -276,6 +278,206 @@ export default function App() {
     }
   }, []);
 
+  // 메시지 관리
+
+  const { VITE_SERVER_END_POINT } = import.meta.env;
+
+  const getUuid = () => {
+    const sessionId = window.sessionStorage.getItem("_da_da_sessionId");
+    const tabHash = window.sessionStorage.getItem("di_tab_hash");
+    return `${sessionId}_${tabHash}`;
+  };
+
+  const uuid = useMemo(getUuid, []);
+
+  const fetchMessage = async (message: string, tts = false) => {
+    setMessages((prev) => [...prev, { content: message, isUser: true }]);
+
+    await fetchEventSource(`${VITE_SERVER_END_POINT}/chat`, {
+      method: "POST",
+      headers: {
+        Accept: "text/event-stream",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        uuid,
+        content: message,
+      }),
+      onopen: async (res: Response) => {
+        if (res.ok && res.status === 200) {
+          console.log("Connection made ", res);
+        } else if (res.status >= 400 && res.status < 500 && res.status !== 429) {
+          console.log("Client-side error ", res);
+        }
+      },
+
+      // stream를 통해 데이터를 받을 때 사용되는 함수 입니다.
+      // 기본 첫번째 토큰에는 type과 content, modelNo, modelNoList, modelList등으로 구분 됩니다.
+      // 기존 content에서 단순 요약 정보와 같은 내용은 data로 응답이 나타납니다
+      // { "type" : "info" , "modelNo" : "SESEQWE2424"}
+      // { "data" : "이"}
+      // { "data" : "제"}
+      // { "data" : "품"}
+      onmessage(event) {
+        const data = JSON.parse(event.data);
+        handleMessage(data);
+      },
+      onclose() {
+        if (!tts || typeof speechSynthesis === "undefined") return;
+        const lastMessage = messages[messages.length - 1];
+        if (lastMessage.isUser) return;
+
+        const voice = speechSynthesis.getVoices().findLast((v) => v.lang === "ko-KR");
+        const utter = new SpeechSynthesisUtterance(lastMessage.content);
+        utter.voice = voice;
+        speechSynthesis.speak(utter);
+      },
+    });
+  };
+
+  const handleMessage = (data) => {
+    if (data.type !== undefined) {
+      if (data.type === "recommend") {
+        setMessages((prev) => [
+          ...prev,
+          {
+            type: data.type,
+            content: "",
+            isUser: false,
+            isTyping: true,
+            isCompared: false,
+            id: data.craetedAt,
+            modelNo: data.modelNo,
+            spec: data.content.content,
+          },
+        ]);
+      } else if (data.type === "info") {
+        setMessages((prev) => [
+          ...prev,
+          {
+            type: data.type,
+            content: "",
+            isUser: false,
+            isTyping: true,
+            isCompared: false,
+            id: data.craetedAt,
+            modelNo: data.modelNo,
+            btnString: "상세 스펙 보기",
+          },
+        ]);
+      } else if (data.type === "compare") {
+        setMessages((prev) => [
+          ...prev,
+          {
+            type: data.type,
+            content: "",
+            isUser: false,
+            isTyping: true,
+            isCompared: true,
+            id: data.craetedAt,
+            modelNoList: data.modelNoList,
+            btnString: "자세히 비교하기",
+          },
+        ]);
+      } else if (data.type === "general") {
+        setMessages((prev) => [
+          ...prev,
+          {
+            type: data.type,
+            content: "",
+            isUser: false,
+            isTyping: true,
+            isCompared: false,
+            id: data.craetedAt,
+          },
+        ]);
+      } else if (data.type === "ranking") {
+        setMessages((prev) => [
+          ...prev,
+          {
+            type: data.type,
+            content: "",
+            isUser: false,
+            isTyping: true,
+            isCompared: false,
+            id: data.craetedAt,
+            modelList: data.modelList,
+            btnString: "자세히 비교하기",
+          },
+        ]);
+      } else if (data.type === "search") {
+        setMessages((prev) => [
+          ...prev,
+          {
+            type: data.type,
+            content: "",
+            isUser: false,
+            isTyping: true,
+            isCompared: false,
+            id: data.craetedAt,
+            modelList: data.modelList,
+            btnString: "자세히 비교하기",
+          },
+        ]);
+      } else if (data.type === "dictionary") {
+        setMessages((prev) => [
+          ...prev,
+          {
+            type: data.type,
+            content: "",
+            isUser: false,
+            isTyping: true,
+            isCompared: false,
+            id: data.craetedAt,
+          },
+        ]);
+      } else {
+        // 이 부분에는 data.type이 없는 문제이므로 오류 문구 추가하면 될 것 같습니다.
+        console.log("예외처리해야함!!");
+      }
+    } else if (data.data !== undefined) {
+      setMessages((prev) => {
+        const lastMessageIndex = prev.length - 1;
+        const updatedMessages = [
+          ...prev.slice(0, lastMessageIndex),
+          {
+            ...prev[lastMessageIndex],
+            content: prev[lastMessageIndex].content + data.data,
+          },
+        ];
+        return updatedMessages;
+      });
+    }
+  };
+
+  // 음성 인식
+
+  const { isListening, isCompleted, content, supports, init, start } = useSpeechInput();
+
+  const [isSpeechInput, setSpeechInput] = useState(false);
+  const [speechText, setSpeechText] = useState("");
+
+  useEffect(() => {
+    if (supports) init();
+  }, [supports]);
+
+  useEffect(() => {
+    if (isListening) {
+      setSpeechInput(true);
+      setSpeechText(content);
+    } else {
+      setSpeechInput(false);
+    }
+  }, [isListening, content]);
+
+  useEffect(() => {
+    if (isCompleted) {
+      setSpeechInput(false);
+      start();
+      fetchMessage(speechText, true);
+    }
+  }, [isCompleted]);
+
   return (
     <QueryClientProvider client={queryClient}>
       {/* mui component를 사용하는 경우 아래와 같이 StyledEngineProvider를 반드시 사용해야 합니다!*/}
@@ -331,6 +533,10 @@ export default function App() {
                 setMessages={setMessages}
                 handleOpenExpandModal={handleOpenExpandModal}
                 changeSelectedModelNo={changeSelectedModelNo}
+                fetchMessage={fetchMessage}
+                handleMessage={handleMessage}
+                isSpeechInput={isSpeechInput}
+                speechText={speechText}
               />
             </S.ChatMainContent>
           </S.ChatMainWrapper>
