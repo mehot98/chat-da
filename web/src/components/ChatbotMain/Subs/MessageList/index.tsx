@@ -14,7 +14,7 @@ const MessageList = ({
 }: {
   messages: T.MessagesProps;
   currentTypingId: number;
-  setMessages: (data: any, message: string) => void;
+  setMessages: Dispatch<SetStateAction<T.MessagesProps>>;
   setComparePrds: Dispatch<SetStateAction<T.ComparePrdProps[]>>;
   handleOpenExpandModal: (st: T.ExpandModalStateType) => void;
   changeSelectedModelNo: (models: string[]) => void;

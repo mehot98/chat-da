@@ -4,18 +4,19 @@ import * as S from "./style";
 import * as T from "@src/types";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import React from "react";
+import { i } from "vite/dist/node/types.d-jgA8ss1A";
 
 const Message = (props: T.MessageProps) => {
   const chatDAIconSrc = chrome.runtime.getURL("icons/ChatDA_icon_128.png");
   const minusIconSrc = chrome.runtime.getURL("icons/minus_icon.png");
   function handleCancelButton() {
-    // props.setMessages((prev) => {
-    //   const filteredMessages = prev.filter((message: T.MsgProps) => message.id !== props.id);
-    //   if (filteredMessages.length === 0) {
-    //     sessionStorage.setItem("messages", JSON.stringify(filteredMessages));
-    //   }
-    //   return filteredMessages;
-    // });
+    props.setMessages((prev) => {
+      const filteredMessages = prev.filter((message: T.MsgProps) => message.id !== props.id);
+      if (filteredMessages.length === 0) {
+        sessionStorage.setItem("messages", JSON.stringify(filteredMessages));
+      }
+      return filteredMessages;
+    });
     props.setComparePrds((prev2) => {
       const filteredPrd = prev2.filter((prd: T.ComparePrdProps) => prd.id !== props.id);
       if (filteredPrd.length === 0) {
@@ -24,6 +25,7 @@ const Message = (props: T.MessageProps) => {
       return filteredPrd;
     });
   }
+  //세션스토리지에서 모델명 가져오기
 
   const handleExpandOpenBtn = () => {
     const modelsNoListSet = new Set(props.modelNoList);
@@ -34,15 +36,32 @@ const Message = (props: T.MessageProps) => {
 
   if (props.isUser) {
     if (props.isCompared) {
+      const storage = JSON.parse(sessionStorage.getItem("comparePrds") || "[]");
+      const lastCompare = storage[storage.length - 1].modelNo;
+
+      const modelNoList = storage.map((stor) => stor.modelNo);
+
+      const handleExpandOpenBtn = () => {
+        props.changeSelectedModelNo(modelNoList);
+        props.handleOpenExpandModal(props.type);
+      };
+
       return (
-        <S.UserMessageWrapper>
-          <div className="compare">
-            <span>{props.content}</span>
-            <button onClick={handleCancelButton}>
-              <img src={minusIconSrc} alt="cancel-compare" width={20} height={20} />
-            </button>
-          </div>
-        </S.UserMessageWrapper>
+        <>
+          <S.UserMessageWrapper>
+            <div className="compare">
+              <span>{props.content}</span>
+              <button onClick={handleCancelButton}>
+                <img src={minusIconSrc} alt="cancel-compare" width={20} height={20} />
+              </button>
+            </div>
+          </S.UserMessageWrapper>
+          {props.modelNo === lastCompare && (
+            <S.ExpandOpenBtn onClick={handleExpandOpenBtn} startIcon={<ArrowBackIcon />}>
+              자세히 비교하기
+            </S.ExpandOpenBtn>
+          )}
+        </>
       );
     } else {
       return (

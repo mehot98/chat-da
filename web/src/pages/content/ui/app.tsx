@@ -107,7 +107,16 @@ export default function App() {
   }, [currentUrl]);
 
   // 메시지 정보 담는 곳
-  const [messages, setMessages] = useState<T.MessagesProps>([]);
+  const [messages, setMessages] = useState<T.MessagesProps>([
+    {
+      type: "home",
+      content: "안녕하세요 고객님\n저는 ChatDA에요!\n고객님의 궁금증을 친절히 설명해드릴게요!",
+      isUser: false,
+      isTyping: false,
+      isCompared: false,
+      id: 0,
+    },
+  ]);
   // 비교하기 아이콘 붙이기 + 클릭시 제품명, 코드 저장
   // 비교상품 정보 담는 곳
   const [comparePrds, setComparePrds] = useState<T.ComparePrdProps[]>([]);
@@ -186,11 +195,14 @@ export default function App() {
             if (isDuplicate) {
               return prev;
             } else {
+              console.log("비교 상품: ", prev);
               setMessages((prev2) => {
                 return [
                   ...prev2,
                   {
-                    text: `${spanTags[0].textContent}\n${spanTags[1].textContent}`,
+                    type: "compare",
+                    content: `${spanTags[0].textContent}\n${spanTags[1].textContent}`,
+                    modelNo: spanTags[1].textContent,
                     isUser: true,
                     isTyping: true,
                     id: time,
@@ -215,7 +227,7 @@ export default function App() {
 
   /*
   #===============================================================================#
-  |                               리뷰 요약 appendChild                             |
+  |                               리뷰 요약 appendChild                            |
   #===============================================================================#
   */
   // 리뷰 요약 내용을 담을 state
@@ -302,7 +314,7 @@ export default function App() {
   }, [linkReviewNodeList, reviewSummary]);
 
   useEffect(() => {
-    if (messages.length > 0) {
+    if (messages.length > 1) {
       sessionStorage.setItem("messages", JSON.stringify(messages));
     }
   }, [messages]);
@@ -312,13 +324,6 @@ export default function App() {
       sessionStorage.setItem("comparePrds", JSON.stringify(comparePrds));
     }
   }, [comparePrds]);
-
-  // useEffect(() => {
-  //   const storage = JSON.parse(sessionStorage.getItem("messages") || "[]");
-  //   const compare = JSON.parse(sessionStorage.getItem("comparePrds") || "[]");
-  //   setMessages(storage);
-  //   setMessages(compare);
-  // }, []);\
 
   const queryClient = new QueryClient();
 
@@ -349,33 +354,27 @@ export default function App() {
     }
     // eslint-disable-next-line
   }, [isDetailPage, isProductSummaryRendered]);
-  // useEffect(() => {
-  //   console.log(expandModalState);
-  // }, [expandModalState]);
-
-  // useEffect(() => {
-  //   console.log(selectedModelNo);
-  // }, [selectedModelNo]);
 
   // home 메시지
-  useEffect(() => {
-    if (sessionStorage.getItem("messages") === null) {
-      sessionStorage.setItem(
-        "messages",
-        JSON.stringify([
-          {
-            type: "home",
-            content:
-              "안녕하세요 고객님\n저는 ChatDA에요!\n고객님의 궁금증을 친절히 설명해드릴게요!",
-            isUser: false,
-            isTyping: false,
-            isCompared: false,
-            id: 0,
-          },
-        ]),
-      );
-    }
-  }, []);
+  // useEffect(() => {
+  //   console.log("새로고침하면 떠야함: ", sessionStorage.getItem("messages"));
+  //   if (sessionStorage.getItem("messages") === null) {
+  //     sessionStorage.setItem(
+  //       "messages",
+  //       JSON.stringify([
+  //         {
+  //           type: "home",
+  //           content:
+  //             "안녕하세요 고객님\n저는 ChatDA에요!\n고객님의 궁금증을 친절히 설명해드릴게요!",
+  //           isUser: false,
+  //           isTyping: false,
+  //           isCompared: false,
+  //           id: 0,
+  //         },
+  //       ]),
+  //     );
+  //   }
+  // }, []);
 
   // 메시지 관리
 

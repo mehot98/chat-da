@@ -2,6 +2,7 @@ import { Dispatch, SetStateAction } from "react";
 import * as T from "../../index";
 
 export interface MsgProps {
+  type?: "compare" | "info" | "recommend" | "home";
   text?: string;
   content?: string;
   sender?: "user" | "bot";
@@ -46,7 +47,7 @@ export interface MessageProps {
   reviewCount?: string;
   rating?: string;
   imageUrl?: string;
-  setMessages?: (data: any, message: string) => void;
+  setMessages?: Dispatch<SetStateAction<T.MessagesProps>>;
   setComparePrds?: Dispatch<SetStateAction<T.ComparePrdProps[]>>;
   handleOpenExpandModal?: (st: T.ExpandModalStateType) => void;
   changeSelectedModelNo?: (models: string[]) => void;
