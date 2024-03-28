@@ -3,19 +3,19 @@ import * as Comp from "@root/src/components";
 import * as S from "./style";
 import * as T from "@src/types";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import React from "react";
 
-export default function Message(props: T.MessageProps) {
+const Message = (props: T.MessageProps) => {
   const chatDAIconSrc = chrome.runtime.getURL("icons/ChatDA_icon_128.png");
   const minusIconSrc = chrome.runtime.getURL("icons/minus_icon.png");
-
   function handleCancelButton() {
-    props.setMessages((prev) => {
-      const filteredMessages = prev.filter((message: T.MsgProps) => message.id !== props.id);
-      if (filteredMessages.length === 0) {
-        sessionStorage.setItem("messages", JSON.stringify(filteredMessages));
-      }
-      return filteredMessages;
-    });
+    // props.setMessages((prev) => {
+    //   const filteredMessages = prev.filter((message: T.MsgProps) => message.id !== props.id);
+    //   if (filteredMessages.length === 0) {
+    //     sessionStorage.setItem("messages", JSON.stringify(filteredMessages));
+    //   }
+    //   return filteredMessages;
+    // });
     props.setComparePrds((prev2) => {
       const filteredPrd = prev2.filter((prd: T.ComparePrdProps) => prd.id !== props.id);
       if (filteredPrd.length === 0) {
@@ -37,7 +37,7 @@ export default function Message(props: T.MessageProps) {
       return (
         <S.UserMessageWrapper>
           <div className="compare">
-            <span>{props.text}</span>
+            <span>{props.content}</span>
             <button onClick={handleCancelButton}>
               <img src={minusIconSrc} alt="cancel-compare" width={20} height={20} />
             </button>
@@ -48,7 +48,7 @@ export default function Message(props: T.MessageProps) {
       return (
         <S.UserMessageWrapper>
           <div>
-            <p>{props.text}</p>
+            <p>{props.content}</p>
           </div>
         </S.UserMessageWrapper>
       );
@@ -98,13 +98,27 @@ export default function Message(props: T.MessageProps) {
             <img src={chatDAIconSrc} alt="ChatDA-logo" width={43} height={42} />
             <S.AiMessageDiv>
               <div>
-                <p>{props.text}</p>
+                <p>{props.content}</p>
               </div>
             </S.AiMessageDiv>
           </S.AiMessageRow>
 
           <Comp.ChatbotRecommend {...recommendProps} />
           <MessageFeedback isRecommend={true} />
+        </S.AiMessageWrapper>
+      );
+    } else if (props.type === "home") {
+      return (
+        <S.AiMessageWrapper>
+          <S.AiMessageRow>
+            <img src={chatDAIconSrc} alt="ChatDA-logo" width={43} height={42} />
+            <S.AiMessageDiv>
+              <div>
+                <p>{props.content}</p>
+              </div>
+            </S.AiMessageDiv>
+          </S.AiMessageRow>
+          <Comp.ChatbotHomeMessage />
         </S.AiMessageWrapper>
       );
     } else {
@@ -114,7 +128,7 @@ export default function Message(props: T.MessageProps) {
             <img src={chatDAIconSrc} alt="ChatDA-logo" width={43} height={42} />
             <S.AiMessageDiv>
               <div>
-                <p>{props.text}</p>
+                <p>{props.content}</p>
               </div>
             </S.AiMessageDiv>
           </S.AiMessageRow>
@@ -130,4 +144,6 @@ export default function Message(props: T.MessageProps) {
       );
     }
   }
-}
+};
+
+export default Message;

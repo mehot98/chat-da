@@ -2,8 +2,9 @@ import Message from "../Message";
 import * as T from "@root/src/types";
 import * as S from "./style";
 import { Dispatch, SetStateAction } from "react";
+import React from "react";
 
-export default function MessageList({
+const MessageList = ({
   messages,
   currentTypingId,
   setMessages,
@@ -13,11 +14,11 @@ export default function MessageList({
 }: {
   messages: T.MessagesProps;
   currentTypingId: number;
-  setMessages: Dispatch<SetStateAction<T.MessagesProps>>;
+  setMessages: (data: any, message: string) => void;
   setComparePrds: Dispatch<SetStateAction<T.ComparePrdProps[]>>;
   handleOpenExpandModal: (st: T.ExpandModalStateType) => void;
   changeSelectedModelNo: (models: string[]) => void;
-}) {
+}) => {
   return (
     <S.MessageListWrapper>
       {messages.map((message: T.MessageProps, index: number) => (
@@ -33,4 +34,6 @@ export default function MessageList({
       ))}
     </S.MessageListWrapper>
   );
-}
+};
+
+export default MessageList;
