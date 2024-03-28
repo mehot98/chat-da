@@ -17,7 +17,7 @@ def get_compare_detail(
 ):
     """
     제품 비교 상세보기 페이지 API\n
-    입력: modelNo(EWEWE2323,WEAFWEWE23)\n
+    입력: modelNo(RF85C9101AP,RS84B5061M9)\n
     응답: CompareResponseDto(type, spec[], model_no_list[])\n
     """
     model_no_list = model_no.split(",")
