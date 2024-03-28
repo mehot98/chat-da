@@ -220,7 +220,9 @@ export default function App() {
   //   setMessages(compare);
   // }, []);\
 
-  function renderReactComponentElement(element:ReactElement) {
+  const queryClient = new QueryClient();
+
+  function renderReactComponentElement(element: ReactElement) {
     // 외부 요소를 찾거나 생성
     const menuElement = document.getElementsByClassName("menu01")[0];
     let childElement = document.getElementById("summaryPlace");
@@ -233,12 +235,8 @@ export default function App() {
 
     // React Portal을 사용하여 외부 요소 안에 React 컴포넌트를 렌더링
     const root = createRoot(childElement);
-    root.render(
-      <QueryClientProvider client={queryClient}>{element}</QueryClientProvider>
-    )
+    root.render(<QueryClientProvider client={queryClient}>{element}</QueryClientProvider>);
   }
-
-  const queryClient = new QueryClient();
 
   // 제품 요약 말풍선 생성
   const [isProductSummaryRendered, setIsProductSummaryRendered] = useState<boolean>(false);
@@ -250,13 +248,33 @@ export default function App() {
       setIsProductSummaryRendered(true);
     }
   }, [isDetailPage, isProductSummaryRendered]);
-  useEffect(() => {
-    console.log(expandModalState);
-  }, [expandModalState]);
+  // useEffect(() => {
+  //   console.log(expandModalState);
+  // }, [expandModalState]);
 
+  // useEffect(() => {
+  //   console.log(selectedModelNo);
+  // }, [selectedModelNo]);
+
+  // home 메시지
   useEffect(() => {
-    console.log(selectedModelNo);
-  }, [selectedModelNo]);
+    if (sessionStorage.getItem("messages") === null) {
+      sessionStorage.setItem(
+        "messages",
+        JSON.stringify([
+          {
+            type: "home",
+            content:
+              "안녕하세요 고객님\n저는 ChatDA에요!\n고객님의 궁금증을 친절히 설명해드릴게요!",
+            isUser: false,
+            isTyping: false,
+            isCompared: false,
+            id: 0,
+          },
+        ]),
+      );
+    }
+  }, []);
 
   return (
     <QueryClientProvider client={queryClient}>

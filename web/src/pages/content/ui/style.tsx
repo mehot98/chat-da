@@ -13,7 +13,7 @@ export const ChatMainModal = styled(Dialog)`
   & .MuiDialog-paper {
     max-width: none;
     max-height: none;
-    width: 350px;
+    width: 360px;
     height: 600px;
     position: fixed;
     right: 120px;
