@@ -204,7 +204,7 @@ def post_feedback(
 
     result = es.search(index="logs*", body=query)
 
-    if result['hits']['total']['value'] == 0:
+    if result['hits']['total']['value'] != 1:
         return {"success": False}
 
     target = result['hits']['hits'][0]['_source']
