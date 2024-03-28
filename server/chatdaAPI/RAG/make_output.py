@@ -152,11 +152,11 @@ def get_output(user_input, search):
     }
 
 
-# 체인 중간 과정 보기
-set_debug(True)
-
-# 테스트용
-if __name__ == '__main__':
-    res = get_output(user_input='크기가 큰 냉장고 순위 알려줘', search=True)
-    print(f"type : {res['type']}")
-    print(f"content : {res['content']}")
+# # 체인 중간 과정 보기
+# set_debug(True)
+#
+# # 테스트용
+# if __name__ == '__main__':
+#     res = get_output(user_input='용량이 600L이상 되는 냉장고를 가격이 낮은 순으로 알려줘', search=False)
+#     print(f"type : {res['type']}")
+#     print(f"content : {res['content']}")
