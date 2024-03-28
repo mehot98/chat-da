@@ -18,7 +18,7 @@ export default function PopularItem(props: T.PopularItemProps) {
       <S.PopularItemDiv>
         <S.AccordionWrapper expanded={isExpanded}>
           <S.AccordionSummaryWrapper id="panel1-header" aria-controls="panel-content">
-            <img src={props.imageUrl} alt="popular-product" width={74} height={142} />
+            <S.ProductImg src={props.imageUrl} alt="popular-product" />
             <S.ContentDiv isExpanded={isExpanded}>
               <S.ProductNameWrapper>
                 <S.ProductName>{props.제품명}</S.ProductName>
