@@ -1,8 +1,21 @@
 import styled from "@emotion/styled";
-import Grid from "@mui/material/Unstable_Grid2";
+// eslint-disable-next-line
+import Grid, { Grid2Props } from "@mui/material/Unstable_Grid2";
+import { ElementType } from "react";
 
-export const GridWrapper = styled(Grid)`
+interface WrapperType {
+  length: number;
+}
+
+const Grid2 = <C extends ElementType>(props: Grid2Props<C, { component?: C }> & WrapperType) => {
+  return <Grid {...props}>{props.children}</Grid>;
+};
+
+export const GridWrapper = styled(Grid2)`
   margin: 20px 0;
+  width: ${(props) => {
+    return props.length * 276 + (props.length - 1) * 40;
+  }}px;
 `;
 
 export const GridRow = styled(Grid)`

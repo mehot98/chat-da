@@ -41,7 +41,7 @@ export default function SpecCompareGrid({
 
   if (recommendProps[0]["제품_코드"]) {
     return (
-      <S.GridWrapper container spacing={2} rowSpacing={6}>
+      <S.GridWrapper container spacing={2} rowSpacing={6} length={recommendProps.length}>
         {/* 제품 카드 */}
         <S.GridRow xs={12} sx={{ gap: "40px" }}>
           {recommendProps.map((recommend) => (

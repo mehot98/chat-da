@@ -1,8 +1,9 @@
-import { useState, useEffect, ReactElement, useMemo } from "react";
+import { useState, useEffect, ReactElement, useRef, useMemo } from "react";
 import * as Comp from "@root/src/components";
 import * as S from "./style";
 import * as T from "@root/src/types";
 import * as P from "@pages/ExpandModal";
+import { request } from "@src/apis/requestBuilder";
 import chatDAIconPath from "@root/public/icons/ChatDA_icon_128.png";
 import theme from "@assets/style/theme.module.scss";
 import { StyledEngineProvider } from "@mui/material/styles";
@@ -78,19 +79,22 @@ export default function App() {
   const currentUrl = window.location.href;
 
   // 냉장고 페이지에서 모든 리스트 선택, 디테일 페이지일시 요약정보 제공
-  const [fridgeList, setFridgeList] = useState<NodeListOf<Element>>();
+  const fridgeList = useRef<NodeListOf<Element>>();
+  const linkReviewNodeList = useRef<NodeListOf<HTMLLinkElement>>();
   const [isDetailPage, setIsDetailPage] = useState(false);
   const [modelNo, setModelNo] = useState("");
 
   useEffect(() => {
-    if (currentUrl === "https://www.samsung.com/sec/refrigerators/all-refrigerators/") {
+    if (currentUrl.includes("https://www.samsung.com/sec/refrigerators/all-refrigerators/")) {
       const moreBtn: HTMLButtonElement | null = document.querySelector("#morePrd");
       let newLiElements: NodeListOf<Element> = document.querySelectorAll(".item-inner");
-      setFridgeList(newLiElements);
+      fridgeList.current = newLiElements;
+
+      linkReviewNodeList.current = document.querySelectorAll(".link-review");
 
       moreBtn.addEventListener("click", () => {
         newLiElements = document.querySelectorAll(".item-inner");
-        setFridgeList(newLiElements);
+        fridgeList.current = newLiElements;
       });
       setIsDetailPage(false);
     } else if (currentUrl.includes("https://www.samsung.com/sec/refrigerators/")) {
@@ -107,9 +111,15 @@ export default function App() {
   // 비교하기 아이콘 붙이기 + 클릭시 제품명, 코드 저장
   // 비교상품 정보 담는 곳
   const [comparePrds, setComparePrds] = useState<T.ComparePrdProps[]>([]);
+
+  /*
+  #===============================================================================#
+  |                             비교하기 버튼 appendChild                            |
+  #===============================================================================#
+  */
   useEffect(() => {
-    if (fridgeList && fridgeList.length > 0) {
-      fridgeList.forEach((element: Element) => {
+    if (fridgeList.current && fridgeList.current.length > 0) {
+      fridgeList.current.forEach((element: Element) => {
         const compareButton: HTMLButtonElement = document.createElement("button");
         compareButton.id = "ChatDAButton";
 
@@ -203,6 +213,94 @@ export default function App() {
     }
   }, [fridgeList]);
 
+  /*
+  #===============================================================================#
+  |                               리뷰 요약 appendChild                             |
+  #===============================================================================#
+  */
+  // 리뷰 요약 내용을 담을 state
+  const [reviewSummary, setReviewSummary] = useState<string>("리뷰가 없거나 요약을 못했어요😭");
+  const [currentModelNo, setCurrentModelNo] = useState<string>("");
+  const modelNoList = useRef<string[]>([]);
+  const reviewSummaryDict = useRef(new Map());
+
+  useEffect(() => {
+    const summary =
+      reviewSummaryDict.current.get(currentModelNo) || "리뷰가 없거나 요약을 못했어요😭";
+    setReviewSummary(summary);
+  }, [currentModelNo]);
+
+  useEffect(() => {
+    if (modelNoList.current.length > 0) {
+      modelNoList.current.forEach(async (modelNo) => {
+        if (!reviewSummaryDict.current.has(modelNo)) {
+          const { data } = await request.get(`/summary/review?modelNo=${modelNo}`);
+
+          console.log("response!!!!!!!!!", data);
+          reviewSummaryDict.current.set(modelNo, data.content);
+        }
+      });
+    }
+  }, [modelNoList.current.length]);
+
+  useEffect(() => {
+    if (linkReviewNodeList.current && linkReviewNodeList.current.length > 0) {
+      linkReviewNodeList.current.forEach((linkReviewNode: HTMLLinkElement) => {
+        const urlList = linkReviewNode.href.split("/");
+        const modelNo = urlList[urlList.length - 2];
+        modelNoList.current.push(modelNo);
+
+        const reviewMessageDiv: HTMLDivElement = document.createElement("div");
+        const reviewMessageTitle: HTMLSpanElement = document.createElement("span");
+        const reviewMessageDetail: HTMLSpanElement = document.createElement("span");
+
+        reviewMessageTitle.textContent = "💬ChatDA가 요약한 이 제품의 리뷰 내용!";
+        reviewMessageTitle.style.color = "white";
+        reviewMessageTitle.style.fontSize = "14px";
+        reviewMessageTitle.style.fontWeight = "bold";
+
+        if (!reviewMessageDiv.hasChildNodes()) {
+          reviewMessageDiv.appendChild(reviewMessageTitle);
+          reviewMessageDiv.appendChild(reviewMessageDetail);
+        }
+
+        reviewMessageDetail.textContent = "리뷰가 없거나 요약을 못했어요😭";
+        reviewMessageDetail.style.color = "white";
+        reviewMessageDetail.style.fontSize = "14px";
+
+        reviewMessageDiv.style.width = "300px";
+        reviewMessageDiv.style.position = "absolute";
+        reviewMessageDiv.style.bottom = "110%";
+        reviewMessageDiv.style.right = "10%";
+        reviewMessageDiv.style.flexDirection = "column";
+        reviewMessageDiv.style.padding = "8px 20px";
+        reviewMessageDiv.style.gap = "10px";
+        reviewMessageDiv.style.zIndex = "100";
+        reviewMessageDiv.style.backgroundColor = `${theme.bordercolor}`;
+        reviewMessageDiv.style.borderRadius = "17px 17px 0 17px";
+        reviewMessageDiv.style.display = "none";
+        reviewMessageDiv.style.textAlign = "left";
+
+        console.log("linkreviewnode 자식 수 !!!", linkReviewNode.children.length);
+
+        if (linkReviewNode.children.length <= 1) {
+          linkReviewNode.appendChild(reviewMessageDiv);
+        }
+
+        linkReviewNode.addEventListener("mouseenter", () => {
+          setCurrentModelNo(modelNo);
+          reviewMessageDetail.textContent =
+            reviewSummaryDict.current.get(modelNo) || "리뷰가 없거나 요약을 못했어요😭";
+          reviewMessageDiv.style.display = "flex";
+        });
+
+        linkReviewNode.addEventListener("mouseleave", () => {
+          reviewMessageDiv.style.display = "none";
+        });
+      });
+    }
+  }, [linkReviewNodeList, reviewSummary]);
+
   useEffect(() => {
     if (messages.length > 0) {
       sessionStorage.setItem("messages", JSON.stringify(messages));
@@ -249,6 +347,7 @@ export default function App() {
       renderReactComponentElement(productSummaryElement);
       setIsProductSummaryRendered(true);
     }
+    // eslint-disable-next-line
   }, [isDetailPage, isProductSummaryRendered]);
   // useEffect(() => {
   //   console.log(expandModalState);
@@ -543,7 +642,6 @@ export default function App() {
         </S.ChatMainModal>
         {/* 요약정보 말풍선 */}
       </StyledEngineProvider>
-      {/* {isDetailPage && <Comp.ProductSummary />} */}
       <S.ChatModalBackdrop
         className="backdrop"
         onClick={handleClickBackdrop}

@@ -24,6 +24,7 @@ export default function GridSpecSummaryIcon({
                   <ColumnSub.SpecSummaryIcon {...makeSpecObject(summary, specKey)} />
                 )}
               </S.SpecWrapper>
+              {i !== summarySpec.length - 1 && <S.VerticalLine />}
             </>
           ))}
         </S.GridRow>
