@@ -1,9 +1,10 @@
-import { useState, useEffect, ReactElement, useRef, use } from "react";
+import { useState, useEffect, ReactElement, useRef, use, useMemo } from "react";
 import * as Comp from "@root/src/components";
 import * as S from "./style";
 import * as T from "@root/src/types";
 import * as P from "@pages/ExpandModal";
 import * as API from "@src/apis";
+import { request } from "@src/apis/requestBuilder";
 import chatDAIconPath from "@root/public/icons/ChatDA_icon_128.png";
 import theme from "@assets/style/theme.module.scss";
 import { StyledEngineProvider } from "@mui/material/styles";
@@ -217,77 +218,36 @@ export default function App() {
   #===============================================================================#
   */
   // 리뷰 요약 내용을 담을 state
-  // const [reviewSummary, setReviewSummary] = useState<string>("리뷰가 없거나 요약을 못했어요😭");
-
-  // const useReviewSummary = (modelNo: string) => {
-  //   const queryKey = ["review-summary"];
-  //   const [reviewSummary, setReviewSummary] = useState<string>("리뷰가 없거나 요약을 못했어요😭");
-  //   const { data: response } = useQuery({
-  //     queryKey: queryKey,
-  //     queryFn: () => API.reviewSummary.getSummary({ modelNo: modelNo }),
-  //   });
-
-  //   useEffect(() => {
-  //     if (response) {
-  //       setReviewSummary(response.content);
-  //     }
-  //   });
-  //   // setReviewSummary(response.content);
-  //   return reviewSummary;
-  // };
-
-  // 다른 params를 사용할 때 다른 queryKey를 사용할 수 있음
-  // const queryKeys = linkReviewNodeList.current.map((node) => {
-  //   const li = node.href.split("/");
-  //   return li[li.length - 2];
-  // });
-  let queryKeys = [];
-  // // 각각의 queryKey에 대해 useQuery를 호출하고 각각의 response와 isLoading 상태를 받아옴
-
-  const queries = queryKeys.map((queryKey) => {
-    const { data: response, refetch: refetching } = useQuery({
-      queryKey: [queryKey],
-      queryFn: () => API.productSummary.getSummary({ modelNo: queryKey }), // 여기에서 다른 params를 사용할 수 있음
-    });
-    console.log(response);
-  });
+  const [reviewSummary, setReviewSummary] = useState<string>("리뷰가 없거나 요약을 못했어요😭");
+  const [currentModelNo, setCurrentModelNo] = useState<string>("");
+  const modelNoList = useRef<string[]>([]);
+  const reviewSummaryDict = useRef(new Map());
 
   useEffect(() => {
-    console.log("으아아ㅏ아아아", queries);
-  }, [queries]);
+    const summary =
+      reviewSummaryDict.current.get(currentModelNo) || "리뷰가 없거나 요약을 못했어요😭";
+    setReviewSummary(summary);
+  }, [currentModelNo]);
 
-  // console.log("쿼리들임!!!!!!!!", queries);
+  useEffect(() => {
+    if (modelNoList.current.length > 0) {
+      modelNoList.current.forEach(async (modelNo) => {
+        if (!reviewSummaryDict.current.has(modelNo)) {
+          const { data } = await request.get(`/summary/review?modelNo=${modelNo}`);
+
+          console.log("response!!!!!!!!!", data);
+          reviewSummaryDict.current.set(modelNo, data.content);
+        }
+      });
+    }
+  }, [modelNoList.current.length]);
 
   useEffect(() => {
     if (linkReviewNodeList.current && linkReviewNodeList.current.length > 0) {
-      console.log(linkReviewNodeList);
-      queryKeys = [...linkReviewNodeList.current].map((node) => {
-        const li = node.href.split("/");
-        return li[li.length - 2];
-      });
-      console.log("쿼리키 ㅠ", queryKeys);
-
-      if (queryKeys.length > 0) {
-        queries.forEach((query) => {
-          console.log("쿼리ㅣㅣㅣㅣ", query);
-          query.refetching();
-        });
-      }
-
-      // 각각의 queryKey에 대해 useQuery를 호출하고 각각의 response와 isLoading 상태를 받아옴
-      // const queries = queryKeys.map((queryKey) => {
-      //   return useQuery({
-      //     queryKey: [queryKey],
-      //     queryFn: () => API.productSummary.getSummary({ modelNo: queryKey }), // 여기에서 다른 params를 사용할 수 있음
-      //   });
-      // });
-
-      console.log("쿼리들임!!!!!!!!", queries);
-      // linkReviewNodeList.current.forEach((linkReviewNode: HTMLLinkElement) => {
-      for (let i = 0; i < linkReviewNodeList.current.length; i++) {
-        const linkReviewNode: HTMLLinkElement = linkReviewNodeList.current[i];
+      linkReviewNodeList.current.forEach((linkReviewNode: HTMLLinkElement) => {
         const urlList = linkReviewNode.href.split("/");
         const modelNo = urlList[urlList.length - 2];
+        modelNoList.current.push(modelNo);
 
         const reviewMessageDiv: HTMLDivElement = document.createElement("div");
         const reviewMessageTitle: HTMLSpanElement = document.createElement("span");
@@ -298,48 +258,47 @@ export default function App() {
         reviewMessageTitle.style.fontSize = "14px";
         reviewMessageTitle.style.fontWeight = "bold";
 
-        // reviewMessageDetail.textContent = "리뷰가 없거나 요약을 못했어요😭";
-        reviewMessageDetail.textContent = queries;
+        if (!reviewMessageDiv.hasChildNodes()) {
+          reviewMessageDiv.appendChild(reviewMessageTitle);
+          reviewMessageDiv.appendChild(reviewMessageDetail);
+        }
+
+        reviewMessageDetail.textContent = "리뷰가 없거나 요약을 못했어요😭";
         reviewMessageDetail.style.color = "white";
         reviewMessageDetail.style.fontSize = "14px";
 
-        reviewMessageDiv.appendChild(reviewMessageTitle);
-        reviewMessageDiv.appendChild(reviewMessageDetail);
         reviewMessageDiv.style.width = "300px";
         reviewMessageDiv.style.position = "absolute";
-        reviewMessageDiv.style.bottom = "100%";
+        reviewMessageDiv.style.bottom = "110%";
+        reviewMessageDiv.style.right = "10%";
         reviewMessageDiv.style.flexDirection = "column";
         reviewMessageDiv.style.padding = "8px 20px";
         reviewMessageDiv.style.gap = "10px";
         reviewMessageDiv.style.zIndex = "100";
         reviewMessageDiv.style.backgroundColor = `${theme.bordercolor}`;
-        reviewMessageDiv.style.borderRadius = "17px 17px 17px 0";
+        reviewMessageDiv.style.borderRadius = "17px 17px 0 17px";
         reviewMessageDiv.style.display = "none";
         reviewMessageDiv.style.textAlign = "left";
 
-        linkReviewNode.appendChild(reviewMessageDiv);
+        console.log("linkreviewnode 자식 수 !!!", linkReviewNode.children.length);
+
+        if (linkReviewNode.children.length <= 1) {
+          linkReviewNode.appendChild(reviewMessageDiv);
+        }
 
         linkReviewNode.addEventListener("mouseenter", () => {
-          const urlList = linkReviewNode.href.split("/");
-          const modelNo = urlList[urlList.length - 2];
-          console.log(modelNo);
-          // const queryKey = ["review-summary"];
-          // const { data: response } = useQuery({
-          //   queryKey: queryKey,
-          //   queryFn: () => API.reviewSummary.getSummary({ modelNo: modelNo }),
-          // });
-          // console.log(response);
-          // const res = useReviewSummary(modelNo);
-          // setReviewSummary(res.content);
+          setCurrentModelNo(modelNo);
+          reviewMessageDetail.textContent =
+            reviewSummaryDict.current.get(modelNo) || "리뷰가 없거나 요약을 못했어요😭";
           reviewMessageDiv.style.display = "flex";
         });
 
         linkReviewNode.addEventListener("mouseleave", () => {
           reviewMessageDiv.style.display = "none";
         });
-      }
+      });
     }
-  }, [linkReviewNodeList]);
+  }, [linkReviewNodeList, reviewSummary]);
 
   useEffect(() => {
     if (messages.length > 0) {
