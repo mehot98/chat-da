@@ -9,3 +9,9 @@ export const GridRow = styled(Grid)`
 export const SpecWrapper = styled.div`
   width: 100%;
 `;
+
+export const VerticalLine = styled.div`
+  width: 1px;
+  height: 180%;
+  background-color: #e0e0e0;
+`;

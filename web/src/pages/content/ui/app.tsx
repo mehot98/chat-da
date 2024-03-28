@@ -1,8 +1,9 @@
-import { useState, useEffect, ReactElement } from "react";
+import { useState, useEffect, ReactElement, useRef, useMemo } from "react";
 import * as Comp from "@root/src/components";
 import * as S from "./style";
 import * as T from "@root/src/types";
 import * as P from "@pages/ExpandModal";
+import { request } from "@src/apis/requestBuilder";
 import chatDAIconPath from "@root/public/icons/ChatDA_icon_128.png";
 import theme from "@assets/style/theme.module.scss";
 import { StyledEngineProvider } from "@mui/material/styles";
@@ -13,6 +14,8 @@ const searchIconPath = "icons/search_icon.png";
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { createRoot } from "react-dom/client";
+import { useSpeechInput } from "@root/src/hooks/useSpeechInput";
+import { fetchEventSource } from "@microsoft/fetch-event-source";
 
 export default function App() {
   const [isOpenMainModal, setIsOpenMainModal] = useState<boolean>(false);
@@ -76,19 +79,22 @@ export default function App() {
   const currentUrl = window.location.href;
 
   // 냉장고 페이지에서 모든 리스트 선택, 디테일 페이지일시 요약정보 제공
-  const [fridgeList, setFridgeList] = useState<NodeListOf<Element>>();
+  const fridgeList = useRef<NodeListOf<Element>>();
+  const linkReviewNodeList = useRef<NodeListOf<HTMLLinkElement>>();
   const [isDetailPage, setIsDetailPage] = useState(false);
   const [modelNo, setModelNo] = useState("");
 
   useEffect(() => {
-    if (currentUrl === "https://www.samsung.com/sec/refrigerators/all-refrigerators/") {
+    if (currentUrl.includes("https://www.samsung.com/sec/refrigerators/all-refrigerators/")) {
       const moreBtn: HTMLButtonElement | null = document.querySelector("#morePrd");
       let newLiElements: NodeListOf<Element> = document.querySelectorAll(".item-inner");
-      setFridgeList(newLiElements);
+      fridgeList.current = newLiElements;
+
+      linkReviewNodeList.current = document.querySelectorAll(".link-review");
 
       moreBtn.addEventListener("click", () => {
         newLiElements = document.querySelectorAll(".item-inner");
-        setFridgeList(newLiElements);
+        fridgeList.current = newLiElements;
       });
       setIsDetailPage(false);
     } else if (currentUrl.includes("https://www.samsung.com/sec/refrigerators/")) {
@@ -105,9 +111,15 @@ export default function App() {
   // 비교하기 아이콘 붙이기 + 클릭시 제품명, 코드 저장
   // 비교상품 정보 담는 곳
   const [comparePrds, setComparePrds] = useState<T.ComparePrdProps[]>([]);
+
+  /*
+  #===============================================================================#
+  |                             비교하기 버튼 appendChild                            |
+  #===============================================================================#
+  */
   useEffect(() => {
-    if (fridgeList && fridgeList.length > 0) {
-      fridgeList.forEach((element: Element) => {
+    if (fridgeList.current && fridgeList.current.length > 0) {
+      fridgeList.current.forEach((element: Element) => {
         const compareButton: HTMLButtonElement = document.createElement("button");
         compareButton.id = "ChatDAButton";
 
@@ -201,6 +213,94 @@ export default function App() {
     }
   }, [fridgeList]);
 
+  /*
+  #===============================================================================#
+  |                               리뷰 요약 appendChild                             |
+  #===============================================================================#
+  */
+  // 리뷰 요약 내용을 담을 state
+  const [reviewSummary, setReviewSummary] = useState<string>("리뷰가 없거나 요약을 못했어요😭");
+  const [currentModelNo, setCurrentModelNo] = useState<string>("");
+  const modelNoList = useRef<string[]>([]);
+  const reviewSummaryDict = useRef(new Map());
+
+  useEffect(() => {
+    const summary =
+      reviewSummaryDict.current.get(currentModelNo) || "리뷰가 없거나 요약을 못했어요😭";
+    setReviewSummary(summary);
+  }, [currentModelNo]);
+
+  useEffect(() => {
+    if (modelNoList.current.length > 0) {
+      modelNoList.current.forEach(async (modelNo) => {
+        if (!reviewSummaryDict.current.has(modelNo)) {
+          const { data } = await request.get(`/summary/review?modelNo=${modelNo}`);
+
+          console.log("response!!!!!!!!!", data);
+          reviewSummaryDict.current.set(modelNo, data.content);
+        }
+      });
+    }
+  }, [modelNoList.current.length]);
+
+  useEffect(() => {
+    if (linkReviewNodeList.current && linkReviewNodeList.current.length > 0) {
+      linkReviewNodeList.current.forEach((linkReviewNode: HTMLLinkElement) => {
+        const urlList = linkReviewNode.href.split("/");
+        const modelNo = urlList[urlList.length - 2];
+        modelNoList.current.push(modelNo);
+
+        const reviewMessageDiv: HTMLDivElement = document.createElement("div");
+        const reviewMessageTitle: HTMLSpanElement = document.createElement("span");
+        const reviewMessageDetail: HTMLSpanElement = document.createElement("span");
+
+        reviewMessageTitle.textContent = "💬ChatDA가 요약한 이 제품의 리뷰 내용!";
+        reviewMessageTitle.style.color = "white";
+        reviewMessageTitle.style.fontSize = "14px";
+        reviewMessageTitle.style.fontWeight = "bold";
+
+        if (!reviewMessageDiv.hasChildNodes()) {
+          reviewMessageDiv.appendChild(reviewMessageTitle);
+          reviewMessageDiv.appendChild(reviewMessageDetail);
+        }
+
+        reviewMessageDetail.textContent = "리뷰가 없거나 요약을 못했어요😭";
+        reviewMessageDetail.style.color = "white";
+        reviewMessageDetail.style.fontSize = "14px";
+
+        reviewMessageDiv.style.width = "300px";
+        reviewMessageDiv.style.position = "absolute";
+        reviewMessageDiv.style.bottom = "110%";
+        reviewMessageDiv.style.right = "10%";
+        reviewMessageDiv.style.flexDirection = "column";
+        reviewMessageDiv.style.padding = "8px 20px";
+        reviewMessageDiv.style.gap = "10px";
+        reviewMessageDiv.style.zIndex = "100";
+        reviewMessageDiv.style.backgroundColor = `${theme.bordercolor}`;
+        reviewMessageDiv.style.borderRadius = "17px 17px 0 17px";
+        reviewMessageDiv.style.display = "none";
+        reviewMessageDiv.style.textAlign = "left";
+
+        console.log("linkreviewnode 자식 수 !!!", linkReviewNode.children.length);
+
+        if (linkReviewNode.children.length <= 1) {
+          linkReviewNode.appendChild(reviewMessageDiv);
+        }
+
+        linkReviewNode.addEventListener("mouseenter", () => {
+          setCurrentModelNo(modelNo);
+          reviewMessageDetail.textContent =
+            reviewSummaryDict.current.get(modelNo) || "리뷰가 없거나 요약을 못했어요😭";
+          reviewMessageDiv.style.display = "flex";
+        });
+
+        linkReviewNode.addEventListener("mouseleave", () => {
+          reviewMessageDiv.style.display = "none";
+        });
+      });
+    }
+  }, [linkReviewNodeList, reviewSummary]);
+
   useEffect(() => {
     if (messages.length > 0) {
       sessionStorage.setItem("messages", JSON.stringify(messages));
@@ -247,6 +347,7 @@ export default function App() {
       renderReactComponentElement(productSummaryElement);
       setIsProductSummaryRendered(true);
     }
+    // eslint-disable-next-line
   }, [isDetailPage, isProductSummaryRendered]);
   // useEffect(() => {
   //   console.log(expandModalState);
@@ -275,6 +376,206 @@ export default function App() {
       );
     }
   }, []);
+
+  // 메시지 관리
+
+  const { VITE_SERVER_END_POINT } = import.meta.env;
+
+  const getUuid = () => {
+    const sessionId = window.sessionStorage.getItem("_da_da_sessionId");
+    const tabHash = window.sessionStorage.getItem("di_tab_hash");
+    return `${sessionId}_${tabHash}`;
+  };
+
+  const uuid = useMemo(getUuid, []);
+
+  const fetchMessage = async (message: string, tts = false) => {
+    setMessages((prev) => [...prev, { content: message, isUser: true }]);
+
+    await fetchEventSource(`${VITE_SERVER_END_POINT}/chat`, {
+      method: "POST",
+      headers: {
+        Accept: "text/event-stream",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        uuid,
+        content: message,
+      }),
+      onopen: async (res: Response) => {
+        if (res.ok && res.status === 200) {
+          console.log("Connection made ", res);
+        } else if (res.status >= 400 && res.status < 500 && res.status !== 429) {
+          console.log("Client-side error ", res);
+        }
+      },
+
+      // stream를 통해 데이터를 받을 때 사용되는 함수 입니다.
+      // 기본 첫번째 토큰에는 type과 content, modelNo, modelNoList, modelList등으로 구분 됩니다.
+      // 기존 content에서 단순 요약 정보와 같은 내용은 data로 응답이 나타납니다
+      // { "type" : "info" , "modelNo" : "SESEQWE2424"}
+      // { "data" : "이"}
+      // { "data" : "제"}
+      // { "data" : "품"}
+      onmessage(event) {
+        const data = JSON.parse(event.data);
+        handleMessage(data);
+      },
+      onclose() {
+        if (!tts || typeof speechSynthesis === "undefined") return;
+        const lastMessage = messages[messages.length - 1];
+        if (lastMessage.isUser) return;
+
+        const voice = speechSynthesis.getVoices().findLast((v) => v.lang === "ko-KR");
+        const utter = new SpeechSynthesisUtterance(lastMessage.content);
+        utter.voice = voice;
+        speechSynthesis.speak(utter);
+      },
+    });
+  };
+
+  const handleMessage = (data) => {
+    if (data.type !== undefined) {
+      if (data.type === "recommend") {
+        setMessages((prev) => [
+          ...prev,
+          {
+            type: data.type,
+            content: "",
+            isUser: false,
+            isTyping: true,
+            isCompared: false,
+            id: data.craetedAt,
+            modelNo: data.modelNo,
+            spec: data.content.content,
+          },
+        ]);
+      } else if (data.type === "info") {
+        setMessages((prev) => [
+          ...prev,
+          {
+            type: data.type,
+            content: "",
+            isUser: false,
+            isTyping: true,
+            isCompared: false,
+            id: data.craetedAt,
+            modelNo: data.modelNo,
+            btnString: "상세 스펙 보기",
+          },
+        ]);
+      } else if (data.type === "compare") {
+        setMessages((prev) => [
+          ...prev,
+          {
+            type: data.type,
+            content: "",
+            isUser: false,
+            isTyping: true,
+            isCompared: true,
+            id: data.craetedAt,
+            modelNoList: data.modelNoList,
+            btnString: "자세히 비교하기",
+          },
+        ]);
+      } else if (data.type === "general") {
+        setMessages((prev) => [
+          ...prev,
+          {
+            type: data.type,
+            content: "",
+            isUser: false,
+            isTyping: true,
+            isCompared: false,
+            id: data.craetedAt,
+          },
+        ]);
+      } else if (data.type === "ranking") {
+        setMessages((prev) => [
+          ...prev,
+          {
+            type: data.type,
+            content: "",
+            isUser: false,
+            isTyping: true,
+            isCompared: false,
+            id: data.craetedAt,
+            modelList: data.modelList,
+            btnString: "자세히 비교하기",
+          },
+        ]);
+      } else if (data.type === "search") {
+        setMessages((prev) => [
+          ...prev,
+          {
+            type: data.type,
+            content: "",
+            isUser: false,
+            isTyping: true,
+            isCompared: false,
+            id: data.craetedAt,
+            modelList: data.modelList,
+            btnString: "자세히 비교하기",
+          },
+        ]);
+      } else if (data.type === "dictionary") {
+        setMessages((prev) => [
+          ...prev,
+          {
+            type: data.type,
+            content: "",
+            isUser: false,
+            isTyping: true,
+            isCompared: false,
+            id: data.craetedAt,
+          },
+        ]);
+      } else {
+        // 이 부분에는 data.type이 없는 문제이므로 오류 문구 추가하면 될 것 같습니다.
+        console.log("예외처리해야함!!");
+      }
+    } else if (data.data !== undefined) {
+      setMessages((prev) => {
+        const lastMessageIndex = prev.length - 1;
+        const updatedMessages = [
+          ...prev.slice(0, lastMessageIndex),
+          {
+            ...prev[lastMessageIndex],
+            content: prev[lastMessageIndex].content + data.data,
+          },
+        ];
+        return updatedMessages;
+      });
+    }
+  };
+
+  // 음성 인식
+
+  const { isListening, isCompleted, content, supports, init, start } = useSpeechInput();
+
+  const [isSpeechInput, setSpeechInput] = useState(false);
+  const [speechText, setSpeechText] = useState("");
+
+  useEffect(() => {
+    if (supports) init();
+  }, [supports]);
+
+  useEffect(() => {
+    if (isListening) {
+      setSpeechInput(true);
+      setSpeechText(content);
+    } else {
+      setSpeechInput(false);
+    }
+  }, [isListening, content]);
+
+  useEffect(() => {
+    if (isCompleted) {
+      setSpeechInput(false);
+      start();
+      fetchMessage(speechText, true);
+    }
+  }, [isCompleted]);
 
   return (
     <QueryClientProvider client={queryClient}>
@@ -331,13 +632,16 @@ export default function App() {
                 setMessages={setMessages}
                 handleOpenExpandModal={handleOpenExpandModal}
                 changeSelectedModelNo={changeSelectedModelNo}
+                fetchMessage={fetchMessage}
+                handleMessage={handleMessage}
+                isSpeechInput={isSpeechInput}
+                speechText={speechText}
               />
             </S.ChatMainContent>
           </S.ChatMainWrapper>
         </S.ChatMainModal>
         {/* 요약정보 말풍선 */}
       </StyledEngineProvider>
-      {/* {isDetailPage && <Comp.ProductSummary />} */}
       <S.ChatModalBackdrop
         className="backdrop"
         onClick={handleClickBackdrop}
