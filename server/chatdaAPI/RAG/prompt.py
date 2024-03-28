@@ -54,6 +54,8 @@ Firstly, create a syntactically correct MySQL query to run only with using the f
 Use JOIN to retreive more information about the question.
 Query for at most {top_k} results for this first query using the LIMIT clause as per MySQL.
 Pay attention to use only the column names you can see in the tables below.
+You always have to include the condition (`가격` is not null) in the WHERE clause in the first query
+that you provide to retrieve only products where the '가격' column is always non-null.
 
 Only use the following tables for the first MySQL query:
 {table_info}
@@ -61,7 +63,10 @@ Only use the following tables for the first MySQL query:
 And secondly, create a syntactically correct MySQL query to run like the first one.
 But in this case you will join more tables.
 You will only need table's names to join and the column to join with the main table.
-Query for at most {top_k2} results for this second query using the LIMIT clause as per MySQL.
+Query for at most {top_k2} results for this second query using the LIMIT clause as per MySQL, 
+So the LIMIT clause can be different from the first query.
+You always have to include the condition (`가격` is not null) in the WHERE clause in the second query
+that you provide to retrieve only products where the '가격' column is always non-null.
 
 Here is the additional table names to join:
 [`refridgerator_mores`,`refridgerator_reviews`,`refridgerator_details`,`refridgerator_prices`]
