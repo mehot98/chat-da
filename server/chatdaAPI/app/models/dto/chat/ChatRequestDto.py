@@ -15,6 +15,5 @@ class FeedbackRequestDto(CamelModel):
     """
     챗봇과의 대화에 대한 피드백 스키마
     """
-    uuid: str
-    created_at: str
+    chat_id: str
     feedback: Literal["긍정", "부정"]

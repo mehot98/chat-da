@@ -1,9 +1,8 @@
-import { useState, useEffect, ReactElement, useRef, use, useMemo } from "react";
+import { useState, useEffect, ReactElement, useRef } from "react";
 import * as Comp from "@root/src/components";
 import * as S from "./style";
 import * as T from "@root/src/types";
 import * as P from "@pages/ExpandModal";
-import * as API from "@src/apis";
 import { request } from "@src/apis/requestBuilder";
 import chatDAIconPath from "@root/public/icons/ChatDA_icon_128.png";
 import theme from "@assets/style/theme.module.scss";
@@ -13,7 +12,7 @@ import CloseIcon from "@mui/icons-material/Close";
 const rankingIconPath = "icons/ranking_icon.png";
 const searchIconPath = "icons/search_icon.png";
 
-import { QueryClient, QueryClientProvider, useQuery } from "@tanstack/react-query";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { createRoot } from "react-dom/client";
 
 export default function App() {
@@ -312,6 +311,15 @@ export default function App() {
     }
   }, [comparePrds]);
 
+  // useEffect(() => {
+  //   const storage = JSON.parse(sessionStorage.getItem("messages") || "[]");
+  //   const compare = JSON.parse(sessionStorage.getItem("comparePrds") || "[]");
+  //   setMessages(storage);
+  //   setMessages(compare);
+  // }, []);\
+
+  const queryClient = new QueryClient();
+
   function renderReactComponentElement(element: ReactElement) {
     // 외부 요소를 찾거나 생성
     const menuElement = document.getElementsByClassName("menu01")[0];
@@ -328,8 +336,6 @@ export default function App() {
     root.render(<QueryClientProvider client={queryClient}>{element}</QueryClientProvider>);
   }
 
-  const queryClient = new QueryClient();
-
   // 제품 요약 말풍선 생성
   const [isProductSummaryRendered, setIsProductSummaryRendered] = useState<boolean>(false);
 
@@ -341,13 +347,33 @@ export default function App() {
     }
     // eslint-disable-next-line
   }, [isDetailPage, isProductSummaryRendered]);
-  useEffect(() => {
-    console.log(expandModalState);
-  }, [expandModalState]);
+  // useEffect(() => {
+  //   console.log(expandModalState);
+  // }, [expandModalState]);
 
+  // useEffect(() => {
+  //   console.log(selectedModelNo);
+  // }, [selectedModelNo]);
+
+  // home 메시지
   useEffect(() => {
-    console.log(selectedModelNo);
-  }, [selectedModelNo]);
+    if (sessionStorage.getItem("messages") === null) {
+      sessionStorage.setItem(
+        "messages",
+        JSON.stringify([
+          {
+            type: "home",
+            content:
+              "안녕하세요 고객님\n저는 ChatDA에요!\n고객님의 궁금증을 친절히 설명해드릴게요!",
+            isUser: false,
+            isTyping: false,
+            isCompared: false,
+            id: 0,
+          },
+        ]),
+      );
+    }
+  }, []);
 
   return (
     <QueryClientProvider client={queryClient}>

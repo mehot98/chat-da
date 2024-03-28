@@ -4,4 +4,11 @@ export interface ComparePrdProps {
   id: number;
 }
 
-export type ExpandModalStateType = "popular" | "search" | "info" | "compare" | "recommend" | null;
+export type ExpandModalStateType =
+  | "popular"
+  | "search"
+  | "info"
+  | "compare"
+  | "recommend"
+  | "home"
+  | null;

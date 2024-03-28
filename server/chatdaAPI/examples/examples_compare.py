@@ -1,8 +1,8 @@
 from chatdaAPI.RAG.input_type import COMPARE
 from chatdaAPI.examples.base_query import join
 
-base_query = (f"SELECT * FROM 'refridgerator' WHERE `제품_코드`='RF85C90D1AP' OR `제품_코드`='RF85C90D2AP';\n\n"
-              f"{join} WHERE 'refridgerator'.`제품_코드`='RF85C90D1AP' OR 'refridgerator'.`제품_코드`='RF85C90D2AP';")
+base_query = (f"SELECT * FROM 'refridgerators' WHERE `제품_코드`='RF85C90D1AP' OR `제품_코드`='RF85C90D2AP';\n\n"
+              f"{join} WHERE 'refridgerators'.`제품_코드`='RF85C90D1AP' OR 'refridgerators'.`제품_코드`='RF85C90D2AP';")
 
 examples = [
     {
@@ -61,18 +61,18 @@ examples = [
     },
     {
         "input": "RF85C90D1AP와 RF85C90D2AP의 리뷰 평점과 리뷰 개수를 비교해줘.",
-        "query": (f"SELECT * FROM 'refridgerator'"
-                  f" JOIN `refridgerator_reviews` ON `refridgerator`.제품_코드 = `refridgerator_reviews`.제품_코드 "
-                  f"WHERE `refridgerator`.`제품_코드`='RF85C90D1AP' OR `refridgerator`.`제품_코드`='RF85C90D2AP';\n\n"
-                  f"{join} WHERE 'refridgerator'.`제품_코드`='RF85C90D1AP' OR 'refridgerator'.`제품_코드`='RF85C90D2AP';"),
+        "query": (f"SELECT * FROM 'refridgerators'"
+                  f" JOIN `refridgerator_reviews` ON `refridgerators`.제품_코드 = `refridgerator_reviews`.제품_코드 "
+                  f"WHERE `refridgerators`.`제품_코드`='RF85C90D1AP' OR `refridgerators`.`제품_코드`='RF85C90D2AP';\n\n"
+                  f"{join} WHERE 'refridgerators'.`제품_코드`='RF85C90D1AP' OR 'refridgerators'.`제품_코드`='RF85C90D2AP';"),
         "type": COMPARE,
         "index": 9
     },
     {
         "input": "RF85C90D1AP와 RF85C90D2AP중에 뭐가 더 무거워?",
-        "query": (f"SELECT * FROM 'refridgerator'"
-                  f" WHERE `refridgerator`.`제품_코드`='RF85C90D1AP' OR `refridgerator`.`제품_코드`='RF85C90D2AP';\n\n"
-                  f"{join} WHERE 'refridgerator'.`제품_코드`='RF85C90D1AP' OR 'refridgerator'.`제품_코드`='RF85C90D2AP';"),
+        "query": (f"SELECT * FROM 'refridgerators'"
+                  f" WHERE `refridgerators`.`제품_코드`='RF85C90D1AP' OR `refridgerators`.`제품_코드`='RF85C90D2AP';\n\n"
+                  f"{join} WHERE 'refridgerators'.`제품_코드`='RF85C90D1AP' OR 'refridgerators'.`제품_코드`='RF85C90D2AP';"),
         "type": COMPARE,
         "index": 10
     },
