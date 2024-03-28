@@ -274,7 +274,7 @@ async def returnData(response: any, stream: any, req: Request, log: Dict, data: 
         # GPT 응답에 대한 token을 EventStream으로 보내주기
         for event in stream:
             token = {
-                "data": event
+                "data": str(datetime.datetime.utcnow().time())
             }
             result += event
             yield f"data: {json.dumps(token)}\n\n"
@@ -285,7 +285,7 @@ async def returnData(response: any, stream: any, req: Request, log: Dict, data: 
         result = ""
         for event in stream:
             token = {
-                "data": event
+                "data": str(datetime.datetime.utcnow().time())
             }
             result += event
             yield f"data: {json.dumps(token)}\n\n"
