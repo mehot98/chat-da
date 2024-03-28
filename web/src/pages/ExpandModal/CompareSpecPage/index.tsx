@@ -1,8 +1,9 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import { request } from "@src/apis/requestBuilder";
 import * as Comp from "@root/src/components";
 import * as S from "./style";
 import * as T from "@src/types/index";
+import makeNumberWithCommas from "@src/utils/makeNumberWithCommas";
 
 export default function CompareSpecPage({ selectedModelNo }: { selectedModelNo: string[] }) {
   const [recommendPropsList, setRecommendPropsList] = useState<T.ChatbotRecommendCardProps[]>([]);
@@ -31,8 +32,7 @@ export default function CompareSpecPage({ selectedModelNo }: { selectedModelNo: 
         제품_코드: data["제품_코드"],
         제품명: data["제품명"],
         가격: data["가격"],
-        // 혜택가: data["혜택가"],
-        혜택가: "1,490,000원",
+        혜택가: makeNumberWithCommas(data["할인가"]),
         imageUrl: data["imageUrl"],
       },
     ]);
@@ -127,7 +127,7 @@ export default function CompareSpecPage({ selectedModelNo }: { selectedModelNo: 
     //   rawSpecObjectList.current.push([])
     // }
 
-    [...rawSpecListKeysSet].forEach((key: string, i) => {
+    [...rawSpecListKeysSet].forEach((key: string) => {
       rawSpecList.forEach((specList, j) => {
         if (!specList[key] || specList[key] === "없음") {
           const newSpecList = rawSpecList[j];
