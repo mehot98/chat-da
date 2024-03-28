@@ -1,4 +1,4 @@
-import { useState, useEffect, ReactElement, useRef } from "react";
+import { useState, useEffect, ReactElement, useRef, use } from "react";
 import * as Comp from "@root/src/components";
 import * as S from "./style";
 import * as T from "@root/src/types";
@@ -78,7 +78,7 @@ export default function App() {
 
   // 냉장고 페이지에서 모든 리스트 선택, 디테일 페이지일시 요약정보 제공
   const fridgeList = useRef<NodeListOf<Element>>();
-  const linkReviewNodeList = useRef<NodeListOf<Element>>();
+  const linkReviewNodeList = useRef<NodeListOf<HTMLLinkElement>>();
   const [isDetailPage, setIsDetailPage] = useState(false);
   const [modelNo, setModelNo] = useState("");
 
@@ -217,24 +217,77 @@ export default function App() {
   #===============================================================================#
   */
   // 리뷰 요약 내용을 담을 state
-  const [reviewSummary, setReviewSummary] = useState<string>("리뷰가 없거나 요약을 못했어요😭");
+  // const [reviewSummary, setReviewSummary] = useState<string>("리뷰가 없거나 요약을 못했어요😭");
 
-  const useReviewSummary = (modelNo: string) => {
-    const queryKey = ["review-summary"];
-    const { data: response } = useQuery({
-      queryKey: queryKey,
-      queryFn: () => API.reviewSummary.getSummary({ modelNo: modelNo }),
+  // const useReviewSummary = (modelNo: string) => {
+  //   const queryKey = ["review-summary"];
+  //   const [reviewSummary, setReviewSummary] = useState<string>("리뷰가 없거나 요약을 못했어요😭");
+  //   const { data: response } = useQuery({
+  //     queryKey: queryKey,
+  //     queryFn: () => API.reviewSummary.getSummary({ modelNo: modelNo }),
+  //   });
+
+  //   useEffect(() => {
+  //     if (response) {
+  //       setReviewSummary(response.content);
+  //     }
+  //   });
+  //   // setReviewSummary(response.content);
+  //   return reviewSummary;
+  // };
+
+  // 다른 params를 사용할 때 다른 queryKey를 사용할 수 있음
+  // const queryKeys = linkReviewNodeList.current.map((node) => {
+  //   const li = node.href.split("/");
+  //   return li[li.length - 2];
+  // });
+  let queryKeys = [];
+  // // 각각의 queryKey에 대해 useQuery를 호출하고 각각의 response와 isLoading 상태를 받아옴
+
+  const queries = queryKeys.map((queryKey) => {
+    const { data: response, refetch: refetching } = useQuery({
+      queryKey: [queryKey],
+      queryFn: () => API.productSummary.getSummary({ modelNo: queryKey }), // 여기에서 다른 params를 사용할 수 있음
     });
-    // setReviewSummary(response.content);
-    return response;
-  };
+    console.log(response);
+  });
+
+  useEffect(() => {
+    console.log("으아아ㅏ아아아", queries);
+  }, [queries]);
+
+  // console.log("쿼리들임!!!!!!!!", queries);
 
   useEffect(() => {
     if (linkReviewNodeList.current && linkReviewNodeList.current.length > 0) {
-      linkReviewNodeList.current.forEach((linkReviewNode: HTMLLinkElement) => {
-        // const urlList = linkReviewNode.href.split("/");
-        // const modelNo = urlList[urlList.length - 2];
-        // useReviewSummary(modelNo);
+      console.log(linkReviewNodeList);
+      queryKeys = [...linkReviewNodeList.current].map((node) => {
+        const li = node.href.split("/");
+        return li[li.length - 2];
+      });
+      console.log("쿼리키 ㅠ", queryKeys);
+
+      if (queryKeys.length > 0) {
+        queries.forEach((query) => {
+          console.log("쿼리ㅣㅣㅣㅣ", query);
+          query.refetching();
+        });
+      }
+
+      // 각각의 queryKey에 대해 useQuery를 호출하고 각각의 response와 isLoading 상태를 받아옴
+      // const queries = queryKeys.map((queryKey) => {
+      //   return useQuery({
+      //     queryKey: [queryKey],
+      //     queryFn: () => API.productSummary.getSummary({ modelNo: queryKey }), // 여기에서 다른 params를 사용할 수 있음
+      //   });
+      // });
+
+      console.log("쿼리들임!!!!!!!!", queries);
+      // linkReviewNodeList.current.forEach((linkReviewNode: HTMLLinkElement) => {
+      for (let i = 0; i < linkReviewNodeList.current.length; i++) {
+        const linkReviewNode: HTMLLinkElement = linkReviewNodeList.current[i];
+        const urlList = linkReviewNode.href.split("/");
+        const modelNo = urlList[urlList.length - 2];
 
         const reviewMessageDiv: HTMLDivElement = document.createElement("div");
         const reviewMessageTitle: HTMLSpanElement = document.createElement("span");
@@ -245,8 +298,8 @@ export default function App() {
         reviewMessageTitle.style.fontSize = "14px";
         reviewMessageTitle.style.fontWeight = "bold";
 
-        reviewMessageDetail.textContent = "리뷰가 없거나 요약을 못했어요😭";
-        // reviewMessageDetail.textContent = reviewSummary;
+        // reviewMessageDetail.textContent = "리뷰가 없거나 요약을 못했어요😭";
+        reviewMessageDetail.textContent = queries;
         reviewMessageDetail.style.color = "white";
         reviewMessageDetail.style.fontSize = "14px";
 
@@ -284,7 +337,7 @@ export default function App() {
         linkReviewNode.addEventListener("mouseleave", () => {
           reviewMessageDiv.style.display = "none";
         });
-      });
+      }
     }
   }, [linkReviewNodeList]);
 
