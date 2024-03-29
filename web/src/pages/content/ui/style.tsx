@@ -2,6 +2,10 @@ import styled from "@emotion/styled";
 import theme from "@assets/style/theme.module.scss";
 import { Dialog, IconButton } from "@mui/material";
 
+export const WholeWrapper = styled.div`
+  position: relative;
+`;
+
 export const ChatMainModal = styled(Dialog)`
   width: 0;
   height: 100vh;
@@ -21,11 +25,20 @@ export const ChatMainModal = styled(Dialog)`
     border-radius: 15px;
     margin: 0;
     z-index: 1300;
+
+    /* @media screen and (max-width: 800px) {
+      width: 97.5vw;
+      height: 100vh;
+      right: 0;
+    } */
   }
 `;
 
 export const ChatExpandModal = styled(ChatMainModal)`
   z-index: 1299;
+  @media screen and (max-width: 800px) {
+    z-index: 1400;
+  }
 
   & .MuiDialog-paper {
     padding: 30px;
@@ -40,6 +53,16 @@ export const ChatExpandModal = styled(ChatMainModal)`
     border-right: 30px solid white;
     gap: 30px;
     user-select: none;
+
+    @media screen and (max-width: 800px) {
+      width: 100%;
+      max-width: none;
+      height: 87%;
+      border-radius: 15px 15px 0 0;
+      border-right: none;
+      bottom: 0;
+      right: 0;
+    }
 
     ::-webkit-scrollbar {
       background-color: transparent;
@@ -93,6 +116,11 @@ export const HeaderWords = styled.div`
     font-weight: light;
     color: white;
   }
+  /* @media screen and (max-width: 800px) {
+    p {
+      font-size: 16px;
+    }
+  } */
 `;
 
 export const IconWrapper = styled.div`
@@ -105,6 +133,15 @@ export const IconWrapper = styled.div`
   span {
     font-size: 10px;
     font-weight: bold;
+  }
+  @media screen and (max-width: 800px) {
+    img {
+      width: 40px;
+      height: 40px;
+    }
+    span {
+      font-size: 12px;
+    }
   }
 `;
 

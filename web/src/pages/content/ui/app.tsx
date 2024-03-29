@@ -356,25 +356,25 @@ export default function App() {
   }, [isDetailPage, isProductSummaryRendered]);
 
   // home 메시지
-  // useEffect(() => {
-  //   console.log("새로고침하면 떠야함: ", sessionStorage.getItem("messages"));
-  //   if (sessionStorage.getItem("messages") === null) {
-  //     sessionStorage.setItem(
-  //       "messages",
-  //       JSON.stringify([
-  //         {
-  //           type: "home",
-  //           content:
-  //             "안녕하세요 고객님\n저는 ChatDA에요!\n고객님의 궁금증을 친절히 설명해드릴게요!",
-  //           isUser: false,
-  //           isTyping: false,
-  //           isCompared: false,
-  //           id: 0,
-  //         },
-  //       ]),
-  //     );
-  //   }
-  // }, []);
+  useEffect(() => {
+    console.log("새로고침하면 떠야함: ", sessionStorage.getItem("messages"));
+    if (sessionStorage.getItem("messages") === null) {
+      sessionStorage.setItem(
+        "messages",
+        JSON.stringify([
+          {
+            type: "home",
+            content:
+              "안녕하세요 고객님\n저는 ChatDA에요!\n고객님의 궁금증을 친절히 설명해드릴게요!",
+            isUser: false,
+            isTyping: false,
+            isCompared: false,
+            id: 0,
+          },
+        ]),
+      );
+    }
+  }, []);
 
   // 메시지 관리
 
@@ -580,66 +580,68 @@ export default function App() {
     <QueryClientProvider client={queryClient}>
       {/* mui component를 사용하는 경우 아래와 같이 StyledEngineProvider를 반드시 사용해야 합니다!*/}
       <StyledEngineProvider injectFirst>
-        <S.ChatExpandModal
-          open={isOpenExpandModal}
-          onClose={handleCloseExpandModal}
-          disableScrollLock={true}
-        >
-          <S.CloseBtn onClick={handleCloseExpandModal}>
-            <CloseIcon />
-          </S.CloseBtn>
-          {expandModalState === "popular" ? (
-            <P.PopularItemPage />
-          ) : expandModalState === "info" ? (
-            <P.DetailSpecPage selectedModelNo={selectedModelNo} />
-          ) : expandModalState === "compare" ? (
-            <P.CompareSpecPage selectedModelNo={selectedModelNo} />
-          ) : (
-            expandModalState === "search" && <P.SearchPage />
-          )}
-        </S.ChatExpandModal>
+        <S.WholeWrapper>
+          <S.ChatExpandModal
+            open={isOpenExpandModal}
+            onClose={handleCloseExpandModal}
+            disableScrollLock={true}
+          >
+            <S.CloseBtn onClick={handleCloseExpandModal}>
+              <CloseIcon />
+            </S.CloseBtn>
+            {expandModalState === "popular" ? (
+              <P.PopularItemPage />
+            ) : expandModalState === "info" ? (
+              <P.DetailSpecPage selectedModelNo={selectedModelNo} />
+            ) : expandModalState === "compare" ? (
+              <P.CompareSpecPage selectedModelNo={selectedModelNo} />
+            ) : (
+              expandModalState === "search" && <P.SearchPage />
+            )}
+          </S.ChatExpandModal>
 
-        <S.ChatMainModal
-          open={isOpenMainModal}
-          onClose={handleCloseMainModal}
-          disableScrollLock={true}
-        >
-          <S.ChatMainWrapper>
-            <S.ChatMainHeader>
-              <S.HeaderWords>
-                <p>
-                  상품 <b>비교</b>, 상세 정보 <b>설명</b>, <b>추천</b>까지!
-                </p>
-                <p>삼성의 가전제품들을</p>
-                <p>이해하기 쉽게 알려드립니다 😊</p>
-              </S.HeaderWords>
-              <S.IconWrapper onClick={() => handleOpenExpandModal("popular")}>
-                <img src={rankingIconSrc} alt="ranking-icon" width={35} height={35} />
-                <span>인기순위</span>
-              </S.IconWrapper>
-              <S.IconWrapper onClick={() => handleOpenExpandModal("search")}>
-                <img src={searchIconSrc} alt="search-icon" width={35} height={35} />
-                <span>조건검색</span>
-              </S.IconWrapper>
-            </S.ChatMainHeader>
+          <S.ChatMainModal
+            open={isOpenMainModal}
+            onClose={handleCloseMainModal}
+            disableScrollLock={true}
+          >
+            <S.ChatMainWrapper>
+              <S.ChatMainHeader>
+                <S.HeaderWords>
+                  <p>
+                    상품 <b>비교</b>, 상세 정보 <b>설명</b>, <b>추천</b>까지!
+                  </p>
+                  <p>삼성의 가전제품들을</p>
+                  <p>이해하기 쉽게 알려드립니다 😊</p>
+                </S.HeaderWords>
+                <S.IconWrapper onClick={() => handleOpenExpandModal("popular")}>
+                  <img src={rankingIconSrc} alt="ranking-icon" width={35} height={35} />
+                  <span>인기순위</span>
+                </S.IconWrapper>
+                <S.IconWrapper onClick={() => handleOpenExpandModal("search")}>
+                  <img src={searchIconSrc} alt="search-icon" width={35} height={35} />
+                  <span>조건검색</span>
+                </S.IconWrapper>
+              </S.ChatMainHeader>
 
-            <S.ChatMainContent>
-              <Comp.ChatbotMain
-                props={comparePrds}
-                setComparePrds={setComparePrds}
-                messages={messages}
-                setMessages={setMessages}
-                handleOpenExpandModal={handleOpenExpandModal}
-                changeSelectedModelNo={changeSelectedModelNo}
-                fetchMessage={fetchMessage}
-                handleMessage={handleMessage}
-                isSpeechInput={isSpeechInput}
-                speechText={speechText}
-              />
-            </S.ChatMainContent>
-          </S.ChatMainWrapper>
-        </S.ChatMainModal>
-        {/* 요약정보 말풍선 */}
+              <S.ChatMainContent>
+                <Comp.ChatbotMain
+                  props={comparePrds}
+                  setComparePrds={setComparePrds}
+                  messages={messages}
+                  setMessages={setMessages}
+                  handleOpenExpandModal={handleOpenExpandModal}
+                  changeSelectedModelNo={changeSelectedModelNo}
+                  fetchMessage={fetchMessage}
+                  handleMessage={handleMessage}
+                  isSpeechInput={isSpeechInput}
+                  speechText={speechText}
+                />
+              </S.ChatMainContent>
+            </S.ChatMainWrapper>
+          </S.ChatMainModal>
+          {/* 요약정보 말풍선 */}
+        </S.WholeWrapper>
       </StyledEngineProvider>
       <S.ChatModalBackdrop
         className="backdrop"
