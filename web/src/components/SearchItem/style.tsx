@@ -13,7 +13,7 @@ export const SearchItemWrapper = styled.div`
 `;
 
 export const LeftImg = styled.img`
-  width: 130px;
+  width: 120px;
   height: 160px;
   object-fit: cover;
 `;

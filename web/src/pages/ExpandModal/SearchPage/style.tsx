@@ -1,6 +1,11 @@
 import styled from "@emotion/styled";
 import IconButton from "@mui/material/IconButton";
 
+interface InputPlaceholderProps {
+  isEmpty: boolean;
+  isFocused: boolean;
+}
+
 export const ModalHeaderWrapper = styled.div`
   width: fit-content;
   height: fit-content;
@@ -23,6 +28,17 @@ export const ModalHeaderSubSpan = styled.span`
 export const SearchInputWrapper = styled.div`
   position: relative;
   width: 80%;
+`;
+
+export const InputPlaceholder = styled.span<InputPlaceholderProps>`
+  position: absolute;
+  color: #c7c7c7;
+  padding: 15px 30px;
+  pointer-events: none;
+  display: ${(props) => (props.isEmpty && !props.isFocused ? "block" : "none")};
+  & span {
+    font-size: 15px;
+  }
 `;
 
 export const ModalHeaderSearchInput = styled.input`
