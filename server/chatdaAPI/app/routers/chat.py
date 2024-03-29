@@ -72,10 +72,11 @@ def post_chat(
             # 위 예제 입력에서 걸리지 않은 입력에 대해서는 langchain을 활용한 답변을 생성합니다
             case default:
                 data = get_output(user_input=chat_request_dto.content, search=False)
-
+                print(data)
                 # 만약 model_list가 None이라면 DB에서 검색된 내용이 없다는 뜻
-                if data["model_list"] is None:
+                if "model_list" not in data and "model_no_list" not in data:
                     response = response_dto.ChatExceptionDto()
+                    data["content"] = "잘 모르겠어요. 다시 질문해주세요"
                 else:
                     match data["type"]:
                         # langchain으로 생성된 답변의 타입에 따라 응답으로 보낼 객체 형식을 변경합니다.
@@ -107,17 +108,28 @@ def post_chat(
                 }
             }
         ])
-
-    log = {
-        "chat_id": chat_id,
-        "time": datetime.datetime.utcnow(),
-        "uuid": chat_request_dto.uuid,
-        "latency": time.time(),
-        "type": data["type"],
-        "user_message": content,
-        "system_message": "",
-        "model_no_list": data["model_list"][:10]
-    }
+    if "model_list" in data and "type" in data:
+        log = {
+            "chat_id": chat_id,
+            "time": datetime.datetime.utcnow(),
+            "uuid": chat_request_dto.uuid,
+            "latency": time.time(),
+            "type": data["type"],
+            "user_message": content,
+            "system_message": "",
+            "model_no_list": data["model_list"][:10]
+        }
+    else:
+        log = {
+            "chat_id": chat_id,
+            "time": datetime.datetime.utcnow(),
+            "uuid": chat_request_dto.uuid,
+            "latency": time.time(),
+            "type": "Error",
+            "user_message": content,
+            "system_message": "",
+            "model_no_list": "Not In Data"
+        }
 
     return StreamingResponse(returnData(response, data["content"], req, log, data), headers={'X-Accel-Buffering': 'no'},
                              media_type="text/event-stream")
@@ -295,5 +307,6 @@ async def returnData(response: any, stream: any, req: Request, log: Dict, data: 
 
     logger.info("chat_history", extra=log)
 
-    for model in data["model_list"]:
-        logger.info("preference", extra={"model_no": model["제품_코드"][:10]})
+    if "model_list" in data:
+        for model in data["model_list"]:
+            logger.info("preference", extra={"model_no": model["제품_코드"][:10]})

@@ -5,6 +5,7 @@ from pydantic import Field
 
 from chatdaAPI.app.models.utils.CamelModel import CamelModel
 
+
 class ChatInfoDto(CamelModel):
     """
     챗봇과의 대화 중에서 제품 정보에 대한 응답 스키마
@@ -112,7 +113,7 @@ class ChatExceptionDto(CamelModel):
     """
     질문에 대한 답을 찾지 못했을 경우 예외 처리 대답
     """
-    content: str = "잘 모르겠어요. 다시 질문해주세요."
+    type: str = "error"
     chat_id: str
 
 
@@ -140,11 +141,12 @@ def init_compare_response(data, chat_id):
 
 
 def init_recommend_response(data, chat_id):
-    if data["model_list"] is None:
-        return ChatExceptionDto(chat_id)
+    if "model_no_list" not in data:
+        return ChatExceptionDto(
+            chat_id=chat_id)
 
     else:
-        model = data["model_list"][0]
+        model = data["model_no_list"][0]
         return ChatRecommendDto(
             type=data["type"],
             content=model,
