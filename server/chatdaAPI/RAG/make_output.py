@@ -24,10 +24,10 @@ db = SQLDatabase.from_uri(
 context = db.get_context()
 
 # 언어 모델 로드
-llm = ChatOpenAI(model="gpt-3.5-turbo-16k", temperature=0.1, verbose=True)
+llm = ChatOpenAI(model="gpt-3.5-turbo-0125", temperature=0.7, verbose=True)
 
 # 언어 모델 로드 with Stream
-llm_stream = ChatOpenAI(model="gpt-3.5-turbo-16k", temperature=0.1, verbose=True, streaming=True,)
+llm_stream = ChatOpenAI(model="gpt-3.5-turbo-0125", temperature=0.7, verbose=True, streaming=True,)
 
 # 데이터베이스 연결 설정
 setup = {
@@ -136,6 +136,9 @@ def get_output(user_input, search):
             # 유저 입력으로부터 답변 생성
             result = answer_chain.stream({"question": user_input, "query": query[0], "result": result})
 
+            # # 테스트용
+            # answer_chain = prompt.answer_prompt | llm | StrOutputParser()
+            # result = answer_chain.invoke({"question": user_input, "query": query[0], "result": result})
         else:
             result = "제품에 대한 정보가 존재하지 않습니다!"
             model_list = None
@@ -144,6 +147,9 @@ def get_output(user_input, search):
         answer_chain = first_prompt | llm_stream | StrOutputParser()
 
         result = answer_chain.stream({"question": user_input})
+        # # 테스트용
+        # answer_chain = first_prompt | llm | StrOutputParser()
+        # result = answer_chain.invoke({"question": user_input})
 
     return {
         "type": user_input_type,
@@ -157,6 +163,6 @@ def get_output(user_input, search):
 #
 # # 테스트용
 # if __name__ == '__main__':
-#     res = get_output(user_input='용량이 600L이상 되는 냉장고를 가격이 낮은 순으로 알려줘', search=False)
+#     res = get_output(user_input='RF90DG9111S9와 RF60DB9342AP를 비교해줘', search=False)
 #     print(f"type : {res['type']}")
 #     print(f"content : {res['content']}")
