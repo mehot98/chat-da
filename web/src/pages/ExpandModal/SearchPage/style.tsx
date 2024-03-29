@@ -1,5 +1,6 @@
 import styled from "@emotion/styled";
 import IconButton from "@mui/material/IconButton";
+import CircularProgress from "@mui/material/CircularProgress";
 
 interface InputPlaceholderProps {
   isEmpty: boolean;
@@ -57,9 +58,11 @@ export const SearchIconButton = styled(IconButton)`
 `;
 
 export const ModalSearchItemWrapper = styled.div`
-  width: fit-content;
+  width: 585px;
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
   gap: 30px;
   margin: 30px 0;
 `;
