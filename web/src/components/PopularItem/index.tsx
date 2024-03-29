@@ -4,7 +4,7 @@ import * as Comp from "@src/components";
 import * as API from "@src/apis";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 
 export default function PopularItem(props: T.PopularItemProps) {

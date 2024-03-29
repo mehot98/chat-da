@@ -3,8 +3,6 @@ import * as Comp from "@root/src/components";
 import * as S from "./style";
 import * as T from "@src/types";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import React from "react";
-import { i } from "vite/dist/node/types.d-jgA8ss1A";
 
 const Message = (props: T.MessageProps) => {
   const chatDAIconSrc = chrome.runtime.getURL("icons/ChatDA_icon_128.png");

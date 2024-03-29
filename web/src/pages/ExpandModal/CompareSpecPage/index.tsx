@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import { request } from "@src/apis/requestBuilder";
 import * as Comp from "@root/src/components";
 import * as S from "./style";
@@ -127,7 +127,7 @@ export default function CompareSpecPage({ selectedModelNo }: { selectedModelNo: 
     //   rawSpecObjectList.current.push([])
     // }
 
-    [...rawSpecListKeysSet].forEach((key: string, i) => {
+    [...rawSpecListKeysSet].forEach((key: string) => {
       rawSpecList.forEach((specList, j) => {
         if (!specList[key] || specList[key] === "없음") {
           const newSpecList = rawSpecList[j];
