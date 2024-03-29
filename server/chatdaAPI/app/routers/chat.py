@@ -177,29 +177,34 @@ def post_feedback(
     """
 
     query = f"""
+    {{
+      "query": {{
+        "bool": {{
+          "should": [
             {{
-              "query": {{
-                "bool": {{
-                  "must": [
-                    {{
-                      "match": {{
-                        "message": "chat_history"
-                      }}
-                    }},
-                    {{
-                      "match": {{
-                        "chat_id": "{feedback_request_dto.chat_id}"
-                      }}
-                    }}
-                  ]
-                }}
+              "match": {{
+                "message": "chat_history"
+              }}
+            }},
+            {{
+              "match": {{
+                "message": "feedback"
               }}
             }}
+          ],
+          "must": {{
+            "match": {{
+              "chat_id": "{feedback_request_dto.chat_id}"
+            }}
+          }}
+        }}
+      }}
+    }}
     """
 
     result = es.search(index="logs*", body=query)
 
-    if result['hits']['total']['value'] == 0:
+    if result['hits']['total']['value'] != 1:
         return {"success": False}
 
     target = result['hits']['hits'][0]['_source']
