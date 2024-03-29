@@ -14,7 +14,7 @@ const manifest = {
   name: "ChatDA",
   version: packageJson.version,
   description: "삼성의 가전제품에 대해 궁금한 점이 있으신가요? ChatDA가 설명해드리겠습니다!",
-  permissions: ["storage"],
+  permissions: [],
   background: {
     service_worker: "src/pages/background/index.js",
     type: "module",
@@ -30,10 +30,10 @@ const manifest = {
     128: "icons/ChatDA_icon_128.png",
   },
   content_scripts: [
-    {
-      matches: ["https://www.samsung.com/*"],
-      js: ["src/pages/contentInjected/index.js"],
-    },
+    // {
+    //   matches: ["https://www.samsung.com/*"],
+    //   js: ["src/pages/contentInjected/index.js"],
+    // },
     {
       matches: ["https://www.samsung.com/*"],
       js: ["src/pages/contentUI/index.js"],
