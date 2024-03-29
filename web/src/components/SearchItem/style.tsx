@@ -7,15 +7,19 @@ export const SearchItemWrapper = styled.div`
   display: flex;
   gap: 30px;
   justify-content: center;
-  padding: 6px 15px 6px 48px;
+  padding: 6px 15px 6px 25px;
   border-radius: 30px;
   box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.25);
 `;
 
 export const LeftImg = styled.img`
-  width: 74px;
-  height: 142px;
+  width: 130px;
+  height: 100%;
   object-fit: cover;
+`;
+
+export const LeftDiv = styled.div`
+  margin: 20px 0;
 `;
 
 export const RightDiv = styled.div`
@@ -23,7 +27,7 @@ export const RightDiv = styled.div`
   flex-direction: column;
   gap: 15px;
   width: 80%;
-  margin: 30px 25px 30px 0px;
+  margin: 20px 25px 20px 0px;
 `;
 
 export const RightDivInnerCol = styled.div`
