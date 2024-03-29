@@ -37,7 +37,7 @@ export const ChatExpandModal = styled(ChatMainModal)`
     align-items: center;
     right: 440px;
     border-radius: 15px 0px 0px 15px;
-    border-right: 30px solid white;
+    border-right: 43px solid white;
     gap: 30px;
     user-select: none;
 
