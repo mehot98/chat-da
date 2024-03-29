@@ -561,6 +561,7 @@ export default function App() {
 
   useEffect(() => {
     if (isListening) {
+      setIsOpenMainModal(true);
       setSpeechInput(true);
       setSpeechText(content);
     } else {
@@ -571,8 +572,7 @@ export default function App() {
   useEffect(() => {
     if (isCompleted) {
       setSpeechInput(false);
-      start();
-      fetchMessage(speechText, true);
+      fetchMessage(speechText, true).then(start);
     }
   }, [isCompleted]);
 
