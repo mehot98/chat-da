@@ -1,9 +1,3 @@
-import os
-
-from chatdaAPI.config import config
-print(os.getenv('OPENAI_API_KEY'),)
-
-
 from chatdaAPI.app.routers.chat import router as chat_router
 from chatdaAPI.app.routers.compare import router as compare_router
 from chatdaAPI.app.routers.detail import router as detail_router
