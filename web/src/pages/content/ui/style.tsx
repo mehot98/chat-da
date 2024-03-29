@@ -101,6 +101,7 @@ export const IconWrapper = styled.div`
   align-items: center;
   gap: 10px;
   color: white;
+  cursor: pointer;
   span {
     font-size: 10px;
     font-weight: bold;

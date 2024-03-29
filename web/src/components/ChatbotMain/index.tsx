@@ -56,7 +56,7 @@ const ChatbotMain = (props: {
         <Sub.MessageList
           messages={props.messages}
           currentTypingId={currentTypingId}
-          setMessages={props.handleMessage}
+          setMessages={props.setMessages}
           setComparePrds={props.setComparePrds}
           handleOpenExpandModal={props.handleOpenExpandModal}
           changeSelectedModelNo={props.changeSelectedModelNo}

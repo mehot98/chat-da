@@ -30,14 +30,14 @@ export default function SpecCompareGrid({
     "SmartThings_모바일_앱_지원",
   ];
 
-  useEffect(() => {
-    console.log("여기 grid임", summarySpec, rawSpec);
-    // summarySpec.forEach((summary, i) => {
-    //   console.log("이거 makeSpecObject 실행할거임", summary);
-    //   console.log("이게 결과임", makeSpecObject(summary, "소비효율등급"));
-    // });
-    // eslint-disable-next-line
-  }, []);
+  // useEffect(() => {
+  //   console.log("여기 grid임", summarySpec, rawSpec);
+  //   // summarySpec.forEach((summary, i) => {
+  //   //   console.log("이거 makeSpecObject 실행할거임", summary);
+  //   //   console.log("이게 결과임", makeSpecObject(summary, "소비효율등급"));
+  //   // });
+  //   // eslint-disable-next-line
+  // }, []);
 
   if (recommendProps[0]["제품_코드"]) {
     return (
