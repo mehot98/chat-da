@@ -1,3 +1,4 @@
+import asyncio
 import datetime
 import json
 from typing import Dict
@@ -94,20 +95,13 @@ def post_chat(
                             response = response_dto.init_dictionary_response(data, chat_id)
                         case default:
                             # 만약 type이 지정되지 않은 값이 나온다면 Exception을 발생시킵니다.
-                            raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=[
-                                {
-                                    "type": "error",
-                                    "msg": "Content error",
-                                    "input": {
-                                        "content": "string"
-                                    }
-                                }
-                            ])
+                            raise Exception(data)
     except Exception as e:
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=[
             {
                 "type": "error",
                 "msg": "Server Error",
+                "error": e,
                 "input": {
                     "content": "string"
                 }
@@ -125,7 +119,8 @@ def post_chat(
         "model_no_list": data["model_list"][:10]
     }
 
-    return StreamingResponse(returnData(response, data["content"], req, log, data), headers={'X-Accel-Buffering': 'no'}, media_type="text/event-stream")
+    return StreamingResponse(returnData(response, data["content"], req, log, data), headers={'X-Accel-Buffering': 'no'},
+                             media_type="text/event-stream")
 
 
 @router.post("/search",
@@ -147,7 +142,7 @@ def post_search(
     # 현재 리스트가 800개 조회되는 오류 발생
     data["model_list"] = data["model_no_list"][:10]
 
-    return response_dto.init_search_response(data,chat_id)
+    return response_dto.init_search_response(data, chat_id)
 
 
 @router.get("/ranking",
@@ -177,29 +172,34 @@ def post_feedback(
     """
 
     query = f"""
+    {{
+      "query": {{
+        "bool": {{
+          "should": [
             {{
-              "query": {{
-                "bool": {{
-                  "must": [
-                    {{
-                      "match": {{
-                        "message": "chat_history"
-                      }}
-                    }},
-                    {{
-                      "match": {{
-                        "chat_id": "{feedback_request_dto.chat_id}"
-                      }}
-                    }}
-                  ]
-                }}
+              "match": {{
+                "message": "chat_history"
+              }}
+            }},
+            {{
+              "match": {{
+                "message": "feedback"
               }}
             }}
+          ],
+          "must": {{
+            "match": {{
+              "chat_id": "{feedback_request_dto.chat_id}"
+            }}
+          }}
+        }}
+      }}
+    }}
     """
 
     result = es.search(index="logs*", body=query)
 
-    if result['hits']['total']['value'] == 0:
+    if result['hits']['total']['value'] != 1:
         return {"success": False}
 
     target = result['hits']['hits'][0]['_source']
@@ -224,7 +224,6 @@ def post_feedback(
 @router.post("/preference", status_code=status.HTTP_200_OK)
 def post_feedback(
 ):
-
     query = """
     {
       "size": 0,
@@ -262,6 +261,7 @@ def post_feedback(
 
     return [d['key'] for d in result['aggregations']['top_model_no']['buckets']]
 
+
 async def returnData(response: any, stream: any, req: Request, log: Dict, data: any):
     # 만약 request 측 세션이 끊어지면 해당 Stream을 종료시키기
     is_disconnected = await req.is_disconnected()
@@ -278,7 +278,7 @@ async def returnData(response: any, stream: any, req: Request, log: Dict, data: 
             }
             result += event
             yield f"data: {json.dumps(token)}\n\n"
-            time.sleep(0.02)
+            await asyncio.sleep(0.02)
         log["system_message"] = result
     else:
         # GPT 응답에 대한 token을 EventStream으로 보내주기

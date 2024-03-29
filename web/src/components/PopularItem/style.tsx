@@ -48,10 +48,9 @@ export const AccordionSummaryWrapper = styled(AccordionSummary)`
   && {
     width: 585px;
     display: flex;
-    gap: 15px;
     /* align-items: center; */
     justify-content: center;
-    padding: 6px 15px 6px 48px;
+    padding: 6px 15px 6px 0;
     border-radius: 30px;
     box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.25);
 
@@ -66,6 +65,13 @@ export const AccordionSummaryWrapper = styled(AccordionSummary)`
       gap: 46px;
     }
   }
+`;
+
+export const ImgContentWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0;
 `;
 
 export const ContentWrapper = styled.div`

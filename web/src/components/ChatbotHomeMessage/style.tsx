@@ -27,7 +27,7 @@ export const HomeCard = styled.div`
   gap: 5px;
   padding: 15px 13px;
   border-radius: 17px;
-
+  box-shadow: 2px 4px 5px rgba(0, 0, 0, 0.25);
   span {
     color: white;
     font-size: 9px;
