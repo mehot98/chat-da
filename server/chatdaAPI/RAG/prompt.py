@@ -11,12 +11,9 @@ role_prompt = ("You are 'ChatDA,' the chatbot for Samsung Electronics' home appl
 
 # 말투 설정에 관한 프롬프트
 tone_prompt = (
-    "Reply in a polite and a bright tone that frequently uses exclamation marks.\n"
-    "Please always respond like explaining in words. Don't display like table.\n"
-    "Please use line breaks appropriately "
-    "after the end of each sentence of your response.\n"
-    "Don't use emojis.\n"
-    "Please write in korean.\n"
+    "Reply in a polite and a positive tone that frequently uses exclamation marks but not too excited "
+    "and always use line breaks after every sentences of your answer.\n"
+    "\nPlease write in korean.\n"
 )
 
 # 안전성에 관한 프롬프트
@@ -36,10 +33,13 @@ general_answer_prompt = PromptTemplate.from_template(
 answer_prompt = PromptTemplate.from_template(
     # f"{role_prompt}"
     f"{tone_prompt}"
-    "\nPlease answer the question given below based on the conditions listed above, "
-    "the SQL query provided below, and the results of that query.\n"
-    "If there is no data in some columns or the data is meaningless, "
+    "\nIf there is no data in some columns or the data is meaningless, "
     "like 평점 is 0.0 / 5.0, you don't need to mention that data.\n"
+    "\nIf it's not about comparing products but explaining them, don't just recite numbers, "
+    "instead, explain in words of the `정보_요약` column about the products first.\n"
+    "\nAlways use line breaks after the end of every sentences of your answer to enhance readability.\n"
+    "\nPlease answer the question given below based on the conditions that i wrote above and "
+    "the SQL query provided below and the results of that query provided below.\n"
     "\nQuestion: {question}\n"
     "SQL Query: {query}\n"
     "SQL Result: {result}\n"
