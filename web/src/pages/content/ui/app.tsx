@@ -561,6 +561,7 @@ export default function App() {
 
   useEffect(() => {
     if (isListening) {
+      setIsOpenMainModal(true);
       setSpeechInput(true);
       setSpeechText(content);
     } else {
