@@ -6,6 +6,13 @@ from chatdaAPI.app.routers.summary import router as summary_router
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
+import os
+
+from chatdaAPI.config import config
+print(os.getenv('OPENAI_API_KEY'),)
+
+
+
 app = FastAPI()
 
 
