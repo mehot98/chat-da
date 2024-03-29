@@ -3,6 +3,7 @@ import { request } from "@src/apis/requestBuilder";
 import * as Comp from "@root/src/components";
 import * as S from "./style";
 import * as T from "@src/types/index";
+import makeNumberWithCommas from "@src/utils/makeNumberWithCommas";
 
 export default function DetailSpecPage({ selectedModelNo }: { selectedModelNo: string[] }) {
   const [recommendProps, setRecommendProps] = useState<T.ChatbotRecommendCardProps>({
@@ -26,8 +27,7 @@ export default function DetailSpecPage({ selectedModelNo }: { selectedModelNo: s
       제품_코드: data["제품_코드"],
       제품명: data["제품명"],
       가격: data["가격"],
-      // 혜택가: data["혜택가"],
-      혜택가: "1,490,000원",
+      혜택가: makeNumberWithCommas(data["할인가"]),
       imageUrl: data["imageUrl"],
     });
     setSummarySpec({

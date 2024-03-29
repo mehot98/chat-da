@@ -85,6 +85,12 @@ export const ContentWrapper = styled.div`
 //   display: flex;
 // `;
 
+export const ProductImg = styled.img`
+  width: 74px;
+  height: 142px;
+  object-fit: cover;
+`;
+
 export const ContentDiv = styled.div<ContentDivProps>`
   width: 355px;
   height: fit-content;
