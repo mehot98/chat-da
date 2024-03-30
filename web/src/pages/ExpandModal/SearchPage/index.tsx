@@ -4,8 +4,13 @@ import * as S from "./style";
 import * as T from "@src/types";
 import { request } from "@src/apis/requestBuilder";
 import SearchIcon from "@mui/icons-material/Search";
+import searchInfoPath from "@assets/img/search_info.png";
+import noSearchResultPath from "@assets/img/no_search_result.png";
 
 export default function SearchPage() {
+  const searchInfoSrc = chrome.runtime.getURL(searchInfoPath);
+  const noSearchResultSrc = chrome.runtime.getURL(noSearchResultPath);
+
   const [isSearched, setIsSearched] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [inputContent, setInputContent] = useState<string>("");
@@ -22,12 +27,19 @@ export default function SearchPage() {
     event.preventDefault();
 
     if (inputContent) {
-      const { data } = await request.post("/chat/search", {
-        uuid: getUuid(),
-        content: inputContent,
-      });
-      setSiProps(data.modelList);
+      setIsLoading(true);
       setIsSearched(true);
+      const { data } = await request
+        .post("/chat/search", {
+          uuid: getUuid(),
+          content: inputContent,
+        })
+        .catch((err) => {
+          console.log(err);
+          setIsLoading(false);
+        });
+      setSiProps(data.modelList);
+      setIsLoading(false);
     }
   };
 
@@ -68,13 +80,20 @@ export default function SearchPage() {
 
         <S.ModalSearchItemWrapper>
           {!isSearched ? (
-            <span>검색해보세요</span>
+            <S.ImgWrapper>
+              <img src={searchInfoSrc} alt="search-info" width={300} />
+            </S.ImgWrapper>
+          ) : isLoading ? (
+            <S.LoadingCard />
           ) : siProps.length > 0 ? (
             siProps.map((searchItemProps: T.SearchItemProps, i: number) => (
               <Comp.SearchItem {...searchItemProps} key={i} />
             ))
           ) : (
-            <span>검색결과가 없어요</span>
+            <S.ImgWrapper>
+              <img src={noSearchResultSrc} alt="no-search-result" width={300} />
+              <S.ImgSpan>검색 결과가 없어요ㅠ</S.ImgSpan>
+            </S.ImgWrapper>
           )}
         </S.ModalSearchItemWrapper>
       </S.ModalHeaderWrapper>

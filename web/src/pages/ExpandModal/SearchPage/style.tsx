@@ -1,6 +1,5 @@
 import styled from "@emotion/styled";
 import IconButton from "@mui/material/IconButton";
-import CircularProgress from "@mui/material/CircularProgress";
 
 interface InputPlaceholderProps {
   isEmpty: boolean;
@@ -65,4 +64,36 @@ export const ModalSearchItemWrapper = styled.div`
   align-items: center;
   gap: 30px;
   margin: 30px 0;
+`;
+
+export const ImgWrapper = styled.div`
+  position: relative;
+`;
+
+export const ImgSpan = styled.span`
+  width: max-content;
+  font-size: 20px;
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translate(-50%, 0);
+`;
+
+export const LoadingCard = styled.div`
+  width: 100%;
+  height: 150px;
+  border-radius: 30px;
+
+  animation: shimmer 2s infinite linear;
+  background: linear-gradient(to right, #eff1f3 4%, #e2e2e2 25%, #eff1f3 36%);
+  background-size: 1000px 100%;
+
+  @keyframes shimmer {
+    0% {
+      background-position: -1000px 0;
+    }
+    100% {
+      background-position: 1000px 0;
+    }
+  }
 `;
