@@ -301,6 +301,7 @@ async def returnData(response: any, stream: any, req: Request, log: Dict, data: 
             }
             result += event
             yield f"data: {json.dumps(token)}\n\n"
+            await asyncio.sleep(0.02)
         log["system_message"] = result
 
     log['latency'] = time.time() - log['latency']
