@@ -4,7 +4,6 @@ import * as Comp from "@src/components";
 import makeNumberWithCommas from "@src/utils/makeNumberWithCommas";
 
 export default function SearchItem(props: T.SearchItemProps) {
-  // console.log(props);
   return (
     <S.SearchItemWrapper>
       <S.LeftDiv>
