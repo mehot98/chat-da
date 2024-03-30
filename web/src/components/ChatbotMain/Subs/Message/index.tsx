@@ -79,9 +79,7 @@ const Message = (props: T.MessageProps) => {
           <S.AiMessageRow>
             <img src={chatDAIconSrc} alt="ChatDA-logo" width={43} height={42} />
             <S.AiMessageDiv>
-              <div>
-                <p>{props.content}</p>
-              </div>
+              <div>{props.isLoading ? <S.Loading /> : <p>{props.content}</p>}</div>
             </S.AiMessageDiv>
           </S.AiMessageRow>
 
@@ -109,9 +107,7 @@ const Message = (props: T.MessageProps) => {
           <S.AiMessageRow>
             <img src={chatDAIconSrc} alt="ChatDA-logo" width={43} height={42} />
             <S.AiMessageDiv>
-              <div>
-                <p>{props.content}</p>
-              </div>
+              <div>{props.isLoading ? <S.Loading /> : <p>{props.content}</p>}</div>
             </S.AiMessageDiv>
           </S.AiMessageRow>
 
