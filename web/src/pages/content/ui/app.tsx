@@ -444,7 +444,7 @@ export default function App() {
             isUser: false,
             isTyping: true,
             isCompared: false,
-            id: data.craetedAt,
+            id: data.chatId,
             modelNo: data.modelNo,
             spec: data.content,
           },
@@ -458,7 +458,7 @@ export default function App() {
             isUser: false,
             isTyping: true,
             isCompared: false,
-            id: data.craetedAt,
+            id: data.chatId,
             modelNo: data.modelNo,
             btnString: "상세 스펙 보기",
           },
@@ -472,7 +472,7 @@ export default function App() {
             isUser: false,
             isTyping: true,
             isCompared: true,
-            id: data.craetedAt,
+            id: data.chatId,
             modelNoList: data.modelNoList,
             btnString: "자세히 비교하기",
           },
@@ -486,7 +486,7 @@ export default function App() {
             isUser: false,
             isTyping: true,
             isCompared: false,
-            id: data.craetedAt,
+            id: data.chatId,
           },
         ]);
       } else if (data.type === "ranking") {
@@ -498,7 +498,7 @@ export default function App() {
             isUser: false,
             isTyping: true,
             isCompared: false,
-            id: data.craetedAt,
+            id: data.chatId,
             modelList: data.modelList,
             btnString: "인기순위 보기",
           },
@@ -512,7 +512,7 @@ export default function App() {
             isUser: false,
             isTyping: true,
             isCompared: false,
-            id: data.craetedAt,
+            id: data.chatId,
             modelList: data.modelList,
             btnString: "자세히 비교하기",
           },
@@ -526,7 +526,7 @@ export default function App() {
             isUser: false,
             isTyping: true,
             isCompared: false,
-            id: data.craetedAt,
+            id: data.chatId,
           },
         ]);
       } else if (data.type === "error") {
@@ -538,7 +538,7 @@ export default function App() {
             isUser: false,
             isTyping: true,
             isCompared: false,
-            id: data.craetedAt,
+            id: data.chatId,
           },
         ]);
       } else {
