@@ -389,7 +389,11 @@ export default function App() {
   const uuid = useMemo(getUuid, []);
 
   const fetchMessage = async (message: string, tts = false) => {
-    setMessages((prev) => [...prev, { content: message, isUser: true }]);
+    setMessages((prev) => [
+      ...prev,
+      { content: message, isUser: true },
+      { isUser: false, isLoading: true },
+    ]);
 
     await fetchEventSource(`${VITE_SERVER_END_POINT}/chat`, {
       method: "POST",
@@ -436,111 +440,155 @@ export default function App() {
   const handleMessage = (data) => {
     if (data.type !== undefined) {
       if (data.type === "recommend") {
-        setMessages((prev) => [
-          ...prev,
-          {
-            type: data.type,
-            content: "",
-            isUser: false,
-            isTyping: true,
-            isCompared: false,
-            id: data.chatId,
-            modelNo: data.modelNo,
-            spec: data.content,
-          },
-        ]);
+        setMessages((prev) => {
+          const lastMessageIndex = prev.length - 1;
+          const updatedMessages = [
+            ...prev.slice(0, lastMessageIndex),
+            {
+              ...prev[lastMessageIndex],
+              type: data.type,
+              content: "",
+              isUser: false,
+              isTyping: true,
+              isCompared: false,
+              isLoading: false,
+              id: data.chatId,
+              modelNo: data.modelNo,
+              spec: data.content,
+            },
+          ];
+          return updatedMessages;
+        });
       } else if (data.type === "info") {
-        setMessages((prev) => [
-          ...prev,
-          {
-            type: data.type,
-            content: "",
-            isUser: false,
-            isTyping: true,
-            isCompared: false,
-            id: data.chatId,
-            modelNo: data.modelNo,
-            btnString: "상세 스펙 보기",
-          },
-        ]);
+        setMessages((prev) => {
+          const lastMessageIndex = prev.length - 1;
+          const updatedMessages = [
+            ...prev.slice(0, lastMessageIndex),
+            {
+              ...prev[lastMessageIndex],
+              type: data.type,
+              content: "",
+              isUser: false,
+              isTyping: true,
+              isCompared: false,
+              isLoading: false,
+              id: data.chatId,
+              modelNo: data.modelNo,
+              btnString: "상세 스펙 보기",
+            },
+          ];
+          return updatedMessages;
+        });
       } else if (data.type === "compare") {
-        setMessages((prev) => [
-          ...prev,
-          {
-            type: data.type,
-            content: "",
-            isUser: false,
-            isTyping: true,
-            isCompared: true,
-            id: data.chatId,
-            modelNoList: data.modelNoList,
-            btnString: "자세히 비교하기",
-          },
-        ]);
+        setMessages((prev) => {
+          const lastMessageIndex = prev.length - 1;
+          const updatedMessages = [
+            ...prev.slice(0, lastMessageIndex),
+            {
+              ...prev[lastMessageIndex],
+              type: data.type,
+              content: "",
+              isUser: false,
+              isTyping: true,
+              isCompared: true,
+              isLoading: false,
+              id: data.chatId,
+              modelNoList: data.modelNoList,
+              btnString: "자세히 비교하기",
+            },
+          ];
+          return updatedMessages;
+        });
       } else if (data.type === "general") {
-        setMessages((prev) => [
-          ...prev,
-          {
-            type: data.type,
-            content: "",
-            isUser: false,
-            isTyping: true,
-            isCompared: false,
-            id: data.chatId,
-          },
-        ]);
+        setMessages((prev) => {
+          const lastMessageIndex = prev.length - 1;
+          const updatedMessages = [
+            ...prev.slice(0, lastMessageIndex),
+            {
+              ...prev[lastMessageIndex],
+              type: data.type,
+              content: "",
+              isUser: false,
+              isTyping: true,
+              isCompared: false,
+              isLoading: false,
+              id: data.chatId,
+            },
+          ];
+          return updatedMessages;
+        });
       } else if (data.type === "ranking") {
-        setMessages((prev) => [
-          ...prev,
-          {
-            type: data.type,
-            content: "",
-            isUser: false,
-            isTyping: true,
-            isCompared: false,
-            id: data.chatId,
-            modelList: data.modelList,
-            btnString: "인기순위 보기",
-          },
-        ]);
+        setMessages((prev) => {
+          const lastMessageIndex = prev.length - 1;
+          const updatedMessages = [
+            ...prev.slice(0, lastMessageIndex),
+            {
+              type: data.type,
+              content: "",
+              isUser: false,
+              isTyping: true,
+              isCompared: false,
+              isLoading: false,
+              id: data.chatId,
+              modelList: data.modelList,
+              btnString: "인기순위 보기",
+            },
+          ];
+          return updatedMessages;
+        });
       } else if (data.type === "search") {
-        setMessages((prev) => [
-          ...prev,
-          {
-            type: data.type,
-            content: "",
-            isUser: false,
-            isTyping: true,
-            isCompared: false,
-            id: data.chatId,
-            modelList: data.modelList,
-            btnString: "자세히 비교하기",
-          },
-        ]);
+        setMessages((prev) => {
+          const lastMessageIndex = prev.length - 1;
+          const updatedMessages = [
+            ...prev.slice(0, lastMessageIndex),
+            {
+              type: data.type,
+              content: "",
+              isUser: false,
+              isTyping: true,
+              isCompared: false,
+              isLoading: false,
+              id: data.chatId,
+              modelList: data.modelList,
+              btnString: "자세히 비교하기",
+            },
+          ];
+          return updatedMessages;
+        });
       } else if (data.type === "dictionary") {
-        setMessages((prev) => [
-          ...prev,
-          {
-            type: data.type,
-            content: "",
-            isUser: false,
-            isTyping: true,
-            isCompared: false,
-            id: data.chatId,
-          },
-        ]);
+        setMessages((prev) => {
+          const lastMessageIndex = prev.length - 1;
+          const updatedMessages = [
+            ...prev.slice(0, lastMessageIndex),
+            {
+              type: data.type,
+              content: "",
+              isUser: false,
+              isTyping: true,
+              isCompared: false,
+              isLoading: false,
+              id: data.chatId,
+            },
+          ];
+          return updatedMessages;
+        });
       } else if (data.type === "error") {
-        setMessages((prev) => [
-          ...prev,
-          {
-            type: data.type,
-            content: "",
-            isUser: false,
-            isTyping: true,
-            isCompared: false,
-            id: data.chatId,
-          },
-        ]);
+        setMessages((prev) => {
+          const lastMessageIndex = prev.length - 1;
+          const updatedMessages = [
+            ...prev.slice(0, lastMessageIndex),
+            {
+              type: data.type,
+              content: "",
+              isUser: false,
+              isTyping: true,
+              isCompared: false,
+              isLoading: false,
+              id: data.chatId,
+            },
+          ];
+          return updatedMessages;
+        });
       } else {
         // 이 부분에는 data.type이 없는 문제이므로 오류 문구 추가하면 될 것 같습니다.
         console.log("예외처리해야함!!");
