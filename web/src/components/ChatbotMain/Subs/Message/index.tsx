@@ -86,7 +86,7 @@ const Message = (props: T.MessageProps) => {
           </S.AiMessageRow>
 
           <Comp.ChatbotRecommend {...recommendProps} />
-          <MessageFeedback isRecommend={true} />
+          <MessageFeedback isRecommend={true} chatId={props.id} />
         </S.AiMessageWrapper>
       );
     } else if (props.type === "home") {
@@ -115,7 +115,7 @@ const Message = (props: T.MessageProps) => {
             </S.AiMessageDiv>
           </S.AiMessageRow>
 
-          <MessageFeedback isRecommend={false} />
+          <MessageFeedback isRecommend={false} chatId={props.id} />
 
           {props.btnString && (
             <S.ExpandOpenBtn onClick={handleExpandOpenBtn} startIcon={<ArrowBackIcon />}>

@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import theme from "@assets/style/theme.module.scss";
-import { Button } from "@mui/material";
+import { Button, Snackbar } from "@mui/material";
 
 export const BtnWrapper = styled.div`
   display: flex;
@@ -27,3 +27,5 @@ export const UnlikeBtn = styled(Btn)`
   color: ${theme.unlikebtncolor};
   border: 1px solid ${theme.unlikebtncolor};
 `;
+
+export const AlertToast = styled(Snackbar)``;
