@@ -114,7 +114,7 @@ export default function App() {
       isUser: false,
       isTyping: false,
       isCompared: false,
-      id: 0,
+      id: "0",
     },
   ]);
   // 비교하기 아이콘 붙이기 + 클릭시 제품명, 코드 저장

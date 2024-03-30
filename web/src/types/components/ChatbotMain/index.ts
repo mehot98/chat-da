@@ -8,7 +8,7 @@ export interface MsgProps {
   sender?: "user" | "bot";
   isUser?: boolean;
   isTyping?: boolean;
-  id?: number;
+  id?: string;
   isCompared?: boolean;
 }
 
@@ -21,7 +21,7 @@ export interface MessageProps {
   content: string;
   isUser: boolean;
   isTyping: boolean;
-  id: number;
+  id: string;
   isCompared: boolean;
   currentTypingId?: number;
   modelNo?: string;
