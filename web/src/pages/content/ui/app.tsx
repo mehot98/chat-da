@@ -188,7 +188,7 @@ export default function App() {
           const parentElement = compareButton.parentElement;
           const detailElement = parentElement.querySelector(".card-detail");
           const spanTags = detailElement.querySelectorAll("span");
-          const time = Date.now();
+          const time = Date.now().toString();
 
           setComparePrds((prev) => {
             const isDuplicate = prev.some((item) => item.modelNo === spanTags[1].textContent);
@@ -569,6 +569,7 @@ export default function App() {
 
   useEffect(() => {
     if (supports) init();
+    // eslint-disable-next-line
   }, [supports]);
 
   useEffect(() => {
@@ -586,6 +587,7 @@ export default function App() {
       setSpeechInput(false);
       fetchMessage(speechText, true).then(start);
     }
+    // eslint-disable-next-line
   }, [isCompleted]);
 
   return (

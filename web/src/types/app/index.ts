@@ -5,10 +5,13 @@ export interface ComparePrdProps {
 }
 
 export type ExpandModalStateType =
-  | "ranking"
-  | "search"
-  | "info"
   | "compare"
+  | "info"
   | "recommend"
   | "home"
+  | "general"
+  | "ranking"
+  | "search"
+  | "dictionary"
+  | "error"
   | null;

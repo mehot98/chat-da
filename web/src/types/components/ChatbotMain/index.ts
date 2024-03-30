@@ -2,7 +2,16 @@ import { Dispatch, SetStateAction } from "react";
 import * as T from "../../index";
 
 export interface MsgProps {
-  type?: "compare" | "info" | "recommend" | "home";
+  type?:
+    | "compare"
+    | "info"
+    | "recommend"
+    | "home"
+    | "general"
+    | "ranking"
+    | "search"
+    | "dictionary"
+    | "error";
   text?: string;
   content?: string;
   sender?: "user" | "bot";
@@ -10,6 +19,7 @@ export interface MsgProps {
   isTyping?: boolean;
   id?: string;
   isCompared?: boolean;
+  isLoading?: boolean;
 }
 
 export interface MessagesProps extends Array<MsgProps> {}
@@ -17,12 +27,22 @@ export interface MessagesProps extends Array<MsgProps> {}
 export interface MessageProps {
   // type 추가 예정 ex -> 스펙에 대한 설명, 일상적인 대화 등
   // server의 type에 따라 추가 할 것
-  type: "compare" | "info" | "recommend" | "home";
+  type:
+    | "compare"
+    | "info"
+    | "recommend"
+    | "home"
+    | "general"
+    | "ranking"
+    | "search"
+    | "dictionary"
+    | "error";
   content: string;
   isUser: boolean;
   isTyping: boolean;
   id: string;
   isCompared: boolean;
+  isLoading: boolean;
   currentTypingId?: number;
   modelNo?: string;
   modelNoList?: Array<string>;
