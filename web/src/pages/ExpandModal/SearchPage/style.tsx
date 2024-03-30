@@ -1,5 +1,11 @@
 import styled from "@emotion/styled";
 import IconButton from "@mui/material/IconButton";
+import CircularProgress from "@mui/material/CircularProgress";
+
+interface InputPlaceholderProps {
+  isEmpty: boolean;
+  isFocused: boolean;
+}
 
 export const ModalHeaderWrapper = styled.div`
   width: fit-content;
@@ -25,6 +31,17 @@ export const SearchInputWrapper = styled.div`
   width: 80%;
 `;
 
+export const InputPlaceholder = styled.span<InputPlaceholderProps>`
+  position: absolute;
+  color: #c7c7c7;
+  padding: 15px 30px;
+  pointer-events: none;
+  display: ${(props) => (props.isEmpty && !props.isFocused ? "block" : "none")};
+  & span {
+    font-size: 15px;
+  }
+`;
+
 export const ModalHeaderSearchInput = styled.input`
   width: 100%;
   height: 50px;
@@ -41,9 +58,11 @@ export const SearchIconButton = styled(IconButton)`
 `;
 
 export const ModalSearchItemWrapper = styled.div`
-  width: fit-content;
+  width: 585px;
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
   gap: 30px;
   margin: 30px 0;
 `;

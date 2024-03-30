@@ -1,69 +1,46 @@
-import * as Comp from "@root/src/components";
+import { useState, FocusEvent } from "react";
+import * as Comp from "@src/components";
 import * as S from "./style";
-import * as T from "@root/src/types";
+import * as T from "@src/types";
+import { request } from "@src/apis/requestBuilder";
 import SearchIcon from "@mui/icons-material/Search";
 
 export default function SearchPage() {
-  const PIProps: T.SearchItemProps[] = [
-    {
-      제품_코드: "RH62A504EB4",
-      제품명: "양문형 냉장고 644 L",
-      평점: "0.0 / 5.0",
-      리뷰_개수: 0,
-      가격: null,
-      혜택가: null,
-      소비효율등급: "2등급",
-      가로: "912 mm",
-      높이: "1780 mm",
-      깊이: "740 mm",
-      전체_용량: "644 L",
-      냉장실_용량: "408 L",
-      냉동실_용량: "236 L",
-      맞춤보관실_용량: null,
-      smartThings: "미지원",
-      imageUrl:
-        "//images.samsung.com/kdp/goods/2024/02/05/d37b0003-3f76-45f9-9d7d-56139cda7b57.png",
-    },
-    {
-      제품_코드: "RF85C9481AP",
-      제품명: "BESPOKE 냉장고 4도어 846 L (빅아이스/위스키볼, 이온살균)",
-      평점: "4.5 / 5.0",
-      리뷰_개수: 24,
-      가격: null,
-      혜택가: null,
-      소비효율등급: "1등급",
-      가로: "912 mm",
-      높이: "1853 mm",
-      깊이: "930 mm",
-      전체_용량: "846 L",
-      냉장실_용량: "503 L",
-      냉동실_용량: "167 L",
-      맞춤보관실_용량: "176 L",
-      smartThings: "미지원",
-      imageUrl:
-        "//images.samsung.com/kdp/goods/2023/09/19/b54dd92d-4c0d-4519-96e2-9fbff733b14c.png",
-    },
-    {
-      제품_코드: "RF85DB9792AP",
-      제품명:
-        "BESPOKE 정수기 냉장고 4도어 830 L (오토 듀얼 아이스/위스키볼&큐브, 정수디스펜서&오토필, 이온살균)",
-      평점: "0.0 / 5.0",
-      리뷰_개수: 0,
-      가격: "4905000 원",
-      혜택가: null,
-      소비효율등급: "2등급",
-      가로: "912 mm",
-      높이: "1853 mm",
-      깊이: "930 mm",
-      전체_용량: "830 L",
-      냉장실_용량: "492 L",
-      냉동실_용량: "162 L",
-      맞춤보관실_용량: "176 L",
-      smartThings: "미지원",
-      imageUrl:
-        "//images.samsung.com/kdp/goods/2024/02/19/8f160228-2fec-42d6-8b6a-02e2e332fe38.png",
-    },
-  ];
+  const [isSearched, setIsSearched] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [inputContent, setInputContent] = useState<string>("");
+  const [focused, setFocused] = useState<boolean>(false);
+  const [siProps, setSiProps] = useState<T.SearchItemProps[]>([]);
+
+  const getUuid = () => {
+    const sessionId = window.sessionStorage.getItem("_da_da_sessionId");
+    const tabHash = window.sessionStorage.getItem("di_tab_hash");
+    return `${sessionId}_${tabHash}`;
+  };
+
+  const handleSubmit = async (event: React.MouseEvent | React.KeyboardEvent<HTMLInputElement>) => {
+    event.preventDefault();
+
+    if (inputContent) {
+      const { data } = await request.post("/chat/search", {
+        uuid: getUuid(),
+        content: inputContent,
+      });
+      setSiProps(data.modelList);
+      setIsSearched(true);
+    }
+  };
+
+  const handleEnterSubmit = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter") {
+      handleSubmit(event);
+    }
+  };
+
+  const handleFocus = (e: FocusEvent<HTMLInputElement, Element>) => {
+    e.stopPropagation();
+    setFocused(true);
+  };
 
   return (
     <>
@@ -73,16 +50,32 @@ export default function SearchPage() {
 
         {/* 검색창 */}
         <S.SearchInputWrapper>
-          <S.ModalHeaderSearchInput />
-          <S.SearchIconButton>
+          <S.InputPlaceholder isEmpty={!inputContent} isFocused={focused}>
+            <span>용량이 600L이상 되는 냉장고를 가격이 낮은 순으로 알려줘</span>
+          </S.InputPlaceholder>
+          <S.ModalHeaderSearchInput
+            value={inputContent}
+            onChange={(event) => setInputContent(event.target.value)}
+            onKeyDown={handleEnterSubmit}
+            className="message-input"
+            onFocus={handleFocus}
+            onBlur={() => setFocused(false)}
+          />
+          <S.SearchIconButton onClick={handleSubmit}>
             <SearchIcon />
           </S.SearchIconButton>
         </S.SearchInputWrapper>
 
         <S.ModalSearchItemWrapper>
-          {PIProps.map((searchItemProps: T.SearchItemProps, i: number) => (
-            <Comp.SearchItem {...searchItemProps} key={i} />
-          ))}
+          {!isSearched ? (
+            <span>검색해보세요</span>
+          ) : siProps.length > 0 ? (
+            siProps.map((searchItemProps: T.SearchItemProps, i: number) => (
+              <Comp.SearchItem {...searchItemProps} key={i} />
+            ))
+          ) : (
+            <span>검색결과가 없어요</span>
+          )}
         </S.ModalSearchItemWrapper>
       </S.ModalHeaderWrapper>
     </>

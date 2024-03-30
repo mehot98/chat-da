@@ -446,7 +446,7 @@ export default function App() {
             isCompared: false,
             id: data.craetedAt,
             modelNo: data.modelNo,
-            spec: data.content.content,
+            spec: data.content,
           },
         ]);
       } else if (data.type === "info") {
@@ -500,7 +500,7 @@ export default function App() {
             isCompared: false,
             id: data.craetedAt,
             modelList: data.modelList,
-            btnString: "자세히 비교하기",
+            btnString: "인기순위 보기",
           },
         ]);
       } else if (data.type === "search") {
@@ -518,6 +518,18 @@ export default function App() {
           },
         ]);
       } else if (data.type === "dictionary") {
+        setMessages((prev) => [
+          ...prev,
+          {
+            type: data.type,
+            content: "",
+            isUser: false,
+            isTyping: true,
+            isCompared: false,
+            id: data.craetedAt,
+          },
+        ]);
+      } else if (data.type === "error") {
         setMessages((prev) => [
           ...prev,
           {
@@ -589,7 +601,7 @@ export default function App() {
             <S.CloseBtn onClick={handleCloseExpandModal}>
               <CloseIcon />
             </S.CloseBtn>
-            {expandModalState === "popular" ? (
+            {expandModalState === "ranking" ? (
               <P.PopularItemPage />
             ) : expandModalState === "info" ? (
               <P.DetailSpecPage selectedModelNo={selectedModelNo} />
@@ -614,7 +626,7 @@ export default function App() {
                   <p>삼성의 가전제품들을</p>
                   <p>이해하기 쉽게 알려드립니다 😊</p>
                 </S.HeaderWords>
-                <S.IconWrapper onClick={() => handleOpenExpandModal("popular")}>
+                <S.IconWrapper onClick={() => handleOpenExpandModal("ranking")}>
                   <img src={rankingIconSrc} alt="ranking-icon" width={35} height={35} />
                   <span>인기순위</span>
                 </S.IconWrapper>

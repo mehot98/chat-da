@@ -5,7 +5,7 @@ export interface ComparePrdProps {
 }
 
 export type ExpandModalStateType =
-  | "popular"
+  | "ranking"
   | "search"
   | "info"
   | "compare"

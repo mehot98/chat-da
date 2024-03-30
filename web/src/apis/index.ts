@@ -1,5 +1,5 @@
 import * as productSummary from "./productSummary";
-import * as reviewSummary from "./reviewSummary";
 import * as popularItem from "./PopularItem";
+import * as searchItem from "./searchItem";
 
-export { productSummary, reviewSummary, popularItem };
+export { productSummary, popularItem, searchItem };

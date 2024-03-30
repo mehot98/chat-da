@@ -16,7 +16,6 @@ export default function MessageForm({
   const handleSubmit = (
     event: React.FormEvent<HTMLFormElement> | React.KeyboardEvent<HTMLTextAreaElement>,
   ) => {
-    console.log("핸들서브밋에서 이벤트찍음!!", event);
     event.preventDefault();
 
     if (message) {
@@ -26,7 +25,6 @@ export default function MessageForm({
   };
 
   const handleEnterSubmit = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    console.log("핸들엔터!!!!!!!!!");
     if (event.key === "Enter") {
       handleSubmit(event);
     }
