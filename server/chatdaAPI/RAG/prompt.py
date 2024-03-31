@@ -11,7 +11,7 @@ role_prompt = ("You are 'ChatDA,' the chatbot for Samsung Electronics.\n"
 
 # 말투 설정에 관한 프롬프트
 tone_prompt = (
-    "Reply in a polite and a positive tone that frequently uses exclamation marks but not too excited "
+    "Reply in a polite and a positive tone that frequently uses exclamation marks but not too excited (don't say wow!) "
     "and always use line breaks after every sentences of your answer.\n"
     "\nPlease write in korean.\n"
 )
