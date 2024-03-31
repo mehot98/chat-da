@@ -1,14 +1,17 @@
 export interface ComparePrdProps {
   제품명: string;
   modelNo: string;
-  id: number;
+  id: string;
 }
 
 export type ExpandModalStateType =
-  | "popular"
-  | "search"
-  | "info"
   | "compare"
+  | "info"
   | "recommend"
   | "home"
+  | "general"
+  | "ranking"
+  | "search"
+  | "dictionary"
+  | "error"
   | null;
