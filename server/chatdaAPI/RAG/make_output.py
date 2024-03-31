@@ -163,6 +163,6 @@ def get_output(user_input, search):
 #
 # # 테스트용
 # if __name__ == '__main__':
-#     res = get_output(user_input='RF90DG9111S9와 RF60DB9342AP를 비교해줘', search=False)
+#     res = get_output(user_input='RS84B5041WW는 어떤 제품이야?', search=False)
 #     print(f"type : {res['type']}")
 #     print(f"content : {res['content']}")

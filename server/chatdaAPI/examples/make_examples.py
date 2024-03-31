@@ -66,7 +66,9 @@ retriever = db.as_retriever(
 
 def get_examples(user_input):
     # 유저 입력과 가장 관련있는 예제 하나를 가져오기
-    most_relevant_example = retriever.get_relevant_documents(user_input)[0]
+    # most_relevant_example = retriever.get_relevant_documents(user_input)[0]
+    most_relevant_tuple = db.similarity_search_with_relevance_scores(user_input, 1)[0]
+    most_relevant_example = most_relevant_tuple[0]
 
     # 같은 타입의 예제들을 가져오기
     user_input_type = most_relevant_example.metadata["type"]
@@ -82,7 +84,7 @@ def get_examples(user_input):
         examples_temp = examples_search.examples
     elif user_input_type == input_type.ADDITIONAL:
         examples_temp = examples_additional.examples
-    elif user_input_type == input_type.DICTIONARY:
+    elif user_input_type == input_type.DICTIONARY and most_relevant_tuple[1] > 0.99:
         return {
             "input": most_relevant_example.page_content,
             "query": most_relevant_example.metadata["query"]
