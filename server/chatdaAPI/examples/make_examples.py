@@ -84,7 +84,7 @@ def get_examples(user_input):
         examples_temp = examples_search.examples
     elif user_input_type == input_type.ADDITIONAL:
         examples_temp = examples_additional.examples
-    elif user_input_type == input_type.DICTIONARY and most_relevant_tuple[1] > 0.99:
+    elif user_input_type == input_type.DICTIONARY and most_relevant_tuple[1] > 0.8:
         return {
             "input": most_relevant_example.page_content,
             "query": most_relevant_example.metadata["query"]
