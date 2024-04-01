@@ -79,7 +79,7 @@ export default function App() {
   const currentUrl = window.location.href;
 
   // 냉장고 페이지에서 모든 리스트 선택, 디테일 페이지일시 요약정보 제공
-  const fridgeList = useRef<NodeListOf<Element>>();
+  const [fridgeList, setFridgeList] = useState<NodeListOf<Element>>();
   const linkReviewNodeList = useRef<NodeListOf<HTMLLinkElement>>();
   const [isDetailPage, setIsDetailPage] = useState(false);
   const [modelNo, setModelNo] = useState("");
@@ -88,13 +88,15 @@ export default function App() {
     if (currentUrl.includes("https://www.samsung.com/sec/refrigerators/all-refrigerators/")) {
       const moreBtn: HTMLButtonElement | null = document.querySelector("#morePrd");
       let newLiElements: NodeListOf<Element> = document.querySelectorAll(".item-inner");
-      fridgeList.current = newLiElements;
+      setFridgeList(newLiElements);
 
       linkReviewNodeList.current = document.querySelectorAll(".link-review");
 
       moreBtn.addEventListener("click", () => {
-        newLiElements = document.querySelectorAll(".item-inner");
-        fridgeList.current = newLiElements;
+        setTimeout(() => {
+          newLiElements = document.querySelectorAll(".item-inner");
+          setFridgeList(newLiElements);
+        }, 1000);
       });
       setIsDetailPage(false);
     } else if (currentUrl.includes("https://www.samsung.com/sec/refrigerators/")) {
@@ -127,8 +129,9 @@ export default function App() {
   #===============================================================================#
   */
   useEffect(() => {
-    if (fridgeList.current && fridgeList.current.length > 0) {
-      fridgeList.current.forEach((element: Element) => {
+    console.log("냉장고 !!!!!!!!!!!!!!!!", fridgeList);
+    if (fridgeList && fridgeList.length > 0) {
+      fridgeList.forEach((element: Element) => {
         const compareButton: HTMLButtonElement = document.createElement("button");
         compareButton.id = "ChatDAButton";
 
@@ -434,6 +437,48 @@ export default function App() {
         utter.voice = voice;
         speechSynthesis.speak(utter);
       },
+      onerror() {
+        throw new Error();
+
+        return;
+      },
+    }).catch((error) => {
+      const errorMessage = "죄송해요 제가 이해하지 못했어요😥";
+      let idx = 0;
+      setMessages((prev) => {
+        const lastMessageIndex = prev.length - 1;
+        const updatedMessages = [
+          ...prev.slice(0, lastMessageIndex),
+          {
+            type: error,
+            content: "",
+            isUser: false,
+            isTyping: true,
+            isCompared: false,
+            isLoading: false,
+            id: Date.now().toString(),
+          },
+        ];
+        return updatedMessages;
+      });
+
+      const errorTyping = setInterval(() => {
+        const temp = errorMessage[idx];
+
+        setMessages((prev) => {
+          const lastMessageIndex = prev.length - 1;
+          const updatedMessages = [
+            ...prev.slice(0, lastMessageIndex),
+            {
+              ...prev[lastMessageIndex],
+              content: prev[lastMessageIndex].content + temp,
+            },
+          ];
+          return updatedMessages;
+        });
+        idx++;
+        if (idx === errorMessage.length) clearInterval(errorTyping);
+      }, 20);
     });
   };
 
