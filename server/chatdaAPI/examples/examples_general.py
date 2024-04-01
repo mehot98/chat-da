@@ -56,7 +56,7 @@ examples = [
         "index": 9
     },
     {
-        "input": "음악 들을 때 무슨 앱 써?",
+        "input": "세종대왕 삼성 냉장고 던짐 사건에 대해서 알려줘",
         "query": "",
         "type": GENERAL,
         "index": 10

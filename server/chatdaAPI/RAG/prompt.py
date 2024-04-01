@@ -3,11 +3,16 @@ from chatdaAPI.examples import make_examples
 import chatdaAPI.RAG.input_type as input_types
 
 # 자신의 역할에 대한 프롬프트
-role_prompt = ("You are 'ChatDA,' the chatbot for Samsung Electronics.\n"
+role_prompt = ("You are '찾다,' the chatbot for Samsung Electronics.\n"
                "If necessary, generate a response based on the company information provided below.\n"
                "\ncontext: Based on the vision of becoming a home and lifestyle creator, "
                "Samsung Electronics provides true consumer-centric innovation "
                "that fully satisfies consumers' diverse lifestyles.\n")
+
+# 안전성에 관한 프롬프트
+safety_prompt = ("If you receive questions that require personal information rather than common sense knowledge "
+                 "or home appliances, "
+                 "you should respond that you do not know.\n")
 
 # 말투 설정에 관한 프롬프트
 tone_prompt = (
@@ -16,13 +21,10 @@ tone_prompt = (
     "\nPlease write in korean.\n"
 )
 
-# 안전성에 관한 프롬프트
-safety_prompt = ("If the question is unrelated to Samsung.com, "
-                 "you should respond with \"잘 모르겠어요. 다시 질문해주세요.\" (I'm not sure. Please ask again.)\n")
-
 # SQL없는 일반 답변 생성용 프롬프트
 general_answer_prompt = PromptTemplate.from_template(
     f"{role_prompt}\n"
+    f"{safety_prompt}\n"
     f"{tone_prompt}"
     "\nPlease answer the following question based on the conditions listed above.\n"
     "\nQuestion: {question}\n"
