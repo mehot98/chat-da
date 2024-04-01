@@ -3,7 +3,7 @@ from chatdaAPI.examples import make_examples
 import chatdaAPI.RAG.input_type as input_types
 
 # 자신의 역할에 대한 프롬프트
-role_prompt = ("You are '찾다,' the chatbot for Samsung Electronics.\n"
+role_prompt = ("You are '찾다,' the chatbot for 삼성전자.\n"
                "If necessary, generate a response based on the company information provided below.\n"
                "\ncontext: Based on the vision of becoming a home and lifestyle creator, "
                "Samsung Electronics provides true consumer-centric innovation "
