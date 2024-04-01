@@ -80,46 +80,28 @@ export default function ProductSummary({ content }: { content: string }) {
   const [isClose, setIsClose] = useState(false);
 
   // 시간 지날때 점점 흐려지고 사라짐
-  const timeRef = useRef<number | null>(null);
-  const hidden = setTimeout(() => {
-    modal[0].classList.add("hidden");
-  }, 12000);
-
   const modal = document.getElementsByClassName("fade");
-  useEffect(() => {
-    if (modal[0]) {
-      modal[0].addEventListener("mouseenter", handleMouseEnter);
-      modal[0].addEventListener("mouseleave", handleMouseLeave);
 
-      setTimeout(() => {
-        modal[0].classList.add("fade-out");
-      }, 3000);
-
-      () => hidden;
-    }
-  }, []);
+  let fadeOut: NodeJS.Timeout;
+  let hidden: NodeJS.Timeout;
 
   const handleMouseEnter = () => {
-    const modal = document.getElementsByClassName("fade");
-    if (modal[0]) {
-      if (timeRef.current) {
-        clearTimeout(timeRef.current);
-        timeRef.current = null;
-      }
-      modal[0].classList.remove("fdae-out");
-      clearTimeout(hidden);
-    }
+    clearTimeout(fadeOut);
+    clearTimeout(hidden);
+    modal[0].classList.remove("fade-out");
+    modal[0].classList.remove("hidden");
   };
 
   const handleMouseLeave = () => {
     const modal = document.getElementsByClassName("fade");
     if (modal[0]) {
-      timeRef.current = window.setTimeout(() => {
-        modal[0].classList.add("fade-out");
-        timeRef.current = null;
-      }, 3000);
+      hidden = setTimeout(() => {
+        modal[0].classList.add("hidden");
+      }, 10000);
 
-      () => hidden;
+      fadeOut = setTimeout(() => {
+        modal[0].classList.add("fade-out");
+      }, 3000);
     }
   };
 
@@ -134,6 +116,18 @@ export default function ProductSummary({ content }: { content: string }) {
     }
   }, [summaryContentRef]);
 
+  useEffect(() => {
+    if (summaryInfo) {
+      hidden = setTimeout(() => {
+        modal[0].classList.add("hidden");
+      }, 10000);
+
+      fadeOut = setTimeout(() => {
+        modal[0].classList.add("fade-out");
+      }, 3000);
+    }
+  }, [summaryInfo]);
+
   return (
     <>
       {!isClose && (
@@ -141,6 +135,8 @@ export default function ProductSummary({ content }: { content: string }) {
           summaryContentHeight={summaryContentHeight}
           onClick={() => setIsClose(true)}
           className="fade"
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
         >
           <S.ReviewSummaryDiv>
             <S.ReviewSummaryHeader>
