@@ -391,6 +391,29 @@ export default function App() {
 
   const uuid = useMemo(getUuid, []);
 
+  const [speechSignal, setSpeechSignal] = useState(false);
+
+  speechSynthesis.getVoices();
+  useEffect(() => {
+    if (speechSignal) {
+      if (typeof speechSynthesis === "undefined") return;
+
+      const lastMessage = messages[messages.length - 1];
+      if (lastMessage.isUser) return;
+
+      const voice = speechSynthesis.getVoices().findLast((v) => v.lang === "ko-KR");
+      console.log("Voice: ", voice);
+      console.log("SPEAK: ", lastMessage.content);
+      const utter = new SpeechSynthesisUtterance(lastMessage.content);
+      utter.voice = voice;
+      utter.rate = 1.3;
+      speechSynthesis.speak(utter);
+
+      setSpeechSignal(false);
+    }
+    // eslint-disable-next-line
+  }, [speechSignal]);
+
   const fetchMessage = async (message: string, tts = false) => {
     setMessages((prev) => [
       ...prev,
@@ -428,14 +451,8 @@ export default function App() {
         handleMessage(data);
       },
       onclose() {
-        if (!tts || typeof speechSynthesis === "undefined") return;
-        const lastMessage = messages[messages.length - 1];
-        if (lastMessage.isUser) return;
-
-        const voice = speechSynthesis.getVoices().findLast((v) => v.lang === "ko-KR");
-        const utter = new SpeechSynthesisUtterance(lastMessage.content);
-        utter.voice = voice;
-        speechSynthesis.speak(utter);
+        if (!tts) return;
+        setSpeechSignal(true);
       },
       onerror() {
         throw new Error();
