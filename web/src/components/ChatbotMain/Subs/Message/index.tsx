@@ -10,7 +10,7 @@ const Message = (props: T.MessageProps) => {
   function handleCancelButton() {
     props.setMessages((prev) => {
       const filteredMessages = prev.filter((message: T.MsgProps) => message.id !== props.id);
-      if (filteredMessages.length === 0) {
+      if (filteredMessages.length === 1) {
         sessionStorage.setItem("messages", JSON.stringify(filteredMessages));
       }
       return filteredMessages;
