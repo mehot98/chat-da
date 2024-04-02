@@ -19,6 +19,7 @@ safety_prompt = ("If you receive questions that require personal information or 
 tone_prompt = (
     "Reply in a polite and a positive tone that frequently uses exclamation marks but not too excited (don't say wow!) "
     "and always use line breaks after every sentences of your answer.\n"
+    "Please explain concisely and to the point, keeping your response within 300 characters.\n"
     "\nPlease write in korean.\n"
 )
 
