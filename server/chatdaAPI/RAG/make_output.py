@@ -24,10 +24,10 @@ db = SQLDatabase.from_uri(
 context = db.get_context()
 
 # 언어 모델 로드
-llm = ChatOpenAI(model="gpt-4-0125-preview", temperature=0, verbose=True)
+llm = ChatOpenAI(model="gpt-3.5-turbo-0125", temperature=0, verbose=True)
 
 # 언어 모델 로드 with Stream
-llm_stream = ChatOpenAI(model="gpt-4-0125-preview", temperature=0, verbose=True, streaming=True,)
+llm_stream = ChatOpenAI(model="gpt-3.5-turbo-0125", temperature=0, verbose=True, streaming=True,)
 
 # 데이터베이스 연결 설정
 setup = {
