@@ -59,7 +59,7 @@
 |etc | 기타 업무 |
 
 ## 💜ERD
-![ChatDA (1).png](./ChatDA (1).png)
+![ChatDA.png](./ChatDA.png)   
 
 ## 🖤API
 https://documenter.getpostman.com/view/32331322/2sA35K21LW
