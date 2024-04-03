@@ -90,25 +90,28 @@ https://documenter.getpostman.com/view/32331322/2sA35K21LW
 
 ### 1. 비교하기
 #### 버튼을 통한 비교하기
+![compare1](/uploads/8833de4f5f930d9cf2b8325f406cf21d/compare1.gif)
 
 
 #### 채팅을 통한 비교하기
-
+![compare2](/uploads/c358ed2d4107544bef0ad82e6d26bbe4/compare2.gif)
 
 ### 2. 제품 정보 검색
+![info](/uploads/21b92f2b19e45e005f708bd022a485d6/info.gif)
+
+### 3. 인기 순위 및 조건 검색
+![etc](/uploads/73cc9d5cdca890c1d40b9872347b048a/etc.gif)
 
 
-### 3. 인기 순위
+### 4. 리뷰 요약 & 제품 본문 요약
+![summary](/uploads/22235b1ddc9e3714821139d4d5b2fa7d/summary.gif)
 
 
-### 4. 조건 검색
+### 5. 호출어 인식 기능
+![hichatda](/uploads/189788831ef00a794628427ed537e972/hichatda.gif)
 
-
-### 5. 리뷰 요약 & 제품 본문 요약
-
-
-### 6. 호출어 인식 기능
-
+### 6. 모니터링
+![monitor](/uploads/0e85dcd7315d710489329a15255a5c4c/monitor.gif)
 
 
 
