@@ -72,7 +72,7 @@ def get_output(user_input, search):
             ranking_query = examples_ranking.examples[0]["query"].split("\n\n")[1]
 
             model_list = make_model_list(ranking_query)
-            model_list = model_list[:3]
+            model_list = model_list[:10]
             ranking_list = ""
 
             # 3위까지 답변 생성
