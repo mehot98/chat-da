@@ -33,7 +33,9 @@
 ## :runner: 개발 인원
 | **서다찬 (팀장)** | **이승준** | **이승민** | **박이언** | **나해란** | **이진성** |
 | :------: |  :------: |  :------: |  :------: |  :------: |  :------: |
-| <img src="https://avatars.githubusercontent.com/u/111109411?v=4" height=150 width=150> <br/> **백엔드** | **백엔드** | **백엔드** | **백엔드** | **프론트엔드** | **프론트엔드** | 
+| <img src="https://avatars.githubusercontent.com/u/111109411?v=4" height=150 width=150> <br/> **백엔드** |<img src="/uploads/f7dcb683b9b124d835239579285cf78a/Untitled__36_.png"> <br/> **백엔드** | <img src="/uploads/c45710cadbc776db7646f0dae1de9f8f/Untitled__37_.png"> <br/> **백엔드** |<img src="https://avatars.githubusercontent.com/u/6011621?v=4"> <br/>  **백엔드** | <img src="/uploads/62daeed2b26278a11a604adac64adc82/Untitled__35_.png"> <br/> **프론트엔드** | <img src="/uploads/fef97138731d5de1a795e4ae1601be07/rn_image_picker_lib_temp_b04dea6e-5dfb-481b-9b14-10bc818fcf76.jpg"> <br/> **프론트엔드** | 
+
+
 
 ## :yellow_heart: 개발 환경
 
