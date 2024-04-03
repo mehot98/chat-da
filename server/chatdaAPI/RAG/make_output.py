@@ -76,7 +76,7 @@ def get_output(user_input, search):
             ranking_list = ""
 
             # 3위까지 답변 생성
-            for i in range(10):
+            for i in range(3):
                 ranking_list += f"{i+1}위는 {model_list[i]['제품_코드']}\n"
 
             return {
