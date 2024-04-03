@@ -129,7 +129,6 @@ def post_chat(
             "system_message": "",
             "model_no_list": "Not In Data"
         }
-    print(1)
     return StreamingResponse(returnData(response, data["content"], req, log, data), headers={'X-Accel-Buffering': 'no'},
                              media_type="text/event-stream")
 
