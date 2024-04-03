@@ -31,9 +31,9 @@
 
 
 ## :runner: 개발 인원
-| **서다찬** | **이승준** | **이진성** | **이승민** | **박이언** | **나해란** |
+| **서다찬 (팀장)** | **이승준** | **이승민** | **박이언** | **나해란** | **이진성** |
 | :------: |  :------: |  :------: |  :------: |  :------: |  :------: |
-| [<img src="https://avatars.githubusercontent.com/u/111109411?v=4" height=150 width=150> <br/> @DevDachan](https://github.com/chn7894) |||||| 
+| <img src="https://avatars.githubusercontent.com/u/111109411?v=4" height=150 width=150> <br/> **백엔드** | **백엔드** | **백엔드** | **백엔드** | **프론트엔드** | **프론트엔드** | 
 
 ## :yellow_heart: 개발 환경
 
@@ -45,6 +45,27 @@
 - 모니터링 : Elastic Search, Logstash, Beats, Kibana
 <br>
 
+## 빌드 방법
+
+### 1. FastAPI
+- 패키지 다운로드
+```
+$ pip install -r requirements.txt
+```
+- 실행
+```
+$ uvicorn chatdaAPI.main.app:app --host 0.0.0.0 --reload
+```
+
+### 2. React
+- 패키지 다운로드
+```
+$ npm i
+```
+- 빌드
+```
+$ npm run dev
+```
 
 ## :green_heart: 커밋 컨벤션
 | prefix |  설명 |   
@@ -64,7 +85,6 @@
 ## 🖤API
 https://documenter.getpostman.com/view/32331322/2sA35K21LW
 
-## 💙Bug Report
 
 
 ## 💙Bug Report
