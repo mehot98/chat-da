@@ -86,6 +86,11 @@ $ npm run dev
 https://documenter.getpostman.com/view/32331322/2sA35K21LW
 
 
+## :green_heart: Project Architecture
+![chatda_system_architecture-001__1___1_](/uploads/c533bd52eacebeba5ba9ca86ac9e311b/chatda_system_architecture-001__1___1_.png)
+
+
+
 ## :yellow_heart: 기능별 소개
 
 ### 1. 비교하기
