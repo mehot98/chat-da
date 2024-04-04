@@ -45,8 +45,3 @@ def tts(text):
     except Exception as e:
         raise Exception("음성 파일 저장 오류")
 
-
-if __name__ == "__main__":
-    key_path = "../secret/google-cloud-key.json"
-    output_path = "./output.mp3"
-    tts("BESPOKE 냉장고 4도어 제품에 대해 설명해줘")
