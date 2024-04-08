@@ -6,12 +6,7 @@ from chatdaAPI.app.routers.summary import router as summary_router
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-
-
-
-
 app = FastAPI()
-
 
 origins = [
     "*"
