@@ -21,6 +21,8 @@ app.add_middleware(
 )
 
 
+
+
 # 채팅 관련 라우터
 app.include_router(chat_router, prefix="/chat", tags=["chat"])
 
