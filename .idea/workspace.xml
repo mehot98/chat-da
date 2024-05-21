@@ -4,9 +4,28 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="dcb44238-0c0b-4513-a36c-ba8cd94562d5" name="Changes" comment="">
+    <list default="true" id="dcb44238-0c0b-4513-a36c-ba8cd94562d5" name="Changes" comment="docs: 리드미 이미지 재배치">
+      <change afterPath="$PROJECT_DIR$/readme-image/chatda_system_architecture.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/readme-image/erd.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/readme-image/feature1.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/readme-image/feature2.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/readme-image/feature3.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/readme-image/feature4.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/readme-image/feature5.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/readme-image/feature6.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/readme-image/feature7.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/readme-image/member1.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/readme-image/member2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/readme-image/member3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/readme-image/member4.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/readme-image/member5.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/readme-image/member6.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/S10P21S004.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/S10P21S004.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/image.png" beforeDir="false" afterPath="$PROJECT_DIR$/readme-image/main.png" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -15,6 +34,9 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitToolBoxStore">
+    <option name="projectConfigVersion" value="5" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -32,17 +54,30 @@
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "feature/be/log",
-    "last_opened_file_path": "C:/Users/SSAFY/mehot98/chatda-setup",
+    "git-widget-placeholder": "develop",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/SSAFY/mehot98/S10P21S004/readme-image",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "com.maddyhome.idea.vim.ui.VimEmulationConfigurable",
+    "ts.external.directory.path": "C:\\Program Files\\JetBrains\\IntelliJ IDEA 2023.3.4\\plugins\\javascript-impl\\jsLanguageServicesImpl\\external",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\SSAFY\mehot98\S10P21S004\readme-image" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\SSAFY\mehot98\S10P21S004\readme-image" />
+    </key>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -60,6 +95,8 @@
       <updated>1711504319013</updated>
       <workItem from="1711504321954" duration="3818000" />
       <workItem from="1711518063384" duration="410000" />
+      <workItem from="1716190917642" duration="998000" />
+      <workItem from="1716250934507" duration="721000" />
     </task>
     <servers />
   </component>
@@ -76,5 +113,20 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="docs: 리드미 이미지 재배치" />
+    <option name="LAST_COMMIT_MESSAGE" value="docs: 리드미 이미지 재배치" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/web/src/components/ChatbotMain/index.tsx</url>
+          <line>1</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

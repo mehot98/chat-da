@@ -1,4 +1,4 @@
-![image.png](./image.png)
+![image.png](readme-image/main.png)
 
 <div align='center'>
 	<img src="https://img.shields.io/badge/FastAPI-339933?style=flat&logo=FastAPI&logoColor=white"/>
@@ -31,9 +31,9 @@
 
 
 ## :runner: 개발 인원
-| **서다찬 (팀장)** | **이승준** | **이승민** | **박이언** | **나해란** | **이진성** |
-| :------: |  :------: |  :------: |  :------: |  :------: |  :------: |
-| <img src="https://avatars.githubusercontent.com/u/111109411?v=4" height=150 width=150> <br/> **백엔드** |<img src="/uploads/f7dcb683b9b124d835239579285cf78a/Untitled__36_.png"> <br/> **백엔드** | <img src="/uploads/c45710cadbc776db7646f0dae1de9f8f/Untitled__37_.png"> <br/> **백엔드** |<img src="https://avatars.githubusercontent.com/u/6011621?v=4"> <br/>  **백엔드** | <img src="/uploads/62daeed2b26278a11a604adac64adc82/Untitled__35_.png"> <br/> **프론트엔드** | <img src="/uploads/fef97138731d5de1a795e4ae1601be07/rn_image_picker_lib_temp_b04dea6e-5dfb-481b-9b14-10bc818fcf76.jpg"> <br/> **프론트엔드** | 
+|                              **서다찬 (팀장)**                               |                                 **이승준**                                 | **이승민** | **박이언** | **나해란** |                                  **이진성**                                  |
+|:-----------------------------------------------------------------------:|:-----------------------------------------------------------------------:|  :------: |  :------: |  :------: |:-------------------------------------------------------------------------:|
+| <img src="readme-image/member1.jpg" height=150 width=150> <br/> **백엔드** | <img src="readme-image/member2.png" height=150 width=150> <br/> **백엔드** | <img src="readme-image/member3.png" height=150 width=150> <br/> **백엔드** | <img src="readme-image/member4.png" height=150 width=150> <br/>  **백엔드** |  <img src="readme-image/member5.png" height=150 width=150> <br/> **프론트엔드** | <img src="readme-image/member6.jpg" height=150 width=150> <br/> **프론트엔드** | 
 
 
 
@@ -82,44 +82,38 @@ $ npm run dev
 |etc | 기타 업무 |
 
 ## 💜ERD
-![ChatDA.png](./ChatDA.png)   
+![erd.png](readme-image%2Ferd.png)
 
 ## 🖤API
 https://documenter.getpostman.com/view/32331322/2sA35K21LW
 
-
 ## :green_heart: Project Architecture
-![chatda_system_architecture-001__1___1_](/uploads/c533bd52eacebeba5ba9ca86ac9e311b/chatda_system_architecture-001__1___1_.png)
-
+![chatda_system_architecture.png](readme-image%2Fchatda_system_architecture.png)
 
 
 ## :yellow_heart: 기능별 소개
 
 ### 1. 비교하기
 #### 버튼을 통한 비교하기
-![compare1](/uploads/8833de4f5f930d9cf2b8325f406cf21d/compare1.gif)
-
+![feature1.gif](readme-image%2Ffeature1.gif)
 
 #### 채팅을 통한 비교하기
-![compare2](/uploads/c358ed2d4107544bef0ad82e6d26bbe4/compare2.gif)
+![feature2.gif](readme-image%2Ffeature2.gif)
 
 ### 2. 제품 정보 검색
-![info](/uploads/21b92f2b19e45e005f708bd022a485d6/info.gif)
+![feature3.gif](readme-image%2Ffeature3.gif)
 
 ### 3. 인기 순위 및 조건 검색
-![etc](/uploads/73cc9d5cdca890c1d40b9872347b048a/etc.gif)
-
+![feature4.gif](readme-image%2Ffeature4.gif)
 
 ### 4. 리뷰 요약 & 제품 본문 요약
-![summary](/uploads/22235b1ddc9e3714821139d4d5b2fa7d/summary.gif)
-
+![feature5.gif](readme-image%2Ffeature5.gif)
 
 ### 5. 호출어 인식 기능
-![hichatda](/uploads/189788831ef00a794628427ed537e972/hichatda.gif)
+![feature6.gif](readme-image%2Ffeature6.gif)
 
 ### 6. 모니터링
-![monitor](/uploads/0e85dcd7315d710489329a15255a5c4c/monitor.gif)
-
+![feature7.gif](readme-image%2Ffeature7.gif)
 
 
 ## 💙Bug Report
